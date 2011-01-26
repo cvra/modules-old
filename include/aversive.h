@@ -1,0 +1,159 @@
+/*  
+ *  Copyright Droids Corporation, Microb Technology, Eirbot (2007)
+ * 
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *  Revision : $Id: aversive.h,v 1.1.2.6 2009-05-18 12:19:51 zer0 Exp $
+ *
+ */
+
+/**
+ * here are some cute little macros, and other stuff, microcontroller
+ * related ! 
+ */
+
+
+#ifndef _AVERSIVE_H_
+#define _AVERSIVE_H_
+
+#include <aversive/types.h>
+#include <aversive/errno.h>
+#include <aversive/irq_lock.h>
+
+
+#define F_CPU ((unsigned long)CONFIG_QUARTZ)
+
+#define Hz  1l
+#define KHz 1000l
+#define MHz 1000000l
+
+
+
+/*
+ *  a few "mathematical" macros : maximums and minimums
+ */
+
+/**
+ *  signed maxmimum : both signs are tested
+ */
+#define S_MAX(to_saturate, value_max)    \
+do {                                     \
+   if (to_saturate > value_max)          \
+     to_saturate = value_max;            \
+   else if (to_saturate < -value_max)    \
+     to_saturate = -value_max;           \
+ } while(0)
+
+/**
+ *  unsigned maximum : result >0 is forced
+ */
+#define U_MAX(to_saturate, value_max)    \
+do {                                     \
+   if (to_saturate > value_max)          \
+     to_saturate = value_max;            \
+   else if (to_saturate < 0)             \
+     to_saturate = 0;                    \
+ } while(0)
+
+/**
+ *   simple maximum
+ */
+#define MAX(to_saturate, value_max)      \
+do {                                     \
+   if (to_saturate > value_max)          \
+     to_saturate = value_max;            \
+} while(0)
+
+/**
+ *  simple minimum
+ */
+#define MIN(to_saturate, value_min)      \
+do {                                     \
+   if (to_saturate < value_min)          \
+     to_saturate = value_min;            \
+} while(0)
+
+
+/** absolute
+ *  while the abs() function in the libc works only with int type
+ *  this macro works with every numerical type including floats
+ */
+#define ABS(val) ({					\
+			__typeof(val) __val = (val);	\
+			if (__val < 0)			\
+				__val = - __val;	\
+			__val;				\
+		})
+
+/* a few asm utilities */
+
+#ifdef TRACK_LOW_LEVEL_HOOKS
+#warning "Low level hook debugging is on"
+#define nop() do {} while(0)
+#define nothing() do {} while(0)
+#define cli() do {printf("\nERROR:Call to CLI : %s:%d (%s)\n", __FILE__, __LINE__, __FUNCTION__);} while(0)
+#define sei() do {printf("\nERROR:Call to SEI here : %s:%d (%s)\n", __FILE__, __LINE__, __FUNCTION__);} while(0)
+#define reset() do {printf("\nERROR:Call to reset here : %s:%d\n", __FILE__, __LINE__);} while(0)
+#else
+#define nop() do {} while(0)
+#define nothing() do {} while(0)
+#define cli() do {} while(0)
+#define sei() do {} while(0)
+#define reset() do {} while(0)
+#endif
+
+/**
+ *   little bit toggeling macro 
+ *  
+ *  change pin state
+ *  usage :
+ *  BIT_TOGGLE(PORTB,2) to make the pin 2 of PORTB toggle
+ */
+#define BIT_TOGGLE(port,bit) do {\
+      if(bit_is_set(PIN(port),bit)) \
+	cbi(port,bit); \
+      else \
+	sbi(port,bit); \
+      } while(0)
+
+
+/** booleans */
+#define FALSE 0
+#define TRUE 1
+#define False FALSE
+#define false FALSE
+#define True TRUE
+#define true TRUE
+
+
+/** DDR and PINS from port adress */
+#define DDR(port) (*(&(port) -1))
+#define PIN(port) (*(&(port) -2))
+
+/** open collector simulation macros */
+#define OPEN_CO_INIT(port, bit) sbi(port,bit)
+#define OPEN_CO_HIGH(port, bit) cbi(DDR(port),bit)
+#define OPEN_CO_LOW(port, bit)  cbi(DDR(port),bit)
+
+/** deprecated macros in libc, but they're almost used, so we implement them again ;) */
+#ifndef cbi
+#define cbi(sfr, bit) ( sfr &= ~ _BV(bit))
+#endif
+#ifndef sbi
+#define sbi(sfr, bit) ( sfr |= _BV(bit))
+#endif
+
+#endif /* ifndef _AVERSIVE_H_ */
+
