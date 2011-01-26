@@ -43,79 +43,9 @@
 
 #include <aversive.h>
 
-#ifdef CONFIG_MODULE_SCHEDULER_USE_TIMERS
-#include <timer.h>
-#endif /* CONFIG_MODULE_SCHEDULER_USE_TIMERS */
-
-#include <scheduler_config.h>
-
-#ifdef CONFIG_MODULE_SCHEDULER_USE_TIMERS
-#if SCHEDULER_TIMER_NUM == 0
-#define SCHEDULER_TIMER_REGISTER()  timer0_register_OV_intr(scheduler_interrupt)
-#define SCHEDULER_CLOCK_PRESCALER timer0_get_prescaler_div()
-#ifdef TCNT0H
-#define SCHEDULER_TIMER_BITS 16
-#else
-#define SCHEDULER_TIMER_BITS 8
-#endif
-
-#elif SCHEDULER_TIMER_NUM == 1
-#define SCHEDULER_TIMER_REGISTER()  timer1_register_OV_intr(scheduler_interrupt)
-#define SCHEDULER_CLOCK_PRESCALER timer1_get_prescaler_div()
-#ifdef TCNT1H
-#define SCHEDULER_TIMER_BITS 16
-#else
-#define SCHEDULER_TIMER_BITS 8
-#endif
-
-#elif SCHEDULER_TIMER_NUM == 2
-#define SCHEDULER_TIMER_REGISTER()  timer2_register_OV_intr(scheduler_interrupt)
-#define SCHEDULER_CLOCK_PRESCALER timer2_get_prescaler_div()
-#ifdef TCNT2H
-#define SCHEDULER_TIMER_BITS 16
-#else
-#define SCHEDULER_TIMER_BITS 8
-#endif
-
-#elif SCHEDULER_TIMER_NUM == 3
-#define SCHEDULER_TIMER_REGISTER()  timer3_register_OV_intr(scheduler_interrupt)
-#define SCHEDULER_CLOCK_PRESCALER timer3_get_prescaler_div()
-#ifdef TCNT3H
-#define SCHEDULER_TIMER_BITS 16
-#else
-#define SCHEDULER_TIMER_BITS 8
-#endif
-
-#else
-#error "Bad SCHEDULER_TIMER_NUM value in config file"
-#endif
-
-#endif /* CONFIG_MODULE_SCHEDULER_USE_TIMERS */
-
-#ifdef CONFIG_MODULE_SCHEDULER_TIMER0
-#define SCHEDULER_TIMER_BITS 8
-#endif /* CONFIG_MODULE_SCHEDULER_TIMER0 */
-
-#ifndef CONFIG_MODULE_SCHEDULER_MANUAL
-
-/** TIME_UNIT is the number of microseconds between each interruption
- * if the prescaler equals 1 */
-#if SCHEDULER_TIMER_BITS == 8
-#define TIMER_UNIT_FLOAT ( 256000000.0 / (double)(CONFIG_QUARTZ) )
-#else
-#define TIMER_UNIT_FLOAT ( 65536000000.0 / (double)(CONFIG_QUARTZ) )
-#endif
-
-/** SCHEDULER_UNIT is the number of microseconds between each
- *  scheduler interruption. We can use it like this :
- *    scheduler_add_periodical_event(f, 1000L/SCHEDULER_UNIT);
- *  The function f will be called every ms. 
- */
-#define SCHEDULER_UNIT_FLOAT ( TIMER_UNIT_FLOAT * (double)SCHEDULER_CLOCK_PRESCALER )
-#define SCHEDULER_UNIT ( (unsigned long) SCHEDULER_UNIT_FLOAT )
-
-#endif /* ! CONFIG_MODULE_SCHEDULER_MANUAL */
-
+#warning "Cette valeur doit etre modifiee en fonction des timers"
+#define SCHEDULER_UNIT 16 /* us */
+#define SCHEDULER_NB_MAX_EVENT 5
 
 
 #define SCHEDULER_PERIODICAL 0

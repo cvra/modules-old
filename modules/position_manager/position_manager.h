@@ -26,6 +26,9 @@
 #include <math.h>
 #include <robot_system.h>
 
+
+#define CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
+
 /** 
  * structure that stores the number of impulsions that corresponds to
  * a mm or a degre. We also need to specify the track of the
