@@ -30,7 +30,6 @@
 #include <scheduler.h>
 #include <scheduler_private.h>
 #include <scheduler_stats.h>
-#include <scheduler_config.h>
 
 
 /* this file is compiled for AVR version only */
