@@ -46,6 +46,7 @@
 #warning "Cette valeur doit etre modifiee en fonction des timers"
 #define SCHEDULER_UNIT 16 /* us */
 #define SCHEDULER_NB_MAX_EVENT 5
+#define SCHEDULER_NB_STACKING_MAX SCHEDULER_NB_MAX_EVENT
 
 
 #define SCHEDULER_PERIODICAL 0

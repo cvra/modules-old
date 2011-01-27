@@ -22,13 +22,6 @@
 #ifndef _SCHEDULER_PRIVATE_H_
 #define _SCHEDULER_PRIVATE_H_
 
-/* sanity checks */
-#if _SCHEDULER_CONFIG_VERSION_ != 4
-#warning "You are using an old version of scheduler_config.h file"
-#warning "_SCHEDULER_CONFIG_VERSION_ is != 4"
-#warning "Look in modules/base/scheduler/config directory to import changes"
-#warning "You should define SCHEDULER_NB_STACKING_MAX and SCHEDULER_CK"
-#endif
 
 #include <stdint.h>
 
