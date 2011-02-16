@@ -2,7 +2,7 @@
 #define _CVRA_DC_H_
 
 #include <aversive.h>
-#include <cvra_dc_regs.h>
+
 
 /* Registers */
 #define DC_PMW0_REGISTER_OFFSET 0x00
@@ -13,7 +13,7 @@
 #define DC_PWM_MINIMAL_VALUE 40
 
 
-typedef (void *) cvra_dc;
+typedef int* cvra_dc;
 
 /** Resets the device by setting all registers to 0. */
 void cvra_dc_reset(cvra_dc device);
@@ -30,7 +30,7 @@ void cvra_dc_set_pwm_1(cvra_dc device, int32_t value);
 /** Gets encoder 0. */
 int32_t cvra_dc_get_encoder_0(cvra_dc device);
 
-/** Gets encoder 1. */
+/** Gets encoder 1. */
 int32_t cvra_dc_get_encoder_1(cvra_dc device);
 
 #endif

@@ -36,7 +36,7 @@
 #include <system.h>
 #else
 #define IORD(adress, offset) (*(adress+offset))
-#define IOWR(adress, offset, data) (*(adress+offset) = data)
+#define IOWR(adress, offset, data) (*(adress+offset) = data)
 #endif
 
 #define F_CPU ((unsigned long)CONFIG_QUARTZ)
@@ -109,9 +109,9 @@ do {                                     \
 #warning "Low level hook debugging is on"
 #define nop() do {} while(0)
 #define nothing() do {} while(0)
-#define cli() do {printf("\nERROR:Call to CLI : %s:%d (%s)\n", __FILE__, __LINE__, __FUNCTION__);} while(0)
-#define sei() do {printf("\nERROR:Call to SEI here : %s:%d (%s)\n", __FILE__, __LINE__, __FUNCTION__);} while(0)
-#define reset() do {printf("\nERROR:Call to reset here : %s:%d\n", __FILE__, __LINE__);} while(0)
+#define cli() do {printf("\nERROR:Call to CLI : %s:%d (%s)\n", __FILE__, __LINE__, __FUNCTION__);} while(0)
+#define sei() do {printf("\nERROR:Call to SEI here : %s:%d (%s)\n", __FILE__, __LINE__, __FUNCTION__);} while(0)
+#define reset() do {printf("\nERROR:Call to reset here : %s:%d\n", __FILE__, __LINE__);} while(0)
 #else
 #define nop() do {} while(0)
 #define nothing() do {} while(0)
