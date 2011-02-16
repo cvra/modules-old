@@ -32,6 +32,12 @@
 #include <aversive/errno.h>
 #include <aversive/irq_lock.h>
 
+#ifdef COMPILE_ON_ROBOT
+#include <system.h>
+#else
+#define IORD(adress) (*(adress))
+#define IOWR(adress, data) (*(adress) = data)
+#endif
 
 #define F_CPU ((unsigned long)CONFIG_QUARTZ)
 
