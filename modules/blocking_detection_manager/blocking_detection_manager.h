@@ -25,10 +25,9 @@
 #ifndef BLOCKING_DETECTION_MANAGER_H_
 #define BLOCKING_DETECTION_MANAGER_H_
 
-/* display debug every 128 calls of manage if defined */
-#define BD_DEBUG 128
-
+#include <aversive.h>
 #include <control_system_manager.h>
+
 
 /* detect blocking based on motor current.
  * triggers the blocking if:
@@ -43,48 +42,22 @@
 
 struct blocking_detection {
 	struct cs *cs;
-
-	uint32_t i_thres;
-	int32_t k1;
-	int32_t k2;
 	uint16_t cpt_thres;
 	uint16_t cpt;
-	uint16_t speed_thres;
-#ifdef BD_DEBUG
-	uint16_t debug_cpt;
-#endif
-
-	int32_t prev_pos;
-	int32_t speed;
+	uint16_t err_thres;
 };
 
 /** init module, give the cs as parameter */
-void bd_init(struct blocking_detection *bd);
+void bd_init(struct blocking_detection *bd, struct cs *cs);
 
-/** thresholds for current-based blocking detection. If cpt_thres
- *  is 0, disable it. */
-void bd_set_current_thresholds(struct blocking_detection *bd,
-			       int32_t k1, int32_t k2,
-			       uint32_t i_thres, uint16_t cpt_thres);
 
-/** speed threshold: if speed is above it, disable
- * blocking_detection. */
-void bd_set_speed_threshold(struct blocking_detection *bd,
-			    uint16_t speed);
+void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16_t cpt_thres);
 
 /** reset the blocking */
 void bd_reset(struct blocking_detection *bd);
 
-/** function to be called periodically, when we use cs structure */
-void bd_manage_from_cs(struct blocking_detection *bd, struct cs *cs);
-
-/** function to be called periodically, when we use values directly */
-void bd_manage_from_pos_cmd(struct blocking_detection *bd,
-			    int32_t pos, int32_t cmd);
-
-/** function to be called periodically, when we use values directly */
-void bd_manage_from_speed_cmd(struct blocking_detection *bd,
-			      int32_t speed, int32_t cmd);
+/** function to be called periodically */
+void bd_manage(struct blocking_detection *bd);
 
 /** get value of blocking detection */
 uint8_t bd_get(struct blocking_detection *bd);
