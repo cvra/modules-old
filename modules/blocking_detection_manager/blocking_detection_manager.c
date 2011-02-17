@@ -65,7 +65,7 @@ uint8_t bd_get(struct blocking_detection * bd)
 {
 	uint8_t ret, flags;
 	IRQ_LOCK(flags);
-	ret = (bd->cpt_thres && (bd->cpt == bd->cpt_thres));
+	ret = (bd->cpt_thres && (bd->cpt >= bd->cpt_thres));
 	IRQ_UNLOCK(flags);
 	return ret;
 }
