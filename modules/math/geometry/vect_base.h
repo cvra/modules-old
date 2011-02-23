@@ -22,6 +22,8 @@
 #ifndef _VECT_BASE_H_
 #define _VECT_BASE_H_
 
+/** \addtogroup Geometrie */
+
 typedef struct _vect_t {
   float x;
   float y;
@@ -53,5 +55,5 @@ void vect_rot_retro(vect_t *v);
 float vect_get_angle(vect_t *v, vect_t *w);
 
 void vect_resize(vect_t *v, float l);
-
+/** @} */
 #endif /* _VECT_BASE_H_ */

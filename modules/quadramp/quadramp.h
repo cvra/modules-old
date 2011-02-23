@@ -24,6 +24,12 @@
 
 #include <aversive.h>
 
+/** \addtogroup Quadramp
+ * Ce module s'occuppe de la generation d'une rampe trapezoidale de
+ * vitesse. Il est prevu pour s'integrer avec control_system_manager.
+ * @{
+ */
+
 struct quadramp_filter
 {
 	double var_2nd_ord_pos;
@@ -41,10 +47,12 @@ void quadramp_init(struct quadramp_filter *q);
 
 void quadramp_reset(struct quadramp_filter *q);
 
+/** Set acceleration. */
 void quadramp_set_2nd_order_vars(struct quadramp_filter *q,
 				 double var_2nd_ord_pos,
 				 double var_2nd_ord_neg);
 
+/** Set speed. */
 void quadramp_set_1st_order_vars(struct quadramp_filter *q,
 				 double var_1st_ord_pos,
 				 double var_1st_ord_neg);
@@ -56,11 +64,15 @@ void quadramp_set_1st_order_vars(struct quadramp_filter *q,
 uint8_t quadramp_is_finished(struct quadramp_filter *q);
 
 /**
- * Process the ramp
+ * Process the ramp.
  *
  * \param data should be a (struct quadramp_filter *) pointer
  * \param in is the input of the filter
  */
 int32_t quadramp_do_filter(void *data, int32_t in);
+
+/** @} */
+
+
 
 #endif

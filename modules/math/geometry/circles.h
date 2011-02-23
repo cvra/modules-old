@@ -22,6 +22,13 @@
 #ifndef _CIRCLES_H_
 #define _CIRCLES_H_
 
+
+/** \addtogroup Geometrie
+ * Ce module fait quelques calculs de geometrie simple sur des cercles,
+ * des droites et des polygones.
+ * @{
+ */
+
 typedef struct _circle {
 	double x;
 	double y;
@@ -44,4 +51,9 @@ uint8_t pt_is_inside_circle(const point_t *p, circle_t *c);
 uint8_t circle_intersect(const circle_t *c1, const circle_t *c2,
 			 point_t *p1, point_t *p2);
 
+/** @} */
+
 #endif /* _CIRCLES_H_ */
+
+
+

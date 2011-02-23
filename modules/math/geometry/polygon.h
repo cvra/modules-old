@@ -22,6 +22,8 @@
 #ifndef _POLYGON_H_
 #define _POLYGON_H_
 
+/** \addtogroup Geometrie */
+
 typedef struct _poly {
 	point_t * pts;
 	uint8_t l;
@@ -95,5 +97,6 @@ calc_rays(poly_t *polys, uint8_t npolys, uint8_t *rays);
 void 
 calc_rays_weight(poly_t *polys, uint8_t npolys, uint8_t *rays, 
 		 uint8_t ray_n, uint16_t *weight);
-
+         
+/** @} */
 #endif

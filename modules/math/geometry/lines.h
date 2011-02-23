@@ -22,6 +22,8 @@
 #ifndef _LINES_H_
 #define _LINES_H_
 
+/** \addtogroup Geometrie */
+
 typedef struct _line {
 	double a;
 	double b;
@@ -55,4 +57,6 @@ intersect_segment(const point_t *s1, const point_t *s2,
 /* translate the line */
 void
 line_translate(line_t *l, vect_t *v);
+
+/** @} */
 #endif /* _LINES_H_ */
