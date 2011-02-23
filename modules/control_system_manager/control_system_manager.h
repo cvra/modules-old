@@ -26,10 +26,6 @@
 /** \file control_system_manager.h
  * \brief Interface for the control_system manager module.
  *
- * \todo Test the module on a real system.
- *
- * \test No test for the moment, only correct compilation.
- *
  * This module provide functions to control and regulate a system.
  */
     
@@ -37,6 +33,13 @@
 #define _CONTROL_SYSTEM_MANAGER_
 
 #include <aversive.h>
+
+/** \addtogroup Regulation
+ * Ce module s'occupe de fournir un wrapper aux filtres (PID et trapeze).
+ * Il s'occupe aussi de lire les entrees des capteurs et de balancer la 
+ * puissance sur la sortie du regulateur.
+ * @{
+ */
 
 /** The data structure used by the control_system_manager module */
 struct cs {
@@ -131,5 +134,6 @@ int32_t cs_get_filtered_feedback(struct cs* cs);
 /** Change the consign without calculating control system */
 void cs_set_consign(struct cs* cs, int32_t v);
 
+/** @} */
 
 #endif /* #ifndef _CONTROL_SYSTEM_MANAGER_ */

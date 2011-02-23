@@ -24,13 +24,16 @@
 * \author JD & Vincent
 * \version 2.0
 * \date 21.12.2005 @ 23:09
-* \todo Complex operations on vectors and implementation of the <french> reperes </french>
-* \test polar -> cartesian & cartesian -> polar seems to be ok.
 *
 * This module provides functions to handle 2d vectors and basic geometry fucntions.
 */
 
 /** \dontinclude main.c */
+
+/** \addtogroup Vect2D
+ * This module manages 2D vectors.
+ * @{
+ */
 
 #ifndef _VECT2_H_
 #define _VECT2_H_
@@ -62,10 +65,7 @@ typedef struct _vect2_pol
 
 /************************ Begin prototyping ************************/
 
-/** \addtogroup Convertions
- * This functions allow to convert between the 2 vector types.
- * @{
- */
+
 
 /** \brief Convert a polar vector to a cartesian one
 * \param vp reference to target polar vector to convert from.
@@ -83,14 +83,6 @@ void vect2_pol2cart(vect2_pol* vp, vect2_cart* vc);
 *
 **/
 void vect2_cart2pol(vect2_cart* vc, vect2_pol* vp);
-
-/** @} */
-
-
-/** \addtogroup Basics
- * This functions allow basic vector operations.
- * @{
- */
 
 
 /** \brief Add 2 polar vectors and return the result

@@ -54,6 +54,10 @@
 
 #define SCHEDULER_DEFAULT_PRIORITY 128
 
+/** \addtogroup Scheduler
+ * This is the multi tasking subsystem.
+ * @{
+ */
 
 /** Initialisation of the module */
 void scheduler_init(void);
@@ -114,6 +118,8 @@ int8_t scheduler_del_event(int8_t num);
  *  CONFIG_MODULE_SCHEDULER_MANUAL is defined. In this case you have
  *  to call it manually too. */
 void scheduler_interrupt(void);
+
+/** @} */
 
 /**
  * Temporarily disable scheduler events. You may loose precision in

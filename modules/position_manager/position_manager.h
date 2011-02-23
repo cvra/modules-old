@@ -26,6 +26,11 @@
 #include <math.h>
 #include <robot_system.h>
 
+/** \addtogroup Odometrie
+ * This module manages the encoders to compute the robot's position.
+ * @{
+ */
+
 
 #define CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
 
@@ -148,5 +153,6 @@ double position_get_y_double(struct robot_position *pos);
  */
 double position_get_a_rad_double(struct robot_position *pos);
 
+/** @} */
 
 #endif
