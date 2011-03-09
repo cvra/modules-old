@@ -21,6 +21,12 @@
 
 /* Trajectory Manager v3 - zer0 - for Eurobot 2010 */
 
+#ifndef _TRAJECTORY_MANAGER_H_
+#define _TRAJECTORY_MANAGER_H_
+
+#include <aversive.h>
+#include <trajectory_manager.h>
+
 #define M_2PI (2*M_PI)
 
 #define DEG(x) ((x) * (180.0 / M_PI))
@@ -76,3 +82,5 @@ double speed_rd2imp(struct trajectory *traj, double speed);
 double speed_imp2rd(struct trajectory *traj, double speed);
 double acc_rd2imp(struct trajectory *traj, double acc);
 double acc_imp2rd(struct trajectory *traj, double acc);
+
+#endif
