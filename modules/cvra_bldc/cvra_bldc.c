@@ -5,7 +5,7 @@
 /** Resets the device by setting all registers to 0. */
 void cvra_bldc_reset(cvra_bldc device) {
     IOWR(device, BLDC_CNT_REGISTER_OFFSET, 0);
-    IOWR(device, BLDC_PMW_REGISTER_OFFSET, BLDC_PWM_MINIMAL_VALUE);
+    IOWR(device, BLDC_PWM_REGISTER_OFFSET, BLDC_PWM_MINIMAL_VALUE);
 }
 
 /** Sets the PWM. */
@@ -13,7 +13,7 @@ void cvra_bldc_set_pwm(cvra_bldc device, int32_t value) {
     if(value < BLDC_PWM_MINIMAL_VALUE && value > -BLDC_PWM_MINIMAL_VALUE)
         value = BLDC_PWM_MINIMAL_VALUE;
 
-    IOWR(device, BLDC_PMW_REGISTER_OFFSET, value);
+    IOWR(device, BLDC_PWM_REGISTER_OFFSET, value);
 }
 
 /** Gets encoder. */

@@ -4,11 +4,12 @@
 #include <aversive.h>
 
 /* Registers */
-#define BLDC_PMW_REGISTER_OFFSET 0x00
+#define BLDC_PWM_REGISTER_OFFSET 0x00
 #define BLDC_CNT_REGISTER_OFFSET 0x01
 
 /* Constants */
 #define BLDC_PWM_MINIMAL_VALUE 40
+
 
 typedef int* cvra_bldc;
 
