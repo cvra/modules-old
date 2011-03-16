@@ -49,6 +49,15 @@ void bd_reset(struct blocking_detection * bd)
 	IRQ_UNLOCK(flags);
 }
 
+void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16_t cpt_thres) {
+    uint8_t flags;
+    IRQ_LOCK(flags);
+    bd->cpt_thres = cpt_thres;
+    bd->err_thres = err_thres;
+    IRQ_UNLOCK(flags);
+    
+}
+
 
 
 /** function to be called periodically */
