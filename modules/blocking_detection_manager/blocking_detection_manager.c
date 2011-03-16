@@ -31,11 +31,11 @@
 /** init module, give the robot system to use as a parameter */
 void bd_init(struct blocking_detection * bd, struct cs *cs)
 {
-	uint8_t flags;
-	IRQ_LOCK(flags);
-	memset(bd, 0, sizeof(*bd));
+    uint8_t flags;
+    IRQ_LOCK(flags);
+    memset(bd, 0, sizeof(*bd));
     bd->cs = cs;
-	IRQ_UNLOCK(flags);
+    IRQ_UNLOCK(flags);
     
 }
 
@@ -43,10 +43,10 @@ void bd_init(struct blocking_detection * bd, struct cs *cs)
 /** reset current blocking */
 void bd_reset(struct blocking_detection * bd)
 {
-	uint8_t flags;
-	IRQ_LOCK(flags);
-	bd->cpt = 0;
-	IRQ_UNLOCK(flags);
+    uint8_t flags;
+    IRQ_LOCK(flags);
+    bd->cpt = 0;
+    IRQ_UNLOCK(flags);
 }
 
 void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16_t cpt_thres) {
@@ -63,7 +63,7 @@ void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16
 /** function to be called periodically */
 void bd_manage(struct blocking_detection * bd)
 {
-	if(cs_get_error(bd->cs) > bd->err_thres)
+    if(cs_get_error(bd->cs) > bd->err_thres)
         bd->cpt++;
     else
         bd->cpt=0;
@@ -72,9 +72,9 @@ void bd_manage(struct blocking_detection * bd)
 /** get value of blocking detection */
 uint8_t bd_get(struct blocking_detection * bd)
 {
-	uint8_t ret, flags;
-	IRQ_LOCK(flags);
-	ret = (bd->cpt_thres && (bd->cpt >= bd->cpt_thres));
-	IRQ_UNLOCK(flags);
-	return ret;
+    uint8_t ret, flags;
+    IRQ_LOCK(flags);
+    ret = (bd->cpt_thres && (bd->cpt >= bd->cpt_thres));
+    IRQ_UNLOCK(flags);
+    return ret;
 }
