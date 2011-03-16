@@ -193,7 +193,7 @@ int32_t cs_do_process(struct cs* cs, int32_t consign)
     debug_printf("%d %ld ", i++, consign);
 
     /* if the consign filter exist */
-    cs->filtered_consign_value = consign = safe_filter(cs->consign_filter, cs->consign_filter_params, consign);
+    cs->filtered_consign_value = safe_filter(cs->consign_filter, cs->consign_filter_params, consign);
 	
     debug_printf("%ld ", cs->filtered_consign_value);
 
