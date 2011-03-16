@@ -513,6 +513,9 @@ Also see [[AdvancedOptions]]</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
+<div title="AdvancedOptions" creator="Antoine" modifier="Antoine" created="201103162249" changecount="1">
+<pre>&lt;&lt;options&gt;&gt;</pre>
+</div>
 <div title="ArmCalibration" creator="Antoine" modifier="Antoine" created="201103092115" changecount="1">
 <pre>Cet état s’occupe de la calibration des bras. la prise de zéro se fera à vitesse réduite et avec une erreur choc TRES sensible.</pre>
 </div>
@@ -527,6 +530,24 @@ Also see [[AdvancedOptions]]</pre>
 <pre>Cet état est l'état de repos du système. C'est typiquement l'état qu'on aura au début du match, en attente du départ. C'est l'état de reset de la machine à état.
 il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup et CurrentDrop.</pre>
 </div>
+<div title="Installation" creator="Antoine" modifier="Antoine" created="201103162254" modified="201103162255" changecount="4">
+<pre>Pour utiliser ce projet, il faut : 
+#  Creer un nouveau projet dans le NIOS2 SDK.
+#  Choisir le fichier .ptf correspondant au hardware.
+#  Choisir un projet de type &quot;Hello World&quot;.
+#  Recuperer le projet depuis Mercurial.
+#  Ajouter les fichiers au projet.
+#  Ajouter au include path les dossier include/ et include/aversive/ [COMMENT]
+#  Choisir les UART dans les options du BSP : stdout est la sortie vers le PC embarque, stderr est l'UART de debug (generalement un JTAGUART). stdin est l'entree clavier (pour getchar() et scanf()).
+# Lancer un shell NIOS et lancer &quot;make&quot;
+#  Lancer &quot;make download&quot; (verifier)
+# Normalement le code se lance.
+# Trouver un moyen d'envoyer ce code à la c** dans le EPCS.
+# Envoyer le code dans le EPCS.
+# Trouver comment envoyer à la foi le hardware et le software dans le EPCS. Indice: nios-elf-to-flash devrait pouvoir faire quelque chose.
+# Coder tranquillement et gagner la coupe.
+</pre>
+</div>
 <div title="MainMenu" creator="Antoine" modifier="Antoine" created="201103092102" changecount="1">
 <pre>[[Todolist]]</pre>
 </div>
@@ -536,31 +557,43 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 <div title="SiteTitle" creator="Antoine" modifier="Antoine" created="201103092102" modified="201103092102" changecount="3">
 <pre>Scratchbook</pre>
 </div>
-<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103092111" changecount="2">
-<pre>* Transformer parse_acceleration et parse_speed pour recevoir des unites SI.
-* Lier le scanner et les bras via [[strat_arm.c]]
-* Avancer sur la classe de test python (développer une script de test pourrait être utile)
-* Tester le scanner
-* Ecrire le driver de l'ADC
+<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103162252" changecount="7">
+<pre>''Bras''
+* Lier le scanner et les bras via [[strat_arm.c]]
+* Implémenter les différents états pour chaque bras (rangé, automatique, poussage de tour ou remorquage de pion).
+* Implémenter la calibration des bras.
+''Scanner''
+* Tester le scanner.
+* Ecrire le driver de l'ADC.
+''Communication PC''
+* Finir d'implémenter l'envoi du status.
+* Implémenter les commandes permettant de déposer des tours.
+* Implémenter le stockage des déplacement dans une FIFO dotée de push, get, flush et count. Si la pile est flushée, hardstop. Flush la pile en cas d'évitement.
+* Implémenter la désactivation de l'évitement par la strat.
+''Divers / toolchain''
 * Tester le code sur le compilateur 'NIOS2'
-* Implémenter plus de protocole, notamment pour les bras.</pre>
+* Avancer sur la classe de test python (développer un script de test pourrait être utile)
+* Enlever le plus de warnings possibles.
+* Implémenter la comm avec la balise et la fonction d'oubli.
+
+</pre>
 </div>
 <div title="strat_arm.c" creator="Antoine" modifier="Antoine" created="201103092111" modified="201103092112" changecount="4">
 <pre>Roles de ce module :
-* Servir de bridge entre le scanner et les bras.
-* Eviter que 2 bras soit sortis en même temps.
-* Faire la différence entre cases rouges et bleues.
-* Gérer les différents modes (autopickup et manual pickup).
-* S'occuper de faire remonter l'information au PC embarqué.
+*&amp;nbsp;Servir de bridge entre le scanner et les bras.
+*&amp;nbsp;Eviter que 2 bras soit sortis en même temps.
+*&amp;nbsp;Faire la différence entre cases rouges et bleues.
+*&amp;nbsp;Gérer les différents modes (autopickup et manual pickup).
+*&amp;nbsp;S'occuper de faire remonter l'information au PC embarqué.
 * Débarquer la tour si la strat le demande.
 
 L'implémentation se fera sûrement en utilisant une machine à état.
 Liste des états principaux:
 * [[IDLE]] (bras rentré, en attente d'ordre)
-* AutoPickupIdle (bras rentré, prend le premier pion venu)
-* CurrentPickup (Un bras sorti, prise en cours).
-* CurrentDrop (Dépose en cours)
-* ErrorState (état absorbant, lié à une erreur fatale, comme par exemple un choc sur un bras).</pre>
+*&amp;nbsp;AutoPickupIdle (bras rentré, prend le premier pion venu)
+*&amp;nbsp;CurrentPickup (Un bras sorti, prise en cours).
+*&amp;nbsp;CurrentDrop (Dépose en cours)
+*&amp;nbsp;ErrorState (état absorbant, lié à une erreur fatale, comme par exemple un choc sur un bras).</pre>
 </div>
 </div>
 <!--POST-STOREAREA-->
