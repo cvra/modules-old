@@ -22,6 +22,11 @@
 #include <aversive.h>
 #include <aversive/error.h>
 
+
+#define STATUS_REGISTER 2
+#define TXDATA_REGISTER 0
+#define RXDATA_REGISTER 1
+
 void send_and_receive(void * adress, char *tx, char *rx) {
     /* Ici il faut ecrire dans le SPI. */
     if(tx!=NULL) {
@@ -31,6 +36,7 @@ void send_and_receive(void * adress, char *tx, char *rx) {
         *rx = IORD((char *)(adress), 0);
     }
 }
+
 
 void cvra_adc_init(cvra_adc_t *adc, void *adress) {
     NOTICE(0, "cvra_adc_init");

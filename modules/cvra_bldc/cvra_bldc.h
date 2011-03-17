@@ -11,15 +11,13 @@
 #define BLDC_PWM_MINIMAL_VALUE 40
 
 
-typedef int* cvra_bldc;
-
 /** Resets the device by setting all registers to 0. */
-void cvra_bldc_reset(cvra_bldc device);
+void cvra_bldc_reset(void * device);
 
 /** Sets the PWM. */
-void cvra_bldc_set_pwm(cvra_bldc device, int32_t value);
+void cvra_bldc_set_pwm(void * device, int32_t value);
 
 /** Gets encoder. */
-int32_t cvra_bldc_get_encoder(cvra_bldc device);
+int32_t cvra_bldc_get_encoder(void * device);
 
 #endif
