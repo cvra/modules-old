@@ -20,6 +20,9 @@
 #include "cvra_adc.h"
 #include <stdlib.h>
 
+#define STATUS_REGISTER 2
+#define TXDATA_REGISTER 0
+#define RXDATA_REGISTER 1
 
 void cvra_adc_init(cvra_adc_t *adc, void *adress) {
     int i=8;
