@@ -30,11 +30,13 @@
 void send_and_receive(void * adress, char *tx, char *rx) {
     /* Ici il faut ecrire dans le SPI. */
     if(tx!=NULL) {
-        IOWR((char *)(adress), 0, *tx);
+        IOWR((char *)(adress+TXDATA_REGISTER), 0, *tx);
     }
     if(rx!=NULL) {
-        *rx = IORD((char *)(adress), 0);
+        *rx = IORD((char *)(adress+RXDATA_REGISTER), 0);
     }
+    /* Tant que TXRDY != 1. */
+    while (!(*(char *)(adress+STATUS_REGISTER)) & (1<<6));
 }
 
 
