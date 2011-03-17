@@ -531,19 +531,19 @@ Also see [[AdvancedOptions]]</pre>
 il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup et CurrentDrop.</pre>
 </div>
 <div title="Installation" creator="Antoine" modifier="Antoine" created="201103162254" modified="201103162255" changecount="4">
-<pre>Pour utiliser ce projet, il faut : 
+<pre>Pour utiliser ce projet, il faut :&amp;nbsp;
 #  Creer un nouveau projet dans le NIOS2 SDK.
 #  Choisir le fichier .ptf correspondant au hardware.
 #  Choisir un projet de type &quot;Hello World&quot;.
 #  Recuperer le projet depuis Mercurial.
 #  Ajouter les fichiers au projet.
-#  Ajouter au include path les dossier include/ et include/aversive/ [COMMENT]
-#  Choisir les UART dans les options du BSP : stdout est la sortie vers le PC embarque, stderr est l'UART de debug (generalement un JTAGUART). stdin est l'entree clavier (pour getchar() et scanf()).
+#  Ajouter au include path les dossier include/&amp;nbsp;et include/aversive/ [COMMENT]
+#  Choisir les UART&amp;nbsp;dans les options du BSP :&amp;nbsp;stdout est la sortie vers le PC&amp;nbsp;embarque, stderr est l'UART&amp;nbsp;de debug (generalement un JTAGUART). stdin est l'entree clavier (pour getchar()&amp;nbsp;et scanf()).
 # Lancer un shell NIOS et lancer &quot;make&quot;
 #  Lancer &quot;make download&quot; (verifier)
 # Normalement le code se lance.
 # Trouver un moyen d'envoyer ce code à la c** dans le EPCS.
-# Envoyer le code dans le EPCS.
+#&amp;nbsp;Envoyer le code dans le EPCS.
 # Trouver comment envoyer à la foi le hardware et le software dans le EPCS. Indice: nios-elf-to-flash devrait pouvoir faire quelque chose.
 # Coder tranquillement et gagner la coupe.
 </pre>
@@ -557,7 +557,7 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 <div title="SiteTitle" creator="Antoine" modifier="Antoine" created="201103092102" modified="201103092102" changecount="3">
 <pre>Scratchbook</pre>
 </div>
-<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103162252" changecount="7">
+<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103170008" changecount="8">
 <pre>''Bras''
 * Lier le scanner et les bras via [[strat_arm.c]]
 * Implémenter les différents états pour chaque bras (rangé, automatique, poussage de tour ou remorquage de pion).
@@ -570,6 +570,7 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 * Implémenter les commandes permettant de déposer des tours.
 * Implémenter le stockage des déplacement dans une FIFO dotée de push, get, flush et count. Si la pile est flushée, hardstop. Flush la pile en cas d'évitement.
 * Implémenter la désactivation de l'évitement par la strat.
+* Creer un fichier strat qui contient tout les codes pour travailler avec la stack.
 ''Divers / toolchain''
 * Tester le code sur le compilateur 'NIOS2'
 * Avancer sur la classe de test python (développer un script de test pourrait être utile)
