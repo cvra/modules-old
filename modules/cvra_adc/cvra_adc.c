@@ -19,13 +19,26 @@
 
 #include "cvra_adc.h"
 #include <stdlib.h>
+#include <aversive.h>
+#include <aversive/error.h>
 
+void send_and_receive(void * adress, char *tx, char *rx) {
+    /* Ici il faut ecrire dans le SPI. */
+    if(tx!=NULL) {
+        IOWR((char *)(adress), 0, *tx);
+    }
+    if(rx!=NULL) {
+        *rx = IORD((char *)(adress), 0);
+    }
+}
 
 void cvra_adc_init(cvra_adc_t *adc, void *adress) {
+    NOTICE(0, "cvra_adc_init");
     int i=8;
     adc->spi_adress = adress;
-    while(i--)
+    while(i--) {
         adc->values[i]=0;
+    }
 }
 void cvra_adc_manage(void *adc) {
     ///FIXME: A remplir une fois que j'ai la datasheet
