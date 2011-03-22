@@ -30,9 +30,17 @@ int32_t cvra_dc_get_encoder_0(cvra_dc device) {
     return tmp;
 }
 
+void cvra_dc_set_encoder_0(cvra_dc device, const int32_t v) {
+    IOWR(device, DC_CNT0_REGISTER_OFFSET, v);
+}
+
 /** Gets encoder 1. */
 int32_t cvra_dc_get_encoder_1(cvra_dc device) {
     volatile int32_t tmp;
     tmp = IORD(device, DC_CNT1_REGISTER_OFFSET);
     return tmp;
+}
+
+void cvra_dc_set_encoder_1(cvra_dc device, const int32_t v) {
+    IOWR(device, DC_CNT1_REGISTER_OFFSET, v);
 }
