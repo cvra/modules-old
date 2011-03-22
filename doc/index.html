@@ -557,14 +557,15 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 <div title="SiteTitle" creator="Antoine" modifier="Antoine" created="201103092102" modified="201103092102" changecount="3">
 <pre>Scratchbook</pre>
 </div>
-<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103170008" changecount="8">
+<div title="Todolist" creator="Antoine" modifier="YourName" created="201103092106" modified="201103221534" changecount="9">
 <pre>''Bras''
 * Lier le scanner et les bras via [[strat_arm.c]]
-* Implémenter les différents états pour chaque bras (rangé, automatique, poussage de tour ou remorquage de pion).
+* Implémenter les différents états pour chaque bras (rangé, automatique, poussage de tour ou remorquage de pion). EN COURS.
 * Implémenter la calibration des bras.
 ''Scanner''
 * Tester le scanner.
 * Ecrire le driver de l'ADC.
+* Implémenter la différence entre un pion, un roi, une tour.
 ''Communication PC''
 * Finir d'implémenter l'envoi du status.
 * Implémenter les commandes permettant de déposer des tours.
@@ -576,8 +577,7 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 * Avancer sur la classe de test python (développer un script de test pourrait être utile)
 * Enlever le plus de warnings possibles.
 * Implémenter la comm avec la balise et la fonction d'oubli.
-
-</pre>
+* Implémenter l'évitement d'obstacle (dans avoiding.c)</pre>
 </div>
 <div title="strat_arm.c" creator="Antoine" modifier="Antoine" created="201103092111" modified="201103092112" changecount="4">
 <pre>Roles de ce module :
