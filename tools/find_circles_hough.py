@@ -8,6 +8,7 @@ class ObjectDetector:
         self.samples=[]
         self.sampleCounter=0
         
+    
     def addSample(self, x, y, midSensor=False, topSensor=False):
         self.samples.append((x,y,midSensor, topSensor, self.sampleCounter))
         self.sampleCounter=self.sampleCounter+1
@@ -17,6 +18,7 @@ class ObjectDetector:
         self.xMax=xMax
         self.yMin=yMin
         self.yMax=yMax
+        
         
     def findCircle(self):
         bestY, bestX, bestDistance=0,0,1e6
@@ -38,7 +40,6 @@ class ObjectDetector:
         firstSeen=self.sampleCounter
         lastSeen=0
         for s in self.samples:
-            
             # Detection du front montant
             if(s[2] and s[4] < firstSeen):
                 firstSeen=s[4]
@@ -56,17 +57,63 @@ class ObjectDetector:
         else:
             midRadius=-1
             
-
-                
-        print firstSeen, lastSeen
         
-        return (bestX, bestY, bestDistance, midRadius)
+        # On recommence pour le 2eme etage
+        firstSeen=self.sampleCounter
+        lastSeen=0
+        for s in self.samples:
+            # Detection du front montant
+            if(s[3] and s[4] < firstSeen):
+                firstSeen=s[4]
+                
+            # Detection du front descendant
+            if(s[3] and s[4] > lastSeen):
+                lastSeen=s[4]
+                
+        # Si on a vu un mid on calcule son diametre sinon on fait rien
+        if(lastSeen>=firstSeen):
+            topRadius=(self.samples[lastSeen][0]-self.samples[firstSeen][0])**2 + (self.samples[lastSeen][1]-self.samples[firstSeen][1])**2
+            topRadius=sqrt(topRadius)
+            topRadius = topRadius/2
+        else:
+            topRadius=-1
+
+        
+        return (bestX, bestY, bestDistance, midRadius, topRadius)
+    
+    
+    # Cette fonction ne marche que si c'est au dimensions coupe en cm
+    def analyze(self):
+        tower = self.findCircle()
+        
+        towerType="pawn"
+        # On a vu de la merde. A calibrer
+        if(tower[2] > self.sampleCounter*5):
+            towerType="not tower"
+        # On vu un roi
+        else:
+            print tower[3]
+            print tower[4]
+            if (tower[3] > 0 and tower[3] < 8 and tower[4]==-1):
+                towerType="king"
+            # On a vu un roi et un pion
+            elif(tower[3] > 0 and tower[3] > 8 and \
+               tower[4] > 0 and tower[4] < 8):
+                   towerType="pawn+king"
+            elif(tower[3] > 0 and tower[3] > 8 and \
+               tower[4] > 0 and tower[4] > 8):
+                towerType="pawn+pawn+king"
+        
+        return (tower[0], tower[1], towerType)
+                
     
     
 if __name__=="__main__":
     print "CVRA Scanner 1.0"
     scan=ObjectDetector(radius=1)
     scan.setDetectionZone()
+    
+    print "====== Cercle C(1,0) r=1 ======"
     # Les points correspondent a un C(1,0) et r=1
     scan.addSample(0.03, 0.23)
     scan.addSample(0.23, 0.64)
@@ -74,36 +121,75 @@ if __name__=="__main__":
     scan.addSample(0.5,1)
     print scan.findCircle()
     
-    # Maintenant on teste le detecteur de tours
-    # Ici on a un roi en C(0,1)
-    scan=ObjectDetector(radius=1)
-    scan.setDetectionZone()
-    scan.addSample(0.,   0.,    midSensor=False)
-    scan.addSample(0.2, -0.6,   midSensor=False)
-    #scan.addSample(0.04, 0.28,  midSensor=True)
-    scan.addSample(0.1,  0.5,   midSensor=True)
-    scan.addSample(0.2,  0.6,   midSensor=True)
-    scan.addSample(0.6,  0.9,   midSensor=True)
-    scan.addSample(0.8,  1.,    midSensor=True)
-    #scan.addSample(0.77, 0.97,  midSensor=True)
-    scan.addSample(1.3,  1.0,   midSensor=False)
-    scan.addSample(1.5,  0.8,   midSensor=False)
-    print scan.findCircle()
     
-    # Maintenant on teste avec des points sur une droite
-    scan=ObjectDetector(radius=1)
-    scan.setDetectionZone()
+    print "====== Droite ======"
+    scan=ObjectDetector(radius=15)
+    scan.setDetectionZone(xMax=300, yMax=210)
     scan.addSample(0., 0.)
-    scan.addSample(0., 0.1)
-    scan.addSample(0., 0.2)
-    scan.addSample(0., 0.3)
-    scan.addSample(0., 0.4)
-    scan.addSample(0., 0.5)
-    scan.addSample(0., 0.6)
-    scan.addSample(0., 0.7)
-    scan.addSample(0., 0.8)
-    scan.addSample(0., 0.9)
-    print scan.findCircle()
+    scan.addSample(0., 10)
+    scan.addSample(0., 15)
+    scan.addSample(0., 20)
+    scan.addSample(0., 25)
+    scan.addSample(0., 30)
+    scan.addSample(0., 35)
+    scan.addSample(0., 40)
+    scan.addSample(0., 45)
+    scan.addSample(0., 50)
+    scan.addSample(0., 55)
+    scan.addSample(0., 60)
+    scan.addSample(0., 65)  
+    scan.addSample(0., 70)
+    scan.addSample(0., 75)
+    scan.addSample(0., 80)
+    scan.addSample(0., 85)
+    scan.addSample(0., 90)
+    print scan.analyze()
+    
+    
+    print "====== Roi en (120, 103) ======"
+    
+    # Simulation de la table
+    # Le pion est en (120, 103) et c'est un roi
+    # Il y a en moyenne un centimetre de bruit
+    scan=ObjectDetector(radius=15)
+    scan.setDetectionZone(xMax=300, yMax=210)
+    scan.addSample(105, 107, False)
+    scan.addSample(105, 100, False)
+    scan.addSample(110, 115, True)
+    scan.addSample(105, 100, True)
+    scan.addSample(115, 118, True)
+    scan.addSample(118, 118, True)
+    scan.addSample(122, 118, False)
+    scan.addSample(105, 100, False)
+    scan.addSample(129, 116, False)
+    print scan.analyze()
+    
+    print "====== Pion+Roi (120, 103) ======"
+    # Pion plus roi pos (120, 103)
+    scan=ObjectDetector(radius=15)
+    scan.setDetectionZone(xMax=300, yMax=210)
+    scan.addSample(105, 107, True, False)
+    scan.addSample(105, 100, True, False)
+    scan.addSample(110, 115, True, True)
+    scan.addSample(105, 100, True, True)
+    scan.addSample(115, 118, True, True)
+    scan.addSample(118, 118, True, True)
+    scan.addSample(122, 118, True, False)
+    scan.addSample(105, 100, True, False)
+    scan.addSample(129, 116, True, False)
+    print scan.analyze()
+    
+    print "====== Robot carre ======"
+    scan=ObjectDetector(radius=15)
+    scan.setDetectionZone(xMax=300, yMax=210)
+    scan.addSample(71, 105)
+    scan.addSample(65, 107)
+    scan.addSample(58, 108)
+    scan.addSample(57, 103)
+    scan.addSample(53, 87)
+    scan.addSample(52, 82)
+    print scan.analyze()
+    
     
     
     
