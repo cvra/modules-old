@@ -22,23 +22,13 @@
 #include <aversive.h>
 #include <aversive/error.h>
 
-
-#define STATUS_REGISTER 2
-#define TXDATA_REGISTER 0
-#define RXDATA_REGISTER 1
-
-void send_and_receive(void * adress, char *tx, char *rx) {
-    /* Ici il faut ecrire dans le SPI. */
-    if(tx!=NULL) {
-        IOWR((char *)(adress+TXDATA_REGISTER), 0, *tx);
-    }
-    if(rx!=NULL) {
-        *rx = IORD((char *)(adress+RXDATA_REGISTER), 0);
-    }
-    /* Tant que TXRDY != 1. */
-    while (!(*(char *)(adress+STATUS_REGISTER)) & (1<<6));
-}
-
+/* Register map */
+#define TXDATA_REGISTER             0
+#define RXDATA_REGISTER             1
+#define STATUS_REGISTER             2
+#define CONTROL_REGISTER            3
+#define RESERVED_REGISTER           4
+#define SLAVE_SELECT_MASK_REGISTER  5
 
 void cvra_adc_init(cvra_adc_t *adc, void *adress) {
     NOTICE(0, "cvra_adc_init");
@@ -47,11 +37,29 @@ void cvra_adc_init(cvra_adc_t *adc, void *adress) {
     while(i--) {
         adc->values[i]=0;
     }
+    adc->next_read=0;
+    
+    /* Configuration du hardware. */
+    
+    /* Force le signal CS et interrupt sur RXRDY. */
+    IOWR(adc->spi_adress, CONTROL_REGISTER, (1<<10) | (1<<7));
+    
+    /* On selectionne le CS 1. */
+    IOWR(adc->spi_adress, SLAVE_SELECT_MASK_REGISTER, 0x01);
+    
+    ///TODO: Implementer l'interrupt
 }
-void cvra_adc_manage(void *adc) {
-    ///FIXME: A remplir une fois que j'ai la datasheet
+
+/* Devrait etre appellee depuis un contexte d'interrupt sur TXRDY. */
+void cvra_adc_manage(void *a) {
+    cvra_adc_t *adc = (cvra_adc_t *)a;
+    adc->values[adc->next_read]=IORD(adc->spi_adress, RXDATA_REGISTER);
+    adc->next_read = (adc->next_read+1)%8;
+    IOWR(adc->spi_adress, TXDATA_REGISTER, adc->next_read<<3);
 }
 
 int cvra_adc_get_value(cvra_adc_t *adc, int input) {
+    if(input >= 8 || input < 0)
+        return -1;
     return adc->values[input];
 }

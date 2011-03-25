@@ -24,7 +24,8 @@
 #include <aversive.h>
 
 typedef struct {
-    void *spi_adress;
+    uint32_t *spi_adress;
+    uint8_t next_read; /* Le prochain in du ADC108S102 a etre lu. */
     int16_t values[8];
 } cvra_adc_t;
 
