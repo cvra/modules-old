@@ -103,7 +103,6 @@ if __name__=="__main__":
     scan.addSample(0., 0.7)
     scan.addSample(0., 0.8)
     scan.addSample(0., 0.9)
-    
     print scan.findCircle()
     
     
