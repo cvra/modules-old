@@ -530,20 +530,20 @@ Also see [[AdvancedOptions]]</pre>
 <pre>Cet état est l'état de repos du système. C'est typiquement l'état qu'on aura au début du match, en attente du départ. C'est l'état de reset de la machine à état.
 il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup et CurrentDrop.</pre>
 </div>
-<div title="Installation" creator="Antoine" modifier="Antoine" created="201103162254" modified="201103162255" changecount="4">
+<div title="Installation" creator="Antoine" modifier="YourName" created="201103162254" modified="201103252257" changecount="5">
 <pre>Pour utiliser ce projet, il faut :&amp;nbsp;
 #  Creer un nouveau projet dans le NIOS2 SDK.
 #  Choisir le fichier .ptf correspondant au hardware.
 #  Choisir un projet de type &quot;Hello World&quot;.
 #  Recuperer le projet depuis Mercurial.
 #  Ajouter les fichiers au projet.
-#  Ajouter au include path les dossier include/&amp;nbsp;et include/aversive/ [COMMENT]
-#  Choisir les UART&amp;nbsp;dans les options du BSP :&amp;nbsp;stdout est la sortie vers le PC&amp;nbsp;embarque, stderr est l'UART&amp;nbsp;de debug (generalement un JTAGUART). stdin est l'entree clavier (pour getchar()&amp;nbsp;et scanf()).
+#  Ajouter au include path les dossier include/ et les modules/* en éditant les premières lignes du Makefile
+#  Choisir les UART dans les options du BSP  stdout est la sortie vers le PC embarque, stderr est l'UART de debug (generalement un JTAGUART). stdin est l'entree clavier (pour getchar() et scanf()).
 # Lancer un shell NIOS et lancer &quot;make&quot;
 #  Lancer &quot;make download&quot; (verifier)
 # Normalement le code se lance.
 # Trouver un moyen d'envoyer ce code à la c** dans le EPCS.
-#&amp;nbsp;Envoyer le code dans le EPCS.
+# Envoyer le code dans le EPCS.
 # Trouver comment envoyer à la foi le hardware et le software dans le EPCS. Indice: nios-elf-to-flash devrait pouvoir faire quelque chose.
 # Coder tranquillement et gagner la coupe.
 </pre>
