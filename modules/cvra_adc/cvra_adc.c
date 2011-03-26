@@ -30,7 +30,7 @@
 #define RESERVED_REGISTER           4
 #define SLAVE_SELECT_MASK_REGISTER  5
 
-void cvra_adc_init(cvra_adc_t *adc, void *adress) {
+void cvra_adc_init(cvra_adc_t *adc, void *adress , int irq_number) {
     NOTICE(0, "cvra_adc_init");
     int i=8;
     adc->spi_adress = adress;
@@ -47,7 +47,9 @@ void cvra_adc_init(cvra_adc_t *adc, void *adress) {
     /* On selectionne le CS 1. */
     IOWR(adc->spi_adress, SLAVE_SELECT_MASK_REGISTER, 0x01);
     
-    ///TODO: Implementer l'interrupt
+    #ifdef COMPILE_ON_ROBOT
+    alt_ic_isr_register(0, irq_number, cvra_adc_manage, (void *)adc, 0);
+    #endif
 }
 
 /* Devrait etre appellee depuis un contexte d'interrupt sur TXRDY. */
