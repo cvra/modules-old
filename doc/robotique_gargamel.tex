@@ -1,0 +1,193 @@
+%%%% UTF-8 %%%
+\documentclass[a4paper]{report} 
+ 
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+
+\author{Gargamel(RCVA)}
+\title{Conseils théoriques pour Eurobot}
+\begin{document}
+%%%%%%%%%%%%%%
+
+\maketitle % Page de titre
+\tableofcontents % Table des matières
+
+\chapter{Trajectoires courbes et odométrie}
+Un véhicule se déplaçant sur une trajectoire courbe est soumis à la force centrifuge F. (Centrifuge ou centripète, c'est comme on veut).
+Cette force qui tire le robot à l'extérieur de sa trajectoire, induit des déplacements non pris en compte par une odométrie classique.
+La méthode présentée ici permet de corriger dans une certaine mesure ces erreurs odométriques induites.
+La force centrifuge F étant perpendiculaire à la tangente à la trajectoire, l'idée est de supposer que le déplacement latéral résultant est proportionnel à cette force. Le coefficient de proportionnalité sera déterminé expérimentalement.
+Cette force centrifuge peut prendre les 3 formes équivalentes.
+\begin{equation}
+F= \frac{M*V^2}{R} = M*\omega^2*R = M*\omega*V
+\end{equation}
+
+\begin{itemize}
+\item F:  Force centrifuge
+\item M: Masse du véhicule
+\item V:  Vitesse linéaire
+\item $\omega$: Vitesse de rotation
+\item R:  Rayon de courbure de la trajectoire
+\end{itemize}
+
+
+Pour le calcul, la 3eme forme $F=M*\omega*V$ est la plus intéressante car elle ne fait pas intervenir R .
+En 1 point n de la trajectoire on peut facilement calculer:
+
+\begin{equation}
+V_n= D_n - D_{n-1}
+\end{equation}
+\begin{equation}
+\omega_n= \theta_n - \theta_{n-1}
+\end{equation}
+
+\section{Odométrie classique sans correction centrifuge}
+
+\begin{equation}
+\Delta x = V_n \cos\theta_n
+\end{equation}
+\begin{equation}
+\Delta y = V_n \sin\theta_n
+\end{equation}
+
+\begin{equation}
+x_n = x_{n-1} + \Delta x 
+\end{equation}
+\begin{equation}
+y_n = y_{n-1} + \Delta y
+\end{equation}
+
+\section{Odométrie avec correction centrifuge}
+
+La force centrifuge $F=M*\omega(n)*V(n)$ étant perpendiculaire à la tangente à la trajectoire:
+\begin{equation}
+F_x= -M*\omega_n*V_n*\sin\theta_n = -M*\omega_n*\Delta y
+\end{equation}
+\begin{equation}
+F_y= M* \omega_n*V_n*\cos\theta_n = M* \omega_n*\Delta x
+\end{equation}
+
+On admet que la déviation latérale est proportionnelle à la force centrifuge F:
+\begin{equation}
+deviation_x = K_1*F_x = -K* \omega_n*\Delta y
+\end{equation}
+\begin{equation}
+deviation_y= K_1*F_y = K*\ \omega_n*\Delta x
+\end{equation}
+
+En posant $K=K_1*M$ qui devient la constante de proportionnalité qui sera déterminée expérimentalement.
+
+\textbf{Remarque:} On fera bien attention au croisement des réactions en X et en Y.
+
+Soit l'algorithme d'une odométrie avec correction centrifuge:
+\begin{equation}
+\Delta x = V_n\cos\theta_n
+\end{equation}
+\begin{equation}
+\Delta y = V_n\sin\theta_n
+\end{equation}
+
+\begin{equation}
+x_n = x_{n-1} + \Delta x + deviation_x
+\end{equation}
+\begin{equation}
+y_ = y_{n-1} + \Delta y + deviation_y
+\end{equation}
+
+\section{Conclusion}
+Cette correction n'entraîne pas de sinus et cosinus supplémentaires à calculer.
+La constante K va être déterminé expérimentalement par des essais sur trajectoires courbes en optimisant sa valeur de manière à ce que la position finale réelle du robot (valeurs de x et y) s'approche au mieux de la position calculée par odométrie.
+Procéder par valeurs croissantes de la vitesse linéaire de déplacement ce qui permet de définir un vitesse max autorisée au delà de laquelle, cette correction centrifuge montre ses limites.
+
+Cette méthode nous a permis à trajectoires courbes données et précision odométrique donnée d'augmenter considérablement la vitesse de déplacement.
+
+%%%%%%%%%%%%%%
+\chapter{De l'importance de la différence de diamètre des deux roues codeuses}
+Parlons encore une fois d’odométrie pour ceux que ça intéresse et qui sont (ou seront dans les jours ou les quelques semaines qui restent) confrontés au problème de précision du positionnement.
+Je ne reviendrai pas sur tous les points qui ont déjà été évoqués sur ce forum , mais sur un problème particulier que mon équipe connaissait déjà mais qui s’est révélé encore plus critique que prévu. Il s’agit de l’influence d’une différence, si petite soit-elle, entre les diamètres des 2 roues folles.
+
+\section{Démonstration}
+Pour convaincre les incrédules, livrons nous à une petite évaluation du phénomène avec à la clef une application numérique.
+Soit $D_1$ et $D_2$ les diamètres des 2 roues codeuses. ($D$ étant le diamètre nominal).
+
+\begin{equation}
+\frac{\Delta D}{D} = \frac{D_1-D_2}{D}
+\end{equation}
+
+Imaginons un déplacement en ligne droite et le robot ayant atteint son régime établi de déplacement à vitesse constante.
+Les asservissements en position des 2 roues assurent une vitesse angulaire constante pour les 2 roues. Comme la roue droite est plus grande que la gauche elle va par conséquent faire plus de chemin et le robot va décrire une trajectoire purement circulaire. 
+Si on appelle $V_1$ la vitesse linéaire de la roue droite et $V_2$ celle de la gauche.
+($V$ étant la vitesse moyenne de déplacement du robot), on retrouve :
+
+\begin{equation}
+\frac{\Delta V}{V} = \frac{V_1-V_2}{V} = \frac{\Delta D}{D} = (D_1-D_2)D
+\end{equation}
+
+On démontre facilement que le robot va décrire un cercle de rayon R.
+\begin{equation}
+R= \frac{A}{\frac{\Delta V}{V}}
+\end{equation}
+A représentant la voie (la distance entre les 2 roues codeuses).
+
+\section{Application numérique}
+
+On pose $A=30 cm$ et  $\frac{\Delta D}{D}=\frac{1}{1000}$ soit une différence de diamètre qui peut paraître microscopique. On va chiffrer son influence surprenante sur la précision de positionnement.
+\begin{equation}
+R=\frac{0.3}{\frac{1}{1000}}= 300
+\end{equation}
+Le robot décrit un cercle de rayon 300m ce qui parait un rayon énorme donc un déplacement pratiquement rectiligne. Il n’en est rien.
+Supposons une traversée du terrain soit un déplacement suivant l’axe y de $Y=3$.
+Le robot ayant parcouru 3m a tourné sur le cercle d’un angle $\theta$.
+\begin{equation}
+\theta=\frac{3}{300} rd
+\end{equation}
+On démontre (géométrie élémentaire), que l’abscisse X qui aurait du rester constante (Déplacement suivant y) a en fait varié de $\delta X$ 
+
+\begin{equation}
+\delta X= 2*\theta*Y = 2 *\frac{1}{100}*3= 0.06
+\end{equation}
+
+\section{Conclusion} 
+1/1000 de différence relative sur le diamètre des roues et l’odométrie est dans les choux de 6 cm sur une simple traversée de terrain.
+Conséquence : La fabrication mécanique de 2 roues de diamètre égal avec une telle précision étant illusoire, il faut donc corriger par logiciel cette imperfection.
+Par exemple sur le robot RCVA, l’équipe a corrigé la roue droite avec un coefficient de 1.0118 (La correction a évidemment été faite de manière empirique).
+
+\section{Méthode de réglage de la correction}
+Après moultes discussions la solution nous est apparue, sidérante par sa simplicité de mise en œuvre. Bon dieu mais c’est bien sûr ! C’était l’évidence même. La logique implacable. Adieu les calages de terrain. Adieu les billes d’acier lancées par planchette. Adieu les lignes tracées au sol. Adieu les calages douteux sur bordures incertaines. Adieu les séries d’essais aux conclusions discutables. 
+On va vous la livrer notre méthode, vous embarquer au Nirvana et n’hésitez pas le voyage est gratuit.  
+
+La méthode consiste bien sûr à corriger une différence éventuelle sur le diamètre des 2 roues codeuses. Elle s’inspire de la méthode de zéro qui a toujours donné de bons résultats en physique (Pas le Zero de Microb mon cher Olivier)
+Vous placez votre robot n’ importe où sur le terrain et après une suite de tout-droits et de rotations vous lui demandez de revenir à peu près au point de départ puis de s’orienter vers sa position initiale.
+
+La méthode peut prendre la forme minimum suivante :
+\begin{itemize}
+\item Le robot est placé au voisinage de son coin de départ. 
+\item Vous l’orientez à peu près dans le sens longitudinal du terrain.
+\item Vous repérez avec un simple réglet (C’est mieux qu’un mètre à ruban) l’orientation du robot en mesurant les distances droite et gauche du plan arrière du robot à la bordure qui lui est à peu près parallèle. 
+\item Vous programmez le cycle suivant :
+\begin{itemize}
+\item Orientation initiale du robot=0. (Pour x et y vous mettez n’importe quoi)
+\item Tout-droit d’une certaine distance (la plus grande possible) en marche avant.
+\item Rotation de 180 degré. 
+\item Tout-droit de la même distance toujours en marche avant.
+\item Rotation de -180 degré
+\end{itemize}
+
+\end{itemize}
+A ce stade, le robot est revenu au voisinage de sa position de départ.
+Vous terminez le cycle et c’est primordial par :
+Rotation vers orientation initiale. (Qui je vous rappelle est l’orientation nulle).
+Il vous suffit alors de reprendre votre réglet et de mesurer de nouveau la distance droite et gauche du cul du robot à la bordure soi-disant parallèle.
+
+Si les roues sont de même diamètre, le robot a repris la même orientation qu’initiale.
+Si le robot est incliné vers la gauche, la roue droite est plus grande que la gauche
+(Il faut corriger par un coefficient sur la vitesse droite, supérieur à 1 !!)
+Et vice versa.
+
+L’intérêt de la méthode, réside dans le fait qu’on ne s’occupe plus du tout de la déviation en x (si le déplacement est en y). Seule une variation de son orientation nous intéresse. Ce qui signifie qu’on a plus à se soucier de l’horizontalité du terrain et de son état. Les bordures sont oubliées mis à part la bordure qui a servi à contrôler les orientations initiales et finales. 
+La méthode peut être améliorée en précision en répétant le cycle aller retour plusieurs fois (Ne pas oublier de terminer le cycle par la rotation vers orientation nulle).
+La méthode fonctionne même si les coefficients ${COEF}_D$ et ${COEF}_{ROT}$ n’ont pas été ajustés. N’exagérez quand même pas trop sur ce point.
+
+Vous imaginez bien que la méthode a été testée sur le robot RCVA aujourd’hui, ce qui est la moindre des choses.
+
+\end{document}

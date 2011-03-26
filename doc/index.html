@@ -557,27 +557,24 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 <div title="SiteTitle" creator="Antoine" modifier="Antoine" created="201103092102" modified="201103092102" changecount="3">
 <pre>Scratchbook</pre>
 </div>
-<div title="Todolist" creator="Antoine" modifier="YourName" created="201103092106" modified="201103221705" changecount="14">
+<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103261514" changecount="19">
 <pre>''Bras''
-* Lier le scanner et les bras via [[strat_arm.c]]
+* Lier le scanner et les bras.
 * Implémenter les différents états pour chaque bras (rangé, automatique, poussage de tour ou remorquage de pion). EN COURS.
 * Mettre les bonnes positions dans les #defines de [[strat_arm.c]]
 * Implémenter la calibration des bras.
 * Implémenter la dépose.
 ''Scanner''
 * Tester le scanner.
-* Ecrire le driver de l'ADC. En cours.
-* Implémenter la différence entre un pion, un roi, une tour.
+* Ecrire le driver de l'ADC. Il n'y a plus qu'a exécuter le code sous interrupt.
 ''Communication PC''
 * Finir d'implémenter l'envoi du status.
 * Implémenter les commandes permettant de déposer des tours.
 * Implémenter le stockage des déplacement dans une FIFO dotée de push, get, flush et count. Si la pile est flushée, hardstop. Flush la pile en cas d'évitement.
 * Implémenter la désactivation de l'évitement par la strat.
-* Creer un fichier strat qui contient tout les codes pour travailler avec la stack.
 ''Divers / toolchain''
-* Tester le code sur le compilateur 'NIOS2'
+* Tester le code sur le compilateur NIOS2. Done. Voir la page installation pour un howto.
 * Avancer sur la classe de test python (développer un script de test pourrait être utile)
-* Enlever le plus de warnings possibles.
 * Implémenter la comm avec la balise et la fonction d'oubli.
 * Implémenter l'évitement d'obstacle (dans avoiding.c)</pre>
 </div>
