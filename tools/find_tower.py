@@ -86,14 +86,14 @@ class ObjectDetector:
     def analyze(self):
         tower = self.findCircle()
         
+        print "Result of algorithm : "+repr(tower)
+        
         towerType="pawn"
         # On a vu de la merde. A calibrer
         if(tower[2] > self.sampleCounter*5):
             towerType="not tower"
         # On vu un roi
         else:
-            print tower[3]
-            print tower[4]
             if (tower[3] > 0 and tower[3] < 8 and tower[4]==-1):
                 towerType="king"
             # On a vu un roi et un pion
