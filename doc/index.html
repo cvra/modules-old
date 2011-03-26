@@ -530,7 +530,7 @@ Also see [[AdvancedOptions]]</pre>
 <pre>Cet état est l'état de repos du système. C'est typiquement l'état qu'on aura au début du match, en attente du départ. C'est l'état de reset de la machine à état.
 il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup et CurrentDrop.</pre>
 </div>
-<div title="Installation" creator="Antoine" modifier="YourName" created="201103162254" modified="201103252257" changecount="5">
+<div title="Installation" creator="Antoine" modifier="Antoine" created="201103162254" modified="201103261603" changecount="6">
 <pre>Pour utiliser ce projet, il faut :&amp;nbsp;
 #  Creer un nouveau projet dans le NIOS2 SDK.
 #  Choisir le fichier .ptf correspondant au hardware.
@@ -538,6 +538,8 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 #  Recuperer le projet depuis Mercurial.
 #  Ajouter les fichiers au projet.
 #  Ajouter au include path les dossier include/ et les modules/* en éditant les premières lignes du Makefile
+#  Ajouter dans les CFLAGS l'option &quot;-DCOMPILE_ON_ROBOT&quot; pour désactiver la simulation.
+#  Editer adresses.h pour mettre les bonnes adresses.
 #  Choisir les UART dans les options du BSP  stdout est la sortie vers le PC embarque, stderr est l'UART de debug (generalement un JTAGUART). stdin est l'entree clavier (pour getchar() et scanf()).
 # Lancer un shell NIOS et lancer &quot;make&quot;
 #  Lancer &quot;make download&quot; (verifier)
@@ -557,13 +559,14 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 <div title="SiteTitle" creator="Antoine" modifier="Antoine" created="201103092102" modified="201103092102" changecount="3">
 <pre>Scratchbook</pre>
 </div>
-<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103261514" changecount="19">
+<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103261527" changecount="21">
 <pre>''Bras''
 * Lier le scanner et les bras.
 * Implémenter les différents états pour chaque bras (rangé, automatique, poussage de tour ou remorquage de pion). EN COURS.
 * Mettre les bonnes positions dans les #defines de [[strat_arm.c]]
 * Implémenter la calibration des bras.
 * Implémenter la dépose.
+* Implémenter le flush du scanner si le robot a tourné.
 ''Scanner''
 * Tester le scanner.
 * Ecrire le driver de l'ADC. Il n'y a plus qu'a exécuter le code sous interrupt.
@@ -573,7 +576,7 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 * Implémenter le stockage des déplacement dans une FIFO dotée de push, get, flush et count. Si la pile est flushée, hardstop. Flush la pile en cas d'évitement.
 * Implémenter la désactivation de l'évitement par la strat.
 ''Divers / toolchain''
-* Tester le code sur le compilateur NIOS2. Done. Voir la page installation pour un howto.
+* Tester le code sur le compilateur NIOS2. Done. Voir la page [[Installation]] pour un howto.
 * Avancer sur la classe de test python (développer un script de test pourrait être utile)
 * Implémenter la comm avec la balise et la fonction d'oubli.
 * Implémenter l'évitement d'obstacle (dans avoiding.c)</pre>
