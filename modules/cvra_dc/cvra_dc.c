@@ -29,7 +29,7 @@ int32_t cvra_dc_get_encoder_0(cvra_dc device) {
     tmp = IORD(device, DC_CNT0_REGISTER_OFFSET);
     return tmp;
 }
-
+    
 void cvra_dc_set_encoder_0(cvra_dc device, const int32_t v) {
     IOWR(device, DC_CNT0_REGISTER_OFFSET, v);
 }

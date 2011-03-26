@@ -14,7 +14,7 @@
 #define DC_PWM_MINIMAL_VALUE 40
 
 
-typedef int* cvra_dc;
+typedef void* cvra_dc;
 
 /** Resets the device by setting all registers to 0. */
 void cvra_dc_reset(cvra_dc device);

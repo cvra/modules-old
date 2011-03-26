@@ -35,8 +35,8 @@
 #ifdef COMPILE_ON_ROBOT
 #include <system.h>
 #else
-#define IORD(adress, offset) (*(adress+offset))
-#define IOWR(adress, offset, data) (*(adress+offset) = data)
+#define IORD(adress, offset) (*((int32_t *)adress+offset))
+#define IOWR(adress, offset, data) (*((int32_t *)adress+offset) = data)
 #endif
 
 #define F_CPU ((unsigned long)CONFIG_QUARTZ)
