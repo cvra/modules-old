@@ -12,6 +12,9 @@ class ObjectDetector:
     def addSample(self, x, y, midSensor=False, topSensor=False):
         self.samples.append((x,y,midSensor, topSensor, self.sampleCounter))
         self.sampleCounter=self.sampleCounter+1
+        self.kingRadius=8
+        self.pawnRadius=15
+        self.kingMargin=2
         
     def setDetectionZone(self, xMin=0, xMax=10, yMin=0, yMax=10):
         self.xMin=xMin
@@ -94,14 +97,14 @@ class ObjectDetector:
             towerType="not tower"
         # On vu un roi
         else:
-            if (tower[3] > 0 and tower[3] < 8 and tower[4]==-1):
+            if (tower[3] > 0 and tower[3] < self.kingRadius and tower[4]==-1):
                 towerType="king"
             # On a vu un roi et un pion
-            elif(tower[3] > 0 and tower[3] > 8 and \
-               tower[4] > 0 and tower[4] < 8):
+            elif(tower[3] > 0 and tower[3] > (self.kingRadius) and \
+               tower[4] > 0 and tower[4] < self.kingMargin):
                    towerType="pawn+king"
-            elif(tower[3] > 0 and tower[3] > 8 and \
-               tower[4] > 0 and tower[4] > 8):
+            elif(tower[3] > 0 and tower[3] > (self.kingRadius) and \
+               tower[4] > 0 and tower[4] > (self.kingRadius)):
                 towerType="pawn+pawn+king"
         
         return (tower[0], tower[1], towerType)
@@ -189,6 +192,25 @@ if __name__=="__main__":
     scan.addSample(53, 87)
     scan.addSample(52, 82)
     print scan.analyze()
+    
+    print "====== Rotation avec un roi en (147, 85) ======"
+    scan=ObjectDetector(radius=15)
+    scan.setDetectionZone(xMax=300, yMax=210)
+    scan.addSample(133, 80, midSensor=False, topSensor=False)
+    scan.addSample(132, 85, midSensor=False, topSensor=False)
+    scan.addSample(133, 90, midSensor=True, topSensor=False)
+    scan.addSample(136, 94, midSensor=True, topSensor=False)
+    scan.addSample(137, 96, midSensor=True, topSensor=False)
+    scan.addSample(132, 85, midSensor=False, topSensor=False)
+    scan.addSample(136, 95, midSensor=True, topSensor=False)
+    scan.addSample(133, 80, midSensor=True, topSensor=False)
+    scan.addSample(141, 98, midSensor=True, topSensor=False)
+    scan.addSample(150, 100, midSensor=True, topSensor=False)
+    scan.addSample(158, 95, midSensor=False, topSensor=False)
+    scan.addSample(160, 91, midSensor=False, topSensor=False)
+    print scan.analyze()
+    
+    
     
     
     
