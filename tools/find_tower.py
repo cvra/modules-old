@@ -110,6 +110,24 @@ class ObjectDetector:
         return (tower[0], tower[1], towerType)
                 
     
+    # Affiche les points. Requiert pyplot.
+    def show(self):
+        try:
+            import matplotlib.pyplot as plt
+        except:
+            print "Pas de pyplot, pas de graphe"
+            return
+        
+        x = []
+        y = []
+        
+        for s in self.samples:
+            plt.plot(s[0], s[1], 'ro')
+        
+        
+        plt.axis([0, 300, 0, 210])
+        
+        plt.show()
     
 if __name__=="__main__":
     print "CVRA Scanner 1.0"
@@ -210,6 +228,7 @@ if __name__=="__main__":
     scan.addSample(160, 91, midSensor=False, topSensor=False)
     print scan.analyze()
     
+    scan.show()
     
     
     
