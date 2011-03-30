@@ -42,15 +42,9 @@
 
 #define GLOBAL_IRQ_ARE_MASKED() (0)
 
-#define IRQ_LOCK(flags) do {         \
-  flags = 1;   \
-  cli();                             \
-  } while(0)
-
-#define IRQ_UNLOCK(flags) do {       \
-   flags=0;     \
-  } while ( 0 )
-
+#warning "IRQ_LOCK Disabled."
+#define IRQ_LOCK(flags) (flags=0)
+#define IRQ_UNLOCK(flags) 
 
 
 #endif /* _AVERSIVE_IRQ_LOCK_H_ */

@@ -105,20 +105,13 @@ do {                                     \
 
 /* a few asm utilities */
 
-#ifdef TRACK_LOW_LEVEL_HOOKS
-#warning "Low level hook debugging is on"
-#define nop() do {} while(0)
-#define nothing() do {} while(0)
-#define cli() do {printf("\nERROR:Call to CLI : %s:%d (%s)\n", __FILE__, __LINE__, __FUNCTION__);} while(0)
-#define sei() do {printf("\nERROR:Call to SEI here : %s:%d (%s)\n", __FILE__, __LINE__, __FUNCTION__);} while(0)
-#define reset() do {printf("\nERROR:Call to reset here : %s:%d\n", __FILE__, __LINE__);} while(0)
-#else
+
 #define nop() do {} while(0)
 #define nothing() do {} while(0)
 #define cli() do {} while(0)
 #define sei() do {} while(0)
 #define reset() do {} while(0)
-#endif
+
 
 /**
  *   little bit toggeling macro 

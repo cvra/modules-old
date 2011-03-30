@@ -43,8 +43,8 @@
 
 #include <aversive.h>
 
-
-#define SCHEDULER_UNIT 16 /* us */
+/* Config */
+#define SCHEDULER_UNIT 1000 /* us */
 #define SCHEDULER_NB_MAX_EVENT 10   
 #define SCHEDULER_NB_STACKING_MAX SCHEDULER_NB_MAX_EVENT
 
