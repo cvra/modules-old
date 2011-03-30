@@ -6,7 +6,7 @@ import threading
 import struct
 
 port 	= "/dev/ttyUSB0"
-debit	= 9600
+debit	= 115200
 
 class test_CM:
     
@@ -39,7 +39,7 @@ class test_CM:
             while self.alive:
                 self.databufin = self.serial.readline()
                 if self.lastdatabufin != self.databufin:
-                    traitReponse(self.lastdatabufin)
+                    self.traitReponse(self.lastdatabufin)
                     self.lastdatabufin = self.databufin
                 #readline(size=None,eol = caractere fin de ligne)
                 print self.databufin
@@ -73,7 +73,7 @@ class test_CM:
 #                  'a': truc1(),
 #                  'b': truc2(),
 #                  'c': truc3()
-#                }[data](x)
+#                }[data](x)))
             except:
                 pass
                 # else
@@ -118,6 +118,7 @@ class test_CM:
         cmd = 12
         self.databufout = struct.pack('3sb2s','ABC', cmd ,  '\n')
         self.writer()
+        self.reader()
         
     # Regle la position du robot
     def position_set(self, pos_x, pos_y, angle):
@@ -190,6 +191,12 @@ class test_CM:
         cmd = 24
         self.databufout = struct.pack('3sbhhh2s','ABC', cmd,  Kp,  Ki,  Kd,  '\n')
         self.writer()
+        
+    #wheel_corection_factor
+    def wheel_corection_factor(self, factor):
+        cmd = 25
+        self.databufout = struct.pack('3sbi2s', 'ABC',cmd, factor,  '\n')
+        self.writer()
     
     def asciiToBin(lettre): 
         lettre = ord(lettre) 
@@ -214,20 +221,12 @@ class test_CM:
     def hexify( octets ):
         return ":".join( [ '%x'%(ord(c)) for c in octets ] )
         
-#test = connectS(port, debit)
-#test.start()
-#test.databufout = "1110"
+test = test_CM(port, debit)
+test.start()
+test.position_get()
 #test.writer()
 #test.reader()
 ##print test.databufin
 #test.writer()
-#test.stop()
-#print "fin"
-
-if __name__=="__main__":
-    connection = test_CM("/dev/ttyUSB0", 115200)
-    connection.start()
-    connection.speed(1000, 360)
-    connection.pid_distance(1000,0,0)
-    connection.pid_angle(1000, 0, 0)
-    
+test.stop()
+print "fin"
