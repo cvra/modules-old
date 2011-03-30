@@ -59,11 +59,12 @@ void scheduler_enable_restore(uint8_t old_prio)
 void
 scheduler_interrupt(void)
 {
-	uint8_t i;
+	uint8_t i, flags;
 	uint8_t priority_tmp;
 	SLIST_HEAD(event_list_t, event_t) event_list;
 	struct event_t *e, *next_e, *prev_e=NULL;
 
+    IRQ_LOCK(flags);
 	/* maximize the number of imbrications */
 	if (nb_stacking >= SCHEDULER_NB_STACKING_MAX) {
 		SCHED_INC_STAT(max_stacking);
@@ -71,33 +72,33 @@ scheduler_interrupt(void)
 	}
 
 	nb_stacking ++;
-	sei();
+	IRQ_UNLOCK(flags);
 
 	SLIST_INIT(&event_list);
 
 	/* browse events table to determine which events should be
 	 * scheduled */
 	for (i=0 ; i<SCHEDULER_NB_MAX_EVENT ; i++) {
-		cli();
+		IRQ_LOCK(flags);
 
 		/* the event is already present in a schedule list,
 		 * only update its current time until it reaches 1 */
 		if (g_tab_event[i].state == SCHEDULER_EVENT_SCHEDULED) {
 			if (g_tab_event[i].current_time > 1) {
 				g_tab_event[i].current_time --;
-				sei();
+				IRQ_UNLOCK(flags);
 				continue;
 			}
 			else {
 				SCHED_INC_STAT2(task_delayed, i);
-				sei();
+				IRQ_UNLOCK(flags);
 				continue;
 			}
 		}
 
 		/* nothing to do with other unactive events */
 		if (g_tab_event[i].state != SCHEDULER_EVENT_ACTIVE) {
-			sei();
+			IRQ_UNLOCK(flags);
 			continue;
 		}
 
@@ -107,7 +108,7 @@ scheduler_interrupt(void)
 
 		/* don't need to schedule now */
 		if ( g_tab_event[i].current_time != 0 ) {
-			sei();
+			IRQ_UNLOCK(flags);
 			continue;
 		}
 
@@ -116,7 +117,7 @@ scheduler_interrupt(void)
 		if (g_tab_event[i].priority <= priority_running) {
 			g_tab_event[i].current_time = 1;
 			SCHED_INC_STAT2(task_delayed, i);
-			sei();
+			IRQ_UNLOCK(flags);
 			continue;
 		}
 
@@ -126,7 +127,7 @@ scheduler_interrupt(void)
 		/* schedule it */
 		g_tab_event[i].state = SCHEDULER_EVENT_SCHEDULED;
 		SCHED_INC_STAT2(task_scheduled, i);
-		sei();
+		IRQ_UNLOCK(flags);
 
 		/* insert it in the list (list is ordered).
 		   this should be quite fast since the list is
@@ -159,7 +160,7 @@ scheduler_interrupt(void)
 	/* only called if SCHEDULER_DEBUG is defined */
 	DUMP_EVENTS();
 
-	cli();
+	IRQ_LOCK(flags);
 	priority_tmp = priority_running;
 
 	SLIST_FOREACH(e, &event_list, next) {
@@ -169,13 +170,13 @@ scheduler_interrupt(void)
 
 		/* set running priority */
 		priority_running = e->priority;
-		sei();
+		IRQ_UNLOCK(flags);
 
 		/* the following fields (f and data) can't be modified
 		 * while an event is in state SCHEDULED */
 		e->f(e->data);
 
-		cli();
+		IRQ_LOCK(flags);
 		/* free it if it is single (non-periodical) */
 		if (!e->period) {
 			e->state = SCHEDULER_EVENT_FREE;
@@ -200,4 +201,5 @@ scheduler_interrupt(void)
 
 	priority_running = priority_tmp;
 	nb_stacking--;
+    IRQ_UNLOCK(flags);
 }
