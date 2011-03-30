@@ -33,7 +33,11 @@
 #include <aversive/irq_lock.h>
 
 #ifdef COMPILE_ON_ROBOT
+
 #include <system.h>
+#include <io.h>
+#include <sys/alt_irq.h>
+
 #else
 #define IORD(adress, offset) (*((int32_t *)adress+offset))
 #define IOWR(adress, offset, data) (*((int32_t *)adress+offset) = data)

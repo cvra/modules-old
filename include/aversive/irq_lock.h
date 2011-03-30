@@ -41,13 +41,13 @@
 #define _AVERSIVE_IRQ_LOCK_H_
 
 #ifdef COMPILE_ON_ROBOT
-#include <nios.h>
+#include <nios2.h>
 #define GLOBAL_IRQ_ARE_MASKED() (0)
 
 
 /** Sauvegarde la valeur de STATUS.PIE dans flags, et desactive STATUS.PIE
  * ensuite. */
-#define IRQ_LOCK(flags) do {                                        \
+#define IRQ_LOCK(flags) do {	                                    \
                             uint32_t t;                             \
                             NIOS2_READ_STATUS(t);                   \
                             flags = (t & NIOS2_STATUS_PIE_MSK);     \

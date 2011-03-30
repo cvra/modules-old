@@ -530,7 +530,7 @@ Also see [[AdvancedOptions]]</pre>
 <pre>Cet état est l'état de repos du système. C'est typiquement l'état qu'on aura au début du match, en attente du départ. C'est l'état de reset de la machine à état.
 il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup et CurrentDrop.</pre>
 </div>
-<div title="Installation" creator="Antoine" modifier="YourName" created="201103162254" modified="201103252257" changecount="5">
+<div title="Installation" creator="Antoine" modifier="Antoine" created="201103162254" modified="201103301909" changecount="6">
 <pre>Pour utiliser ce projet, il faut :&amp;nbsp;
 #  Creer un nouveau projet dans le NIOS2 SDK.
 #  Choisir le fichier .ptf correspondant au hardware.
@@ -546,6 +546,18 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 # Envoyer le code dans le EPCS.
 # Trouver comment envoyer à la foi le hardware et le software dans le EPCS. Indice: nios-elf-to-flash devrait pouvoir faire quelque chose.
 # Coder tranquillement et gagner la coupe.
+
+Code à ajouter au Makefile :
+
+ALT_INCLUDE_DIRS := include/
+ALT_INCLUDE_DIRS += modules/math/vect2 modules/math/fixed_point modules/math/geometry
+ALT_INCLUDE_DIRS += modules/cvra_adc modules/cvra_bldc modules/cvra_dc
+ALT_INCLUDE_DIRS += modules/error modules/scheduler
+ALT_INCLUDE_DIRS += modules/pid modules/quadramp modules/control_system_manager
+ALT_INCLUDE_DIRS += modules/robot_system modules/position_manager modules/blocking_detection_manager
+ALT_INCLUDE_DIRS += modules/trajectory_manager modules/obstacle_avoidance
+
+ALT_CFLAGS := -DCOMPILE_ON_ROBOT -DDEBUG_ON_JTAG_UART
 </pre>
 </div>
 <div title="MainMenu" creator="Antoine" modifier="Antoine" created="201103092102" changecount="1">
@@ -557,9 +569,9 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 <div title="SiteTitle" creator="Antoine" modifier="Antoine" created="201103092102" modified="201103092102" changecount="3">
 <pre>Scratchbook</pre>
 </div>
-<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103261311" changecount="15">
+<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103301908" changecount="16">
 <pre>''Bras''
-* Lier le scanner et les bras via [[strat_arm.c]]. EN COURS.
+* Lier le scanner et les bras via [[strat_arm.c]]. EN&amp;nbsp;COURS.
 * Implémenter les différents états pour chaque bras (rangé, automatique, poussage de tour ou remorquage de pion). EN COURS.
 * Mettre les bonnes positions dans les #defines de [[strat_arm.c]]
 * Regler les gains des bras et les mettre comme valeur par defaut.
@@ -576,9 +588,7 @@ il peut faire une transition vers ArmCalibration, AutoPickupIdle, CurrentPickup 
 * Implémenter la désactivation de l'évitement par la strat.
 * Creer un fichier strat qui contient tout les codes pour travailler avec la stack.
 ''Divers / toolchain''
-* Tester le code sur le compilateur 'NIOS2'
 * Avancer sur la classe de test python (développer un script de test pourrait être utile)
-* Enlever le plus de warnings possibles.
 * Implémenter la comm avec la balise et la fonction d'oubli.
 * Implémenter l'évitement d'obstacle (dans avoiding.c)</pre>
 </div>
