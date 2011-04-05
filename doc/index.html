@@ -569,28 +569,23 @@ ALT_CFLAGS := -DCOMPILE_ON_ROBOT -DDEBUG_ON_JTAG_UART
 <div title="SiteTitle" creator="Antoine" modifier="Antoine" created="201103092102" modified="201103092102" changecount="3">
 <pre>Scratchbook</pre>
 </div>
-<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201103301908" changecount="16">
+<div title="Todolist" creator="Antoine" modifier="Antoine" created="201103092106" modified="201104051449" changecount="18">
 <pre>''Bras''
-* Lier le scanner et les bras via [[strat_arm.c]]. EN&amp;nbsp;COURS.
-* Implémenter les différents états pour chaque bras (rangé, automatique, poussage de tour ou remorquage de pion). EN COURS.
+* Lier le scanner et les bras via [[strat_arm.c]]. EN COURS.
 * Mettre les bonnes positions dans les #defines de [[strat_arm.c]]
 * Regler les gains des bras et les mettre comme valeur par defaut.
 * Implémenter la calibration des bras.
 * Implémenter la dépose.
 ''Scanner''
 * Tester le scanner.
-* Ecrire le driver de l'ADC. En cours.
 * Implémenter la différence entre un pion, un roi, une tour.
 ''Communication PC''
 * Finir d'implémenter l'envoi du status.
 * Implémenter les commandes permettant de déposer des tours.
-* Implémenter le stockage des déplacement dans une FIFO dotée de push, get, flush et count. Si la pile est flushée, hardstop. Flush la pile en cas d'évitement.
 * Implémenter la désactivation de l'évitement par la strat.
-* Creer un fichier strat qui contient tout les codes pour travailler avec la stack.
 ''Divers / toolchain''
-* Avancer sur la classe de test python (développer un script de test pourrait être utile)
-* Implémenter la comm avec la balise et la fonction d'oubli.
-* Implémenter l'évitement d'obstacle (dans avoiding.c)</pre>
+* Avancer sur la classe de test python (développer un script de test pourrait être utile). Boulot de Olivier.
+* Implémenter la comm avec la balise et la fonction d'oubli.</pre>
 </div>
 <div title="strat_arm.c" creator="Antoine" modifier="YourName" created="201103092111" modified="201103221704" changecount="5">
 <pre>Roles de ce module :
