@@ -1,0 +1,10 @@
+Dév:
+- traitReponse
+
+
+Test
+- Tester communication avec carte moteur (liaison série)
+- Tester l'envoi de commandes (pack data)
+- Tester la réception de données (unpack)
+- Mettre en place protection de la liaison (vérification connexion/rétablissement)
+- Classe finale après test de test_cmd.py (virer les fct debug)
