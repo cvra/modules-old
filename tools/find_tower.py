@@ -40,15 +40,11 @@ class ObjectDetector:
 
 
         # Detection d'un eventuel roi
-        firstSeen=self.sampleCounter
+        firstSeen=0
         lastSeen=0
         for s in self.samples:
             # Detection du front montant
-            if(s[2] and s[4] < firstSeen):
-                firstSeen=s[4]
-                
-            # Detection du front descendant
-            if(s[2] and s[4] > lastSeen):
+            if(s[2] and lastSeen==0):
                 lastSeen=s[4]
             
             
@@ -57,6 +53,8 @@ class ObjectDetector:
             midRadius=(self.samples[lastSeen][0]-self.samples[firstSeen][0])**2 + (self.samples[lastSeen][1]-self.samples[firstSeen][1])**2
             midRadius=sqrt(midRadius)
             midRadius = midRadius/2
+            midRadius = 10 - midRadius
+            print "MidRadius="+str(midRadius)
         else:
             midRadius=-1
             
@@ -121,8 +119,21 @@ class ObjectDetector:
         x = []
         y = []
         
+        a = self.findCircle()
+        
+        for i in range(50):
+            plt.plot(self.radius*cos(2*3.14*i/50.)+a[0], self.radius*sin(2*3.14*i/50.)+a[1], 'bo')
+        
         for s in self.samples:
-            plt.plot(s[0], s[1], 'ro')
+            if s[2]:
+                plt.plot(s[0], s[1], 'yo')
+            else:
+                plt.plot(s[0], s[1], 'ro')
+        
+        
+        plt.plot(a[0], a[1], 'bo')
+        
+        
         
         
         plt.axis([0, 300, 0, 210])
@@ -211,21 +222,13 @@ if __name__=="__main__":
     scan.addSample(52, 82)
     print scan.analyze()
     
-    print "====== Rotation avec un roi en (147, 85) ======"
+    print "====== Rotation avec un roi en (102, 85) ======"
     scan=ObjectDetector(radius=15)
     scan.setDetectionZone(xMax=300, yMax=210)
-    scan.addSample(133, 80, midSensor=False, topSensor=False)
-    scan.addSample(132, 85, midSensor=False, topSensor=False)
-    scan.addSample(133, 90, midSensor=True, topSensor=False)
-    scan.addSample(136, 94, midSensor=True, topSensor=False)
-    scan.addSample(137, 96, midSensor=True, topSensor=False)
-    scan.addSample(132, 85, midSensor=False, topSensor=False)
-    scan.addSample(136, 95, midSensor=True, topSensor=False)
-    scan.addSample(133, 80, midSensor=True, topSensor=False)
-    scan.addSample(141, 98, midSensor=True, topSensor=False)
-    scan.addSample(150, 100, midSensor=True, topSensor=False)
-    scan.addSample(158, 95, midSensor=False, topSensor=False)
-    scan.addSample(160, 91, midSensor=False, topSensor=False)
+    scan.addSample(x=88, y=80, midSensor=False)
+    scan.addSample(x=88, y=88, midSensor=False)
+    scan.addSample(x=90, y=93, midSensor=True)
+    scan.addSample(x=92, y=95, midSensor=True)
     print scan.analyze()
     
     scan.show()
