@@ -8,8 +8,8 @@ import serial
 import threading
 import struct
 
-port 	= "/dev/ttyUSB0"
-debit	= 115200
+port     = "/dev/ttyUSB0"
+debit    = 115200
 
 class test_CM:
     
@@ -34,7 +34,7 @@ class test_CM:
         self.transmitter_thread.setDaemon(1)
         self.transmitter_thread.start()
 
-    def stop(self):
+    def stopThread(self):
         self.alive = False
     
     def reader(self):
@@ -68,7 +68,7 @@ class test_CM:
             
     # Traitement de la reponse a blocking_get
     def ret_blocking_get(self, trame):
-        blocage, fin_Trame =  unpack_from('B2s', trame,  offset=4)
+        blocage, fin_Trame =  struct.unpack_from('B2s', trame,  offset=4)
         print "Etat blocage : " + blocage
         
     # Traitement de la reponse a goto_next_forward (fin etape)
@@ -77,7 +77,7 @@ class test_CM:
         
     # Traitement de la reponse a position_get
     def ret_position_get(self, trame):
-        get_pos_X, get_pos_Y, get_angle, fin_Trame =  unpack_from('3sBhhh2s', trame,  offset=4)
+        get_pos_X, get_pos_Y, get_angle, fin_Trame = struct.unpack_from('3sBhhh2s', trame,  offset=4)
         print "get position X :" + get_pos_X + " Y : " + get_pos_Y + " angle : " + get_angle
         
     # Traitement de la reponse a trajet_finished
@@ -91,10 +91,10 @@ class test_CM:
             try:
                 print "OK : "
                 try:
-                    {3: ret_blocking_get(data),
-                     9: ret_goto_next_forward(),
-                     12: ret_position_get(data),
-                     20: ret_trajet_finished(data)}[data[3]]()
+                    {3: self.ret_blocking_get(data),
+                     9: self.ret_goto_next_forward(),
+                     12: self.ret_position_get(data),
+                     20: self.ret_trajet_finished(data)}[data[3]]()
                 except:
                     print "Valeur retour invalide !!"
             except:
@@ -219,29 +219,29 @@ class test_CM:
         self.databufout = struct.pack('3sBi2s', 'ABC',cmd, factor,  '\n')
         self.writer()
     
-    ################################# Fonctions annexes inutilisees #########
-    def asciiToBin(lettre): 
-        lettre = ord(lettre) 
-        retour =[] 
-        for i in range(8,-1,-1): 
-            if lettre -2**i >= 0: 
-                lettre -= 2**i 
-                retour.append('1') 
-            else: 
-                lettre.append('0') 
-        return "".join(retour) 
+################################# Fonctions annexes inutilisees #########
+def asciiToBin(lettre): 
+    lettre = ord(lettre) 
+    retour =[] 
+    for i in range(8,-1,-1): 
+        if lettre -2**i >= 0: 
+            lettre -= 2**i 
+            retour.append('1') 
+        else: 
+            lettre.append('0') 
+    return "".join(retour) 
 
-    def binaire(chaine): 
-        retour =[asciiToBin(lettre) for lettre in chaine] 
-        return "".join(retour) 
-        
-    def strTobin(val):
-        for c in val:
-            print(bin(ord(c)))[2:]
-        
-    # renvoie une chaine en octet    
-    def hexify( octets ):
-        return ":".join( [ '%x'%(ord(c)) for c in octets ] )
+def binaire(chaine): 
+    retour =[asciiToBin(lettre) for lettre in chaine] 
+    return "".join(retour) 
+    
+def strTobin(val):
+    for c in val:
+        print(bin(ord(c)))[2:]
+    
+# renvoie une chaine en octet    
+def hexify( octets ):
+    return ":".join( [ '%x'%(ord(c)) for c in octets ] )
         
 # banc de test
 test = test_CM(port, debit)
