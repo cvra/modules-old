@@ -12,7 +12,7 @@ int cmd = 0;
 
 void setup()
 {
-  Serial.begin(115299);
+  Serial.begin(115200);
   establishContact();
 }
 
