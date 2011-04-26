@@ -1,5 +1,5 @@
 Dév:
-- traitReponse
+- traitReponse ok à tester
 
 
 Test

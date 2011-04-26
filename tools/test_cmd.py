@@ -148,15 +148,9 @@ class test_CM:
         self.writer()
         
     # Enclenche la puissance du robot
-    def  power_on(self):
+    def  power(self,  etat):
         cmd = 14
-        self.databufout = struct.pack('3sB2s','ABC', cmd,  '\n')
-        self.writer()
-        
-    #  Denclenche la puissance du robot
-    def  power_off(self):
-        cmd = 15
-        self.databufout = struct.pack('3sB2s','ABC', cmd, '\n')
+        self.databufout = struct.pack('3sBB2s','ABC', cmd, etat,  '\n')
         self.writer()
         
     # Fige le robot
@@ -200,6 +194,39 @@ class test_CM:
         cmd = 22
         self.databufout = struct.pack('3sBhhh2s','ABC', cmd,  dist,  angle,  angle_start,  '\n')
         self.writer()
+        
+    # Aimant avant
+    def magnet_front(self, etat):
+        cmd = 50
+        self.databufout = struct.pack('3sBB2s',  'ABC', cmd,  etat,  '\n')
+        self.writer()
+        
+    # Aimant avant
+    def magnet_back(self, etat):
+        cmd = 51
+        self.databufout = struct.pack('3sBB2s',  'ABC', cmd,  etat,  '\n')
+        self.writer()
+        
+    # Mode des bras
+    # 0=desactive, 1=automatique, 2=pousser, 3=tirer (non implemente), 4=scan bordure, 5=prise de pion bordure, 6=prise de figures bordure
+    def arm_mode(self, gauche,  droit):
+        cmd = 100
+        self.databufout = struct.pack('3sBBB2s',  'ABC', cmd,  gauche, droit,  '\n')
+        self.writer()
+        
+    # drop : depose la tour
+    def drop(self,  cote, pos_X, pos_Y),  :
+        cmd = 101
+        self.databufout = struct.pack('3sBhhh2s',  'ABC', cmd,  gauche, droit,  '\n')
+        self.writer()
+    
+    # Calibration des bras A NE PAS UTILISER EN MATCH !!!!!!!
+    def  arm_calibration(self):
+        cmd = 102
+        self.databufout = struct.pack('3sB2s',  'ABC', cmd,  '\n')
+        self.writer()  
+    
+    # Anciennes commandes
         
     # PID angle
     def pid_angle(self, Kp, Ki, Kd):
