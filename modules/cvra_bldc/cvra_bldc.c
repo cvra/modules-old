@@ -3,8 +3,8 @@
 #include <cvra_bldc.h>
 
 /* Registers */
-#define BLDC_PWM_REGISTER_OFFSET 0x00
-#define BLDC_CNT_REGISTER_OFFSET 0x01
+#define BLDC_PWM_REGISTER_OFFSET 0x01
+#define BLDC_CNT_REGISTER_OFFSET 0x00
 
 /* Constants */
 #define BLDC_PWM_MINIMAL_VALUE 40
