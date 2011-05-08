@@ -11,7 +11,7 @@
 #define DC_PWM1_REGISTER_OFFSET 0x03
 
 
-#define DC_PWM_MINIMAL_VALUE 40
+#define DC_PWM_MINIMAL_VALUE 0
 
 
 typedef void* cvra_dc;

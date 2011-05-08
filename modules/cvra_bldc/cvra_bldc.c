@@ -24,6 +24,10 @@ void cvra_bldc_set_pwm(void * device, int32_t value) {
     IOWR((int32_t *)device, BLDC_PWM_REGISTER_OFFSET, value);
 }
 
+void cvra_bldc_set_pwm_negative(void *device, int32_t value) {
+	cvra_bldc_set_pwm(device, -value);
+}
+
 /** Gets encoder. */
 int32_t cvra_bldc_get_encoder(void * device) {
     volatile int32_t tmp;
