@@ -28,6 +28,9 @@
 
 #include <blocking_detection_manager.h>
 
+
+
+
 /** init module, give the robot system to use as a parameter */
 void bd_init(struct blocking_detection * bd, struct cs *cs)
 {
@@ -63,8 +66,10 @@ void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16
 /** function to be called periodically */
 void bd_manage(struct blocking_detection * bd)
 {
-    if(cs_get_error(bd->cs) > bd->err_thres)
+
+    if(cs_get_error(bd->cs) > bd->err_thres || cs_get_error(bd->cs) < -(bd->err_thres)) {
         bd->cpt++;
+    }
     else
         bd->cpt=0;
 }

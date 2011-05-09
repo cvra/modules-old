@@ -7,7 +7,7 @@
 #define BLDC_CNT_REGISTER_OFFSET 0x00
 
 /* Constants */
-#define BLDC_PWM_MINIMAL_VALUE 40
+#define BLDC_PWM_MINIMAL_VALUE 10
 
 
 /** Resets the device by setting all registers to 0. */
@@ -20,6 +20,9 @@ void cvra_bldc_reset(void * device) {
 void cvra_bldc_set_pwm(void * device, int32_t value) {
     if(value < BLDC_PWM_MINIMAL_VALUE && value > -BLDC_PWM_MINIMAL_VALUE)
         value = BLDC_PWM_MINIMAL_VALUE;
+
+    if(value > 1000) value = 1000;
+    if(value < -1000) value = -1000;
 
     IOWR((int32_t *)device, BLDC_PWM_REGISTER_OFFSET, value);
 }
