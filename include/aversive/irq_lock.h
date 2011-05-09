@@ -55,6 +55,7 @@
                             flags = !!(t & NIOS2_STATUS_PIE_MSK);   \
                             t = t & ~(NIOS2_STATUS_PIE_MSK);        \
                             NIOS2_WRITE_STATUS(t);					\
+                            IOWR(LED_BASE, 0xaa);					\
                         } while(0);									\
                         
 
@@ -63,6 +64,7 @@
                             NIOS2_READ_STATUS(t);                   \
                             t |= ((flags) << NIOS2_STATUS_PIE_OFST);  \
                             NIOS2_WRITE_STATUS(t);                 \
+                            IOWR(LED_BASE, 0x00);					\
                         } while(0);									\
 
 /*

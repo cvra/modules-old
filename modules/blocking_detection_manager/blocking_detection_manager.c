@@ -27,7 +27,7 @@
 #include <aversive/error.h>
 
 #include <blocking_detection_manager.h>
-
+#include <math.h>
 
 
 
@@ -67,7 +67,7 @@ void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16
 void bd_manage(struct blocking_detection * bd)
 {
 
-    if(cs_get_error(bd->cs) > bd->err_thres || cs_get_error(bd->cs) < -(bd->err_thres)) {
+    if(abs(cs_get_error(bd->cs)) > bd->err_thres) {
         bd->cpt++;
     }
     else
