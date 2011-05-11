@@ -65,14 +65,14 @@
                             NIOS2_WRITE_STATUS(t);                 \
                         } while(0);									\
 
-/*
+
 #define cli() do { \
 	uint32_t t; \
 	NIOS2_READ_STATUS(t); \
     t = t & ~(NIOS2_STATUS_PIE_MSK);        \
     NIOS2_WRITE_STATUS(t); \
 } while(0); \
-*/
+
 
 #define sei() do { 							    \
 		uint32_t t;                             \
@@ -81,8 +81,6 @@
         NIOS2_WRITE_STATUS(t);                 \
 } while(0); \
 
-
-#define cli() do { }while(0);
 
 
 

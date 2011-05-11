@@ -79,7 +79,6 @@ scheduler_interrupt(void)
 	 * scheduled */
 	for (i=0 ; i<SCHEDULER_NB_MAX_EVENT ; i++) {
 		cli();
-
 		/* the event is already present in a schedule list,
 		 * only update its current time until it reaches 1 */
 		if (g_tab_event[i].state == SCHEDULER_EVENT_SCHEDULED) {
@@ -174,7 +173,7 @@ scheduler_interrupt(void)
 		 * while an event is in state SCHEDULED */
 		e->f(e->data);
 
-		cli();
+		//cli();
 		/* free it if it is single (non-periodical) */
 		if (!e->period) {
 			e->state = SCHEDULER_EVENT_FREE;
