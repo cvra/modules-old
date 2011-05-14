@@ -32,5 +32,6 @@ typedef struct {
 void cvra_adc_init(cvra_adc_t *adc, void *adress, int irq_number);
 void cvra_adc_manage(void *adc);
 int cvra_adc_get_value(cvra_adc_t *adc, int input);
+void cvra_adc_start_scan(cvra_adc_t *adc);
 
 #endif

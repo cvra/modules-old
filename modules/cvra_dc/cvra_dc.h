@@ -19,9 +19,6 @@ typedef void* cvra_dc;
 /** Resets the device by setting all registers to 0. */
 void cvra_dc_reset(cvra_dc device);
 
-/** Manage the device (reads encoders). */
-void cvra_dc_manage(cvra_dc device);
-
 /** Sets the PWM 0. */
 void cvra_dc_set_pwm_0(cvra_dc device, int32_t value);
 

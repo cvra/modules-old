@@ -31,33 +31,49 @@
 #define SLAVE_SELECT_MASK_REGISTER  5
 
 void cvra_adc_init(cvra_adc_t *adc, void *adress , int irq_number) {
-    NOTICE(0, "cvra_adc_init");
+//    NOTICE(0, "cvra_adc_init");
     int i=8;
+    int val;
     adc->spi_adress = adress;
     while(i--) {
         adc->values[i]=0;
     }
     adc->next_read=0;
     
-    /* Configuration du hardware. */
+    /*�Configuration du hardware. */
     
-    /* Force le signal CS et interrupt sur RXRDY. */
-    IOWR(adc->spi_adress, CONTROL_REGISTER, (1<<10) | (1<<7));
+    /* Pas de CS ni d'interrupt. */
+    IOWR(adc->spi_adress, CONTROL_REGISTER, 0);
     
-    /* On selectionne le CS 1. */
+    /* Deselect ADC */
     IOWR(adc->spi_adress, SLAVE_SELECT_MASK_REGISTER, 0x01);
     
-    #ifdef COMPILE_ON_ROBOT
-    alt_ic_isr_register(0, irq_number, cvra_adc_manage, (void *)adc, 0);
-    #endif
+
+    val = alt_ic_isr_register(0, irq_number, cvra_adc_manage, (void *)adc, 0);
+    val = alt_ic_irq_enable (0,irq_number);
+
 }
 
-/* Devrait etre appellee depuis un contexte d'interrupt sur TXRDY. */
+/*�Devrait etre appellee depuis un contexte d'interrupt sur TXRDY. */
 void cvra_adc_manage(void *a) {
     cvra_adc_t *adc = (cvra_adc_t *)a;
-    adc->values[adc->next_read]=IORD(adc->spi_adress, RXDATA_REGISTER);
-    adc->next_read = (adc->next_read+1)%8;
-    IOWR(adc->spi_adress, TXDATA_REGISTER, adc->next_read<<3);
+
+    adc->values[(adc->next_read+7)&0x07]=(IORD(adc->spi_adress, RXDATA_REGISTER)>>2) & 0x3ff;
+    IOWR(adc->spi_adress, STATUS_REGISTER, 0);
+    adc->next_read ++;
+    if (adc->next_read<8){
+      IOWR(adc->spi_adress, TXDATA_REGISTER, (adc->next_read)<<11);
+    } else {
+    	  IOWR(adc->spi_adress, CONTROL_REGISTER, 0);
+    }
+}
+void cvra_adc_start_scan(cvra_adc_t *adc) {
+	IOWR(adc->spi_adress, STATUS_REGISTER, 0); //Clear all error flags
+	IORD(adc->spi_adress, RXDATA_REGISTER); //Dummy read to clear receive buffer
+	adc->next_read = 0;
+	IOWR(adc->spi_adress, CONTROL_REGISTER, (1<<10) | (1<<7));
+	//Start scan
+	IOWR(adc->spi_adress, TXDATA_REGISTER, (adc->next_read)<<11);
 }
 
 int cvra_adc_get_value(cvra_adc_t *adc, int input) {
