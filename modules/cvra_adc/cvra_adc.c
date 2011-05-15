@@ -23,15 +23,14 @@
 #include <aversive/error.h>
 
 /* Register map */
-#define TXDATA_REGISTER             0
-#define RXDATA_REGISTER             1
+#define RXDATA_REGISTER             0
+#define TXDATA_REGISTER             1
 #define STATUS_REGISTER             2
 #define CONTROL_REGISTER            3
 #define RESERVED_REGISTER           4
 #define SLAVE_SELECT_MASK_REGISTER  5
 
 void cvra_adc_init(cvra_adc_t *adc, void *adress , int irq_number) {
-//    NOTICE(0, "cvra_adc_init");
     int i=8;
     int val;
     adc->spi_adress = adress;
@@ -40,15 +39,12 @@ void cvra_adc_init(cvra_adc_t *adc, void *adress , int irq_number) {
     }
     adc->next_read=0;
     
-    /* Configuration du hardware. */
-    
     /* Pas de CS ni d'interrupt. */
     IOWR(adc->spi_adress, CONTROL_REGISTER, 0);
     
     /* Deselect ADC */
     IOWR(adc->spi_adress, SLAVE_SELECT_MASK_REGISTER, 0x01);
     
-
     val = alt_ic_isr_register(0, irq_number, cvra_adc_manage, (void *)adc, 0);
     val = alt_ic_irq_enable (0,irq_number);
 
@@ -57,10 +53,9 @@ void cvra_adc_init(cvra_adc_t *adc, void *adress , int irq_number) {
 /* Devrait etre appellee depuis un contexte d'interrupt sur TXRDY. */
 void cvra_adc_manage(void *a) {
     cvra_adc_t *adc = (cvra_adc_t *)a;
-
     adc->values[(adc->next_read+7)&0x07]=(IORD(adc->spi_adress, RXDATA_REGISTER)>>2) & 0x3ff;
     IOWR(adc->spi_adress, STATUS_REGISTER, 0);
-    adc->next_read ++;
+    adc->next_read++;
     if (adc->next_read<8){
       IOWR(adc->spi_adress, TXDATA_REGISTER, (adc->next_read)<<11);
     } else {
