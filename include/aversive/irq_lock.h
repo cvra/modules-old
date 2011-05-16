@@ -48,7 +48,7 @@
 /** Sauvegarde la valeur de STATUS.PIE dans flags, et desactive STATUS.PIE
  * ensuite. */
 
-
+#if 0
 #define IRQ_LOCK(flags) do {	                                    \
                             uint32_t t;                             \
                             NIOS2_READ_STATUS(t);                   \
@@ -81,7 +81,13 @@
         NIOS2_WRITE_STATUS(t);                 \
 } while(0); \
 
+#else
+#define IRQ_LOCK(flags) do { } while(0);
+#define IRQ_UNLOCK(flags) do { } while(0);
+#define cli() do { } while(0);
+#define sei() do { } while(0);
 
+#endif
 
 
 #else 
