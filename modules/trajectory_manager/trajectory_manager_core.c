@@ -114,6 +114,7 @@ void trajectory_only_d_rel(struct trajectory *traj, double d_mm)
 /** turn by 'a' degrees */
 void trajectory_a_rel(struct trajectory *traj, double a_deg_rel)
 {
+	printf("%d\n", (int)a_deg_rel);
 	__trajectory_goto_d_a_rel(traj, 0, RAD(a_deg_rel), RUNNING_A,
 				  UPDATE_A | UPDATE_D | RESET_D);
 }

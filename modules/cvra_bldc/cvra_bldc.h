@@ -9,6 +9,8 @@ void cvra_bldc_reset(void * device);
 /** Sets the PWM. */
 void cvra_bldc_set_pwm(void * device, int32_t value);
 
+void cvra_bldc_set_pwm_negative(void *device, int32_t value);
+
 /** Gets encoder. */
 int32_t cvra_bldc_get_encoder(void * device);
 
