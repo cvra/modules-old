@@ -71,7 +71,7 @@ void cvra_adc_start_scan(cvra_adc_t *adc) {
 	IOWR(adc->spi_adress, TXDATA_REGISTER, (adc->next_read)<<11);
 }
 
-int cvra_adc_get_value(cvra_adc_t *adc, int input) {
+int16_t cvra_adc_get_value(cvra_adc_t *adc, int input) {
     if(input >= 8 || input < 0)
         return -1;
     return adc->values[input];
