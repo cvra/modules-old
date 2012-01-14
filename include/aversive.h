@@ -113,15 +113,16 @@ do {                                     \
 
 
 
-#ifdef COMPILE_ON_ROBOT
+#ifndef COMPILE_ON_ROBOT
 #define nop() do {} while(0)
 #define nothing() do {} while(0)
 #define reset() do {} while(0)
 
 #else
+
+
 #define nop() do {} while(0)
 #define nothing() do {} while(0)
-
 
 /* Found on http://www.altera.com/support/kdb/solutions/rd05062005_584.html */
 #define reset() do {                         \
