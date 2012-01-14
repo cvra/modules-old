@@ -44,9 +44,11 @@ void cvra_adc_init(cvra_adc_t *adc, void *adress , int irq_number) {
     
     /* Deselect ADC */
     IOWR(adc->spi_adress, SLAVE_SELECT_MASK_REGISTER, 0x01);
-    
+
+#ifdef COMPILE_ON_ROBOT    
     val = alt_ic_isr_register(0, irq_number, cvra_adc_manage, (void *)adc, 0);
     val = alt_ic_irq_enable (0,irq_number);
+#endif
 
 }
 
