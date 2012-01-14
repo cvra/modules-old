@@ -39,8 +39,10 @@
 #include <sys/alt_irq.h>
 
 #else
+
 #define IORD(adress, offset) (*((int32_t *)adress+offset))
 #define IOWR(adress, offset, data) (*((int32_t *)adress+offset) = data)
+
 #endif
 
 #define F_CPU ((unsigned long)CONFIG_QUARTZ)
@@ -110,9 +112,25 @@ do {                                     \
 /* a few asm utilities */
 
 
+
+#ifdef COMPILE_ON_ROBOT
 #define nop() do {} while(0)
 #define nothing() do {} while(0)
 #define reset() do {} while(0)
+
+#else
+#define nop() do {} while(0)
+#define nothing() do {} while(0)
+
+
+/* Found on http://www.altera.com/support/kdb/solutions/rd05062005_584.html */
+#define reset() do {                         \
+    NIOS2_WRITE_STATUS(0);                   \
+    NIOS2_WRITE_IENABLE(0);                  \
+    ((void (*) (void)) NIOS2_RESET_ADDR) (); \
+    } while(0)
+    
+#endif
 
 
 /**
