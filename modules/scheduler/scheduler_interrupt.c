@@ -22,9 +22,15 @@
 #include <stdlib.h>
 
 #include <aversive.h>
+#include <aversive/irq_lock.h>
 #include <scheduler_config.h>
 #include <scheduler_private.h>
 #include <scheduler_stats.h>
+
+
+#define cli()
+#define sei()
+
 
 /** priority of the running event */
 static volatile uint8_t priority_running=0;
