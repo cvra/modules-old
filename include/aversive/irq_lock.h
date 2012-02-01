@@ -82,18 +82,22 @@
 } while(0); \
 
 #else
-#define IRQ_LOCK(flags) do { } while(0);
-#define IRQ_UNLOCK(flags) do { } while(0);
-#define cli() do { } while(0);
-#define sei() do { } while(0);
+
+
+#define IRQ_LOCK(flags) do {flags++; } while(0)
+#define IRQ_UNLOCK(flags) do {flags--; } while(0)
+#define cli() do { } while(0)
+#define sei() do { } while(0)
 
 #endif
 
 
 #else 
 
-#define IRQ_LOCK(flags) flags=0
-#define IRQ_UNLOCK(flags) flags=1
+#define IRQ_LOCK(flags) do { while(!flags); flags=1; } while(0)
+#define IRQ_UNLOCK(flags) do {flags=0;} while(0)
+#define cli() do { } while(0)
+#define sei() do { } while(0)
 
 #endif /*COMPILE_ON_ROBOT*/
 
