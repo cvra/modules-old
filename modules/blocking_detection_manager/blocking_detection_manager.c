@@ -67,12 +67,29 @@ void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16
 /** function to be called periodically */
 void bd_manage(struct blocking_detection * bd)
 {
+	int32_t consign_speed, real_speed;
 
+	consign_speed = cs_get_filtered_consign(bd->cs) - bd->old_consign;
+	real_speed = cs_get_filtered_feedback(bd->cs) - bd->old_feedback;
+
+	if(abs(consign_speed - real_speed) > bd->err_thres)
+	{
+		bd->cpt++;
+	}
+	else
+	{
+		bd->cpt=0;
+	}
+
+	bd->old_consign = cs_get_filtered_consign(bd->cs);
+	bd->old_feedback = cs_get_filtered_feedback(bd->cs);
+
+	/*
 	if(abs(cs_get_error(bd->cs)) > bd->err_thres) {
         bd->cpt++;
     }
     else
-        bd->cpt=0;
+        bd->cpt=0;*/
 }
 
 /** get value of blocking detection */
