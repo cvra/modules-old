@@ -128,7 +128,7 @@ do {                                     \
 #define reset() do {                         \
     NIOS2_WRITE_STATUS(0);                   \
     NIOS2_WRITE_IENABLE(0);                  \
-    ((void (*) (void)) NIOS2_RESET_ADDR) (); \
+    ((void (*) (void)) 0x04000000) (); \
     } while(0)
     
 #endif

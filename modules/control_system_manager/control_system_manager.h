@@ -53,6 +53,9 @@ struct cs {
         int32_t (*feedback_filter)(void*, int32_t);
         void* feedback_filter_params;
 
+        int32_t (*output_filter)(void*, int32_t);
+        void* output_filter_params;
+
         int32_t (*process_out)(void*);
         void* process_out_params;
 
@@ -85,6 +88,11 @@ void  cs_set_correct_filter(struct cs* cs,
 void  cs_set_feedback_filter(struct cs* cs,
                                     int32_t (*feedback_filter)(void*, int32_t),
                                     void* feedback_filer_params);
+
+/** Set the cs output_filter fields in the cs structure */
+void  cs_set_output_filter(struct cs* cs,
+                                    int32_t (*output_filter)(void*, int32_t),
+                                    void* output_filer_params);
 
 /** Set the cs process_in fields in the cs structure */
 void cs_set_process_in(struct cs* cs,

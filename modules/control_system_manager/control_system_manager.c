@@ -157,6 +157,15 @@ void cs_set_feedback_filter(struct cs* cs, int32_t (*feedback_filter)(void*, int
     IRQ_UNLOCK(flags);
 }
 
+/** Set the cs output_filter fields in the cs structure */
+void  cs_set_output_filter(struct cs* cs, int32_t (*output_filter)(void*, int32_t), void* output_filter_params) {
+    uint8_t flags;
+    IRQ_LOCK(flags);
+    cs->output_filter = output_filter;
+    cs->output_filter_params = output_filter_params;
+    IRQ_UNLOCK(flags);
+}
+
 
 void cs_set_process_in(struct cs* cs, void (*process_in)(void*, int32_t), void* process_in_params)
 {        
@@ -216,7 +225,11 @@ int32_t cs_do_process(struct cs* cs, int32_t consign)
     /* apply the correct filter to error_value and put it into out_value */
     cs->out_value = safe_filter(cs->correct_filter, cs->correct_filter_params, cs->error_value);
  
+    cs->out_value = safe_filter(cs->output_filter, cs->output_filter_params, cs->out_value);
+
     debug_printf("%ld\n", cs->out_value);
+
+
 
     /* send out_value to process in*/
     safe_setprocessin (cs->process_in, cs->process_in_params, cs->out_value);
