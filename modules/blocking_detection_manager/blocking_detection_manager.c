@@ -69,7 +69,8 @@ void bd_manage(struct blocking_detection * bd)
 {
 	int32_t consign_speed, real_speed;
 
-	consign_speed = cs_get_filtered_consign(bd->cs) - bd->old_consign;
+	//consign_speed = cs_get_filtered_consign(bd->cs) - bd->old_consign;
+	consign_speed = cs_get_out(bd->cs);// - bd->old_consign;
 	real_speed = cs_get_filtered_feedback(bd->cs) - bd->old_feedback;
 
 	if(abs(consign_speed - real_speed) > bd->err_thres)
@@ -81,7 +82,8 @@ void bd_manage(struct blocking_detection * bd)
 		bd->cpt=0;
 	}
 
-	bd->old_consign = cs_get_filtered_consign(bd->cs);
+	//bd->old_consign = cs_get_filtered_consign(bd->cs);
+	bd->old_consign = cs_get_out(bd->cs);
 	bd->old_feedback = cs_get_filtered_feedback(bd->cs);
 
 	/*
