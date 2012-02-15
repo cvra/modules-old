@@ -53,6 +53,10 @@
 #define _OBSTACLE_AVOIDANCE_H_
 
 #include <obstacle_avoidance_config.h>
+#include <polygon.h>
+#include <vect_base.h>
+#include <lines.h>
+#include <circles.h>
 
 struct obstacle_avoidance {
 	poly_t polys[MAX_POLY];  /* tab of polygons (obstacles) */

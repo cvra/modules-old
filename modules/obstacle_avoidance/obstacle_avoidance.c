@@ -23,7 +23,6 @@
 
 #include <aversive.h>
 #include <aversive/error.h>
-#include <aversive/pgmspace.h>
 
 #include <math.h>
 #include <stdio.h>
