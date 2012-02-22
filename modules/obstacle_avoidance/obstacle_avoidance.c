@@ -156,15 +156,15 @@ void oa_dump(void)
 	poly_t *poly;
 	point_t *pt;
 
-	printf_P(PSTR("-- OA dump --\r\n"));
-	printf_P(PSTR("nb_polys: %d\r\n"), oa.cur_poly_idx);
-	printf_P(PSTR("nb_pts: %d\r\n"), oa.cur_pt_idx);
+	fprintf(stderr,"-- OA dump --\r\n");
+	fprintf(stderr,"nb_polys: %d\r\n", oa.cur_poly_idx);
+	fprintf(stderr,"nb_pts: %d\r\n", oa.cur_pt_idx);
 	for (i=0; i<oa.cur_poly_idx; i++) {
 		poly = &oa.polys[i];
-		printf_P(PSTR("poly #%d\r\n"), i);
+		fprintf(stderr,"poly #%d\r\n", i);
 		for (j=0; j<poly->l; j++) {
 			pt = &poly->pts[j];
-			printf_P(PSTR("  pt #%d (%2.2f,%2.2f)\r\n"), j, pt->x, pt->y);
+			fprintf(stderr,"  pt #%d (%2.2f,%2.2f)\r\n", j, pt->x, pt->y);
 		}
 	}
 }
@@ -274,7 +274,7 @@ get_path(poly_t *polys, uint8_t *rays)
 
 		if (oa.valid[GET_PT(polys[p].pts[pt])]==0) {
 			DEBUG(E_OA, "invalid path!");
-			return -1;
+			return -2;
 		}
 
 		p1 = oa.p[GET_PT(polys[p].pts[pt])];

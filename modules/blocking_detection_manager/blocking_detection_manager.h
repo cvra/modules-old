@@ -45,9 +45,6 @@ struct blocking_detection {
 	uint16_t cpt_thres;
 	uint16_t cpt;
 	uint16_t err_thres;
-	int32_t old_feedback;
-	int32_t old_consign;
-
 };
 
 /** init module, give the cs as parameter */
