@@ -111,8 +111,6 @@ do {                                     \
 
 /* a few asm utilities */
 
-
-
 #ifndef COMPILE_ON_ROBOT
 #define nop() do {} while(0)
 #define nothing() do {} while(0)
@@ -156,16 +154,6 @@ do {                                     \
 #define false FALSE
 #define True TRUE
 #define true TRUE
-
-
-/** DDR and PINS from port adress */
-#define DDR(port) (*(&(port) -1))
-#define PIN(port) (*(&(port) -2))
-
-/** open collector simulation macros */
-#define OPEN_CO_INIT(port, bit) sbi(port,bit)
-#define OPEN_CO_HIGH(port, bit) cbi(DDR(port),bit)
-#define OPEN_CO_LOW(port, bit)  cbi(DDR(port),bit)
 
 /** deprecated macros in libc, but they're almost used, so we implement them again ;) */
 #ifndef cbi
