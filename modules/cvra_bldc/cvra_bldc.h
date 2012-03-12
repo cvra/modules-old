@@ -17,4 +17,10 @@ int32_t cvra_bldc_get_encoder(void * device);
 /** Sets encoder. */
 void cvra_bldc_set_encoder(void * device, int32_t v);
 
+/** Gets motor position. */
+int32_t cvra_bldc_get_motpos(void * device);
+
+/** Sets motor position. */
+void cvra_bldc_set_motpos(void * device, int32_t v);
+
 #endif
