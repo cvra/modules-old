@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComDebraFpga", "ComDebraFpga.csproj", "{6F119C22-3B99-435C-8E49-129D04D68806}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "grinlib.clPortCom", "..\..\Composants.NET\grinlib.clPortCom\grinlib.clPortCom.csproj", "{950A6401-D8C8-48A9-B384-40C3C8140476}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "grinlib.clPortCom", "..\grinlib.clPortCom\grinlib.clPortCom.csproj", "{950A6401-D8C8-48A9-B384-40C3C8140476}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

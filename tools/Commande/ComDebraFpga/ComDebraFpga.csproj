@@ -83,7 +83,7 @@
     <None Include="simu2012_table.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Composants.NET\grinlib.clPortCom\grinlib.clPortCom.csproj">
+    <ProjectReference Include="..\grinlib.clPortCom\grinlib.clPortCom.csproj">
       <Project>{950A6401-D8C8-48A9-B384-40C3C8140476}</Project>
       <Name>grinlib.clPortCom</Name>
     </ProjectReference>
