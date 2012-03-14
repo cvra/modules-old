@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>lib.clPortCom</name>
+    </assembly>
+    <members>
+        <member name="T:lib.PortCom.clPortCom">
+            <summary>
+            Gestion du port série
+            </summary>
+        </member>
+        <member name="M:lib.PortCom.clPortCom.Finalize">
+            <summary>
+            Destructeur
+            </summary>
+        </member>
+        <member name="M:lib.PortCom.clPortCom.Connect(System.String,System.Int32)">
+            <summary>
+            Connection à un port série
+            </summary>
+            <param name="NumPort">Numéro sous la forme "COM1"</param>
+            <param name="Baudrate">Débit en baud (ex: "57600")</param>
+        </member>
+        <member name="M:lib.PortCom.clPortCom.Disconnect">
+            <summary>
+            Déconnection
+            </summary>
+        </member>
+        <member name="M:lib.PortCom.clPortCom.IsOpen">
+            <summary>
+            Contrôle si le port série est ouvert
+            </summary>
+            <returns>Le port est ouvert ou non</returns>
+        </member>
+        <member name="M:lib.PortCom.clPortCom.Send(System.String)">
+            <summary>
+            Envois de donnée
+            </summary>
+            <param name="Data">Chaine à envoyer</param>
+            <returns>Vrais si ok</returns>
+        </member>
+        <member name="M:lib.PortCom.clPortCom.Send(System.Byte[])">
+            <summary>
+            Envois de donnée
+            </summary>
+            <param name="Data">Données en byte</param>
+            <returns></returns>
+        </member>
+        <member name="M:lib.PortCom.clPortCom.OnEventOccure(lib.PortCom.clPortCom.ETAT_CONN,System.String,System.Byte[])">
+            <summary>
+            Evénement du port série
+            </summary>
+            <param name="TypeEvent"></param>
+            <param name="Data"></param>
+            <param name="DataByte"></param>
+        </member>
+        <member name="P:lib.PortCom.clPortCom.ParentForm">
+            <summary>
+            Forme parente pour synchornisation
+            </summary>
+        </member>
+        <member name="E:lib.PortCom.clPortCom.OnEvent">
+            <summary>
+            Evénement du port série
+            </summary>
+        </member>
+        <member name="T:lib.PortCom.clPortCom.ETAT_CONN">
+            <summary>
+            Messages des évenements
+            </summary>
+        </member>
+        <member name="F:lib.PortCom.clPortCom.ETAT_CONN.CLIENT_CONNECTED">
+            <summary>
+            Un client est connecté
+            </summary>
+        </member>
+        <member name="F:lib.PortCom.clPortCom.ETAT_CONN.CLIENT_DISCONNECTED">
+            <summary>
+            Un client est déconnect
+            </summary>
+        </member>
+        <member name="F:lib.PortCom.clPortCom.ETAT_CONN.DATA_RECEIVED">
+            <summary>
+            Des données sont reçues
+            </summary>
+        </member>
+        <member name="F:lib.PortCom.clPortCom.ETAT_CONN.DATA_SENT">
+            <summary>
+            Des données ont été envoyées
+            </summary>
+        </member>
+        <member name="F:lib.PortCom.clPortCom.ETAT_CONN.WAITING_CLIENT">
+            <summary>
+            Attente d'un client
+            </summary>
+        </member>
+        <member name="F:lib.PortCom.clPortCom.ETAT_CONN.ERROR">
+            <summary>
+            Une erreure est apparue, voir e.Data
+            </summary>
+        </member>
+        <member name="T:lib.PortCom.clPortCom.EventDelegate">
+            <summary>
+            Evenement du port série
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:lib.PortCom.clPortCom.EventEventArgs">
+            <summary>
+            Valeurs de l'évenement
+            </summary>
+        </member>
+        <member name="M:lib.PortCom.clPortCom.EventEventArgs.#ctor(lib.PortCom.clPortCom.ETAT_CONN,System.String,System.Byte[])">
+            <summary>
+            Création des données d'évenement
+            </summary>
+            <param name="typeevent"></param>
+            <param name="data"></param>
+            <param name="dataByte"></param>
+        </member>
+        <member name="M:lib.PortCom.clPortCom.EventEventArgs.#ctor">
+            <summary>
+            Valeurs par défaut
+            </summary>
+        </member>
+        <member name="F:lib.PortCom.clPortCom.EventEventArgs.Data">
+            <summary>
+            Données en string
+            </summary>
+        </member>
+        <member name="F:lib.PortCom.clPortCom.EventEventArgs.DataByte">
+            <summary>
+            Données en byte
+            </summary>
+        </member>
+        <member name="F:lib.PortCom.clPortCom.EventEventArgs.TypeEvent">
+            <summary>
+            Type d'évenement
+            </summary>
+        </member>
+    </members>
+</doc>
