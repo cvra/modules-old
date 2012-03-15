@@ -1,6 +1,17 @@
 #include <aversive.h>
 #include <cvra_dc.h>
 
+
+/* Registers */
+#define DC_CNT0_REGISTER_OFFSET 0x00
+#define DC_PWM0_REGISTER_OFFSET 0x01
+#define DC_CNT1_REGISTER_OFFSET 0x02
+#define DC_PWM1_REGISTER_OFFSET 0x03
+
+
+#define DC_PWM_MAX_VALUE 500
+
+
 /** Resets the device by setting all registers to 0. */
 void cvra_dc_reset(cvra_dc device) {
     IOWR(device, DC_CNT0_REGISTER_OFFSET, 0);

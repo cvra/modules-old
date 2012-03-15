@@ -30,6 +30,8 @@
 #define RESERVED_REGISTER           4
 #define SLAVE_SELECT_MASK_REGISTER  5
 
+void cvra_adc_manage(void *a);
+
 void cvra_adc_init(cvra_adc_t *adc, void *adress , int irq_number) {
     int i=8;
     int val;
