@@ -242,7 +242,6 @@ intersect_segment(const point_t *s1, const point_t *s2,
 	return 1;
 
 }
-
 void line_translate(line_t *l, vect_t *v)
 {
 	l->c -= (l->a * v->x + l->b * v->y);

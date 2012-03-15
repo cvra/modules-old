@@ -22,7 +22,8 @@
 #ifndef _VECT_BASE_H_
 #define _VECT_BASE_H_
 
-/** \addtogroup Geometrie */
+/** \addtogroup Geometrie
+ * @{ */
 
 typedef struct _vect_t {
   float x;
@@ -34,26 +35,37 @@ typedef struct _point_t {
   float y;
 } point_t;
 
-/* Return scalar product */
+/** Computes dot product between 2 vectors. */
 float vect_pscal(vect_t *v, vect_t *w);
 
-/* Return Z of vectorial product */
+/** Returns the Z component of a cross product. */
 float vect_pvect(vect_t *v, vect_t *w);
 
-/* Return scalar product */
+/** Returns the sign of the dot product. */
 int8_t vect_pscal_sign(vect_t *v, vect_t *w);
 
-/* Return Z of vectorial product */
+/** Returns the sign of the Z component of the cross product. */
 int8_t vect_pvect_sign(vect_t *v, vect_t *w);
 
-/* norm of a vector */
+/** Computes the norm of a vector. */
 float xy_norm(float x1, float y1, float x2, float y2);
+
+/** Computes the norm of a vector. */
 float pt_norm(const point_t *p1, const point_t *p2);
+
+/** Computes the norm of a vector. */
 float vect_norm(const vect_t *v);
+
+/** Rotates v by 90 deg CCW */
 void vect_rot_trigo(vect_t *v);
+
+/** Rotates V by 90 deg CW. */
 void vect_rot_retro(vect_t *v);
+
+/** Returns the polar angle of v. */
 float vect_get_angle(vect_t *v, vect_t *w);
 
+/** Scales v by a l factor. */
 void vect_resize(vect_t *v, float l);
 /** @} */
 #endif /* _VECT_BASE_H_ */
