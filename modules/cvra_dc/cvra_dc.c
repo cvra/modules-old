@@ -11,7 +11,6 @@
 
 #define DC_PWM_MAX_VALUE 500
 
-
 /** Resets the device by setting all registers to 0. */
 void cvra_dc_reset(cvra_dc device) {
     IOWR(device, DC_CNT0_REGISTER_OFFSET, 0);
