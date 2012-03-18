@@ -45,7 +45,8 @@ namespace ComDebraFpga
     ask_all_adc = 53,
     arm_mode = 100,
     drop = 101,
-    arm_calibration = 102
+    arm_calibration = 102,
+    arm_position = 103
   }
 
   class ComCmd
@@ -96,6 +97,8 @@ namespace ComDebraFpga
     // Taille complète du paquet ABC + \n compris
     private int[] packetSize = new int[] { 0, 13, 6, 21, 5 + 2 * 7 };
     private bool isRunning = true;
+
+    
 
     public clMain(frmMain Main)
     {

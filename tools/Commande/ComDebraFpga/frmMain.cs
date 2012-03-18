@@ -36,12 +36,7 @@ namespace ComDebraFpga
       // Actions
       lstCmd.Add(new ComCmd(LstPos.reset, "Reset", ""));
       lstCmd.Add(new ComCmd(LstPos.power, "Power", "1"));
-      lstCmd.Add(new ComCmd(LstPos.pump, "Pump", "0,0"));
-      lstCmd.Add(new ComCmd(LstPos.pump, "Pump", "0,1"));
-      lstCmd.Add(new ComCmd(LstPos.pump, "Pump", "0,2"));
-      lstCmd.Add(new ComCmd(LstPos.pump, "Pump", "1,0"));
-      lstCmd.Add(new ComCmd(LstPos.pump, "Pump", "1,1"));
-      lstCmd.Add(new ComCmd(LstPos.pump, "Pump", "1,2"));
+
 
       // Commande déplacement
       lstCmd.Add(new ComCmd(LstPos.hard_stop, "Hard stop", ""));
@@ -65,6 +60,15 @@ namespace ComDebraFpga
       }
 
       m = new clMain(this);
+
+      cmbBrasDroit.SelectedIndex = 0;
+      cmbBrasGauche.SelectedIndex = 0;
+
+      lblArmX.Text = trackArmX.Value.ToString();
+      lblArmY.Text = trackArmY.Value.ToString();
+      lblArmZ.Text = trackArmZ.Value.ToString();
+
+
     }
 
     private void frmMain_Load(object sender, EventArgs e)
@@ -281,5 +285,55 @@ namespace ComDebraFpga
       m.sendCmd(LstPos.goto_direct_backward, new int[] { 250, 250 });
     }
 
+    private void trackPumpG_Scroll(object sender, EventArgs e)
+    {
+      sendCmdPump(1);
+    }
+
+    private void trackPumpD_Scroll(object sender, EventArgs e)
+    {
+      sendCmdPump(0);
+    }
+
+    private void sendCmdPump(int numPump)
+    {
+      int val = numPump == 0 ? trackPumpD.Value : trackPumpG.Value;
+      val = val == -1 ? 2 : val;
+      if (val != 0)
+      {
+        m.sendCmdByte(LstPos.pump, new int[] { numPump, 0 });
+        System.Threading.Thread.Sleep(2000);
+      }
+
+      m.sendCmdByte(LstPos.pump, new int[] { numPump, val });
+    }
+
+    private void trackArmX_Scroll(object sender, EventArgs e)
+    {
+      lblArmX.Text = trackArmX.Value.ToString();
+      sendArmLeft();
+    }
+
+    private void trackArmY_Scroll(object sender, EventArgs e)
+    {
+      lblArmY.Text = trackArmY.Value.ToString();
+      sendArmLeft();
+    }
+
+    private void trackArmZ_Scroll(object sender, EventArgs e)
+    {
+      lblArmZ.Text = trackArmZ.Value.ToString();
+      sendArmLeft();
+    }
+
+    private void sendArmLeft()
+    {
+      m.sendCmd(LstPos.arm_position, new int[] { 0 | (0<<8), trackArmX.Value, trackArmY.Value, trackArmZ.Value });
+    }
+
+    private void cmbBrasGauche_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      m.sendCmdByte(LstPos.arm_mode, new int[] {cmbBrasGauche.SelectedIndex, cmbBrasDroit.SelectedIndex });
+    }
   }
 }
