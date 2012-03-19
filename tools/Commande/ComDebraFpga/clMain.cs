@@ -11,6 +11,7 @@ namespace ComDebraFpga
   enum TypeVal
   {
     info,
+    infoNoLn,
     posX,
     posY,
     angle,
@@ -94,10 +95,11 @@ namespace ComDebraFpga
     private List<byte> curCmdIn = new List<byte>();
     private List<byte[]> lstCmd = new List<byte[]>();
 
-    // Taille complète du paquet ABC + \n compris
-    private int[] packetSize = new int[] { 0, 13, 6, 21, 5 + 2 * 7 };
-    private bool isRunning = true;
 
+    // Taille complète du paquet ABC + \n compris
+    private int[] packetSize = new int[] { 0, 5 + 2 * 8, 6, 21, 5 + 2 * 7 };
+    private bool isRunning = true;
+    public DispInfo info = new DispInfo();
     
 
     public clMain(frmMain Main)
@@ -214,7 +216,11 @@ namespace ComDebraFpga
     private void reportError(string val)
     {
       curCmdIn.Clear();
-      main.addLog(new ComElem(TypeVal.info, "Cmd Error:" + val + " " + buffer[0] + " "));
+      ASCIIEncoding ascii = new ASCIIEncoding();
+      char[] valChar = ascii.GetChars(buffer.ToArray(), 0, 1);
+      byte[] bytes = ascii.GetBytes("abc");
+//      main.addLog(new ComElem(TypeVal.info, "Cmd Error:" + val + " " + buffer[0] + "(" + valChar[0] + ")"));
+      main.addLog(new ComElem(TypeVal.infoNoLn, valChar[0]+""));
     }
 
     private int getInt16(byte bH, byte bL)
@@ -277,17 +283,24 @@ namespace ComDebraFpga
       {
         // Position du robot
         case 1:
-          main.addLog(new ComElem(TypeVal.posX, getInt16(cmd[4], cmd[5]).ToString()));
-          main.addLog(new ComElem(TypeVal.posY, getInt16(cmd[6], cmd[7]).ToString()));
-          main.addLog(new ComElem(TypeVal.angle, getInt16(cmd[8], cmd[9]).ToString()));
-          main.addLog(new ComElem(TypeVal.status, getInt16(cmd[10], cmd[11]).ToString()));
+          int k = 4;
+          info.PosRobot = getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]) + " A= " + getInt16(cmd[k++], cmd[k++]);
+          info.status = getInt16(cmd[k++], cmd[k++]).ToString();
+          info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]);
+          info.ArmRight = "";
+          info.uptime = getInt16(cmd[k++], cmd[k++]);
+          info.hasNewData = true;
+          //main.addLog(new ComElem(TypeVal.posX, getInt16(cmd[4], cmd[5]).ToString()));
+          //main.addLog(new ComElem(TypeVal.posY, getInt16(cmd[6], cmd[7]).ToString()));
+          //main.addLog(new ComElem(TypeVal.angle, getInt16(cmd[8], cmd[9]).ToString()));
+          //main.addLog(new ComElem(TypeVal.status, getInt16(cmd[10], cmd[11]).ToString()));
 
-          string tmpVal = "";
-          for (int i = 0; i < cmd.Length; i++)
-          {
-            tmpVal += cmd[i].ToString() + " ";
-          }
-          //    main.addLog(new ComElem(TypeVal.info,tmpVal));
+          //string tmpVal = "";
+          //for (int i = 0; i < cmd.Length; i++)
+          //{
+          //  tmpVal += cmd[i].ToString() + " ";
+          //}
+          ////    main.addLog(new ComElem(TypeVal.info,tmpVal));
           break;
         case 2:
           string tmpVal2 = "";

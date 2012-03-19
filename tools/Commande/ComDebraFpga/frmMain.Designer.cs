@@ -63,6 +63,9 @@
           this.numDist = new System.Windows.Forms.NumericUpDown();
           this.label4 = new System.Windows.Forms.Label();
           this.groupBox2 = new System.Windows.Forms.GroupBox();
+          this.lbltrackPumpD = new System.Windows.Forms.Label();
+          this.trackPumpD = new System.Windows.Forms.TrackBar();
+          this.label1 = new System.Windows.Forms.Label();
           this.trackPumpG = new System.Windows.Forms.TrackBar();
           this.groupBox6 = new System.Windows.Forms.GroupBox();
           this.label6 = new System.Windows.Forms.Label();
@@ -77,9 +80,6 @@
           this.cmbBrasDroit = new System.Windows.Forms.ComboBox();
           this.butStopAll = new System.Windows.Forms.Button();
           this.propertyVar = new System.Windows.Forms.PropertyGrid();
-          this.label1 = new System.Windows.Forms.Label();
-          this.lbltrackPumpD = new System.Windows.Forms.Label();
-          this.trackPumpD = new System.Windows.Forms.TrackBar();
           this.trackArmX = new System.Windows.Forms.TrackBar();
           this.trackArmY = new System.Windows.Forms.TrackBar();
           this.trackArmZ = new System.Windows.Forms.TrackBar();
@@ -94,11 +94,11 @@
           ((System.ComponentModel.ISupportInitialize)(this.numAngle)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.numDist)).BeginInit();
           this.groupBox2.SuspendLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.trackPumpD)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.trackPumpG)).BeginInit();
           this.groupBox6.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numDropX)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.numDropY)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackPumpD)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.trackArmX)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.trackArmY)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.trackArmZ)).BeginInit();
@@ -458,6 +458,36 @@
           this.groupBox2.TabStop = false;
           this.groupBox2.Text = "Commandes";
           // 
+          // lbltrackPumpD
+          // 
+          this.lbltrackPumpD.AutoSize = true;
+          this.lbltrackPumpD.Location = new System.Drawing.Point(114, 123);
+          this.lbltrackPumpD.Name = "lbltrackPumpD";
+          this.lbltrackPumpD.Size = new System.Drawing.Size(51, 13);
+          this.lbltrackPumpD.TabIndex = 25;
+          this.lbltrackPumpD.Text = "Pompe D";
+          // 
+          // trackPumpD
+          // 
+          this.trackPumpD.AutoSize = false;
+          this.trackPumpD.Location = new System.Drawing.Point(112, 140);
+          this.trackPumpD.Maximum = 1;
+          this.trackPumpD.Minimum = -1;
+          this.trackPumpD.Name = "trackPumpD";
+          this.trackPumpD.Size = new System.Drawing.Size(65, 40);
+          this.trackPumpD.TabIndex = 24;
+          this.trackPumpD.TickStyle = System.Windows.Forms.TickStyle.Both;
+          this.trackPumpD.Scroll += new System.EventHandler(this.trackPumpD_Scroll);
+          // 
+          // label1
+          // 
+          this.label1.AutoSize = true;
+          this.label1.Location = new System.Drawing.Point(114, 69);
+          this.label1.Name = "label1";
+          this.label1.Size = new System.Drawing.Size(51, 13);
+          this.label1.TabIndex = 23;
+          this.label1.Text = "Pompe G";
+          // 
           // trackPumpG
           // 
           this.trackPumpG.AutoSize = false;
@@ -610,36 +640,6 @@
           this.propertyVar.Size = new System.Drawing.Size(269, 263);
           this.propertyVar.TabIndex = 11;
           // 
-          // label1
-          // 
-          this.label1.AutoSize = true;
-          this.label1.Location = new System.Drawing.Point(114, 69);
-          this.label1.Name = "label1";
-          this.label1.Size = new System.Drawing.Size(51, 13);
-          this.label1.TabIndex = 23;
-          this.label1.Text = "Pompe G";
-          // 
-          // lbltrackPumpD
-          // 
-          this.lbltrackPumpD.AutoSize = true;
-          this.lbltrackPumpD.Location = new System.Drawing.Point(114, 123);
-          this.lbltrackPumpD.Name = "lbltrackPumpD";
-          this.lbltrackPumpD.Size = new System.Drawing.Size(51, 13);
-          this.lbltrackPumpD.TabIndex = 25;
-          this.lbltrackPumpD.Text = "Pompe D";
-          // 
-          // trackPumpD
-          // 
-          this.trackPumpD.AutoSize = false;
-          this.trackPumpD.Location = new System.Drawing.Point(112, 140);
-          this.trackPumpD.Maximum = 1;
-          this.trackPumpD.Minimum = -1;
-          this.trackPumpD.Name = "trackPumpD";
-          this.trackPumpD.Size = new System.Drawing.Size(65, 40);
-          this.trackPumpD.TabIndex = 24;
-          this.trackPumpD.TickStyle = System.Windows.Forms.TickStyle.Both;
-          this.trackPumpD.Scroll += new System.EventHandler(this.trackPumpD_Scroll);
-          // 
           // trackArmX
           // 
           this.trackArmX.AutoSize = false;
@@ -649,6 +649,7 @@
           this.trackArmX.Name = "trackArmX";
           this.trackArmX.Size = new System.Drawing.Size(244, 23);
           this.trackArmX.TabIndex = 12;
+          this.trackArmX.Value = 160;
           this.trackArmX.Scroll += new System.EventHandler(this.trackArmX_Scroll);
           // 
           // trackArmY
@@ -660,7 +661,6 @@
           this.trackArmY.Name = "trackArmY";
           this.trackArmY.Size = new System.Drawing.Size(244, 23);
           this.trackArmY.TabIndex = 13;
-          this.trackArmY.Value = 100;
           this.trackArmY.Scroll += new System.EventHandler(this.trackArmY_Scroll);
           // 
           // trackArmZ
@@ -671,7 +671,6 @@
           this.trackArmZ.Name = "trackArmZ";
           this.trackArmZ.Size = new System.Drawing.Size(244, 23);
           this.trackArmZ.TabIndex = 14;
-          this.trackArmZ.Value = 100;
           this.trackArmZ.Scroll += new System.EventHandler(this.trackArmZ_Scroll);
           // 
           // lblArmX
@@ -736,12 +735,12 @@
           ((System.ComponentModel.ISupportInitialize)(this.numDist)).EndInit();
           this.groupBox2.ResumeLayout(false);
           this.groupBox2.PerformLayout();
+          ((System.ComponentModel.ISupportInitialize)(this.trackPumpD)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.trackPumpG)).EndInit();
           this.groupBox6.ResumeLayout(false);
           this.groupBox6.PerformLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numDropX)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.numDropY)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackPumpD)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.trackArmX)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.trackArmY)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.trackArmZ)).EndInit();

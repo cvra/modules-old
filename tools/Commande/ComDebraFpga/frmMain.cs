@@ -109,6 +109,12 @@ namespace ComDebraFpga
         traitLastLog();
         lstLog.RemoveAt(0);
       }
+
+      if (m.info.hasNewData)
+      {
+        propertyVar.SelectedObject = m.info;
+        m.info.hasNewData = false;
+      }
     }
 
     private void traitLastLog()
@@ -118,7 +124,9 @@ namespace ComDebraFpga
         case TypeVal.info:
           rtbLog.AppendText(lstLog[0].val + "\r\n");
           break;
-        //case TypeVal.posX:
+        case TypeVal.infoNoLn:
+          rtbLog.AppendText(lstLog[0].val);
+          break;        //case TypeVal.posX:
         //  lblPosX.Text = "X:" + lstLog[0].val;
         //  break;
         //case TypeVal.posY:
