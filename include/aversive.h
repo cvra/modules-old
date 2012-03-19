@@ -40,7 +40,10 @@
 
 #else
 
+/** Reimplementation de IORD du NIOS2 pour compiler sur le PC */
 #define IORD(adress, offset) (*((int32_t *)adress+offset))
+
+/** Reimplementation de IOWR du NIOS2 pour compiler sur le PC */
 #define IOWR(adress, offset, data) (*((int32_t *)adress+offset) = data)
 
 #endif
@@ -112,6 +115,7 @@ do {                                     \
 /* a few asm utilities */
 
 #ifndef COMPILE_ON_ROBOT
+
 #define nop() do {} while(0)
 #define nothing() do {} while(0)
 #define reset() do {} while(0)
@@ -122,11 +126,13 @@ do {                                     \
 #define nop() do {} while(0)
 #define nothing() do {} while(0)
 
-/* Found on http://www.altera.com/support/kdb/solutions/rd05062005_584.html */
+/** Resets the robot by jumping to the reset address.
+ * @bug L'adresse de retour est hardcodee (0x04000000). pas bien...
+ * @note Found on http://www.altera.com/support/kdb/solutions/rd05062005_584.html */
 #define reset() do {                         \
     NIOS2_WRITE_STATUS(0);                   \
     NIOS2_WRITE_IENABLE(0);                  \
-    ((void (*) (void)) 0x04000000) (); \
+    ((void (*) (void)) 0x04000000) (); 		 \
     } while(0)
     
 #endif

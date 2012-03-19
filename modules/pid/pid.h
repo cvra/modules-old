@@ -52,16 +52,27 @@ struct pid_filter
 	int32_t prev_out; /**< previous out command (for debug only) */
 };
 
-/** init pid */
+/** Inits pid */
 void pid_init(struct pid_filter *p);
 
-/** reset state (derivate and intergral state) */
+/** Resets state (derivate and integral state) */
 void pid_reset(struct pid_filter *p);
 
-/* Use these functions to change one parameter on pid_filter structure */
-void pid_set_gains(struct pid_filter *p, int16_t gp, int16_t gi, int16_t gd) ;
+/** Set the Kp, Gi and Gd gains */
+void pid_set_gains(struct pid_filter *p, int16_t gp, int16_t gi, int16_t gd);
+
+/** Sets the maximums of the PID */
 void pid_set_maximums(struct pid_filter *p, int32_t max_in, int32_t max_I, int32_t max_out);
+
+/** Sets the output shift value.
+ *
+ * At the end of the PID computation, the value is shifted : value >>= out_shift;
+ * @note Default value is 0. */
 void pid_set_out_shift(struct pid_filter *p, uint8_t out_shift);
+
+/** Sets the number of samples to use for the derivate filter.
+ * 
+ * @note Default value is 1 */
 int8_t pid_set_derivate_filter(struct pid_filter *p, uint8_t nb_samples);
 
 /* accessors of all parameter of pid structure*/

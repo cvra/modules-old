@@ -32,22 +32,24 @@
  */
 
 
+/** If defined, the modules compensate for the centrifugal force */
 #define CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
 
 /** 
  * structure that stores the number of impulsions that corresponds to
- * a mm or a degre. We also need to specify the track of the
+ * a mm or a degre. We also need to specify the track of the robot.
  */
 struct robot_physical_params 
 {
-	double track_mm;
-	double distance_imp_per_mm;
+	double track_mm;			/** Track (distance between wheels) in mm */
+	double distance_imp_per_mm;	/** Impulsions per mm */
 };
 
 
 /** 
- * stores a cartesian position on the area in double
- * WARNING : a is stored in radian
+ * Stores a cartesian position in double.
+ *
+ * @note a is stocked in radian
  */
 struct xya_position 
 {
@@ -58,7 +60,8 @@ struct xya_position
 
 /**
  * stores a cartesian position on the area in integers
- * WARNING : a is stored in degree
+ * 
+ * @note a is stocked in degrees.
  */
 struct xya_position_s16
 {
@@ -69,18 +72,19 @@ struct xya_position_s16
 
 /**
  * Structure that stores everthing we need to get and stores the
- * position of the robot 
+ * position of the robot. 
  */
 struct robot_position
 {
-	uint8_t use_ext;
-	struct robot_physical_params phys;
-	struct xya_position pos_d;
-	struct xya_position_s16 pos_s16;
-	struct rs_polar prev_encoders;
-	struct robot_system *rs;
+	uint8_t use_ext;					/** Only useful when we have 2 sets of encoders */
+	struct robot_physical_params phys;	/** The physical parameters of the robot */
+	struct xya_position pos_d;			/** Position of the robot in double. */
+	struct xya_position_s16 pos_s16;	/** Position of the robot in integers */
+	struct rs_polar prev_encoders;		/** Previous state of the encoders */
+	struct robot_system *rs;			/** Robot system used for the computations */
+	
 #ifdef CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE	
-	double centrifugal_coef;
+	double centrifugal_coef;			/** Coefficient for the centrifugal computation */
 #endif
 };
 
@@ -96,7 +100,10 @@ void position_set_centrifugal_coef(struct robot_position *pos, double coef);
 /** Set a new robot position */
 void position_set(struct robot_position *pos, int16_t x, int16_t y, double a_deg);
 
+/** Tells the robot to use the separate wheels encoders (default) */
 void position_use_ext(struct robot_position *pos);
+
+/** Tells the robot to use the motor encoders (disabled) */
 void position_use_mot(struct robot_position *pos);
 
 

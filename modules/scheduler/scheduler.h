@@ -111,12 +111,9 @@ static inline int8_t scheduler_add_periodical_event(void (*f)(void *), void * da
  */
 int8_t scheduler_del_event(int8_t num);
 
-/** Function called by the interruption. It is public in case of host
- *  version, because you have to call it by hand. In AVR version, you
- *  don't have to do anything with this function, it is called
- *  automatilcally by the timer interruption, except if
- *  CONFIG_MODULE_SCHEDULER_MANUAL is defined. In this case you have
- *  to call it manually too. */
+/** Function called by the interruption.
+ * 
+ * @bug This function does not lock the interrupts although it should. */
 void scheduler_interrupt(void);
 
 /** @} */
