@@ -47,7 +47,8 @@ namespace ComDebraFpga
     arm_mode = 100,
     drop = 101,
     arm_calibration = 102,
-    arm_position = 103
+    arm_position = 103,
+    gen_func = 250
   }
 
   class ComCmd
@@ -97,7 +98,7 @@ namespace ComDebraFpga
 
 
     // Taille complète du paquet ABC + \n compris
-    private int[] packetSize = new int[] { 0, 5 + 2 * 8, 6, 21, 5 + 2 * 7 };
+    private int[] packetSize = new int[] { 0, 5 + 2 * 9, 6, 21, 5 + 2 * 7 };
     private bool isRunning = true;
     public DispInfo info = new DispInfo();
     
@@ -289,6 +290,7 @@ namespace ComDebraFpga
           info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]);
           info.ArmRight = "";
           info.uptime = getInt16(cmd[k++], cmd[k++]);
+          info.CPU = getInt16(cmd[k++], cmd[k++]);
           info.hasNewData = true;
           //main.addLog(new ComElem(TypeVal.posX, getInt16(cmd[4], cmd[5]).ToString()));
           //main.addLog(new ComElem(TypeVal.posY, getInt16(cmd[6], cmd[7]).ToString()));

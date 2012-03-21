@@ -80,12 +80,11 @@
           this.cmbBrasDroit = new System.Windows.Forms.ComboBox();
           this.butStopAll = new System.Windows.Forms.Button();
           this.propertyVar = new System.Windows.Forms.PropertyGrid();
-          this.trackArmX = new System.Windows.Forms.TrackBar();
-          this.trackArmY = new System.Windows.Forms.TrackBar();
-          this.trackArmZ = new System.Windows.Forms.TrackBar();
-          this.lblArmX = new System.Windows.Forms.Label();
-          this.lblArmY = new System.Windows.Forms.Label();
-          this.lblArmZ = new System.Windows.Forms.Label();
+          this.cmbGenFunc = new System.Windows.Forms.ComboBox();
+          this.numGenFunc = new System.Windows.Forms.NumericUpDown();
+          this.numArmX = new System.Windows.Forms.NumericUpDown();
+          this.numArmY = new System.Windows.Forms.NumericUpDown();
+          this.numArmZ = new System.Windows.Forms.NumericUpDown();
           ((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
           this.toolStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.picTable)).BeginInit();
@@ -99,9 +98,10 @@
           this.groupBox6.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numDropX)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.numDropY)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackArmX)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackArmY)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackArmZ)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numGenFunc)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmX)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmY)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmZ)).BeginInit();
           this.SuspendLayout();
           // 
           // dataButs
@@ -215,7 +215,7 @@
           this.groupBox3.Controls.Add(this.numDist);
           this.groupBox3.Location = new System.Drawing.Point(0, 482);
           this.groupBox3.Name = "groupBox3";
-          this.groupBox3.Size = new System.Drawing.Size(181, 151);
+          this.groupBox3.Size = new System.Drawing.Size(181, 128);
           this.groupBox3.TabIndex = 6;
           this.groupBox3.TabStop = false;
           this.groupBox3.Text = "Moves";
@@ -640,77 +640,111 @@
           this.propertyVar.Size = new System.Drawing.Size(269, 263);
           this.propertyVar.TabIndex = 11;
           // 
-          // trackArmX
+          // cmbGenFunc
           // 
-          this.trackArmX.AutoSize = false;
-          this.trackArmX.Location = new System.Drawing.Point(9, 639);
-          this.trackArmX.Maximum = 200;
-          this.trackArmX.Minimum = -200;
-          this.trackArmX.Name = "trackArmX";
-          this.trackArmX.Size = new System.Drawing.Size(244, 23);
-          this.trackArmX.TabIndex = 12;
-          this.trackArmX.Value = 160;
-          this.trackArmX.Scroll += new System.EventHandler(this.trackArmX_Scroll);
+          this.cmbGenFunc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+          this.cmbGenFunc.FormattingEnabled = true;
+          this.cmbGenFunc.Items.AddRange(new object[] {
+            "0=Start strat",
+            "1=sequence bras",
+            "2=retour depart"});
+          this.cmbGenFunc.Location = new System.Drawing.Point(12, 616);
+          this.cmbGenFunc.Name = "cmbGenFunc";
+          this.cmbGenFunc.Size = new System.Drawing.Size(135, 21);
+          this.cmbGenFunc.TabIndex = 21;
+          this.cmbGenFunc.SelectedIndexChanged += new System.EventHandler(this.cmbGenFunc_SelectedIndexChanged);
           // 
-          // trackArmY
+          // numGenFunc
           // 
-          this.trackArmY.AutoSize = false;
-          this.trackArmY.Location = new System.Drawing.Point(9, 668);
-          this.trackArmY.Maximum = 200;
-          this.trackArmY.Minimum = -100;
-          this.trackArmY.Name = "trackArmY";
-          this.trackArmY.Size = new System.Drawing.Size(244, 23);
-          this.trackArmY.TabIndex = 13;
-          this.trackArmY.Scroll += new System.EventHandler(this.trackArmY_Scroll);
+          this.numGenFunc.Location = new System.Drawing.Point(153, 617);
+          this.numGenFunc.Name = "numGenFunc";
+          this.numGenFunc.Size = new System.Drawing.Size(83, 20);
+          this.numGenFunc.TabIndex = 22;
           // 
-          // trackArmZ
+          // numArmX
           // 
-          this.trackArmZ.AutoSize = false;
-          this.trackArmZ.Location = new System.Drawing.Point(9, 697);
-          this.trackArmZ.Maximum = 300;
-          this.trackArmZ.Name = "trackArmZ";
-          this.trackArmZ.Size = new System.Drawing.Size(244, 23);
-          this.trackArmZ.TabIndex = 14;
-          this.trackArmZ.Scroll += new System.EventHandler(this.trackArmZ_Scroll);
+          this.numArmX.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+          this.numArmX.Location = new System.Drawing.Point(12, 645);
+          this.numArmX.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+          this.numArmX.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+          this.numArmX.Name = "numArmX";
+          this.numArmX.Size = new System.Drawing.Size(83, 20);
+          this.numArmX.TabIndex = 23;
+          this.numArmX.Value = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+          this.numArmX.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
           // 
-          // lblArmX
+          // numArmY
           // 
-          this.lblArmX.AutoSize = true;
-          this.lblArmX.Location = new System.Drawing.Point(252, 639);
-          this.lblArmX.Name = "lblArmX";
-          this.lblArmX.Size = new System.Drawing.Size(31, 13);
-          this.lblArmX.TabIndex = 15;
-          this.lblArmX.Text = "0000";
+          this.numArmY.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+          this.numArmY.Location = new System.Drawing.Point(12, 671);
+          this.numArmY.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+          this.numArmY.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+          this.numArmY.Name = "numArmY";
+          this.numArmY.Size = new System.Drawing.Size(83, 20);
+          this.numArmY.TabIndex = 24;
+          this.numArmY.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
           // 
-          // lblArmY
+          // numArmZ
           // 
-          this.lblArmY.AutoSize = true;
-          this.lblArmY.Location = new System.Drawing.Point(252, 668);
-          this.lblArmY.Name = "lblArmY";
-          this.lblArmY.Size = new System.Drawing.Size(31, 13);
-          this.lblArmY.TabIndex = 16;
-          this.lblArmY.Text = "0000";
-          // 
-          // lblArmZ
-          // 
-          this.lblArmZ.AutoSize = true;
-          this.lblArmZ.Location = new System.Drawing.Point(252, 697);
-          this.lblArmZ.Name = "lblArmZ";
-          this.lblArmZ.Size = new System.Drawing.Size(31, 13);
-          this.lblArmZ.TabIndex = 17;
-          this.lblArmZ.Text = "0000";
+          this.numArmZ.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+          this.numArmZ.Location = new System.Drawing.Point(12, 697);
+          this.numArmZ.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+          this.numArmZ.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+          this.numArmZ.Name = "numArmZ";
+          this.numArmZ.Size = new System.Drawing.Size(83, 20);
+          this.numArmZ.TabIndex = 25;
+          this.numArmZ.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
           // 
           // frmMain
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(1264, 732);
-          this.Controls.Add(this.lblArmZ);
-          this.Controls.Add(this.lblArmY);
-          this.Controls.Add(this.lblArmX);
-          this.Controls.Add(this.trackArmZ);
-          this.Controls.Add(this.trackArmY);
-          this.Controls.Add(this.trackArmX);
+          this.Controls.Add(this.numArmZ);
+          this.Controls.Add(this.numArmY);
+          this.Controls.Add(this.numArmX);
+          this.Controls.Add(this.numGenFunc);
+          this.Controls.Add(this.cmbGenFunc);
           this.Controls.Add(this.propertyVar);
           this.Controls.Add(this.groupBox2);
           this.Controls.Add(this.label4);
@@ -741,9 +775,10 @@
           this.groupBox6.PerformLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numDropX)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.numDropY)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackArmX)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackArmY)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackArmZ)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numGenFunc)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmX)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmY)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmZ)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -801,12 +836,11 @@
         private System.Windows.Forms.Label lbltrackPumpD;
         private System.Windows.Forms.TrackBar trackPumpD;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TrackBar trackArmX;
-        private System.Windows.Forms.TrackBar trackArmY;
-        private System.Windows.Forms.TrackBar trackArmZ;
-        private System.Windows.Forms.Label lblArmX;
-        private System.Windows.Forms.Label lblArmY;
-        private System.Windows.Forms.Label lblArmZ;
+        private System.Windows.Forms.ComboBox cmbGenFunc;
+        private System.Windows.Forms.NumericUpDown numGenFunc;
+        private System.Windows.Forms.NumericUpDown numArmX;
+        private System.Windows.Forms.NumericUpDown numArmY;
+        private System.Windows.Forms.NumericUpDown numArmZ;
     }
 }
 

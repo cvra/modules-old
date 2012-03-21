@@ -63,12 +63,6 @@ namespace ComDebraFpga
 
       cmbBrasDroit.SelectedIndex = 0;
       cmbBrasGauche.SelectedIndex = 0;
-
-      lblArmX.Text = trackArmX.Value.ToString();
-      lblArmY.Text = trackArmY.Value.ToString();
-      lblArmZ.Text = trackArmZ.Value.ToString();
-
-
     }
 
     private void frmMain_Load(object sender, EventArgs e)
@@ -316,32 +310,24 @@ namespace ComDebraFpga
       m.sendCmdByte(LstPos.pump, new int[] { numPump, val });
     }
 
-    private void trackArmX_Scroll(object sender, EventArgs e)
-    {
-      lblArmX.Text = trackArmX.Value.ToString();
-      sendArmLeft();
-    }
-
-    private void trackArmY_Scroll(object sender, EventArgs e)
-    {
-      lblArmY.Text = trackArmY.Value.ToString();
-      sendArmLeft();
-    }
-
-    private void trackArmZ_Scroll(object sender, EventArgs e)
-    {
-      lblArmZ.Text = trackArmZ.Value.ToString();
-      sendArmLeft();
-    }
-
     private void sendArmLeft()
     {
-      m.sendCmd(LstPos.arm_position, new int[] { 0 | (0<<8), trackArmX.Value, trackArmY.Value, trackArmZ.Value });
+      m.sendCmd(LstPos.arm_position, new int[] { 0 | (0 << 8), (int)numArmX.Value, (int)numArmY.Value, (int)numArmZ.Value });
     }
 
     private void cmbBrasGauche_SelectedIndexChanged(object sender, EventArgs e)
     {
       m.sendCmdByte(LstPos.arm_mode, new int[] {cmbBrasGauche.SelectedIndex, cmbBrasDroit.SelectedIndex });
+    }
+
+    private void cmbGenFunc_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      m.sendCmdByte(LstPos.gen_func, new int[] { cmbGenFunc.SelectedIndex, (int)numGenFunc.Value });
+    }
+
+    private void numArmX_ValueChanged(object sender, EventArgs e)
+    {
+      sendArmLeft();
     }
   }
 }

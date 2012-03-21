@@ -13,5 +13,6 @@ namespace ComDebraFpga
     public string ArmRight { get; set; }
     public string status { get; set; }
     public int uptime { get; set; }
+    public int CPU { get; set; }
   }
 }
