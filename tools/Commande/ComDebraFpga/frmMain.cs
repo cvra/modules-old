@@ -16,9 +16,11 @@ namespace ComDebraFpga
     List<ComCmd> lstCmd = new List<ComCmd>();
 
     clMain m;
+    clDrawTable drawTable;
     public frmMain()
     {
       InitializeComponent();
+      drawTable = new clDrawTable(picTable);
 
       txtPort.Text = Settings.Default.comPort;
 
@@ -41,16 +43,6 @@ namespace ComDebraFpga
       // Commande déplacement
       lstCmd.Add(new ComCmd(LstPos.hard_stop, "Hard stop", ""));
       lstCmd.Add(new ComCmd(LstPos.prepare_start, "Prepare start", "66,250,250,45,160"));
-      lstCmd.Add(new ComCmd(LstPos.go_straight, "Avancer", "600"));
-      lstCmd.Add(new ComCmd(LstPos.go_straight, "Avancer", "-600"));
-      lstCmd.Add(new ComCmd(LstPos.turn_to, "Turn to", "0"));
-      lstCmd.Add(new ComCmd(LstPos.turn_to, "Turn to", "45"));
-      lstCmd.Add(new ComCmd(LstPos.goto_direct_forward, "goto_direct_forward", "250,250"));
-      lstCmd.Add(new ComCmd(LstPos.goto_direct_forward, "goto_direct_forward", "500,250"));
-      lstCmd.Add(new ComCmd(LstPos.goto_direct_forward, "goto_direct_forward", "1000,300"));
-      lstCmd.Add(new ComCmd(LstPos.goto_direct_forward, "goto_direct_forward", "1500,700"));
-      lstCmd.Add(new ComCmd(LstPos.goto_direct_forward, "goto_direct_forward", "2000,400"));
-      lstCmd.Add(new ComCmd(LstPos.goto_direct_backward, "goto avoid ", "1500, 1500"));
       lstCmd.Add(new ComCmd(LstPos.traj_finished, "TrajFini", "0"));
       lstCmd.Add(new ComCmd(LstPos.blocking_reset, "Block reset", ""));
 
@@ -109,6 +101,24 @@ namespace ComDebraFpga
         propertyVar.SelectedObject = m.info;
         m.info.hasNewData = false;
       }
+
+      // Pour le débug
+      m.info.PosRobot = "323,344,87";
+      //info.status = getInt16(cmd[k++], cmd[k++]).ToString();
+      //info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]);
+      //info.ArmRight = "";
+      //info.uptime = getInt16(cmd[k++], cmd[k++]);
+      //info.CPU = getInt16(cmd[k++], cmd[k++]);
+      //info.hasNewData = true;
+      // Fin de pour le debug
+
+      string[] s = m.info.PosRobot.Split(new char[] { ',' });
+
+      float.TryParse(s[0], out drawTable.robot.X);
+      float.TryParse(s[1], out drawTable.robot.Y);
+      float.TryParse(s[2], out drawTable.robot.angle);
+
+      picTable.Invalidate();
     }
 
     private void traitLastLog()
@@ -188,12 +198,10 @@ namespace ComDebraFpga
         case LstPos.turn_to:
         //******************** 2 paramètres ****************************
         case LstPos.acceleration:
-        case LstPos.goto_direct_backward:
-        case LstPos.goto_direct_forward:
-        case LstPos.goto_direct_all:
         case LstPos.speed:
         case LstPos.set_blocking:
         //******************** 3 paramètres ****************************
+        case LstPos.goto_type:
         case LstPos.position_set:
         case LstPos.windows:
         //******************** 4 paramètres ****************************
@@ -317,7 +325,7 @@ namespace ComDebraFpga
 
     private void cmbBrasGauche_SelectedIndexChanged(object sender, EventArgs e)
     {
-      m.sendCmdByte(LstPos.arm_mode, new int[] {cmbBrasGauche.SelectedIndex, cmbBrasDroit.SelectedIndex });
+      m.sendCmdByte(LstPos.arm_mode, new int[] { cmbBrasGauche.SelectedIndex, cmbBrasDroit.SelectedIndex });
     }
 
     private void cmbGenFunc_SelectedIndexChanged(object sender, EventArgs e)
@@ -328,6 +336,42 @@ namespace ComDebraFpga
     private void numArmX_ValueChanged(object sender, EventArgs e)
     {
       sendArmLeft();
+    }
+
+    private void picTable_Paint(object sender, PaintEventArgs e)
+    {
+      drawTable.Paint(e.Graphics);
+    }
+
+    private void picTable_MouseDown(object sender, MouseEventArgs e)
+    {
+      if (e.Button == MouseButtons.Left)
+      {
+        if (Control.ModifierKeys == Keys.Control)
+        {
+          m.sendCmd(LstPos.goto_type, new int[]{ 0,
+            (int)((picTable.Width - e.X) / drawTable.RatioPixelInc),
+            (int)(e.Y / drawTable.RatioPixelInc)});
+        }
+        else if (Control.ModifierKeys == Keys.Shift)
+        {
+          //numDropX.Value = (int)((picTable.Width - e.X) / drawTable.RatioPixelInc);
+          //numDropY.Value = (int)(e.Y / drawTable.RatioPixelInc);
+        }
+        else
+        {
+          m.sendCmd(LstPos.goto_type, new int[]{ 3,
+            (int)((picTable.Width - e.X) / drawTable.RatioPixelInc),
+            (int)(e.Y / drawTable.RatioPixelInc)});
+        }
+      }
+      else if (e.Button == MouseButtons.Right)
+      {
+        //sendData("pilote.posAdv.x = " + ((picTable.Width - e.X) / drawTable.RatioPixelInc).ToString() + ";");
+        //sendData("pilote.posAdv.y = " + (e.Y / drawTable.RatioPixelInc).ToString() + ";");
+      }
+
+      drawTable.ActionMouse(e);
     }
   }
 }

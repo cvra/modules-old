@@ -200,6 +200,8 @@
           this.picTable.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
           this.picTable.TabIndex = 3;
           this.picTable.TabStop = false;
+          this.picTable.Paint += new System.Windows.Forms.PaintEventHandler(this.picTable_Paint);
+          this.picTable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picTable_MouseDown);
           // 
           // groupBox3
           // 
@@ -432,12 +434,12 @@
           // label4
           // 
           this.label4.AutoSize = true;
-          this.label4.Location = new System.Drawing.Point(187, 485);
+          this.label4.Location = new System.Drawing.Point(498, 487);
           this.label4.Name = "label4";
-          this.label4.Size = new System.Drawing.Size(133, 52);
+          this.label4.Size = new System.Drawing.Size(171, 65);
           this.label4.TabIndex = 9;
-          this.label4.Text = "lck:Goto Point PP HV\r\nlck+crl: Goto Point \r\nlck+shift: Set Point depose\r\nrck: set" +
-              " Adv";
+          this.label4.Text = "lck: Goto with avoid\r\nlck+crl: Goto direct\r\nlck+shift: Set Point depose\r\nlck+shif" +
+              "t+ctrl: Set Point prise au sol\r\nrck: set Adv";
           // 
           // groupBox2
           // 
@@ -451,7 +453,7 @@
           this.groupBox2.Controls.Add(this.cmbBrasGauche);
           this.groupBox2.Controls.Add(this.cmbBrasDroit);
           this.groupBox2.Controls.Add(this.butStopAll);
-          this.groupBox2.Location = new System.Drawing.Point(293, 485);
+          this.groupBox2.Location = new System.Drawing.Point(187, 488);
           this.groupBox2.Name = "groupBox2";
           this.groupBox2.Size = new System.Drawing.Size(213, 245);
           this.groupBox2.TabIndex = 10;
@@ -650,15 +652,15 @@
             "2=retour depart"});
           this.cmbGenFunc.Location = new System.Drawing.Point(12, 616);
           this.cmbGenFunc.Name = "cmbGenFunc";
-          this.cmbGenFunc.Size = new System.Drawing.Size(135, 21);
+          this.cmbGenFunc.Size = new System.Drawing.Size(94, 21);
           this.cmbGenFunc.TabIndex = 21;
           this.cmbGenFunc.SelectedIndexChanged += new System.EventHandler(this.cmbGenFunc_SelectedIndexChanged);
           // 
           // numGenFunc
           // 
-          this.numGenFunc.Location = new System.Drawing.Point(153, 617);
+          this.numGenFunc.Location = new System.Drawing.Point(112, 617);
           this.numGenFunc.Name = "numGenFunc";
-          this.numGenFunc.Size = new System.Drawing.Size(83, 20);
+          this.numGenFunc.Size = new System.Drawing.Size(69, 20);
           this.numGenFunc.TabIndex = 22;
           // 
           // numArmX

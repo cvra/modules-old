@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clDrawTable.cs" />
     <Compile Include="clMain.cs" />
     <Compile Include="DispInfo.cs" />
     <Compile Include="frmMain.cs">
