@@ -9,6 +9,7 @@ namespace ComDebraFpga
   {
     internal bool hasNewData;
     public string PosRobot { get; set; }
+    public string PosRobotAdv { get; set; }
     public string ArmLeft { get; set; }
     public string ArmRight { get; set; }
     public string status { get; set; }

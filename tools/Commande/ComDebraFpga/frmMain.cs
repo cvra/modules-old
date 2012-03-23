@@ -104,6 +104,7 @@ namespace ComDebraFpga
 
       // Pour le débug
       m.info.PosRobot = "323,344,87";
+      m.info.hasNewData = true;
       //info.status = getInt16(cmd[k++], cmd[k++]).ToString();
       //info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]);
       //info.ArmRight = "";
@@ -118,6 +119,13 @@ namespace ComDebraFpga
       float.TryParse(s[1], out drawTable.robot.Y);
       float.TryParse(s[2], out drawTable.robot.angle);
 
+      if (m.info.PosRobotAdv != null)
+      {
+        s = m.info.PosRobotAdv.Split(new char[] { ',' });
+
+        float.TryParse(s[0], out drawTable.robotAdv.X);
+        float.TryParse(s[1], out drawTable.robotAdv.Y);
+      }
       picTable.Invalidate();
     }
 
@@ -292,7 +300,7 @@ namespace ComDebraFpga
 
     private void butGoInit_Click(object sender, EventArgs e)
     {
-      m.sendCmd(LstPos.goto_direct_backward, new int[] { 250, 250 });
+      m.sendCmd(LstPos.goto_type, new int[] {3, 250, 250 });
     }
 
     private void trackPumpG_Scroll(object sender, EventArgs e)
@@ -355,8 +363,11 @@ namespace ComDebraFpga
         }
         else if (Control.ModifierKeys == Keys.Shift)
         {
-          //numDropX.Value = (int)((picTable.Width - e.X) / drawTable.RatioPixelInc);
-          //numDropY.Value = (int)(e.Y / drawTable.RatioPixelInc);
+          // Set point de dépose
+        }
+        else if (Control.ModifierKeys == Keys.Alt)
+        {
+          // Set point de prise
         }
         else
         {
@@ -367,8 +378,9 @@ namespace ComDebraFpga
       }
       else if (e.Button == MouseButtons.Right)
       {
-        //sendData("pilote.posAdv.x = " + ((picTable.Width - e.X) / drawTable.RatioPixelInc).ToString() + ";");
-        //sendData("pilote.posAdv.y = " + (e.Y / drawTable.RatioPixelInc).ToString() + ";");
+        m.info.PosRobotAdv =
+          ((int)((picTable.Width - e.X) / drawTable.RatioPixelInc)).ToString() + "," +
+          ((int)(e.Y / drawTable.RatioPixelInc)).ToString();
       }
 
       drawTable.ActionMouse(e);

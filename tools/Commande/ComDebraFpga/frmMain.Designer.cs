@@ -436,10 +436,10 @@
           this.label4.AutoSize = true;
           this.label4.Location = new System.Drawing.Point(498, 487);
           this.label4.Name = "label4";
-          this.label4.Size = new System.Drawing.Size(171, 65);
+          this.label4.Size = new System.Drawing.Size(143, 65);
           this.label4.TabIndex = 9;
-          this.label4.Text = "lck: Goto with avoid\r\nlck+crl: Goto direct\r\nlck+shift: Set Point depose\r\nlck+shif" +
-              "t+ctrl: Set Point prise au sol\r\nrck: set Adv";
+          this.label4.Text = "lck: Goto with avoid\r\nlck+crl: Goto direct\r\nlck+shift: Set Point depose\r\nlck+alt:" +
+              " Set Point prise au sol\r\nrck: set Adv";
           // 
           // groupBox2
           // 
