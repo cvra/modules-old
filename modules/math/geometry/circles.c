@@ -26,12 +26,12 @@
 #include <vect_base.h>
 #include <circles.h>
 
-static inline float sq(float x)
+static inline double sq(double x)
 {
 	return x*x;
 }
 
-uint8_t pt_is_inside_circle(const point_t *p, circle_t *c)
+int pt_is_inside_circle(const point_t *p, circle_t *c)
 {
 	vect_t v;
 	v.x = p->x - c->x;
@@ -51,11 +51,11 @@ uint8_t pt_is_inside_circle(const point_t *p, circle_t *c)
  *  p2 are dummy for 0 result. When result is 1, p1 and p2 are set to
  *  the same value.
  */
-uint8_t circle_intersect(const circle_t *c1, const circle_t *c2,
+int circle_intersect(const circle_t *c1, const circle_t *c2,
 			 point_t *p1, point_t *p2)
 {
 	circle_t ca, cb;
-	float a, b, c, d, e;
+	double a, b, c, d, e;
 	uint8_t ret = 0;
 
 	/* create circles with same radius, but centered on 0,0 : it
@@ -67,8 +67,8 @@ uint8_t circle_intersect(const circle_t *c1, const circle_t *c2,
 	cb.y = c2->y - c1->y;
 	cb.r = c2->r;
 
-	/* inspired from
-	   http://www.loria.fr/~roegel/notes/note0001.pdf */
+	/* inspired from http://www.loria.fr/~roegel/notes/note0001.pdf 
+	 * which can be found in doc. */
 	a = 2. * cb.x;
 	b = 2. * cb.y;
 	c = sq(cb.x) + sq(cb.y) - sq(cb.r) + sq(ca.r);
@@ -79,7 +79,8 @@ uint8_t circle_intersect(const circle_t *c1, const circle_t *c2,
 	if (d < 0)
 		return 0;
 
-	if (b == 0) {
+	
+	if (fabs(b) < 1e-4) {
 		/* special case */
 		e = sq(cb.r) - sq((2. * c - sq(a)) / (2. * a));
 
