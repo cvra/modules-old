@@ -103,7 +103,7 @@ namespace ComDebraFpga
       }
 
       // Pour le débug
-      m.info.PosRobot = "323,344,87";
+      //m.info.PosRobot = "1400,344,5";
       m.info.hasNewData = true;
       //info.status = getInt16(cmd[k++], cmd[k++]).ToString();
       //info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]);
@@ -113,15 +113,17 @@ namespace ComDebraFpga
       //info.hasNewData = true;
       // Fin de pour le debug
 
-      string[] s = m.info.PosRobot.Split(new char[] { ',' });
+      if (m.info.PosRobot != null)
+      {
+        string[] s = m.info.PosRobot.Split(new char[] { ',' });
 
-      float.TryParse(s[0], out drawTable.robot.X);
-      float.TryParse(s[1], out drawTable.robot.Y);
-      float.TryParse(s[2], out drawTable.robot.angle);
-
+        float.TryParse(s[0], out drawTable.robot.X);
+        float.TryParse(s[1], out drawTable.robot.Y);
+        float.TryParse(s[2], out drawTable.robot.angle);
+      }
       if (m.info.PosRobotAdv != null)
       {
-        s = m.info.PosRobotAdv.Split(new char[] { ',' });
+        string[] s = m.info.PosRobotAdv.Split(new char[] { ',' });
 
         float.TryParse(s[0], out drawTable.robotAdv.X);
         float.TryParse(s[1], out drawTable.robotAdv.Y);
@@ -371,6 +373,10 @@ namespace ComDebraFpga
         }
         else
         {
+          m.info.PosRobot =
+  ((int)((picTable.Width - e.X) / drawTable.RatioPixelInc)).ToString() + "," +
+  ((int)(e.Y / drawTable.RatioPixelInc) + "," + numAngle.Value.ToString()).ToString();
+
           m.sendCmd(LstPos.goto_type, new int[]{ 3,
             (int)((picTable.Width - e.X) / drawTable.RatioPixelInc),
             (int)(e.Y / drawTable.RatioPixelInc)});

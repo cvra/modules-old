@@ -6,12 +6,6 @@ using System.Windows.Forms;
 
 namespace ComDebraFpga
 {
-  public struct TYPE_POINT
-  {
-    public int X;
-    public int Y;
-  }
-
   public struct TYPE_ODO
   {
     public float X;
@@ -45,6 +39,7 @@ namespace ComDebraFpga
     public float bras = 190.0f;
     public float RatioPixelInc = 1f;
     public const int penWidth = 5;
+    public float EvitRobot = 328 / 2;
 
     // Pen
 
@@ -83,6 +78,7 @@ namespace ComDebraFpga
     public ETAT_OBJ[] PosObjAdvVision = new ETAT_OBJ[5];
     public ETAT_OBJ[] PosObjAdvVisionT = new ETAT_OBJ[5];
     public string color = "b";
+    public List<List<Point>> lstAvoid = new List<List<Point>>();
 
     public const int NB_X = 13;
     public const int NB_Y = 11;
@@ -122,6 +118,43 @@ namespace ComDebraFpga
 
       robotAdv.X = 2750;
       robotAdv.Y = 250;
+
+      lstAvoid.Add(new List<Point>());
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(0, 334));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(666, 334));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(666, 666));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(0, 666));
+      lstAvoid.Add(new List<Point>());
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(0, 2000));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(491, 2000));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(529, 1094));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(0, 1094));
+      lstAvoid.Add(new List<Point>());
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(809, 709));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(1391, 709));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(1391, 1291));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(809, 1291));
+      lstAvoid.Add(new List<Point>());
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(1391, 1166));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(1609, 1166));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(1609, 834));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(1391, 834));
+
+      lstAvoid.Add(new List<Point>());
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(3000, 334));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(2334, 334));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(2334, 666));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(3000, 666));
+      lstAvoid.Add(new List<Point>());
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(3000, 2000));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(2509, 2000));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(2471, 1094));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(3000, 1094));
+      lstAvoid.Add(new List<Point>());
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(2191, 709));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(1609, 709));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(1609, 1291));
+      lstAvoid[lstAvoid.Count - 1].Add(new Point(2191, 1291));
 
       updRatio();
     }
@@ -184,12 +217,12 @@ namespace ComDebraFpga
       Dessin.DrawLine(PenBlue, 0, 0, -0, RobotLongueure2);
 
       Dessin.DrawLine(PenBlue, -94, -160, 94, -160);
-      
+
       Dessin.DrawLine(PenBlue, 94, -160, 145, -50);
       Dessin.DrawLine(PenBlue, -94, -160, -145, -50);
 
       Dessin.DrawLine(PenBlue, 145, -50, 145, 50);
-      Dessin.DrawLine(PenBlue,- 145, -50, -145, 50);
+      Dessin.DrawLine(PenBlue, -145, -50, -145, 50);
 
       Dessin.DrawLine(PenBlue, 145, 50, 128, 87);
       Dessin.DrawLine(PenBlue, -145, 50, -128, 87);
@@ -197,20 +230,20 @@ namespace ComDebraFpga
       Dessin.DrawLine(PenBlue, 128, 87, 47, 168);
       Dessin.DrawLine(PenBlue, -128, 87, -47, 168);
 
-      Dessin.DrawLine(PenBlue, 47, 168, -47, 168);      
+      Dessin.DrawLine(PenBlue, 47, 168, -47, 168);
 
       // Distance bras
       Dessin.DrawEllipse(PenLightCoral, 135 - bras, -bras, bras * 2, bras * 2);
       Dessin.DrawEllipse(PenLightCoral, -135 - bras, -bras, bras * 2, bras * 2);
       // Dessin capteurs
       Dessin.DrawLine(PenBlue, 60, 138, 60 + (float)Math.Sqrt(600 * 600 / 2), 138 + (float)Math.Sqrt(600 * 600 / 2));
-      Dessin.DrawLine(PenBlue, -60, 138, -(60 + (float)Math.Sqrt(600 * 600 / 2)), 138 + (float)Math.Sqrt(600 * 600 / 2)); 
+      Dessin.DrawLine(PenBlue, -60, 138, -(60 + (float)Math.Sqrt(600 * 600 / 2)), 138 + (float)Math.Sqrt(600 * 600 / 2));
 
       //Dessin.DrawLine(PenBlue, -RobotLargeur2, -RobotLongueure2, RobotLargeur2, -RobotLongueure2);
       //Dessin.DrawLine(PenBlue, RobotLargeur2, -RobotLongueure2, RobotLargeur2, RobotLongueure2);
       //Dessin.DrawLine(PenBlue, RobotLargeur2, RobotLongueure2, -RobotLargeur2, RobotLongueure2);
       //Dessin.DrawLine(PenBlue, -RobotLargeur2, RobotLongueure2, -RobotLargeur2, -RobotLongueure2);
-      
+
 
       // Dessin du robot adverse
       InitView(Dessin);
@@ -221,6 +254,21 @@ namespace ComDebraFpga
       Dessin.DrawLine(PenRed, RobotLargeur2, -RobotLongueure2, RobotLargeur2, RobotLongueure2);
       Dessin.DrawLine(PenRed, RobotLargeur2, RobotLongueure2, -RobotLargeur2, RobotLongueure2);
       Dessin.DrawLine(PenRed, -RobotLargeur2, RobotLongueure2, -RobotLargeur2, -RobotLongueure2);
+
+      // Dessin des lignes d'évitement
+      InitView(Dessin);
+
+      for (int i = 0; i < lstAvoid.Count; i++)
+      {
+        for (int j = 0; j < lstAvoid[i].Count - 1; j++)
+        {
+          Dessin.DrawLine(PenLightCoral, lstAvoid[i][j].X, lstAvoid[i][j].Y,
+            lstAvoid[i][j + 1].X, lstAvoid[i][j + 1].Y);
+        }
+        Dessin.DrawLine(PenLightCoral, lstAvoid[i][0].X, lstAvoid[i][0].Y,
+          lstAvoid[i][lstAvoid[i].Count - 1].X, lstAvoid[i][lstAvoid[i].Count - 1].Y);
+      }
+
 
       //// Dessin de la position finale
       //InitView(Dessin);
@@ -243,7 +291,7 @@ namespace ComDebraFpga
       {
         posY = 400 + 160 + 320 * i;
         drawObj(PosObjB[i], 200, posY, Dessin);
-        drawObj(PosObjR[i], 3000-200, posY, Dessin);
+        drawObj(PosObjR[i], 3000 - 200, posY, Dessin);
         drawObj(PosObjAdvVision[i], 3000 - 200, posY, Dessin);
         drawObj(PosObjAdvVisionT[i], 3000 - 200, posY, Dessin);
       }
@@ -287,7 +335,7 @@ namespace ComDebraFpga
       Dessin.DrawLine(PenAxis, pOrigine, pOrigine, pOrigine, pOrigine * multi);
 
       Dessin.ResetTransform();
-      Dessin.DrawString("X", clDrawTable.FontTxt, clDrawTable.brushWhite, Dessin.ClipBounds.Width - 70,4);
+      Dessin.DrawString("X", clDrawTable.FontTxt, clDrawTable.brushWhite, Dessin.ClipBounds.Width - 70, 4);
       Dessin.DrawString("Y", clDrawTable.FontTxt, clDrawTable.brushWhite, Dessin.ClipBounds.Width - 20, 60);
 
       Dessin.Flush();
