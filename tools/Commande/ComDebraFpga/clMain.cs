@@ -96,7 +96,7 @@ namespace ComDebraFpga
 
 
     // Taille complète du paquet ABC + \n compris
-    private int[] packetSize = new int[] { 0, 5 + 2 * 9, 6, 21, 5 + 2 * 7 };
+    private int[] packetSize = new int[] { 0, 5 + 2 * 20, 6, 21, 5 + 2 * 7 };
     private bool isRunning = true;
     public DispInfo info = new DispInfo();
     
@@ -283,12 +283,16 @@ namespace ComDebraFpga
         // Position du robot
         case 1:
           int k = 4;
-          info.PosRobot = getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]) + " A= " + getInt16(cmd[k++], cmd[k++]);
+          info.PosRobot = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
           info.status = getInt16(cmd[k++], cmd[k++]).ToString();
-          info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]);
-          info.ArmRight = "";
+          info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
+          info.ArmRight = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
           info.uptime = getInt16(cmd[k++], cmd[k++]);
           info.CPU = getInt16(cmd[k++], cmd[k++]);
+          for (int i = 0; i < 8; i++)
+          {
+            info.ADC[i] = getInt16(cmd[k++], cmd[k++]);
+          }
           info.hasNewData = true;
           //main.addLog(new ComElem(TypeVal.posX, getInt16(cmd[4], cmd[5]).ToString()));
           //main.addLog(new ComElem(TypeVal.posY, getInt16(cmd[6], cmd[7]).ToString()));
