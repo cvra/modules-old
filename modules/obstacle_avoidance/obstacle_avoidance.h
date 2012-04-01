@@ -46,7 +46,6 @@
  *  - MAX_PTS => maximize the sum of every polygons vertices.
  *  - MAX_RAYS => maximum number of rays. 
  *  - MAX_CHKPOINTS => maximum accepted checkpoints in the resulting path.
- *  - PLAYGROUND XXX => dimensions of the playground.
  */
 
 #ifndef _OBSTACLE_AVOIDANCE_H_

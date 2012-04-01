@@ -164,7 +164,6 @@ is_crossing_poly(point_t p1, point_t p2, point_t *intersect_pt,
 		return 1;
 
 	ret1 = is_in_poly(&p1, pol);
-	/* XXX opt */
 	ret2 = is_in_poly(&p2, pol);
 
 	debug_printf("is in poly: p1 %d p2: %d cpt %d\r\n", ret1, ret2, cpt);

@@ -30,8 +30,6 @@ typedef struct _poly {
 	uint8_t l;
 } poly_t;
 
-/* XXX add const, fix arg order */
-
 /** Checks if a point belongs to a polygon
  * @return 0 if outside, 1 if inside, 2 if on edge. */
 uint8_t is_in_poly(const point_t *p, poly_t *pol);

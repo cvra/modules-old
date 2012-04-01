@@ -103,6 +103,7 @@ uint8_t trajectory_in_window(struct trajectory *traj, double d_win, double a_win
 /*********** *TRAJECTORY EVENT FUNC */
 
 /** event called for xy trajectories */
+
 void trajectory_manager_xy_event(struct trajectory *traj);
 
 /* trajectory event for circles */
@@ -112,8 +113,6 @@ void trajectory_manager_circle_event(struct trajectory *traj);
 void trajectory_manager_event(void * param);
 
 /*********** *CIRCLE */
-
-/* XXX TODO */
 
 /*********** CLITOID */
 

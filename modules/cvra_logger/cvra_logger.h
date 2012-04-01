@@ -7,7 +7,7 @@
 
 #ifndef CVRA_LOGGER_H_
 #define CVRA_LOGGER_H_
-/** @todo Tester le module */
+/** @todo Tester tout. */
 
 /** Resets the log. */
 void cvra_logger_reset();

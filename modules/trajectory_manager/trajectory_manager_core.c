@@ -327,17 +327,7 @@ uint8_t trajectory_finished(struct trajectory *traj)
 		trajectory_angle_finished(traj);
 	IRQ_UNLOCK(flags);
 
-#if 0
-	/* XXX THIS IS A VERY BAD WORKAROUND (fix a race) */
-	IRQ_LOCK(flags);
-	ret2 = trajectory_distance_finished(traj) &&
-		trajectory_angle_finished(traj);
-	IRQ_UNLOCK(flags);
-
-	return ret && ret2;
-#else
 	return ret;
-#endif
 }
 
 /** return true if traj is nearly finished */
@@ -441,7 +431,7 @@ void trajectory_manager_xy_event(struct trajectory *traj)
 		d_consign += rs_get_distance(traj->robot);
 
 		/* angle consign */
-		/* XXX here we specify 2.2 instead of 2.0 to avoid oscillations */
+		/* Here we specify 2.2 instead of 2.0 to avoid oscillations */
 		a_consign = (int32_t)(v2pol_target.theta *
 				      (traj->position->phys.distance_imp_per_mm) *
 				      (traj->position->phys.track_mm) / 2.2);
@@ -459,9 +449,6 @@ void trajectory_manager_xy_event(struct trajectory *traj)
 
 	/* step 2 : update state, or delete event if we reached the
 	 * destination */
-
-	/* XXX if target is our pos !! */
-
 	switch (traj->state) {
 	case RUNNING_XY_START:
 	case RUNNING_XY_F_START:
@@ -538,7 +525,6 @@ void circle_get_da_speed_from_radius(struct trajectory *traj,
 }
 
 /* trajectory event for circles */
-/* XXX static */
 void trajectory_manager_circle_event(struct trajectory *traj)
 {
 	double radius;
@@ -588,7 +574,6 @@ void trajectory_manager_circle_event(struct trajectory *traj)
 		  angle_to_center_rad, radius, v2pol_target.r,
 	      coef_p, coef_d, d_speed, a_speed);
 
-	/* XXX check flags */
 	d_consign = 400000 + rs_get_distance(traj->robot);
 	a_consign = 400000 + rs_get_angle(traj->robot);
 

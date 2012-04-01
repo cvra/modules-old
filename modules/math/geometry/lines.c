@@ -218,7 +218,6 @@ intersect_segment(const point_t *s1, const point_t *s2,
 		return 0;
 
 	/* if prod scal neg: cut in middle of segment */
-	/* todo for both segment */
 	v.x = p->x-s1->x;
 	v.y = p->y-s1->y;
 	w.x = p->x-s2->x;

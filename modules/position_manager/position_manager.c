@@ -149,7 +149,7 @@ void position_manage(struct robot_position *pos)
 
 	/* process difference between 2 measures.
 	 * No lock for prev_encoders since we are the only one to use
-	 * this var XXX that's wrong now, perhaps we should lock */
+	 * this var. */
 	delta.distance = encoders.distance - pos->prev_encoders.distance;
 	delta.angle = encoders.angle - pos->prev_encoders.angle;
 
