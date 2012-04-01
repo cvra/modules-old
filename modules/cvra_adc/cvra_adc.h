@@ -43,4 +43,16 @@ int16_t cvra_adc_get_value(cvra_adc_t *adc, int input);
 /** Starts the scan of the 8 input lines. */
 void cvra_adc_start_scan(cvra_adc_t *adc);
 
+#define ADC_DISTANCE_LEFT 0
+#define ADC_DISTANCE_RIGHT 1
+#define ADC_PUMP_CURRENT_RIGHT 2
+#define ADC_PUMP_CURRENT_LEFT 3
+#define ADC_STARTER 4
+#define ADC_OBSTACLE_LEFT 5
+#define ADC_OBSTACLE_RIGHT 6
+#define ADC_NOT_CONNECTED 7
+
+
+
+
 #endif
