@@ -30,13 +30,18 @@
 #include <aversive.h>
 #include <general_errors.h>
 
-#include "error_config.h"
-
 #define ERROR_SEVERITY_EMERG    0
 #define ERROR_SEVERITY_ERROR    1
 #define ERROR_SEVERITY_WARNING  2
 #define ERROR_SEVERITY_NOTICE   3
 #define ERROR_SEVERITY_DEBUG    4
+
+
+/** enable the dump of the comment */
+#define ERROR_DUMP_TEXTLOG 
+
+/** enable the dump of filename and line number */
+#define ERROR_DUMP_FILE_LINE
 
 /** The error structure, which is given as a parameter in log funcs */ 
 struct error {
@@ -46,7 +51,6 @@ struct error {
 	PGM_P file;
 	uint16_t line;
 };
-
 
 struct error_fct {
 	void (*emerg)(struct error *, ...);
