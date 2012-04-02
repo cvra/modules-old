@@ -53,6 +53,9 @@ void bd_reset(struct blocking_detection * bd)
     IRQ_UNLOCK(flags);
 }
 
+/**
+ *
+ */
 void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16_t cpt_thres) {
     uint8_t flags;
     IRQ_LOCK(flags);
@@ -67,7 +70,6 @@ void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16
 /** function to be called periodically */
 void bd_manage(struct blocking_detection * bd)
 {
-
 	if(abs(cs_get_error(bd->cs)) > bd->err_thres) {
         bd->cpt++;
     }
