@@ -15,6 +15,7 @@ namespace ComDebraFpga
     public string status { get; set; }
     public int uptime { get; set; }
     public int CPU { get; set; }
-    public int[] ADC { get; set; }
+    public string ADC1_4 { get; set; }
+    public string ADC5_8 { get; set; }
   }
 }

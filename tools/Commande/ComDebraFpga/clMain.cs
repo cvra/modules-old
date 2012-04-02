@@ -100,7 +100,6 @@ namespace ComDebraFpga
     private bool isRunning = true;
     public DispInfo info = new DispInfo();
     
-
     public clMain(frmMain Main)
     {
       main = Main;
@@ -289,9 +288,15 @@ namespace ComDebraFpga
           info.ArmRight = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
           info.uptime = getInt16(cmd[k++], cmd[k++]);
           info.CPU = getInt16(cmd[k++], cmd[k++]);
-          for (int i = 0; i < 8; i++)
+          info.ADC1_4 = "";
+          for (int i = 0; i < 4; i++)
           {
-            info.ADC[i] = getInt16(cmd[k++], cmd[k++]);
+            info.ADC1_4 += getInt16(cmd[k++], cmd[k++]).ToString() + " ";
+          }
+          info.ADC5_8 = "";
+          for (int i = 4; i < 8; i++)
+          {
+            info.ADC5_8 += getInt16(cmd[k++], cmd[k++]).ToString() + " ";
           }
           info.hasNewData = true;
           //main.addLog(new ComElem(TypeVal.posX, getInt16(cmd[4], cmd[5]).ToString()));
