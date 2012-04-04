@@ -82,9 +82,12 @@
           this.propertyVar = new System.Windows.Forms.PropertyGrid();
           this.cmbGenFunc = new System.Windows.Forms.ComboBox();
           this.numGenFunc = new System.Windows.Forms.NumericUpDown();
-          this.numArmX = new System.Windows.Forms.NumericUpDown();
-          this.numArmY = new System.Windows.Forms.NumericUpDown();
-          this.numArmZ = new System.Windows.Forms.NumericUpDown();
+          this.numArmGX = new System.Windows.Forms.NumericUpDown();
+          this.numArmGY = new System.Windows.Forms.NumericUpDown();
+          this.numArmGZ = new System.Windows.Forms.NumericUpDown();
+          this.numArmDZ = new System.Windows.Forms.NumericUpDown();
+          this.numArmDY = new System.Windows.Forms.NumericUpDown();
+          this.numArmDX = new System.Windows.Forms.NumericUpDown();
           ((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
           this.toolStrip1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.picTable)).BeginInit();
@@ -99,9 +102,12 @@
           ((System.ComponentModel.ISupportInitialize)(this.numDropX)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.numDropY)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.numGenFunc)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.numArmX)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.numArmY)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.numArmZ)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmGX)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmGY)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmGZ)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmDZ)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmDY)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmDX)).BeginInit();
           this.SuspendLayout();
           // 
           // dataButs
@@ -623,6 +629,7 @@
           this.cmbBrasDroit.Name = "cmbBrasDroit";
           this.cmbBrasDroit.Size = new System.Drawing.Size(98, 21);
           this.cmbBrasDroit.TabIndex = 19;
+          this.cmbBrasDroit.SelectedIndexChanged += new System.EventHandler(this.cmbBrasGauche_SelectedIndexChanged);
           // 
           // butStopAll
           // 
@@ -663,88 +670,165 @@
           this.numGenFunc.Size = new System.Drawing.Size(69, 20);
           this.numGenFunc.TabIndex = 22;
           // 
-          // numArmX
+          // numArmGX
           // 
-          this.numArmX.Increment = new decimal(new int[] {
+          this.numArmGX.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-          this.numArmX.Location = new System.Drawing.Point(12, 645);
-          this.numArmX.Maximum = new decimal(new int[] {
+          this.numArmGX.Location = new System.Drawing.Point(12, 645);
+          this.numArmGX.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-          this.numArmX.Minimum = new decimal(new int[] {
+          this.numArmGX.Minimum = new decimal(new int[] {
             500,
             0,
             0,
             -2147483648});
-          this.numArmX.Name = "numArmX";
-          this.numArmX.Size = new System.Drawing.Size(83, 20);
-          this.numArmX.TabIndex = 23;
-          this.numArmX.Value = new decimal(new int[] {
+          this.numArmGX.Name = "numArmGX";
+          this.numArmGX.Size = new System.Drawing.Size(83, 20);
+          this.numArmGX.TabIndex = 23;
+          this.numArmGX.Value = new decimal(new int[] {
             250,
             0,
             0,
             0});
-          this.numArmX.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
+          this.numArmGX.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
           // 
-          // numArmY
+          // numArmGY
           // 
-          this.numArmY.Increment = new decimal(new int[] {
+          this.numArmGY.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-          this.numArmY.Location = new System.Drawing.Point(12, 671);
-          this.numArmY.Maximum = new decimal(new int[] {
+          this.numArmGY.Location = new System.Drawing.Point(12, 671);
+          this.numArmGY.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-          this.numArmY.Minimum = new decimal(new int[] {
+          this.numArmGY.Minimum = new decimal(new int[] {
             500,
             0,
             0,
             -2147483648});
-          this.numArmY.Name = "numArmY";
-          this.numArmY.Size = new System.Drawing.Size(83, 20);
-          this.numArmY.TabIndex = 24;
-          this.numArmY.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
+          this.numArmGY.Name = "numArmGY";
+          this.numArmGY.Size = new System.Drawing.Size(83, 20);
+          this.numArmGY.TabIndex = 24;
+          this.numArmGY.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
           // 
-          // numArmZ
+          // numArmGZ
           // 
-          this.numArmZ.Increment = new decimal(new int[] {
+          this.numArmGZ.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-          this.numArmZ.Location = new System.Drawing.Point(12, 697);
-          this.numArmZ.Maximum = new decimal(new int[] {
+          this.numArmGZ.Location = new System.Drawing.Point(12, 697);
+          this.numArmGZ.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-          this.numArmZ.Minimum = new decimal(new int[] {
+          this.numArmGZ.Minimum = new decimal(new int[] {
             500,
             0,
             0,
             -2147483648});
-          this.numArmZ.Name = "numArmZ";
-          this.numArmZ.Size = new System.Drawing.Size(83, 20);
-          this.numArmZ.TabIndex = 25;
-          this.numArmZ.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
+          this.numArmGZ.Name = "numArmGZ";
+          this.numArmGZ.Size = new System.Drawing.Size(83, 20);
+          this.numArmGZ.TabIndex = 25;
+          this.numArmGZ.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
+          // 
+          // numArmDZ
+          // 
+          this.numArmDZ.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+          this.numArmDZ.Location = new System.Drawing.Point(98, 697);
+          this.numArmDZ.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+          this.numArmDZ.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+          this.numArmDZ.Name = "numArmDZ";
+          this.numArmDZ.Size = new System.Drawing.Size(83, 20);
+          this.numArmDZ.TabIndex = 28;
+          this.numArmDZ.ValueChanged += new System.EventHandler(this.numArmDX_ValueChanged);
+          // 
+          // numArmDY
+          // 
+          this.numArmDY.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+          this.numArmDY.Location = new System.Drawing.Point(98, 671);
+          this.numArmDY.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+          this.numArmDY.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+          this.numArmDY.Name = "numArmDY";
+          this.numArmDY.Size = new System.Drawing.Size(83, 20);
+          this.numArmDY.TabIndex = 27;
+          this.numArmDY.ValueChanged += new System.EventHandler(this.numArmDX_ValueChanged);
+          // 
+          // numArmDX
+          // 
+          this.numArmDX.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+          this.numArmDX.Location = new System.Drawing.Point(98, 645);
+          this.numArmDX.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+          this.numArmDX.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+          this.numArmDX.Name = "numArmDX";
+          this.numArmDX.Size = new System.Drawing.Size(83, 20);
+          this.numArmDX.TabIndex = 26;
+          this.numArmDX.Value = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+          this.numArmDX.ValueChanged += new System.EventHandler(this.numArmDX_ValueChanged);
           // 
           // frmMain
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(1264, 732);
-          this.Controls.Add(this.numArmZ);
-          this.Controls.Add(this.numArmY);
-          this.Controls.Add(this.numArmX);
+          this.Controls.Add(this.numArmDZ);
+          this.Controls.Add(this.numArmDY);
+          this.Controls.Add(this.numArmDX);
+          this.Controls.Add(this.numArmGZ);
+          this.Controls.Add(this.numArmGY);
+          this.Controls.Add(this.numArmGX);
           this.Controls.Add(this.numGenFunc);
           this.Controls.Add(this.cmbGenFunc);
           this.Controls.Add(this.propertyVar);
@@ -778,9 +862,12 @@
           ((System.ComponentModel.ISupportInitialize)(this.numDropX)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.numDropY)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.numGenFunc)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.numArmX)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.numArmY)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.numArmZ)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmGX)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmGY)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmGZ)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmDZ)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmDY)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.numArmDX)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -840,9 +927,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbGenFunc;
         private System.Windows.Forms.NumericUpDown numGenFunc;
-        private System.Windows.Forms.NumericUpDown numArmX;
-        private System.Windows.Forms.NumericUpDown numArmY;
-        private System.Windows.Forms.NumericUpDown numArmZ;
+        private System.Windows.Forms.NumericUpDown numArmGX;
+        private System.Windows.Forms.NumericUpDown numArmGY;
+        private System.Windows.Forms.NumericUpDown numArmGZ;
+        private System.Windows.Forms.NumericUpDown numArmDZ;
+        private System.Windows.Forms.NumericUpDown numArmDY;
+        private System.Windows.Forms.NumericUpDown numArmDX;
     }
 }
 

@@ -330,7 +330,12 @@ namespace ComDebraFpga
 
     private void sendArmLeft()
     {
-      m.sendCmd(LstPos.arm_position, new int[] { 0 | (0 << 8), (int)numArmX.Value, (int)numArmY.Value, (int)numArmZ.Value });
+      m.sendCmd(LstPos.arm_position, new int[] { 0 | (0 << 8), (int)numArmGX.Value, (int)numArmGY.Value, (int)numArmGZ.Value });
+    }
+
+    private void sendArmRight()
+    {
+      m.sendCmd(LstPos.arm_position, new int[] { 0 | (1 << 8), (int)numArmDX.Value, (int)numArmDY.Value, (int)numArmDZ.Value });
     }
 
     private void cmbBrasGauche_SelectedIndexChanged(object sender, EventArgs e)
@@ -390,6 +395,11 @@ namespace ComDebraFpga
       }
 
       drawTable.ActionMouse(e);
+    }
+
+    private void numArmDX_ValueChanged(object sender, EventArgs e)
+    {
+      sendArmRight();
     }
   }
 }
