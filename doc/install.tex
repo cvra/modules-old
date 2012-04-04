@@ -1,0 +1,122 @@
+% Déclaration du type de document (report, book, paper, etc...)
+\documentclass[a4paper]{paper} 
+ 
+% Package pour avoir Latex en français
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+ 
+% Quelques packages utiles
+\usepackage{listings} % Pour afficher des listings de programmes
+\usepackage{graphicx} % Pour afficher des figures
+\usepackage{amsthm}   % Pour créer des théorèmes et des définitions
+\usepackage{amsmath}
+
+% Auteur
+\author{Antoine Albertelli -- CVRA}
+
+ 
+% Titre du document
+\title{Setup de la chaine de compilation NIOS II}
+
+% Début du document
+\begin{document}
+
+\maketitle
+\tableofcontents
+ 
+\section{Outils nécessaires}
+
+Les outils nécessaires pour le développement sont :
+\begin{itemize}
+\item Quartus II Web edition (testé avec la version 11sp1).
+\item Nios II Embedded Design Suite (testé avec la version 11sp1).
+\item Un client Mercurial (hg sous Linux, TortoiseHG sour Windows).
+\end{itemize}
+
+\section{Récupération du code source}
+La première étape est de récupérer le code source depuis Bitbucket.
+Pour ceci :
+\begin{lstlisting}[frame=trBL]
+$ hg clone http://bitbucket.org/antoinealb
+/code-source-carte-robot-2011
+\end{lstlisting}
+
+Un dossier nommée code-source-carte-robot-2011 a maintenant été créé et contient le code du robot.
+
+\textbf{Attention}: Ce dossier doit contenir uniquement les fichiers sources, pas le BSP\footnote{Board Support Package, generé par le Nios II EDS} ni les fichier exécutables !
+
+
+Plus tard lorsqu'on voudra mettre à jour le code il suffira de faire :
+\begin{lstlisting}[frame=trBL]
+$ hg pull
+$ hg update
+\end{lstlisting}
+
+\section{Création du projet dans le Nios II EDS}
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.8\textwidth]{1}
+  \caption{L'environnement de développement Nios II EDS}
+\end{figure}
+
+Dans l'environnement de développement, faire "New Application and BSP from template...".
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.8\textwidth]{tuto2}
+  \caption{Création du projet. Choisir "Empty project"}
+  \label{projectcreation}
+\end{figure}
+Dans cette fenêtre (fig. \ref{projectcreation}) choisir "Empty Application" comme template et faire "Finish".
+Ensuite, aller dans chaque dossier contenant du code source (sauf "tools"), séléctionner les fichier, 
+click droit -> "Add to Nios II build". Il faut aussi le faire pour les sous dossiers de "modules".
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=0.8\textwidth]{4}
+  \caption{Ajout des fichiers à la build.}
+  \label{aa}
+\end{figure}
+
+
+Nous allons maintenant passer à la modification du Makefile. Si Eclipse affiche une erreur à la place du Makefille, faire click droit sur le
+fichier et "Refresh...". 
+
+Il faut trouver la ligne suivante :
+\begin{lstlisting}[frame=trBL]
+ALT_CFLAGS := 
+\end{lstlisting}
+Et la modifier en :
+\begin{lstlisting}[frame=trBL]
+ALT_CFLAGS := -DCOMPILE_ON_ROBOT
+\end{lstlisting}
+Ensuite trouver la ligne :
+\begin{lstlisting}[frame=trBL]
+ALT_INCLUDE_DIRS :=
+\end{lstlisting}
+Et la changer en :
+\begin{lstlisting}[frame=trBL]
+ALT_INCLUDE_DIRS := include/
+ALT_INCLUDE_DIRS += modules/math/vect2 
+ALT_INCLUDE_DIRS += odules/math/fixed_point 
+ALT_INCLUDE_DIRS += modules/math/geometry
+ALT_INCLUDE_DIRS += modules/cvra_adc 
+ALT_INCLUDE_DIRS += modules/cvra_bldc modules/cvra_dc
+ALT_INCLUDE_DIRS += modules/error 
+ALT_INCLUDE_DIRS += modules/scheduler
+ALT_INCLUDE_DIRS += modules/pid 
+ALT_INCLUDE_DIRS += modules/quadramp 
+ALT_INCLUDE_DIRS += modules/control_system_manager
+ALT_INCLUDE_DIRS += modules/robot_system 
+ALT_INCLUDE_DIRS += modules/position_manager 
+ALT_INCLUDE_DIRS += modules/blocking_detection_manager
+ALT_INCLUDE_DIRS += modules/trajectory_manager
+ALT_INCLUDE_DIRS += modules/obstacle_avoidance
+ALT_INCLUDE_DIRS += modules/couple_limiter 
+ALT_INCLUDE_DIRS += modules/cvra_logger
+\end{lstlisting}
+
+
+
+
+\end{document}
