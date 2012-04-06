@@ -96,7 +96,7 @@ namespace ComDebraFpga
 
 
     // Taille complète du paquet ABC + \n compris
-    private int[] packetSize = new int[] { 0, 5 + 2 * 20, 6, 21, 5 + 2 * 7 };
+    private int[] packetSize = new int[] { 0, 5 + 2 * 24, 6, 21, 5 + 2 * 7 };
     private bool isRunning = true;
     public DispInfo info = new DispInfo();
     
@@ -223,7 +223,8 @@ namespace ComDebraFpga
 
     private int getInt16(byte bH, byte bL)
     {
-      return (bH << 8) | (bL);
+      int v = (bH << 8) | (bL);
+      return v > 32700 ?  v - 65536 : v;
     }
 
     private int getInt32(byte bH1, byte bh2, byte bL1, byte bL2)
@@ -298,6 +299,8 @@ namespace ComDebraFpga
           {
             info.ADC5_8 += getInt16(cmd[k++], cmd[k++]).ToString() + " ";
           }
+          info.ArmG = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
+          info.ArmD = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
           info.hasNewData = true;
           //main.addLog(new ComElem(TypeVal.posX, getInt16(cmd[4], cmd[5]).ToString()));
           //main.addLog(new ComElem(TypeVal.posY, getInt16(cmd[6], cmd[7]).ToString()));

@@ -340,7 +340,7 @@ namespace ComDebraFpga
 
     private void cmbBrasGauche_SelectedIndexChanged(object sender, EventArgs e)
     {
-      m.sendCmdByte(LstPos.arm_mode, new int[] { cmbBrasGauche.SelectedIndex, cmbBrasDroit.SelectedIndex });
+      m.sendCmdByte(LstPos.arm_mode, new int[] { cmbBrasGauche.SelectedIndex, cmbBrasGauche.SelectedIndex });
     }
 
     private void cmbGenFunc_SelectedIndexChanged(object sender, EventArgs e)

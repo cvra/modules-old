@@ -593,15 +593,16 @@
           this.label8.Size = new System.Drawing.Size(51, 13);
           this.label8.TabIndex = 22;
           this.label8.Text = "Bras droit";
+          this.label8.Visible = false;
           // 
           // label7
           // 
           this.label7.AutoSize = true;
           this.label7.Location = new System.Drawing.Point(6, 22);
           this.label7.Name = "label7";
-          this.label7.Size = new System.Drawing.Size(67, 13);
+          this.label7.Size = new System.Drawing.Size(28, 13);
           this.label7.TabIndex = 21;
-          this.label7.Text = "Bras gauche";
+          this.label7.Text = "Bras";
           // 
           // cmbBrasGauche
           // 
@@ -629,6 +630,7 @@
           this.cmbBrasDroit.Name = "cmbBrasDroit";
           this.cmbBrasDroit.Size = new System.Drawing.Size(98, 21);
           this.cmbBrasDroit.TabIndex = 19;
+          this.cmbBrasDroit.Visible = false;
           this.cmbBrasDroit.SelectedIndexChanged += new System.EventHandler(this.cmbBrasGauche_SelectedIndexChanged);
           // 
           // butStopAll

@@ -17,5 +17,7 @@ namespace ComDebraFpga
     public int CPU { get; set; }
     public string ADC1_4 { get; set; }
     public string ADC5_8 { get; set; }
+    public string ArmG { get; set; }
+    public string ArmD { get; set; }
   }
 }
