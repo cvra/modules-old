@@ -706,7 +706,9 @@
           this.cmbGenFunc.Items.AddRange(new object[] {
             "0=Start strat",
             "1=sequence bras",
-            "2=retour depart"});
+            "2=retour depart",
+            "3=Arm slow",
+            "4=Arm fast"});
           this.cmbGenFunc.Location = new System.Drawing.Point(12, 616);
           this.cmbGenFunc.Name = "cmbGenFunc";
           this.cmbGenFunc.Size = new System.Drawing.Size(94, 21);
