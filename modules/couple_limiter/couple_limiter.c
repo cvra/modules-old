@@ -56,4 +56,8 @@ int couple_limiter_max_couple_reached(struct couple_limiter *c) {
 	return c->maximum_reached;
 }
 
+void couple_limiter_reset(struct couple_limiter *c) {
+	c->maximum_reached = 0;
+}
+
 

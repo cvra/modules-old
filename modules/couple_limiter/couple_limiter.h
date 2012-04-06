@@ -40,4 +40,5 @@ int couple_limiter_get_couple(struct couple_limiter *c);
 
 int couple_limiter_max_couple_reached(struct couple_limiter *c);
 
+void couple_limiter_reset(struct couple_limiter *c);
 #endif /* COUPLE_LIMITER_H_ */
