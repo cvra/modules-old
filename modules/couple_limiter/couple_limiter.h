@@ -21,6 +21,7 @@ struct couple_limiter {
 	int32_t old_feedback; // pour calculer la vitesses
 	struct cs *related_cs;
 	int couple;			// pour la calibration
+	int maximum_reached; /// =1 si le couple maximum a ete atteint
 };
 
 /** Reset le module */
@@ -36,5 +37,7 @@ void couple_limiter_set_limit(struct couple_limiter *c, int32_t limit);
 void couple_limiter_set_related_cs(struct couple_limiter *c, struct cs *r);
 
 int couple_limiter_get_couple(struct couple_limiter *c);
+
+int couple_limiter_max_couple_reached(struct couple_limiter *c);
 
 #endif /* COUPLE_LIMITER_H_ */

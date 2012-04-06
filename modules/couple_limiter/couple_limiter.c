@@ -13,6 +13,7 @@ void couple_limiter_init(struct couple_limiter *c) {
 	c->couple_limit = 0;
 	c->old_feedback = 0;
 	c->related_cs = NULL;
+	c->maximum_reached = 0;
 }
 
 int32_t couple_limiter_do_filter(void *v, int32_t in) {
@@ -29,6 +30,7 @@ int32_t couple_limiter_do_filter(void *v, int32_t in) {
 
 	if(abs(in - real_speed) > c->couple_limit) {
 		in = (int)((float)in * ((float)c->couple_limit / (float)abs(in - real_speed)));
+		c->maximum_reached = 1;
 	}
 
 
@@ -48,6 +50,10 @@ void couple_limiter_set_related_cs(struct couple_limiter *c, struct cs *r) {
 
 int couple_limiter_get_couple(struct couple_limiter *c) {
 	return c->couple;
+}
+
+int couple_limiter_max_couple_reached(struct couple_limiter *c) {
+	return c->maximum_reached;
 }
 
 
