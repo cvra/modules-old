@@ -25,7 +25,7 @@
 #define _SCHEDULER_CONFIG_VERSION_ 4
 
 /** maximum number of allocated events */
-#define SCHEDULER_NB_MAX_EVENT 5
+#define SCHEDULER_NB_MAX_EVENT 10
 
 /** We set the tick period ourselves. */
 #define CONFIG_MODULE_SCHEDULER_MANUAL
@@ -76,5 +76,9 @@
  *  prescaler is very high, making the timer interrupt period very
  *  long in comparison to printf() */
 /* #define SCHEDULER_DEBUG */
+
+/** A definir pour avoir des stats.
+ * @todo Ne compile pas avec cette option mais pour l'utilite qu'elle a... */
+//#define CONFIG_MODULE_SCHEDULER_STATS
 
 #endif // _SCHEDULER_CONFIG_H_

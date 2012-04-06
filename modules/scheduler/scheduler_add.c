@@ -20,9 +20,12 @@
  */
 
 #include <aversive.h>
+
 #include <scheduler_config.h>
 #include <scheduler_private.h>
 #include <scheduler_stats.h>
+
+#include <stdio.h>
 
 /** get a free event, mark it as allocated and return its index, or -1
  *  if not found. */
@@ -42,6 +45,7 @@ scheduler_alloc_event(void)
 		IRQ_UNLOCK(flags);
 	}
 	SCHED_INC_STAT(alloc_fails);
+	printf("%s failed, maybe we should increase SCHEDULER_NB_MAX_EVENT...\r\n", __FUNCTION__);
 	return -1;
 }
 
