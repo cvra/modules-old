@@ -63,10 +63,14 @@
           this.numDist = new System.Windows.Forms.NumericUpDown();
           this.label4 = new System.Windows.Forms.Label();
           this.groupBox2 = new System.Windows.Forms.GroupBox();
+          this.butPD2 = new System.Windows.Forms.Button();
+          this.butPG3 = new System.Windows.Forms.Button();
+          this.butPD3 = new System.Windows.Forms.Button();
+          this.butPD1 = new System.Windows.Forms.Button();
+          this.butPG2 = new System.Windows.Forms.Button();
+          this.butPG1 = new System.Windows.Forms.Button();
           this.lbltrackPumpD = new System.Windows.Forms.Label();
-          this.trackPumpD = new System.Windows.Forms.TrackBar();
           this.label1 = new System.Windows.Forms.Label();
-          this.trackPumpG = new System.Windows.Forms.TrackBar();
           this.groupBox6 = new System.Windows.Forms.GroupBox();
           this.label6 = new System.Windows.Forms.Label();
           this.label5 = new System.Windows.Forms.Label();
@@ -96,8 +100,6 @@
           ((System.ComponentModel.ISupportInitialize)(this.numAngle)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.numDist)).BeginInit();
           this.groupBox2.SuspendLayout();
-          ((System.ComponentModel.ISupportInitialize)(this.trackPumpD)).BeginInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackPumpG)).BeginInit();
           this.groupBox6.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numDropX)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.numDropY)).BeginInit();
@@ -449,10 +451,14 @@
           // 
           // groupBox2
           // 
+          this.groupBox2.Controls.Add(this.butPD2);
+          this.groupBox2.Controls.Add(this.butPG3);
+          this.groupBox2.Controls.Add(this.butPD3);
+          this.groupBox2.Controls.Add(this.butPD1);
+          this.groupBox2.Controls.Add(this.butPG2);
+          this.groupBox2.Controls.Add(this.butPG1);
           this.groupBox2.Controls.Add(this.lbltrackPumpD);
-          this.groupBox2.Controls.Add(this.trackPumpD);
           this.groupBox2.Controls.Add(this.label1);
-          this.groupBox2.Controls.Add(this.trackPumpG);
           this.groupBox2.Controls.Add(this.groupBox6);
           this.groupBox2.Controls.Add(this.label8);
           this.groupBox2.Controls.Add(this.label7);
@@ -466,6 +472,72 @@
           this.groupBox2.TabStop = false;
           this.groupBox2.Text = "Commandes";
           // 
+          // butPD2
+          // 
+          this.butPD2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+          this.butPD2.Location = new System.Drawing.Point(142, 140);
+          this.butPD2.Name = "butPD2";
+          this.butPD2.Size = new System.Drawing.Size(19, 23);
+          this.butPD2.TabIndex = 31;
+          this.butPD2.Text = "0";
+          this.butPD2.UseVisualStyleBackColor = false;
+          this.butPD2.Click += new System.EventHandler(this.butPD2_Click);
+          // 
+          // butPG3
+          // 
+          this.butPG3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+          this.butPG3.Location = new System.Drawing.Point(167, 85);
+          this.butPG3.Name = "butPG3";
+          this.butPG3.Size = new System.Drawing.Size(19, 23);
+          this.butPG3.TabIndex = 30;
+          this.butPG3.Text = "L";
+          this.butPG3.UseVisualStyleBackColor = false;
+          this.butPG3.Click += new System.EventHandler(this.butPG3_Click);
+          // 
+          // butPD3
+          // 
+          this.butPD3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+          this.butPD3.Location = new System.Drawing.Point(167, 140);
+          this.butPD3.Name = "butPD3";
+          this.butPD3.Size = new System.Drawing.Size(19, 23);
+          this.butPD3.TabIndex = 29;
+          this.butPD3.Text = "L";
+          this.butPD3.UseVisualStyleBackColor = false;
+          this.butPD3.Click += new System.EventHandler(this.butPD3_Click);
+          // 
+          // butPD1
+          // 
+          this.butPD1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+          this.butPD1.Location = new System.Drawing.Point(117, 140);
+          this.butPD1.Name = "butPD1";
+          this.butPD1.Size = new System.Drawing.Size(19, 23);
+          this.butPD1.TabIndex = 28;
+          this.butPD1.Text = "B";
+          this.butPD1.UseVisualStyleBackColor = false;
+          this.butPD1.Click += new System.EventHandler(this.butPD1_Click);
+          // 
+          // butPG2
+          // 
+          this.butPG2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+          this.butPG2.Location = new System.Drawing.Point(142, 85);
+          this.butPG2.Name = "butPG2";
+          this.butPG2.Size = new System.Drawing.Size(19, 23);
+          this.butPG2.TabIndex = 27;
+          this.butPG2.Text = "0";
+          this.butPG2.UseVisualStyleBackColor = false;
+          this.butPG2.Click += new System.EventHandler(this.butPG2_Click);
+          // 
+          // butPG1
+          // 
+          this.butPG1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+          this.butPG1.Location = new System.Drawing.Point(117, 85);
+          this.butPG1.Name = "butPG1";
+          this.butPG1.Size = new System.Drawing.Size(19, 23);
+          this.butPG1.TabIndex = 26;
+          this.butPG1.Text = "B";
+          this.butPG1.UseVisualStyleBackColor = false;
+          this.butPG1.Click += new System.EventHandler(this.butPG1_Click);
+          // 
           // lbltrackPumpD
           // 
           this.lbltrackPumpD.AutoSize = true;
@@ -475,18 +547,6 @@
           this.lbltrackPumpD.TabIndex = 25;
           this.lbltrackPumpD.Text = "Pompe D";
           // 
-          // trackPumpD
-          // 
-          this.trackPumpD.AutoSize = false;
-          this.trackPumpD.Location = new System.Drawing.Point(112, 140);
-          this.trackPumpD.Maximum = 1;
-          this.trackPumpD.Minimum = -1;
-          this.trackPumpD.Name = "trackPumpD";
-          this.trackPumpD.Size = new System.Drawing.Size(65, 40);
-          this.trackPumpD.TabIndex = 24;
-          this.trackPumpD.TickStyle = System.Windows.Forms.TickStyle.Both;
-          this.trackPumpD.Scroll += new System.EventHandler(this.trackPumpD_Scroll);
-          // 
           // label1
           // 
           this.label1.AutoSize = true;
@@ -495,18 +555,6 @@
           this.label1.Size = new System.Drawing.Size(51, 13);
           this.label1.TabIndex = 23;
           this.label1.Text = "Pompe G";
-          // 
-          // trackPumpG
-          // 
-          this.trackPumpG.AutoSize = false;
-          this.trackPumpG.Location = new System.Drawing.Point(112, 85);
-          this.trackPumpG.Maximum = 1;
-          this.trackPumpG.Minimum = -1;
-          this.trackPumpG.Name = "trackPumpG";
-          this.trackPumpG.Size = new System.Drawing.Size(65, 40);
-          this.trackPumpG.TabIndex = 12;
-          this.trackPumpG.TickStyle = System.Windows.Forms.TickStyle.Both;
-          this.trackPumpG.Scroll += new System.EventHandler(this.trackPumpG_Scroll);
           // 
           // groupBox6
           // 
@@ -857,8 +905,6 @@
           ((System.ComponentModel.ISupportInitialize)(this.numDist)).EndInit();
           this.groupBox2.ResumeLayout(false);
           this.groupBox2.PerformLayout();
-          ((System.ComponentModel.ISupportInitialize)(this.trackPumpD)).EndInit();
-          ((System.ComponentModel.ISupportInitialize)(this.trackPumpG)).EndInit();
           this.groupBox6.ResumeLayout(false);
           this.groupBox6.PerformLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numDropX)).EndInit();
@@ -923,9 +969,7 @@
         private System.Windows.Forms.Button butStopAll;
         private System.Windows.Forms.PropertyGrid propertyVar;
         private System.Windows.Forms.ToolStripButton butClearLog;
-        private System.Windows.Forms.TrackBar trackPumpG;
         private System.Windows.Forms.Label lbltrackPumpD;
-        private System.Windows.Forms.TrackBar trackPumpD;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbGenFunc;
         private System.Windows.Forms.NumericUpDown numGenFunc;
@@ -935,6 +979,12 @@
         private System.Windows.Forms.NumericUpDown numArmDZ;
         private System.Windows.Forms.NumericUpDown numArmDY;
         private System.Windows.Forms.NumericUpDown numArmDX;
+        private System.Windows.Forms.Button butPD2;
+        private System.Windows.Forms.Button butPG3;
+        private System.Windows.Forms.Button butPD3;
+        private System.Windows.Forms.Button butPD1;
+        private System.Windows.Forms.Button butPG2;
+        private System.Windows.Forms.Button butPG1;
     }
 }
 

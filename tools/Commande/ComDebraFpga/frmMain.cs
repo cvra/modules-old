@@ -305,24 +305,12 @@ namespace ComDebraFpga
       m.sendCmd(LstPos.goto_type, new int[] {3, 250, 250 });
     }
 
-    private void trackPumpG_Scroll(object sender, EventArgs e)
+    private void sendCmdPump(int numPump, int val)
     {
-      sendCmdPump(1);
-    }
-
-    private void trackPumpD_Scroll(object sender, EventArgs e)
-    {
-      sendCmdPump(0);
-    }
-
-    private void sendCmdPump(int numPump)
-    {
-      int val = numPump == 0 ? trackPumpD.Value : trackPumpG.Value;
-      val = val == -1 ? 2 : val;
       if (val != 0)
       {
         m.sendCmdByte(LstPos.pump, new int[] { numPump, 0 });
-        System.Threading.Thread.Sleep(2000);
+        System.Threading.Thread.Sleep(1000);
       }
 
       m.sendCmdByte(LstPos.pump, new int[] { numPump, val });
@@ -400,6 +388,36 @@ namespace ComDebraFpga
     private void numArmDX_ValueChanged(object sender, EventArgs e)
     {
       sendArmRight();
+    }
+
+    private void butPG1_Click(object sender, EventArgs e)
+    {
+      sendCmdPump(1,1);
+    }
+
+    private void butPG3_Click(object sender, EventArgs e)
+    {
+      sendCmdPump(1, 2);
+    }
+
+    private void butPG2_Click(object sender, EventArgs e)
+    {
+      sendCmdPump(1, 0);
+    }
+
+    private void butPD1_Click(object sender, EventArgs e)
+    {
+      sendCmdPump(0, 1);
+    }
+
+    private void butPD2_Click(object sender, EventArgs e)
+    {
+      sendCmdPump(0, 0);
+    }
+
+    private void butPD3_Click(object sender, EventArgs e)
+    {
+      sendCmdPump(0, 2);
     }
   }
 }
