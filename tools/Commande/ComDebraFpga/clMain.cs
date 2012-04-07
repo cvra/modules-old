@@ -96,10 +96,10 @@ namespace ComDebraFpga
 
 
     // Taille complète du paquet ABC + \n compris
-    private int[] packetSize = new int[] { 0, 5 + 2 * 24, 6, 21, 5 + 4 *4 };
+    private int[] packetSize = new int[] { 0, 5 + 2 * 24, 6, 21, 5 + 4 * 4 };
     private bool isRunning = true;
     public DispInfo info = new DispInfo();
-    
+
     public clMain(frmMain Main)
     {
       main = Main;
@@ -221,8 +221,8 @@ namespace ComDebraFpga
       ASCIIEncoding ascii = new ASCIIEncoding();
       char[] valChar = ascii.GetChars(buffer.ToArray(), 0, 1);
       byte[] bytes = ascii.GetBytes("abc");
-//      main.addLog(new ComElem(TypeVal.info, "Cmd Error:" + val + " " + buffer[0] + "(" + valChar[0] + ")"));
-      main.addLog(new ComElem(TypeVal.infoNoLn, valChar[0]+""));
+      //      main.addLog(new ComElem(TypeVal.info, "Cmd Error:" + val + " " + buffer[0] + "(" + valChar[0] + ")"));
+      main.addLog(new ComElem(TypeVal.infoNoLn, valChar[0] + ""));
     }
 
     private int getInt16(byte bH, byte bL, bool signed = true)
@@ -261,13 +261,13 @@ namespace ComDebraFpga
     public bool sendCmd(LstPos cmd, int[] v)
     {
       List<byte> val = new List<byte>();
-      val.AddRange(new byte[] { 65, 66, 67, (byte)cmd});
+      val.AddRange(new byte[] { 65, 66, 67, (byte)cmd });
 
       for (int i = 0; i < v.Length; i++)
-			{
-			 val.Add((byte)((v[i]) >> 8));
-			 val.Add((byte)(v[i]));
-			}
+      {
+        val.Add((byte)((v[i]) >> 8));
+        val.Add((byte)(v[i]));
+      }
       val.Add(10);
       return sendCmd(val.ToArray());
     }
@@ -370,5 +370,86 @@ namespace ComDebraFpga
     {
       com.Disconnect();
     }
+
+
+
+    static double sq(double x)
+    {
+      return x * x;
+    }
+
+    public static int circle_intersect(circle_t c1, circle_t c2, ref point_t p1, ref point_t p2)
+    {
+      circle_t ca, cb;
+      double a, b, c, d, e;
+      int ret = 0;
+
+      /* create circles with same radius, but centered on 0,0 : it
+       * will make process easier */
+      ca.x = 0;
+      ca.y = 0;
+      ca.r = c1.r;
+      cb.x = c2.x - c1.x;
+      cb.y = c2.y - c1.y;
+      cb.r = c2.r;
+
+      /* inspired from http://www.loria.fr/~roegel/notes/note0001.pdf 
+       * which can be found in doc. */
+      a = 2.0 * cb.x;
+      b = 2.0 * cb.y;
+      c = sq(cb.x) + sq(cb.y) - sq(cb.r) + sq(ca.r);
+      d = sq(2.0 * a * c) -
+        (4.0 * (sq(a) + sq(b)) * (sq(c) - sq(b) * sq(ca.r)));
+
+      /* no intersection */
+      if (d < 0)
+        return 0;
+
+
+      if (Math.Abs(b) < 1e-4)
+      {
+        /* special case */
+        e = sq(cb.r) - sq((2.0 * c - sq(a)) / (2.0 * a));
+
+        /* no intersection */
+        if (e < 0)
+          return 0;
+
+        p1.x = (float)((2.0 * a * c - Math.Sqrt(d)) / (2.0 * (sq(a) + sq(b))));
+        p1.y = (float)Math.Sqrt(e);
+        p2.x = p1.x;
+        p2.y = p1.y;
+        ret = 1;
+      }
+      else
+      {
+        /* usual case */
+        p1.x = (float)((2.0 * a * c - Math.Sqrt(d)) / (2.0 * (sq(a) + sq(b))));
+        p1.y = (float)((c - a * p1.x) / b);
+        p2.x = (float)((2.0 * a * c + Math.Sqrt(d)) / (2.0 * (sq(a) + sq(b))));
+        p2.y = (float)((c - a * p2.x) / b);
+        ret = 2;
+      }
+
+      /* retranslate */
+      p1.x += (float)c1.x;
+      p1.y += (float)c1.y;
+      p2.x += (float)c1.x;
+      p2.y += (float)c1.y;
+
+      return ret;
+    }
   }
+  public struct circle_t
+  {
+    public double x;
+    public double y;
+    public double r;
+  };
+
+  public struct point_t
+  {
+    public float x;
+    public float y;
+  };
 }

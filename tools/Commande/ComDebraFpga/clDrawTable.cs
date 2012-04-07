@@ -41,6 +41,10 @@ namespace ComDebraFpga
     public const int penWidth = 5;
     public float EvitRobot = 328 / 2;
 
+    public PointF p1;
+    public PointF p2;
+    public PointF pBout;
+
     // Pen
 
     public static Pen Penblack = new Pen(Color.Black, penWidth);
@@ -244,6 +248,10 @@ namespace ComDebraFpga
       //Dessin.DrawLine(PenBlue, RobotLargeur2, RobotLongueure2, -RobotLargeur2, RobotLongueure2);
       //Dessin.DrawLine(PenBlue, -RobotLargeur2, RobotLongueure2, -RobotLargeur2, -RobotLongueure2);
 
+      Dessin.DrawLine(PenBlue, new PointF(0, 0), p1);
+      Dessin.DrawLine(PenLightCoral, new PointF(0, 0), p2);
+      Dessin.DrawLine(PenBlue, pBout, p1);
+      Dessin.DrawLine(PenLightCoral, pBout, p2);
 
       // Dessin du robot adverse
       InitView(Dessin);
