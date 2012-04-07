@@ -44,14 +44,14 @@ struct blocking_detection {
 	struct cs *cs;
 	uint16_t cpt_thres;
 	uint16_t cpt;
-	uint16_t err_thres;
+	uint32_t err_thres;
 };
 
 /** init module, give the cs as parameter */
 void bd_init(struct blocking_detection *bd, struct cs *cs);
 
 
-void bd_set_thresholds(struct blocking_detection *bd, uint16_t err_thres, uint16_t cpt_thres);
+void bd_set_thresholds(struct blocking_detection *bd, uint32_t err_thres, uint16_t cpt_thres);
 
 /** reset the blocking */
 void bd_reset(struct blocking_detection *bd);
