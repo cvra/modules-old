@@ -37,11 +37,8 @@
           this.toolStrip1 = new System.Windows.Forms.ToolStrip();
           this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
           this.txtPort = new System.Windows.Forms.ToolStripTextBox();
-          this.butConnect = new System.Windows.Forms.ToolStripButton();
-          this.butClearLog = new System.Windows.Forms.ToolStripButton();
           this.timLog = new System.Windows.Forms.Timer(this.components);
           this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-          this.picTable = new System.Windows.Forms.PictureBox();
           this.groupBox3 = new System.Windows.Forms.GroupBox();
           this.panel1 = new System.Windows.Forms.Panel();
           this.button25 = new System.Windows.Forms.Button();
@@ -92,9 +89,13 @@
           this.numArmDZ = new System.Windows.Forms.NumericUpDown();
           this.numArmDY = new System.Windows.Forms.NumericUpDown();
           this.numArmDX = new System.Windows.Forms.NumericUpDown();
+          this.butSendGenFunc = new System.Windows.Forms.Button();
+          this.picTable = new System.Windows.Forms.PictureBox();
+          this.butConnect = new System.Windows.Forms.ToolStripButton();
+          this.butClearLog = new System.Windows.Forms.ToolStripButton();
+          this.butGraph = new System.Windows.Forms.ToolStripButton();
           ((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
           this.toolStrip1.SuspendLayout();
-          ((System.ComponentModel.ISupportInitialize)(this.picTable)).BeginInit();
           this.groupBox3.SuspendLayout();
           this.panel1.SuspendLayout();
           ((System.ComponentModel.ISupportInitialize)(this.numAngle)).BeginInit();
@@ -110,6 +111,7 @@
           ((System.ComponentModel.ISupportInitialize)(this.numArmDZ)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.numArmDY)).BeginInit();
           ((System.ComponentModel.ISupportInitialize)(this.numArmDX)).BeginInit();
+          ((System.ComponentModel.ISupportInitialize)(this.picTable)).BeginInit();
           this.SuspendLayout();
           // 
           // dataButs
@@ -156,7 +158,8 @@
             this.toolStripLabel1,
             this.txtPort,
             this.butConnect,
-            this.butClearLog});
+            this.butClearLog,
+            this.butGraph});
           this.toolStrip1.Location = new System.Drawing.Point(0, 0);
           this.toolStrip1.Name = "toolStrip1";
           this.toolStrip1.Size = new System.Drawing.Size(1264, 25);
@@ -174,42 +177,10 @@
           this.txtPort.Name = "txtPort";
           this.txtPort.Size = new System.Drawing.Size(50, 25);
           // 
-          // butConnect
-          // 
-          this.butConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-          this.butConnect.Image = ((System.Drawing.Image)(resources.GetObject("butConnect.Image")));
-          this.butConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
-          this.butConnect.Name = "butConnect";
-          this.butConnect.Size = new System.Drawing.Size(56, 22);
-          this.butConnect.Text = "Connect";
-          this.butConnect.Click += new System.EventHandler(this.butConnect_Click);
-          // 
-          // butClearLog
-          // 
-          this.butClearLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-          this.butClearLog.Image = ((System.Drawing.Image)(resources.GetObject("butClearLog.Image")));
-          this.butClearLog.ImageTransparentColor = System.Drawing.Color.Magenta;
-          this.butClearLog.Name = "butClearLog";
-          this.butClearLog.Size = new System.Drawing.Size(58, 22);
-          this.butClearLog.Text = "Clear log";
-          this.butClearLog.Click += new System.EventHandler(this.butClearLog_Click);
-          // 
           // timLog
           // 
           this.timLog.Enabled = true;
           this.timLog.Tick += new System.EventHandler(this.timLog_Tick);
-          // 
-          // picTable
-          // 
-          this.picTable.Image = global::ComDebraFpga.Properties.Resources.simu2012_table;
-          this.picTable.Location = new System.Drawing.Point(0, 28);
-          this.picTable.Name = "picTable";
-          this.picTable.Size = new System.Drawing.Size(669, 454);
-          this.picTable.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-          this.picTable.TabIndex = 3;
-          this.picTable.TabStop = false;
-          this.picTable.Paint += new System.Windows.Forms.PaintEventHandler(this.picTable_Paint);
-          this.picTable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picTable_MouseDown);
           // 
           // groupBox3
           // 
@@ -702,22 +673,42 @@
           // cmbGenFunc
           // 
           this.cmbGenFunc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+          this.cmbGenFunc.DropDownWidth = 150;
           this.cmbGenFunc.FormattingEnabled = true;
           this.cmbGenFunc.Items.AddRange(new object[] {
             "0=Start strat",
             "1=sequence bras",
             "2=retour depart",
             "3=Arm slow",
-            "4=Arm fast"});
+            "4=Arm fast",
+            "5=Gain P",
+            "6=Gain D",
+            "7=Gain angle P",
+            "8=Gain angle D",
+            "9= Gain armXY P",
+            "10=Gain armXY D",
+            "11=Gain armZ P (Mettre positif)",
+            "12=Gain armZ D",
+            "13=Ask Log"});
           this.cmbGenFunc.Location = new System.Drawing.Point(12, 616);
           this.cmbGenFunc.Name = "cmbGenFunc";
-          this.cmbGenFunc.Size = new System.Drawing.Size(94, 21);
+          this.cmbGenFunc.Size = new System.Drawing.Size(74, 21);
           this.cmbGenFunc.TabIndex = 21;
           this.cmbGenFunc.SelectedIndexChanged += new System.EventHandler(this.cmbGenFunc_SelectedIndexChanged);
           // 
           // numGenFunc
           // 
-          this.numGenFunc.Location = new System.Drawing.Point(112, 617);
+          this.numGenFunc.Location = new System.Drawing.Point(92, 617);
+          this.numGenFunc.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+          this.numGenFunc.Minimum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            -2147483648});
           this.numGenFunc.Name = "numGenFunc";
           this.numGenFunc.Size = new System.Drawing.Size(69, 20);
           this.numGenFunc.TabIndex = 22;
@@ -870,11 +861,64 @@
             0});
           this.numArmDX.ValueChanged += new System.EventHandler(this.numArmDX_ValueChanged);
           // 
+          // butSendGenFunc
+          // 
+          this.butSendGenFunc.Location = new System.Drawing.Point(167, 614);
+          this.butSendGenFunc.Name = "butSendGenFunc";
+          this.butSendGenFunc.Size = new System.Drawing.Size(14, 23);
+          this.butSendGenFunc.TabIndex = 29;
+          this.butSendGenFunc.Text = "S";
+          this.butSendGenFunc.UseVisualStyleBackColor = true;
+          this.butSendGenFunc.Click += new System.EventHandler(this.butSendGenFunc_Click);
+          // 
+          // picTable
+          // 
+          this.picTable.Image = global::ComDebraFpga.Properties.Resources.simu2012_table;
+          this.picTable.Location = new System.Drawing.Point(0, 28);
+          this.picTable.Name = "picTable";
+          this.picTable.Size = new System.Drawing.Size(669, 454);
+          this.picTable.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+          this.picTable.TabIndex = 3;
+          this.picTable.TabStop = false;
+          this.picTable.Paint += new System.Windows.Forms.PaintEventHandler(this.picTable_Paint);
+          this.picTable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picTable_MouseDown);
+          // 
+          // butConnect
+          // 
+          this.butConnect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+          this.butConnect.Image = ((System.Drawing.Image)(resources.GetObject("butConnect.Image")));
+          this.butConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.butConnect.Name = "butConnect";
+          this.butConnect.Size = new System.Drawing.Size(56, 22);
+          this.butConnect.Text = "Connect";
+          this.butConnect.Click += new System.EventHandler(this.butConnect_Click);
+          // 
+          // butClearLog
+          // 
+          this.butClearLog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+          this.butClearLog.Image = ((System.Drawing.Image)(resources.GetObject("butClearLog.Image")));
+          this.butClearLog.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.butClearLog.Name = "butClearLog";
+          this.butClearLog.Size = new System.Drawing.Size(58, 22);
+          this.butClearLog.Text = "Clear log";
+          this.butClearLog.Click += new System.EventHandler(this.butClearLog_Click);
+          // 
+          // butGraph
+          // 
+          this.butGraph.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+          this.butGraph.Image = ((System.Drawing.Image)(resources.GetObject("butGraph.Image")));
+          this.butGraph.ImageTransparentColor = System.Drawing.Color.Magenta;
+          this.butGraph.Name = "butGraph";
+          this.butGraph.Size = new System.Drawing.Size(52, 22);
+          this.butGraph.Text = "Graphic";
+          this.butGraph.Click += new System.EventHandler(this.butGraph_Click);
+          // 
           // frmMain
           // 
           this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
           this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
           this.ClientSize = new System.Drawing.Size(1264, 732);
+          this.Controls.Add(this.butSendGenFunc);
           this.Controls.Add(this.numArmDZ);
           this.Controls.Add(this.numArmDY);
           this.Controls.Add(this.numArmDX);
@@ -899,7 +943,6 @@
           ((System.ComponentModel.ISupportInitialize)(this.dataButs)).EndInit();
           this.toolStrip1.ResumeLayout(false);
           this.toolStrip1.PerformLayout();
-          ((System.ComponentModel.ISupportInitialize)(this.picTable)).EndInit();
           this.groupBox3.ResumeLayout(false);
           this.groupBox3.PerformLayout();
           this.panel1.ResumeLayout(false);
@@ -918,6 +961,7 @@
           ((System.ComponentModel.ISupportInitialize)(this.numArmDZ)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.numArmDY)).EndInit();
           ((System.ComponentModel.ISupportInitialize)(this.numArmDX)).EndInit();
+          ((System.ComponentModel.ISupportInitialize)(this.picTable)).EndInit();
           this.ResumeLayout(false);
           this.PerformLayout();
 
@@ -987,6 +1031,8 @@
         private System.Windows.Forms.Button butPD1;
         private System.Windows.Forms.Button butPG2;
         private System.Windows.Forms.Button butPG1;
+        private System.Windows.Forms.Button butSendGenFunc;
+        private System.Windows.Forms.ToolStripButton butGraph;
     }
 }
 

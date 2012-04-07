@@ -12,6 +12,7 @@ namespace ComDebraFpga
 {
   public partial class frmMain : Form
   {
+    frmGraph gr = new frmGraph();
     List<ComElem> lstLog = new List<ComElem>();
     List<ComCmd> lstCmd = new List<ComCmd>();
 
@@ -140,6 +141,7 @@ namespace ComDebraFpga
           break;
         case TypeVal.infoNoLn:
           rtbLog.AppendText(lstLog[0].val);
+          checkForGraph(lstLog[0].val);
           break;        //case TypeVal.posX:
         //  lblPosX.Text = "X:" + lstLog[0].val;
         //  break;
@@ -152,11 +154,34 @@ namespace ComDebraFpga
         //case TypeVal.status:
         //  lblStatus.Text = "S:" + lstLog[0].val;
         //  break;
+        case TypeVal.vals:
+          gr.addData(lstLog[0].val);
+          rtbLog.AppendText(lstLog[0].val + "\r\n");
+          break;
         default:
           rtbLog.AppendText(lstLog[0].val + "\r\n");
           break;
       }
+    }
 
+    string lineGraph = "";
+    private void checkForGraph(string p)
+    {
+      if (gr == null || gr.IsDisposed)
+        return;
+
+      if (p == "\r" )
+      {
+        if (lineGraph.StartsWith("gr"))
+        {
+          gr.addData(lineGraph.Substring(2));
+        }
+        lineGraph = "";
+      }
+      else
+      {
+        lineGraph += p;
+      }
     }
 
     private void dataButs_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -333,7 +358,7 @@ namespace ComDebraFpga
 
     private void cmbGenFunc_SelectedIndexChanged(object sender, EventArgs e)
     {
-      m.sendCmdByte(LstPos.gen_func, new int[] { cmbGenFunc.SelectedIndex, (int)numGenFunc.Value });
+      butSendGenFunc.PerformClick();
     }
 
     private void numArmX_ValueChanged(object sender, EventArgs e)
@@ -418,6 +443,18 @@ namespace ComDebraFpga
     private void butPD3_Click(object sender, EventArgs e)
     {
       sendCmdPump(0, 2);
+    }
+
+    private void butSendGenFunc_Click(object sender, EventArgs e)
+    {
+      m.sendCmd(LstPos.gen_func, new int[] { cmbGenFunc.SelectedIndex, (int)numGenFunc.Value });
+    }
+
+    private void butGraph_Click(object sender, EventArgs e)
+    {
+      if (gr == null || gr.IsDisposed)
+        gr = new frmGraph();
+      gr.Show();
     }
   }
 }

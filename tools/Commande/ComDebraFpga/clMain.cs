@@ -96,7 +96,7 @@ namespace ComDebraFpga
 
 
     // Taille complète du paquet ABC + \n compris
-    private int[] packetSize = new int[] { 0, 5 + 2 * 24, 6, 21, 5 + 2 * 7 };
+    private int[] packetSize = new int[] { 0, 5 + 2 * 24, 6, 21, 5 + 4 *4 };
     private bool isRunning = true;
     public DispInfo info = new DispInfo();
     
@@ -168,7 +168,11 @@ namespace ComDebraFpga
             if (buffer[0] == 'A')
               curCmdIn.Add(buffer[0]);
             else if (buffer[0] == '\n')
-              main.addLog(new ComElem(TypeVal.info, "Cmd ACK"));
+            {
+              //main.addLog(new ComElem(TypeVal.info, "Cmd ACK"));
+              info.nbAck++;
+              info.hasNewData = true;
+            }
             else
               reportError("A");
             break;
@@ -221,10 +225,15 @@ namespace ComDebraFpga
       main.addLog(new ComElem(TypeVal.infoNoLn, valChar[0]+""));
     }
 
-    private int getInt16(byte bH, byte bL)
+    private int getInt16(byte bH, byte bL, bool signed = true)
     {
-      int v = (bH << 8) | (bL);
-      return v > 32700 ?  v - 65536 : v;
+      if (signed)
+      {
+        int v = (bH << 8) | (bL);
+        return v > 32768 ? v - 65536 : v;
+      }
+      else
+        return (bH << 8) | (bL);
     }
 
     private int getInt32(byte bH1, byte bh2, byte bL1, byte bL2)
@@ -287,8 +296,8 @@ namespace ComDebraFpga
           info.status = getInt16(cmd[k++], cmd[k++]).ToString();
           info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
           info.ArmRight = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
-          info.uptime = getInt16(cmd[k++], cmd[k++]);
-          info.CPU = getInt16(cmd[k++], cmd[k++]);
+          info.uptime = getInt16(cmd[k++], cmd[k++], false);
+          info.CPU = getInt16(cmd[k++], cmd[k++], false);
           info.ADC1_4 = "";
           for (int i = 0; i < 4; i++)
           {
@@ -336,7 +345,7 @@ namespace ComDebraFpga
           int i4 = 4;
           while (i4 < cmd.Length - 1)
           {
-            tmpVal4 += getInt16(cmd[i4++], cmd[i4++]).ToString("") + " ";
+            tmpVal4 += getInt32(cmd[i4++], cmd[i4++], cmd[i4++], cmd[i4++]).ToString("") + " ";
           }
           main.addLog(new ComElem(TypeVal.vals, tmpVal4));
           break;

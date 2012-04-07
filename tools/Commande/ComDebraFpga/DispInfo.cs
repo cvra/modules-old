@@ -19,5 +19,6 @@ namespace ComDebraFpga
     public string ADC5_8 { get; set; }
     public string ArmG { get; set; }
     public string ArmD { get; set; }
+    public int nbAck { get; set; }
   }
 }
