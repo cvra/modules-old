@@ -735,7 +735,7 @@
           this.numArmGX.Size = new System.Drawing.Size(83, 20);
           this.numArmGX.TabIndex = 23;
           this.numArmGX.Value = new decimal(new int[] {
-            250,
+            300,
             0,
             0,
             0});
@@ -785,6 +785,11 @@
           this.numArmGZ.Name = "numArmGZ";
           this.numArmGZ.Size = new System.Drawing.Size(83, 20);
           this.numArmGZ.TabIndex = 25;
+          this.numArmGZ.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
           this.numArmGZ.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
           // 
           // numArmDZ
@@ -808,6 +813,11 @@
           this.numArmDZ.Name = "numArmDZ";
           this.numArmDZ.Size = new System.Drawing.Size(83, 20);
           this.numArmDZ.TabIndex = 28;
+          this.numArmDZ.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
           this.numArmDZ.ValueChanged += new System.EventHandler(this.numArmDX_ValueChanged);
           // 
           // numArmDY
@@ -855,7 +865,7 @@
           this.numArmDX.Size = new System.Drawing.Size(83, 20);
           this.numArmDX.TabIndex = 26;
           this.numArmDX.Value = new decimal(new int[] {
-            250,
+            300,
             0,
             0,
             0});
