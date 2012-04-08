@@ -307,8 +307,6 @@ int32_t cs_get_filtered_feedback(struct cs* cs)
     return tmp;
 }
 
-
-
 void cs_set_consign(struct cs* cs, int32_t v)
 {
     uint8_t flags;

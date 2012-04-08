@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComDebraFpga", "ComDebraFpga.csproj", "{6F119C22-3B99-435C-8E49-129D04D68806}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "grinlib.clPortCom", "..\grinlib.clPortCom\grinlib.clPortCom.csproj", "{950A6401-D8C8-48A9-B384-40C3C8140476}"
@@ -9,38 +9,22 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
-		Debut Simu|Any CPU = Debut Simu|Any CPU
-		Debut Simu|x86 = Debut Simu|x86
-		Release Simu|Any CPU = Release Simu|Any CPU
-		Release Simu|x86 = Release Simu|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6F119C22-3B99-435C-8E49-129D04D68806}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{6F119C22-3B99-435C-8E49-129D04D68806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F119C22-3B99-435C-8E49-129D04D68806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F119C22-3B99-435C-8E49-129D04D68806}.Debug|x86.ActiveCfg = Debug|x86
 		{6F119C22-3B99-435C-8E49-129D04D68806}.Debug|x86.Build.0 = Debug|x86
-		{6F119C22-3B99-435C-8E49-129D04D68806}.Debut Simu|Any CPU.ActiveCfg = Debug|x86
-		{6F119C22-3B99-435C-8E49-129D04D68806}.Debut Simu|x86.ActiveCfg = Debug|x86
-		{6F119C22-3B99-435C-8E49-129D04D68806}.Debut Simu|x86.Build.0 = Debug|x86
-		{6F119C22-3B99-435C-8E49-129D04D68806}.Release Simu|Any CPU.ActiveCfg = Release|x86
-		{6F119C22-3B99-435C-8E49-129D04D68806}.Release Simu|x86.ActiveCfg = Release|x86
-		{6F119C22-3B99-435C-8E49-129D04D68806}.Release Simu|x86.Build.0 = Release|x86
-		{6F119C22-3B99-435C-8E49-129D04D68806}.Release|Any CPU.ActiveCfg = Release|x86
+		{6F119C22-3B99-435C-8E49-129D04D68806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F119C22-3B99-435C-8E49-129D04D68806}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F119C22-3B99-435C-8E49-129D04D68806}.Release|x86.ActiveCfg = Release|x86
 		{6F119C22-3B99-435C-8E49-129D04D68806}.Release|x86.Build.0 = Release|x86
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Debug|x86.ActiveCfg = Debug|x86
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Debug|x86.Build.0 = Debug|x86
-		{950A6401-D8C8-48A9-B384-40C3C8140476}.Debut Simu|Any CPU.ActiveCfg = Debut Simu|Any CPU
-		{950A6401-D8C8-48A9-B384-40C3C8140476}.Debut Simu|Any CPU.Build.0 = Debut Simu|Any CPU
-		{950A6401-D8C8-48A9-B384-40C3C8140476}.Debut Simu|x86.ActiveCfg = Debut Simu|x86
-		{950A6401-D8C8-48A9-B384-40C3C8140476}.Debut Simu|x86.Build.0 = Debut Simu|x86
-		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release Simu|Any CPU.ActiveCfg = Release Simu|Any CPU
-		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release Simu|Any CPU.Build.0 = Release Simu|Any CPU
-		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release Simu|x86.ActiveCfg = Release Simu|x86
-		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release Simu|x86.Build.0 = Release Simu|x86
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release|Any CPU.Build.0 = Release|Any CPU
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release|x86.ActiveCfg = Release|x86

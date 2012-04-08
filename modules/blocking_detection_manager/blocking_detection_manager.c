@@ -71,11 +71,16 @@ void bd_set_thresholds(struct blocking_detection *bd, uint32_t err_thres, uint16
 void bd_manage(struct blocking_detection * bd)
 {
 	int32_t err = cs_get_error(bd->cs);
+
+	if(bd->err_thres == 0) return;
+
+
 	if(err < 0)
 		err = -err;
 
-	if(err > bd->err_thres)
+	if(err > bd->err_thres) {
 		bd->cpt++;
+	}
 	else
 		bd->cpt=0;
 }

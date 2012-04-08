@@ -410,11 +410,11 @@ namespace ComDebraFpga
 
 		  alpha = Math.Atan2(pVoulu.y, pVoulu.x);
 		  beta = Math.Atan2(c2.y - pVoulu.y, c2.x - pVoulu.x);
-      addLog(new ComElem(TypeVal.info, " "));
-      addLog(new ComElem(TypeVal.info, "Arm simu PV, " + pVoulu.x.ToString("0.0") + " " + pVoulu.y.ToString("0.0")));
-      addLog(new ComElem(TypeVal.info, "Arm simu P1, " + p1.x.ToString("0.0") + " " + p1.y.ToString("0.0")));
-      addLog(new ComElem(TypeVal.info, "Arm simu P2, " + p2.x.ToString("0.0") + " " + p2.y.ToString("0.0")));
-      addLog(new ComElem(TypeVal.info, "Arm simu A, " + (alpha * 180 / Math.PI).ToString("0.0") + " " + (beta * 180 / Math.PI).ToString("0.0")));
+      //addLog(new ComElem(TypeVal.info, " "));
+      //addLog(new ComElem(TypeVal.info, "Arm simu PV, " + pVoulu.x.ToString("0.0") + " " + pVoulu.y.ToString("0.0")));
+      //addLog(new ComElem(TypeVal.info, "Arm simu P1, " + p1.x.ToString("0.0") + " " + p1.y.ToString("0.0")));
+      //addLog(new ComElem(TypeVal.info, "Arm simu P2, " + p2.x.ToString("0.0") + " " + p2.y.ToString("0.0")));
+      //addLog(new ComElem(TypeVal.info, "Arm simu A, " + (alpha * 180 / Math.PI).ToString("0.0") + " " + (beta * 180 / Math.PI).ToString("0.0")));
     }
 
     private void cmbBrasGauche_SelectedIndexChanged(object sender, EventArgs e)
@@ -424,7 +424,7 @@ namespace ComDebraFpga
 
     private void cmbGenFunc_SelectedIndexChanged(object sender, EventArgs e)
     {
-      butSendGenFunc.PerformClick();
+
     }
 
     private void numArmX_ValueChanged(object sender, EventArgs e)
@@ -521,6 +521,41 @@ namespace ComDebraFpga
       if (gr == null || gr.IsDisposed)
         gr = new frmGraph();
       gr.Show();
+    }
+
+    private void numPS_ValueChanged(object sender, EventArgs e)
+    {
+        m.sendCmd(LstPos.gen_func, new int[] { 9, (int)numPS.Value });
+    }
+
+    private void numDS_ValueChanged(object sender, EventArgs e)
+    {
+        m.sendCmd(LstPos.gen_func, new int[] { 10, (int)numDS.Value });
+    }
+
+    private void numPE_ValueChanged(object sender, EventArgs e)
+    {
+        m.sendCmd(LstPos.gen_func, new int[] { 14, (int)numPE.Value });
+    }
+
+    private void numDE_ValueChanged(object sender, EventArgs e)
+    {
+        m.sendCmd(LstPos.gen_func, new int[] { 15, (int)numDE.Value });
+    }
+
+    private void numPZ_ValueChanged(object sender, EventArgs e)
+    {
+        m.sendCmd(LstPos.gen_func, new int[] { 11, (int)numPZ.Value });
+    }
+
+    private void numDZ_ValueChanged(object sender, EventArgs e)
+    {
+        m.sendCmd(LstPos.gen_func, new int[] { 12, (int)numDZ.Value });
+    }
+
+    private void cmbAskLog_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        m.sendCmd(LstPos.gen_func, new int[] { 13, cmbAskLog.SelectedIndex});
     }
   }
 }

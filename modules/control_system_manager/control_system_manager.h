@@ -142,6 +142,8 @@ int32_t cs_get_filtered_feedback(struct cs* cs);
 /** Change the consign without calculating control system */
 void cs_set_consign(struct cs* cs, int32_t v);
 
+void cs_stop(struct cs * cs);
+
 /** @} */
 
 #endif /* #ifndef _CONTROL_SYSTEM_MANAGER_ */
