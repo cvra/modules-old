@@ -156,7 +156,7 @@ namespace ComDebraFpga
         //  break;
         case TypeVal.vals:
           gr.addData(lstLog[0].val);
-          rtbLog.AppendText(lstLog[0].val + "\r\n");
+         // rtbLog.AppendText(lstLog[0].val + "\r\n");
           break;
         default:
           rtbLog.AppendText(lstLog[0].val + "\r\n");
@@ -343,12 +343,20 @@ namespace ComDebraFpga
 
     private void sendArmLeft()
     {
-      m.sendCmd(LstPos.arm_position, new int[] { 0 | (0 << 8), (int)numArmGX.Value, (int)numArmGY.Value, (int)numArmGZ.Value });
+			int isAbs = 0;
+			if (chkBrasAbs.Checked)
+				isAbs = 1;
+
+			m.sendCmd(LstPos.arm_position, new int[] { isAbs | (0 << 8), (int)numArmGX.Value, (int)numArmGY.Value, (int)numArmGZ.Value });
     }
 
     private void sendArmRight()
     {
-      m.sendCmd(LstPos.arm_position, new int[] { 0 | (1 << 8), (int)numArmDX.Value, (int)numArmDY.Value, (int)numArmDZ.Value });
+			int isAbs = 0;
+			if (chkBrasAbs.Checked)
+				isAbs = 1;
+
+			m.sendCmd(LstPos.arm_position, new int[] { isAbs | (1 << 8), (int)numArmDX.Value, (int)numArmDY.Value, (int)numArmDZ.Value });
 
       circle_t c1, c2;
 
