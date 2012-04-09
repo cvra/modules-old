@@ -21,5 +21,7 @@ namespace ComDebraFpga
     public string ArmD { get; set; }
     public int nbAck { get; set; }
 		public int armPosOk { get; set; }
-  }
+		public string computedArmPosR { get; set; }
+		public string computedArmPosL { get; set; }
+	}
 }

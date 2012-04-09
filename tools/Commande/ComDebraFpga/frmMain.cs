@@ -12,12 +12,6 @@ namespace ComDebraFpga
 {
   public partial class frmMain : Form
   {
-    frmGraph gr = new frmGraph();
-    List<ComElem> lstLog = new List<ComElem>();
-    List<ComCmd> lstCmd = new List<ComCmd>();
-
-    clMain m;
-    clDrawTable drawTable;
     public frmMain()
     {
       InitializeComponent();
@@ -56,13 +50,10 @@ namespace ComDebraFpga
 
       cmbBrasDroit.SelectedIndex = 0;
       cmbBrasGauche.SelectedIndex = 0;
+
+			cmbTypePos.SelectedIndex = 0;
     }
-
-    private void frmMain_Load(object sender, EventArgs e)
-    {
-
-    }
-
+   
     private void butConnect_Click(object sender, EventArgs e)
     {
       if (butConnect.Text == "Connect")
@@ -75,11 +66,6 @@ namespace ComDebraFpga
         butConnect.Enabled = false;
         m.Disconnect();
       }
-    }
-
-    internal void addLog(ComElem newVal)
-    {
-      lstLog.Add(newVal);
     }
 
     private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -132,131 +118,11 @@ namespace ComDebraFpga
       picTable.Invalidate();
     }
 
-    private void traitLastLog()
-    {
-      switch (lstLog[0].typeVal)
-      {
-        case TypeVal.info:
-          rtbLog.AppendText(lstLog[0].val + "\r\n");
-          break;
-        case TypeVal.infoNoLn:
-          rtbLog.AppendText(lstLog[0].val);
-          checkForGraph(lstLog[0].val);
-          break;        //case TypeVal.posX:
-        //  lblPosX.Text = "X:" + lstLog[0].val;
-        //  break;
-        //case TypeVal.posY:
-        //  lblPosY.Text = "Y:" + lstLog[0].val;
-        //  break;
-        //case TypeVal.angle:
-        //  lblPosA.Text = "A:" + lstLog[0].val;
-        //  break;
-        //case TypeVal.status:
-        //  lblStatus.Text = "S:" + lstLog[0].val;
-        //  break;
-        case TypeVal.vals:
-          gr.addData(lstLog[0].val);
-         // rtbLog.AppendText(lstLog[0].val + "\r\n");
-          break;
-        default:
-          rtbLog.AppendText(lstLog[0].val + "\r\n");
-          break;
-      }
-    }
-
-    string lineGraph = "";
-    private void checkForGraph(string p)
-    {
-      if (gr == null || gr.IsDisposed)
-        return;
-
-      if (p == "\r")
-      {
-        if (lineGraph.StartsWith("gr"))
-        {
-          gr.addData(lineGraph.Substring(2));
-        }
-        lineGraph = "";
-      }
-      else
-      {
-        lineGraph += p;
-      }
-    }
-
     private void dataButs_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
       if (e.ColumnIndex == 0)
       {
         ProcessCmd(e.RowIndex);
-      }
-    }
-
-    private void ProcessCmd(int p)
-    {
-      ComCmd curCmd = null;
-      for (int i = 0; i < lstCmd.Count; i++)
-      {
-        string a = dataButs.Rows[p].Cells[0].Value.ToString();
-        if (lstCmd[i].label == a)
-        {
-          curCmd = lstCmd[i];
-          break;
-        }
-      }
-
-      string param = dataButs.Rows[p].Cells[1].Value.ToString();
-      string[] paramStr = param.Split(new char[] { ',' });
-      int[] paramInt = new int[paramStr.Length];
-      for (int i = 0; i < paramInt.Length; i++)
-      {
-        int.TryParse(paramStr[i], out paramInt[i]);
-      }
-
-      switch (curCmd.pos)
-      {
-        //******************** 0 paramètres ****************************
-        case LstPos.stop:
-        case LstPos.hard_stop:
-        case LstPos.reset:
-        case LstPos.ask_position:
-        case LstPos.ask_blocking:
-        case LstPos.traj_finished:
-        case LstPos.blocking_reset:
-        case LstPos.ask_all_adc:
-        case LstPos.magnet_front_pulse:
-        case LstPos.magnet_back_pulse:
-          m.sendCmd(curCmd.pos);
-          break;
-        //******************** 1 paramètres ****************************
-        case LstPos.go_straight:
-        case LstPos.turn_to:
-        //******************** 2 paramètres ****************************
-        case LstPos.acceleration:
-        case LstPos.speed:
-        case LstPos.set_blocking:
-        //******************** 3 paramètres ****************************
-        case LstPos.goto_type:
-        case LstPos.position_set:
-        case LstPos.windows:
-        //******************** 4 paramètres ****************************
-        case LstPos.prepare_start:
-          m.sendCmd(curCmd.pos, paramInt);
-          break;
-        //******************** 1 paramètres byte ***********************
-        case LstPos.power:
-        //******************** 2 paramètres byte ***********************
-        case LstPos.pump:
-        case LstPos.arm_mode:
-          m.sendCmdByte(curCmd.pos, paramInt);
-          break;
-        //******************** Spécial ****************************
-        case LstPos.drop:
-          break;
-        case LstPos.arm_calibration:
-          break;
-        default:
-          break;
       }
     }
 
@@ -330,109 +196,11 @@ namespace ComDebraFpga
       m.sendCmd(LstPos.goto_type, new int[] { 3, 250, 250 });
     }
 
-    private void sendCmdPump(int numPump, int val)
-    {
-      if (val != 0)
-      {
-        m.sendCmdByte(LstPos.pump, new int[] { numPump, 0 });
-        System.Threading.Thread.Sleep(1000);
-      }
-
-      m.sendCmdByte(LstPos.pump, new int[] { numPump, val });
-    }
-
-    private void sendArmLeft()
-    {
-			int isAbs = 0;
-			if (chkBrasAbs.Checked)
-				isAbs = 1;
-
-			m.sendCmd(LstPos.arm_position, new int[] { isAbs | (0 << 8), (int)numArmGX.Value, (int)numArmGY.Value, (int)numArmGZ.Value });
-    }
-
-    private void sendArmRight()
-    {
-			int isAbs = 0;
-			if (chkBrasAbs.Checked)
-				isAbs = 1;
-
-			m.sendCmd(LstPos.arm_position, new int[] { isAbs | (1 << 8), (int)numArmDX.Value, (int)numArmDY.Value, (int)numArmDZ.Value });
-
-      circle_t c1, c2;
-
-      c1.x = c1.y = 0;
-      c1.r = 153; //arm->length[0];
-      c2.x = (int)numArmDX.Value; //arm->target_xy.x;
-      c2.y = (int)numArmDY.Value; //arm->target_xy.y;
-      c2.r = 189; //arm->length[1];
-
-      point_t p1, p2, pVoulu, pNonVoulu;
-      double alpha, beta;
-      p1.x = 0;
-      p1.y = 0;
-      p2.x = 0;
-      p2.y = 0;
-      int nbPos = clMain.circle_intersect(c1, c2, ref p1, ref p2);
-
-      if(nbPos == 0)
-      {
-    	  addLog(new ComElem(TypeVal.info, "Arm simu, calc failed"));
-        return;
-      }
-      /* Si on a 2 possibilites, on essaye de mettre l'epaule le plus au milieu possible */
-      if (nbPos == 2)
-      {
-        if (p1.x < 0 && p2.x > 0)
-        {
-          pVoulu = p2;
-          pNonVoulu = p1;
-        }
-        else if (p2.x < 0 && p1.x > 0)
-        {
-          pVoulu = p1;
-          pNonVoulu = p2;
-        }
-        else
-        {
-          if (p1.x < p2.x)
-          {
-            pVoulu = p2;
-            pNonVoulu = p1;
-          }
-          else
-          {
-            pVoulu = p1;
-            pNonVoulu = p2;
-          }
-        }
-      }
-      else
-      {
-        pVoulu = p1;
-        pNonVoulu = p2;
-      }
-
-      drawTable.p1 = new PointF(pVoulu.x, pVoulu.y);
-      drawTable.p2 = new PointF(pNonVoulu.x, pNonVoulu.y);
-      drawTable.pBout = new PointF((float)numArmDX.Value, (float)numArmDY.Value);
-
-		  alpha = Math.Atan2(pVoulu.y, pVoulu.x);
-		  beta = Math.Atan2(c2.y - pVoulu.y, c2.x - pVoulu.x);
-      //addLog(new ComElem(TypeVal.info, " "));
-      //addLog(new ComElem(TypeVal.info, "Arm simu PV, " + pVoulu.x.ToString("0.0") + " " + pVoulu.y.ToString("0.0")));
-      //addLog(new ComElem(TypeVal.info, "Arm simu P1, " + p1.x.ToString("0.0") + " " + p1.y.ToString("0.0")));
-      //addLog(new ComElem(TypeVal.info, "Arm simu P2, " + p2.x.ToString("0.0") + " " + p2.y.ToString("0.0")));
-      //addLog(new ComElem(TypeVal.info, "Arm simu A, " + (alpha * 180 / Math.PI).ToString("0.0") + " " + (beta * 180 / Math.PI).ToString("0.0")));
-    }
+ 
 
     private void cmbBrasGauche_SelectedIndexChanged(object sender, EventArgs e)
     {
       m.sendCmdByte(LstPos.arm_mode, new int[] { cmbBrasGauche.SelectedIndex, cmbBrasGauche.SelectedIndex });
-    }
-
-    private void cmbGenFunc_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
     }
 
     private void numArmX_ValueChanged(object sender, EventArgs e)
@@ -565,5 +333,30 @@ namespace ComDebraFpga
     {
         m.sendCmd(LstPos.gen_func, new int[] { 13, cmbAskLog.SelectedIndex});
     }
+
+		private void numDistP_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 5, (int)numDistP.Value });
+		}
+
+		private void numDistD_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 6, (int)numDistD.Value });
+		}
+
+		private void numAngP_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 7, (int)numAngP.Value });
+		}
+
+		private void numAngD_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 8, (int)numAngD.Value });
+		}
+
+		private void cmbAskLog2_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 13, cmbAskLog2.SelectedIndex });
+		}
   }
 }

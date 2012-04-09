@@ -63,6 +63,7 @@
 					this.numDist = new System.Windows.Forms.NumericUpDown();
 					this.label4 = new System.Windows.Forms.Label();
 					this.groupBox2 = new System.Windows.Forms.GroupBox();
+					this.cmbTypePos = new System.Windows.Forms.ComboBox();
 					this.butPD2 = new System.Windows.Forms.Button();
 					this.butPG3 = new System.Windows.Forms.Button();
 					this.butPD3 = new System.Windows.Forms.Button();
@@ -107,7 +108,13 @@
 					this.tabControl1 = new System.Windows.Forms.TabControl();
 					this.tabPage1 = new System.Windows.Forms.TabPage();
 					this.tabPage2 = new System.Windows.Forms.TabPage();
-					this.chkBrasAbs = new System.Windows.Forms.CheckBox();
+					this.numDistP = new System.Windows.Forms.NumericUpDown();
+					this.cmbAskLog2 = new System.Windows.Forms.ComboBox();
+					this.label12 = new System.Windows.Forms.Label();
+					this.label13 = new System.Windows.Forms.Label();
+					this.numDistD = new System.Windows.Forms.NumericUpDown();
+					this.numAngP = new System.Windows.Forms.NumericUpDown();
+					this.numAngD = new System.Windows.Forms.NumericUpDown();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -134,6 +141,11 @@
 					((System.ComponentModel.ISupportInitialize)(this.numPZ)).BeginInit();
 					this.tabControl1.SuspendLayout();
 					this.tabPage1.SuspendLayout();
+					this.tabPage2.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numDistP)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numDistD)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numAngP)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numAngD)).BeginInit();
 					this.SuspendLayout();
 					// 
 					// dataButs
@@ -474,7 +486,7 @@
 					// 
 					// groupBox2
 					// 
-					this.groupBox2.Controls.Add(this.chkBrasAbs);
+					this.groupBox2.Controls.Add(this.cmbTypePos);
 					this.groupBox2.Controls.Add(this.butPD2);
 					this.groupBox2.Controls.Add(this.butPG3);
 					this.groupBox2.Controls.Add(this.butPD3);
@@ -495,6 +507,19 @@
 					this.groupBox2.TabIndex = 10;
 					this.groupBox2.TabStop = false;
 					this.groupBox2.Text = "Commandes";
+					// 
+					// cmbTypePos
+					// 
+					this.cmbTypePos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+					this.cmbTypePos.FormattingEnabled = true;
+					this.cmbTypePos.Items.AddRange(new object[] {
+            "0=Bras",
+            "1=Table",
+            "2=Robot"});
+					this.cmbTypePos.Location = new System.Drawing.Point(9, 211);
+					this.cmbTypePos.Name = "cmbTypePos";
+					this.cmbTypePos.Size = new System.Drawing.Size(121, 21);
+					this.cmbTypePos.TabIndex = 32;
 					// 
 					// butPD2
 					// 
@@ -741,7 +766,6 @@
 					this.cmbGenFunc.Name = "cmbGenFunc";
 					this.cmbGenFunc.Size = new System.Drawing.Size(74, 21);
 					this.cmbGenFunc.TabIndex = 21;
-					this.cmbGenFunc.SelectedIndexChanged += new System.EventHandler(this.cmbGenFunc_SelectedIndexChanged);
 					// 
 					// numGenFunc
 					// 
@@ -1093,28 +1117,116 @@
 					this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
 					this.tabPage1.Size = new System.Drawing.Size(248, 125);
 					this.tabPage1.TabIndex = 0;
-					this.tabPage1.Text = "Reglage PID";
+					this.tabPage1.Text = "Reglage PID Bras";
 					this.tabPage1.UseVisualStyleBackColor = true;
 					// 
 					// tabPage2
 					// 
+					this.tabPage2.Controls.Add(this.numDistP);
+					this.tabPage2.Controls.Add(this.cmbAskLog2);
+					this.tabPage2.Controls.Add(this.label12);
+					this.tabPage2.Controls.Add(this.label13);
+					this.tabPage2.Controls.Add(this.numDistD);
+					this.tabPage2.Controls.Add(this.numAngP);
+					this.tabPage2.Controls.Add(this.numAngD);
 					this.tabPage2.Location = new System.Drawing.Point(4, 22);
 					this.tabPage2.Name = "tabPage2";
 					this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-					this.tabPage2.Size = new System.Drawing.Size(399, 168);
+					this.tabPage2.Size = new System.Drawing.Size(248, 125);
 					this.tabPage2.TabIndex = 1;
-					this.tabPage2.Text = "tabPage2";
+					this.tabPage2.Text = "PID Dep";
 					this.tabPage2.UseVisualStyleBackColor = true;
 					// 
-					// chkBrasAbs
+					// numDistP
 					// 
-					this.chkBrasAbs.AutoSize = true;
-					this.chkBrasAbs.Location = new System.Drawing.Point(6, 212);
-					this.chkBrasAbs.Name = "chkBrasAbs";
-					this.chkBrasAbs.Size = new System.Drawing.Size(81, 17);
-					this.chkBrasAbs.TabIndex = 32;
-					this.chkBrasAbs.Text = "Bras absolu";
-					this.chkBrasAbs.UseVisualStyleBackColor = true;
+					this.numDistP.Location = new System.Drawing.Point(49, 8);
+					this.numDistP.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numDistP.Name = "numDistP";
+					this.numDistP.Size = new System.Drawing.Size(69, 20);
+					this.numDistP.TabIndex = 42;
+					this.numDistP.ValueChanged += new System.EventHandler(this.numDistP_ValueChanged);
+					// 
+					// cmbAskLog2
+					// 
+					this.cmbAskLog2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+					this.cmbAskLog2.DropDownWidth = 150;
+					this.cmbAskLog2.FormattingEnabled = true;
+					this.cmbAskLog2.Items.AddRange(new object[] {
+            "0:Std log",
+            "1:robot.distance",
+            "2:robot.angle",
+            "3:robot.right_arm.z_axis",
+            "4:robot.right_arm.shoulder",
+            "5:robot.right_arm.elbow",
+            "6:robot.left_arm.z_axis",
+            "7:robot.left_arm.shoulder",
+            "8:robot.left_arm.elbow"});
+					this.cmbAskLog2.Location = new System.Drawing.Point(11, 86);
+					this.cmbAskLog2.Name = "cmbAskLog2";
+					this.cmbAskLog2.Size = new System.Drawing.Size(215, 21);
+					this.cmbAskLog2.TabIndex = 46;
+					this.cmbAskLog2.SelectedIndexChanged += new System.EventHandler(this.cmbAskLog2_SelectedIndexChanged);
+					// 
+					// label12
+					// 
+					this.label12.AutoSize = true;
+					this.label12.Location = new System.Drawing.Point(8, 10);
+					this.label12.Name = "label12";
+					this.label12.Size = new System.Drawing.Size(25, 13);
+					this.label12.TabIndex = 40;
+					this.label12.Text = "Dist";
+					// 
+					// label13
+					// 
+					this.label13.AutoSize = true;
+					this.label13.Location = new System.Drawing.Point(8, 36);
+					this.label13.Name = "label13";
+					this.label13.Size = new System.Drawing.Size(34, 13);
+					this.label13.TabIndex = 41;
+					this.label13.Text = "Angle";
+					// 
+					// numDistD
+					// 
+					this.numDistD.Location = new System.Drawing.Point(124, 8);
+					this.numDistD.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numDistD.Name = "numDistD";
+					this.numDistD.Size = new System.Drawing.Size(69, 20);
+					this.numDistD.TabIndex = 43;
+					this.numDistD.ValueChanged += new System.EventHandler(this.numDistD_ValueChanged);
+					// 
+					// numAngP
+					// 
+					this.numAngP.Location = new System.Drawing.Point(49, 34);
+					this.numAngP.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numAngP.Name = "numAngP";
+					this.numAngP.Size = new System.Drawing.Size(69, 20);
+					this.numAngP.TabIndex = 44;
+					this.numAngP.ValueChanged += new System.EventHandler(this.numAngP_ValueChanged);
+					// 
+					// numAngD
+					// 
+					this.numAngD.Location = new System.Drawing.Point(124, 34);
+					this.numAngD.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numAngD.Name = "numAngD";
+					this.numAngD.Size = new System.Drawing.Size(69, 20);
+					this.numAngD.TabIndex = 45;
+					this.numAngD.ValueChanged += new System.EventHandler(this.numAngD_ValueChanged);
 					// 
 					// frmMain
 					// 
@@ -1143,7 +1255,6 @@
 					this.Text = "ComDebraFpga";
 					this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 					this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
-					this.Load += new System.EventHandler(this.frmMain_Load);
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).EndInit();
 					this.toolStrip1.ResumeLayout(false);
 					this.toolStrip1.PerformLayout();
@@ -1175,6 +1286,12 @@
 					this.tabControl1.ResumeLayout(false);
 					this.tabPage1.ResumeLayout(false);
 					this.tabPage1.PerformLayout();
+					this.tabPage2.ResumeLayout(false);
+					this.tabPage2.PerformLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numDistP)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numDistD)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numAngP)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numAngD)).EndInit();
 					this.ResumeLayout(false);
 					this.PerformLayout();
 
@@ -1255,11 +1372,18 @@
         private System.Windows.Forms.NumericUpDown numDZ;
         private System.Windows.Forms.NumericUpDown numPZ;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox cmbAskLog;
-				private System.Windows.Forms.CheckBox chkBrasAbs;
+				private System.Windows.Forms.ComboBox cmbAskLog;
 				private System.Windows.Forms.TabControl tabControl1;
 				private System.Windows.Forms.TabPage tabPage1;
 				private System.Windows.Forms.TabPage tabPage2;
+				private System.Windows.Forms.ComboBox cmbTypePos;
+				private System.Windows.Forms.NumericUpDown numDistP;
+				private System.Windows.Forms.ComboBox cmbAskLog2;
+				private System.Windows.Forms.Label label12;
+				private System.Windows.Forms.Label label13;
+				private System.Windows.Forms.NumericUpDown numDistD;
+				private System.Windows.Forms.NumericUpDown numAngP;
+				private System.Windows.Forms.NumericUpDown numAngD;
     }
 }
 
