@@ -19,8 +19,8 @@
  *
  */
 
-#define MAX_POLY 10
-#define MAX_PTS 100
-#define MAX_RAYS 1000
-#define MAX_CHKPOINTS 10
+#define MAX_POLY 100
+#define MAX_PTS 500
+#define MAX_RAYS 2000
+#define MAX_CHKPOINTS 100
 #define OA_COEF 30000

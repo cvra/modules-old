@@ -37,7 +37,6 @@ namespace ComDebraFpga
 
       // Commande déplacement
       lstCmd.Add(new ComCmd(LstPos.hard_stop, "Hard stop", ""));
-      lstCmd.Add(new ComCmd(LstPos.prepare_start, "Prepare start", "66,250,250,45,160"));
       lstCmd.Add(new ComCmd(LstPos.traj_finished, "TrajFini", "0"));
       lstCmd.Add(new ComCmd(LstPos.blocking_reset, "Block reset", ""));
 
@@ -188,7 +187,7 @@ namespace ComDebraFpga
 
     private void butCallageStart_Click(object sender, EventArgs e)
     {
-      m.sendCmd(LstPos.prepare_start, new int[] { 66, 250, 250, 45, 160 });
+      m.sendCmd(LstPos.prepare_start, new int[] { 82, 250, 250, 45, 160 });
     }
 
     private void butGoInit_Click(object sender, EventArgs e)
@@ -301,62 +300,62 @@ namespace ComDebraFpga
 
     private void numPS_ValueChanged(object sender, EventArgs e)
     {
-        m.sendCmd(LstPos.gen_func, new int[] { 9, (int)numPS.Value });
+        m.sendCmd(LstPos.set_PID, new int[] { 4, (int)numPS.Value });
     }
 
     private void numDS_ValueChanged(object sender, EventArgs e)
     {
-        m.sendCmd(LstPos.gen_func, new int[] { 10, (int)numDS.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 5, (int)numDS.Value });
     }
 
     private void numPE_ValueChanged(object sender, EventArgs e)
     {
-        m.sendCmd(LstPos.gen_func, new int[] { 14, (int)numPE.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 8, (int)numPE.Value });
     }
 
     private void numDE_ValueChanged(object sender, EventArgs e)
     {
-        m.sendCmd(LstPos.gen_func, new int[] { 15, (int)numDE.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 9, (int)numDE.Value });
     }
 
     private void numPZ_ValueChanged(object sender, EventArgs e)
     {
-        m.sendCmd(LstPos.gen_func, new int[] { 11, (int)numPZ.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 6, (int)numPZ.Value });
     }
 
     private void numDZ_ValueChanged(object sender, EventArgs e)
     {
-        m.sendCmd(LstPos.gen_func, new int[] { 12, (int)numDZ.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 7, (int)numDZ.Value });
     }
 
     private void cmbAskLog_SelectedIndexChanged(object sender, EventArgs e)
     {
-        m.sendCmd(LstPos.gen_func, new int[] { 13, cmbAskLog.SelectedIndex});
+			m.sendCmd(LstPos.gen_func, new int[] { 5, cmbAskLog.SelectedIndex });
     }
 
 		private void numDistP_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.gen_func, new int[] { 5, (int)numDistP.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 0, (int)numDistP.Value });
 		}
 
 		private void numDistD_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.gen_func, new int[] { 6, (int)numDistD.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 1, (int)numDistD.Value });
 		}
 
 		private void numAngP_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.gen_func, new int[] { 7, (int)numAngP.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 2, (int)numAngP.Value });
 		}
 
 		private void numAngD_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.gen_func, new int[] { 8, (int)numAngD.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 3, (int)numAngD.Value });
 		}
 
 		private void cmbAskLog2_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.gen_func, new int[] { 13, cmbAskLog2.SelectedIndex });
+			m.sendCmd(LstPos.gen_func, new int[] { 5, cmbAskLog2.SelectedIndex });
 		}
   }
 }

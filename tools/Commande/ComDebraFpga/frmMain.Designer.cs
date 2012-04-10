@@ -157,10 +157,10 @@
 					this.dataButs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colButton,
             this.colParam});
-					this.dataButs.Location = new System.Drawing.Point(983, 297);
+					this.dataButs.Location = new System.Drawing.Point(983, 398);
 					this.dataButs.Name = "dataButs";
 					this.dataButs.RowHeadersVisible = false;
-					this.dataButs.Size = new System.Drawing.Size(269, 423);
+					this.dataButs.Size = new System.Drawing.Size(269, 322);
 					this.dataButs.TabIndex = 0;
 					this.dataButs.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataButs_CellContentClick);
 					// 
@@ -746,7 +746,7 @@
 					this.propertyVar.HelpVisible = false;
 					this.propertyVar.Location = new System.Drawing.Point(983, 28);
 					this.propertyVar.Name = "propertyVar";
-					this.propertyVar.Size = new System.Drawing.Size(269, 263);
+					this.propertyVar.Size = new System.Drawing.Size(269, 364);
 					this.propertyVar.TabIndex = 11;
 					// 
 					// cmbGenFunc
@@ -760,8 +760,9 @@
             "2=retour depart",
             "3=Arm slow",
             "4=Arm fast",
-            "5=Gain P",
-            "6=Gain D"});
+            "5=ask log",
+            "6=Ranger bras",
+            "7=Test func"});
 					this.cmbGenFunc.Location = new System.Drawing.Point(12, 616);
 					this.cmbGenFunc.Name = "cmbGenFunc";
 					this.cmbGenFunc.Size = new System.Drawing.Size(74, 21);

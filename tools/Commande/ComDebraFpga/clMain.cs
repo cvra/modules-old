@@ -27,6 +27,7 @@ namespace ComDebraFpga
     blocking_reset = 4,
     go_straight = 5,
     goto_type = 6,
+		set_PID = 7,
     position_set = 13,
     power = 14,
     hard_stop = 16,
