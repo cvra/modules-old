@@ -762,7 +762,8 @@
             "4=Arm fast",
             "5=ask log",
             "6=Ranger bras",
-            "7=Test func"});
+            "7=Test func",
+            "8=Init bras"});
 					this.cmbGenFunc.Location = new System.Drawing.Point(12, 616);
 					this.cmbGenFunc.Name = "cmbGenFunc";
 					this.cmbGenFunc.Size = new System.Drawing.Size(74, 21);
@@ -794,7 +795,7 @@
             0});
 					this.numArmGX.Location = new System.Drawing.Point(12, 645);
 					this.numArmGX.Maximum = new decimal(new int[] {
-            500,
+            3000,
             0,
             0,
             0});
@@ -822,7 +823,7 @@
             0});
 					this.numArmGY.Location = new System.Drawing.Point(12, 671);
 					this.numArmGY.Maximum = new decimal(new int[] {
-            500,
+            3000,
             0,
             0,
             0});
@@ -845,15 +846,10 @@
             0});
 					this.numArmGZ.Location = new System.Drawing.Point(12, 697);
 					this.numArmGZ.Maximum = new decimal(new int[] {
-            500,
+            230,
             0,
             0,
             0});
-					this.numArmGZ.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            -2147483648});
 					this.numArmGZ.Name = "numArmGZ";
 					this.numArmGZ.Size = new System.Drawing.Size(83, 20);
 					this.numArmGZ.TabIndex = 25;
@@ -873,15 +869,10 @@
             0});
 					this.numArmDZ.Location = new System.Drawing.Point(98, 697);
 					this.numArmDZ.Maximum = new decimal(new int[] {
-            500,
+            230,
             0,
             0,
             0});
-					this.numArmDZ.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            -2147483648});
 					this.numArmDZ.Name = "numArmDZ";
 					this.numArmDZ.Size = new System.Drawing.Size(83, 20);
 					this.numArmDZ.TabIndex = 28;
@@ -901,7 +892,7 @@
             0});
 					this.numArmDY.Location = new System.Drawing.Point(98, 671);
 					this.numArmDY.Maximum = new decimal(new int[] {
-            500,
+            3000,
             0,
             0,
             0});
@@ -924,7 +915,7 @@
             0});
 					this.numArmDX.Location = new System.Drawing.Point(98, 645);
 					this.numArmDX.Maximum = new decimal(new int[] {
-            500,
+            3000,
             0,
             0,
             0});
