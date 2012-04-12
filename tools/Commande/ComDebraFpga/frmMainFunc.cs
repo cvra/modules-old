@@ -162,71 +162,61 @@ namespace ComDebraFpga
 		{
 			m.sendCmd(LstPos.arm_position, new int[] { cmbTypePos.SelectedIndex | (1 << 8), (int)numArmDX.Value, (int)numArmDY.Value, (int)numArmDZ.Value });
 
-			//circle_t c1, c2;
+			if (cmbTypePos.SelectedIndex != 0)
+				return;
 
-			//c1.x = c1.y = 0;
-			//c1.r = 153; //arm->length[0];
-			//c2.x = (int)numArmDX.Value; //arm->target_xy.x;
-			//c2.y = (int)numArmDY.Value; //arm->target_xy.y;
-			//c2.r = 189; //arm->length[1];
+			circle_t c1, c2;
 
-			//point_t p1, p2, pVoulu, pNonVoulu;
-			//double alpha, beta;
-			//p1.x = 0;
-			//p1.y = 0;
-			//p2.x = 0;
-			//p2.y = 0;
-			//int nbPos = clMain.circle_intersect(c1, c2, ref p1, ref p2);
+			c1.x = c1.y = 0;
+			c1.r = 153; //arm->length[0];
+			c2.x = (int)numArmDX.Value; //arm->target_xy.x;
+			c2.y = (int)numArmDY.Value; //arm->target_xy.y;
+			c2.r = 189; //arm->length[1];
 
-			//if (nbPos == 0)
-			//{
-			//  addLog(new ComElem(TypeVal.info, "Arm simu, calc failed"));
-			//  return;
-			//}
-			///* Si on a 2 possibilites, on essaye de mettre l'epaule le plus au milieu possible */
-			//if (nbPos == 2)
-			//{
-			//  if (p1.x < 0 && p2.x > 0)
-			//  {
-			//    pVoulu = p2;
-			//    pNonVoulu = p1;
-			//  }
-			//  else if (p2.x < 0 && p1.x > 0)
-			//  {
-			//    pVoulu = p1;
-			//    pNonVoulu = p2;
-			//  }
-			//  else
-			//  {
-			//    if (p1.x < p2.x)
-			//    {
-			//      pVoulu = p2;
-			//      pNonVoulu = p1;
-			//    }
-			//    else
-			//    {
-			//      pVoulu = p1;
-			//      pNonVoulu = p2;
-			//    }
-			//  }
-			//}
-			//else
-			//{
-			//  pVoulu = p1;
-			//  pNonVoulu = p2;
-			//}
+			point_t p1, p2, pVoulu, pNonVoulu;
+			double alpha, beta;
+			p1.x = 0;
+			p1.y = 0;
+			p2.x = 0;
+			p2.y = 0;
+			int nbPos = clMain.circle_intersect(c1, c2, ref p1, ref p2);
 
-			//drawTable.p1 = new PointF(pVoulu.x, pVoulu.y);
-			//drawTable.p2 = new PointF(pNonVoulu.x, pNonVoulu.y);
-			//drawTable.pBout = new PointF((float)numArmDX.Value, (float)numArmDY.Value);
+			if (nbPos == 0)
+			{
+				addLog(new ComElem(TypeVal.info, "Arm simu, calc failed"));
+				return;
+			}
+			/* Si on a 2 possibilites, on essaye de mettre l'epaule le plus au milieu possible */
+			if (nbPos == 2)
+			{
+					if (p1.x < p2.x)
+					{
+						pVoulu = p2;
+						pNonVoulu = p1;
+					}
+					else
+					{
+						pVoulu = p1;
+						pNonVoulu = p2;
+					}
+			}
+			else
+			{
+				pVoulu = p1;
+				pNonVoulu = p2;
+			}
 
-			//alpha = Math.Atan2(pVoulu.y, pVoulu.x);
-			//beta = Math.Atan2(c2.y - pVoulu.y, c2.x - pVoulu.x);
-			////addLog(new ComElem(TypeVal.info, " "));
-			////addLog(new ComElem(TypeVal.info, "Arm simu PV, " + pVoulu.x.ToString("0.0") + " " + pVoulu.y.ToString("0.0")));
-			////addLog(new ComElem(TypeVal.info, "Arm simu P1, " + p1.x.ToString("0.0") + " " + p1.y.ToString("0.0")));
-			////addLog(new ComElem(TypeVal.info, "Arm simu P2, " + p2.x.ToString("0.0") + " " + p2.y.ToString("0.0")));
-			////addLog(new ComElem(TypeVal.info, "Arm simu A, " + (alpha * 180 / Math.PI).ToString("0.0") + " " + (beta * 180 / Math.PI).ToString("0.0")));
+			drawTable.p1 = new PointF(pVoulu.x, pVoulu.y);
+			drawTable.p2 = new PointF(pNonVoulu.x, pNonVoulu.y);
+			drawTable.pBout = new PointF((float)numArmDX.Value, (float)numArmDY.Value);
+
+			alpha = Math.Atan2(pVoulu.y, pVoulu.x);
+			beta = Math.Atan2(c2.y - pVoulu.y, c2.x - pVoulu.x);
+			//addLog(new ComElem(TypeVal.info, " "));
+			//addLog(new ComElem(TypeVal.info, "Arm simu PV, " + pVoulu.x.ToString("0.0") + " " + pVoulu.y.ToString("0.0")));
+			//addLog(new ComElem(TypeVal.info, "Arm simu P1, " + p1.x.ToString("0.0") + " " + p1.y.ToString("0.0")));
+			//addLog(new ComElem(TypeVal.info, "Arm simu P2, " + p2.x.ToString("0.0") + " " + p2.y.ToString("0.0")));
+			//addLog(new ComElem(TypeVal.info, "Arm simu A, " + (alpha * 180 / Math.PI).ToString("0.0") + " " + (beta * 180 / Math.PI).ToString("0.0")));
 		}
 	}
 }

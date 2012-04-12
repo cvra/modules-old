@@ -63,6 +63,8 @@
 					this.numDist = new System.Windows.Forms.NumericUpDown();
 					this.label4 = new System.Windows.Forms.Label();
 					this.groupBox2 = new System.Windows.Forms.GroupBox();
+					this.butRangerBras = new System.Windows.Forms.Button();
+					this.butInitBras = new System.Windows.Forms.Button();
 					this.cmbTypePos = new System.Windows.Forms.ComboBox();
 					this.butPD2 = new System.Windows.Forms.Button();
 					this.butPG3 = new System.Windows.Forms.Button();
@@ -486,6 +488,8 @@
 					// 
 					// groupBox2
 					// 
+					this.groupBox2.Controls.Add(this.butRangerBras);
+					this.groupBox2.Controls.Add(this.butInitBras);
 					this.groupBox2.Controls.Add(this.cmbTypePos);
 					this.groupBox2.Controls.Add(this.butPD2);
 					this.groupBox2.Controls.Add(this.butPG3);
@@ -507,6 +511,26 @@
 					this.groupBox2.TabIndex = 10;
 					this.groupBox2.TabStop = false;
 					this.groupBox2.Text = "Commandes";
+					// 
+					// butRangerBras
+					// 
+					this.butRangerBras.Location = new System.Drawing.Point(76, 184);
+					this.butRangerBras.Name = "butRangerBras";
+					this.butRangerBras.Size = new System.Drawing.Size(61, 21);
+					this.butRangerBras.TabIndex = 34;
+					this.butRangerBras.Text = "Ranger bras";
+					this.butRangerBras.UseVisualStyleBackColor = true;
+					this.butRangerBras.Click += new System.EventHandler(this.butRangerBras_Click);
+					// 
+					// butInitBras
+					// 
+					this.butInitBras.Location = new System.Drawing.Point(9, 184);
+					this.butInitBras.Name = "butInitBras";
+					this.butInitBras.Size = new System.Drawing.Size(61, 21);
+					this.butInitBras.TabIndex = 33;
+					this.butInitBras.Text = "Init bras";
+					this.butInitBras.UseVisualStyleBackColor = true;
+					this.butInitBras.Click += new System.EventHandler(this.butInitBras_Click);
 					// 
 					// cmbTypePos
 					// 
@@ -763,7 +787,8 @@
             "5=ask log",
             "6=Ranger bras",
             "7=Test func",
-            "8=Init bras"});
+            "8=Init bras",
+            "9=Arm rot rel"});
 					this.cmbGenFunc.Location = new System.Drawing.Point(12, 616);
 					this.cmbGenFunc.Name = "cmbGenFunc";
 					this.cmbGenFunc.Size = new System.Drawing.Size(74, 21);
@@ -1376,6 +1401,8 @@
 				private System.Windows.Forms.NumericUpDown numDistD;
 				private System.Windows.Forms.NumericUpDown numAngP;
 				private System.Windows.Forms.NumericUpDown numAngD;
+				private System.Windows.Forms.Button butRangerBras;
+				private System.Windows.Forms.Button butInitBras;
     }
 }
 
