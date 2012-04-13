@@ -153,16 +153,16 @@ namespace ComDebraFpga
 			m.sendCmdByte(LstPos.pump, new int[] { numPump, val });
 		}
 
-		private void sendArmLeft()
+		private void sendArmLeft(int typePos, int x, int y, int z)
 		{
-			m.sendCmd(LstPos.arm_position, new int[] { cmbTypePos.SelectedIndex | (0 << 8), (int)numArmGX.Value, (int)numArmGY.Value, (int)numArmGZ.Value });
+			m.sendCmd(LstPos.arm_position, new int[] { typePos | (0 << 8), x,y,z});
 		}
 
-		private void sendArmRight()
+		private void sendArmRight(int typePos, int x, int y, int z)
 		{
-			m.sendCmd(LstPos.arm_position, new int[] { cmbTypePos.SelectedIndex | (1 << 8), (int)numArmDX.Value, (int)numArmDY.Value, (int)numArmDZ.Value });
+			m.sendCmd(LstPos.arm_position, new int[] { typePos | (1 << 8), x,y,z });
 
-			if (cmbTypePos.SelectedIndex != 0)
+			if (typePos != 0)
 				return;
 
 			circle_t c1, c2;

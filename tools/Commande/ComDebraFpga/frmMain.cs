@@ -49,8 +49,6 @@ namespace ComDebraFpga
 
       cmbBrasDroit.SelectedIndex = 0;
       cmbBrasGauche.SelectedIndex = 0;
-
-			cmbTypePos.SelectedIndex = 0;
     }
    
     private void butConnect_Click(object sender, EventArgs e)
@@ -202,10 +200,6 @@ namespace ComDebraFpga
       m.sendCmdByte(LstPos.arm_mode, new int[] { cmbBrasGauche.SelectedIndex, cmbBrasGauche.SelectedIndex });
     }
 
-    private void numArmX_ValueChanged(object sender, EventArgs e)
-    {
-      sendArmLeft();
-    }
 
     private void picTable_Paint(object sender, PaintEventArgs e)
     {
@@ -249,11 +243,6 @@ namespace ComDebraFpga
       }
 
       drawTable.ActionMouse(e);
-    }
-
-    private void numArmDX_ValueChanged(object sender, EventArgs e)
-    {
-      sendArmRight();
     }
 
     private void butPG1_Click(object sender, EventArgs e)
@@ -367,5 +356,36 @@ namespace ComDebraFpga
 		{
 			m.sendCmd(LstPos.gen_func, new int[] { 6, (int)numGenFunc.Value });
 		}
+
+		private void butArmBrasG_Click(object sender, EventArgs e)
+		{
+			sendArmLeft(0, (int)numArmGX.Value, (int)numArmGY.Value, (int)numArmGZ.Value);
+		}
+
+		private void butArmBrasD_Click(object sender, EventArgs e)
+		{
+			sendArmRight(0, (int)numArmDX.Value, (int)numArmDY.Value, (int)numArmDZ.Value);
+		}
+
+		private void butArmRobotL_Click(object sender, EventArgs e)
+		{
+			sendArmLeft(2, (int)num2X.Value, (int)num2Y.Value, (int)num2Z.Value);
+		}
+
+		private void butArmRobotD_Click(object sender, EventArgs e)
+		{
+			sendArmRight(2, (int)num3X.Value, (int)num3Y.Value, (int)num3Z.Value);
+		}
+
+		private void butArmTableL_Click(object sender, EventArgs e)
+		{
+			sendArmLeft(1, (int)num4X.Value, (int)num4Y.Value, (int)num4Z.Value);
+		}
+
+		private void butArmTableR_Click(object sender, EventArgs e)
+		{
+			sendArmRight(1, (int)num5X.Value, (int)num5Y.Value, (int)num5Z.Value);
+		}
+
   }
 }

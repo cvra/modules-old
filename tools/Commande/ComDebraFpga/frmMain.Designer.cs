@@ -65,7 +65,6 @@
 					this.groupBox2 = new System.Windows.Forms.GroupBox();
 					this.butRangerBras = new System.Windows.Forms.Button();
 					this.butInitBras = new System.Windows.Forms.Button();
-					this.cmbTypePos = new System.Windows.Forms.ComboBox();
 					this.butPD2 = new System.Windows.Forms.Button();
 					this.butPG3 = new System.Windows.Forms.Button();
 					this.butPD3 = new System.Windows.Forms.Button();
@@ -108,8 +107,8 @@
 					this.label11 = new System.Windows.Forms.Label();
 					this.cmbAskLog = new System.Windows.Forms.ComboBox();
 					this.tabControl1 = new System.Windows.Forms.TabControl();
-					this.tabPage1 = new System.Windows.Forms.TabPage();
-					this.tabPage2 = new System.Windows.Forms.TabPage();
+					this.tabPIDBras = new System.Windows.Forms.TabPage();
+					this.tabPIDDep = new System.Windows.Forms.TabPage();
 					this.numDistP = new System.Windows.Forms.NumericUpDown();
 					this.cmbAskLog2 = new System.Windows.Forms.ComboBox();
 					this.label12 = new System.Windows.Forms.Label();
@@ -117,6 +116,27 @@
 					this.numDistD = new System.Windows.Forms.NumericUpDown();
 					this.numAngP = new System.Windows.Forms.NumericUpDown();
 					this.numAngD = new System.Windows.Forms.NumericUpDown();
+					this.ArmBras = new System.Windows.Forms.TabPage();
+					this.butArmBrasD = new System.Windows.Forms.Button();
+					this.butArmBrasG = new System.Windows.Forms.Button();
+					this.ArmRobot = new System.Windows.Forms.TabPage();
+					this.butArmRobotD = new System.Windows.Forms.Button();
+					this.butArmRobotL = new System.Windows.Forms.Button();
+					this.num3X = new System.Windows.Forms.NumericUpDown();
+					this.num2X = new System.Windows.Forms.NumericUpDown();
+					this.num3Z = new System.Windows.Forms.NumericUpDown();
+					this.num2Y = new System.Windows.Forms.NumericUpDown();
+					this.num3Y = new System.Windows.Forms.NumericUpDown();
+					this.num2Z = new System.Windows.Forms.NumericUpDown();
+					this.tabArmTable = new System.Windows.Forms.TabPage();
+					this.butArmTableR = new System.Windows.Forms.Button();
+					this.butArmTableL = new System.Windows.Forms.Button();
+					this.num5X = new System.Windows.Forms.NumericUpDown();
+					this.num4X = new System.Windows.Forms.NumericUpDown();
+					this.num5Z = new System.Windows.Forms.NumericUpDown();
+					this.num4Y = new System.Windows.Forms.NumericUpDown();
+					this.num5Y = new System.Windows.Forms.NumericUpDown();
+					this.num4Z = new System.Windows.Forms.NumericUpDown();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -142,12 +162,27 @@
 					((System.ComponentModel.ISupportInitialize)(this.numDZ)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numPZ)).BeginInit();
 					this.tabControl1.SuspendLayout();
-					this.tabPage1.SuspendLayout();
-					this.tabPage2.SuspendLayout();
+					this.tabPIDBras.SuspendLayout();
+					this.tabPIDDep.SuspendLayout();
 					((System.ComponentModel.ISupportInitialize)(this.numDistP)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numDistD)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numAngP)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numAngD)).BeginInit();
+					this.ArmBras.SuspendLayout();
+					this.ArmRobot.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.num3X)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num2X)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num3Z)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num2Y)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num3Y)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num2Z)).BeginInit();
+					this.tabArmTable.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.num5X)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num4X)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num5Z)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num4Y)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num5Y)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.num4Z)).BeginInit();
 					this.SuspendLayout();
 					// 
 					// dataButs
@@ -490,7 +525,6 @@
 					// 
 					this.groupBox2.Controls.Add(this.butRangerBras);
 					this.groupBox2.Controls.Add(this.butInitBras);
-					this.groupBox2.Controls.Add(this.cmbTypePos);
 					this.groupBox2.Controls.Add(this.butPD2);
 					this.groupBox2.Controls.Add(this.butPG3);
 					this.groupBox2.Controls.Add(this.butPD3);
@@ -531,19 +565,6 @@
 					this.butInitBras.Text = "Init bras";
 					this.butInitBras.UseVisualStyleBackColor = true;
 					this.butInitBras.Click += new System.EventHandler(this.butInitBras_Click);
-					// 
-					// cmbTypePos
-					// 
-					this.cmbTypePos.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-					this.cmbTypePos.FormattingEnabled = true;
-					this.cmbTypePos.Items.AddRange(new object[] {
-            "0=Bras",
-            "1=Table",
-            "2=Robot"});
-					this.cmbTypePos.Location = new System.Drawing.Point(9, 211);
-					this.cmbTypePos.Name = "cmbTypePos";
-					this.cmbTypePos.Size = new System.Drawing.Size(121, 21);
-					this.cmbTypePos.TabIndex = 32;
 					// 
 					// butPD2
 					// 
@@ -818,7 +839,7 @@
             0,
             0,
             0});
-					this.numArmGX.Location = new System.Drawing.Point(12, 645);
+					this.numArmGX.Location = new System.Drawing.Point(6, 8);
 					this.numArmGX.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -837,7 +858,6 @@
             0,
             0,
             0});
-					this.numArmGX.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
 					// 
 					// numArmGY
 					// 
@@ -846,7 +866,7 @@
             0,
             0,
             0});
-					this.numArmGY.Location = new System.Drawing.Point(12, 671);
+					this.numArmGY.Location = new System.Drawing.Point(6, 34);
 					this.numArmGY.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -860,7 +880,6 @@
 					this.numArmGY.Name = "numArmGY";
 					this.numArmGY.Size = new System.Drawing.Size(83, 20);
 					this.numArmGY.TabIndex = 24;
-					this.numArmGY.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
 					// 
 					// numArmGZ
 					// 
@@ -869,7 +888,7 @@
             0,
             0,
             0});
-					this.numArmGZ.Location = new System.Drawing.Point(12, 697);
+					this.numArmGZ.Location = new System.Drawing.Point(6, 60);
 					this.numArmGZ.Maximum = new decimal(new int[] {
             230,
             0,
@@ -883,7 +902,6 @@
             0,
             0,
             0});
-					this.numArmGZ.ValueChanged += new System.EventHandler(this.numArmX_ValueChanged);
 					// 
 					// numArmDZ
 					// 
@@ -892,7 +910,7 @@
             0,
             0,
             0});
-					this.numArmDZ.Location = new System.Drawing.Point(98, 697);
+					this.numArmDZ.Location = new System.Drawing.Point(92, 60);
 					this.numArmDZ.Maximum = new decimal(new int[] {
             230,
             0,
@@ -906,7 +924,6 @@
             0,
             0,
             0});
-					this.numArmDZ.ValueChanged += new System.EventHandler(this.numArmDX_ValueChanged);
 					// 
 					// numArmDY
 					// 
@@ -915,7 +932,7 @@
             0,
             0,
             0});
-					this.numArmDY.Location = new System.Drawing.Point(98, 671);
+					this.numArmDY.Location = new System.Drawing.Point(92, 34);
 					this.numArmDY.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -929,7 +946,6 @@
 					this.numArmDY.Name = "numArmDY";
 					this.numArmDY.Size = new System.Drawing.Size(83, 20);
 					this.numArmDY.TabIndex = 27;
-					this.numArmDY.ValueChanged += new System.EventHandler(this.numArmDX_ValueChanged);
 					// 
 					// numArmDX
 					// 
@@ -938,7 +954,7 @@
             0,
             0,
             0});
-					this.numArmDX.Location = new System.Drawing.Point(98, 645);
+					this.numArmDX.Location = new System.Drawing.Point(92, 8);
 					this.numArmDX.Maximum = new decimal(new int[] {
             3000,
             0,
@@ -957,7 +973,6 @@
             0,
             0,
             0});
-					this.numArmDX.ValueChanged += new System.EventHandler(this.numArmDX_ValueChanged);
 					// 
 					// butSendGenFunc
 					// 
@@ -1100,7 +1115,8 @@
             "5:robot.right_arm.elbow",
             "6:robot.left_arm.z_axis",
             "7:robot.left_arm.shoulder",
-            "8:robot.left_arm.elbow"});
+            "8:robot.left_arm.elbow",
+            "9:Silence"});
 					this.cmbAskLog.Location = new System.Drawing.Point(7, 84);
 					this.cmbAskLog.Name = "cmbAskLog";
 					this.cmbAskLog.Size = new System.Drawing.Size(215, 21);
@@ -1109,50 +1125,53 @@
 					// 
 					// tabControl1
 					// 
-					this.tabControl1.Controls.Add(this.tabPage1);
-					this.tabControl1.Controls.Add(this.tabPage2);
+					this.tabControl1.Controls.Add(this.ArmBras);
+					this.tabControl1.Controls.Add(this.ArmRobot);
+					this.tabControl1.Controls.Add(this.tabArmTable);
+					this.tabControl1.Controls.Add(this.tabPIDDep);
+					this.tabControl1.Controls.Add(this.tabPIDBras);
 					this.tabControl1.Location = new System.Drawing.Point(413, 566);
 					this.tabControl1.Name = "tabControl1";
 					this.tabControl1.SelectedIndex = 0;
 					this.tabControl1.Size = new System.Drawing.Size(256, 151);
 					this.tabControl1.TabIndex = 40;
 					// 
-					// tabPage1
+					// tabPIDBras
 					// 
-					this.tabPage1.Controls.Add(this.numPS);
-					this.tabPage1.Controls.Add(this.cmbAskLog);
-					this.tabPage1.Controls.Add(this.label9);
-					this.tabPage1.Controls.Add(this.numDZ);
-					this.tabPage1.Controls.Add(this.label10);
-					this.tabPage1.Controls.Add(this.numPZ);
-					this.tabPage1.Controls.Add(this.numDS);
-					this.tabPage1.Controls.Add(this.label11);
-					this.tabPage1.Controls.Add(this.numPE);
-					this.tabPage1.Controls.Add(this.numDE);
-					this.tabPage1.Location = new System.Drawing.Point(4, 22);
-					this.tabPage1.Name = "tabPage1";
-					this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-					this.tabPage1.Size = new System.Drawing.Size(248, 125);
-					this.tabPage1.TabIndex = 0;
-					this.tabPage1.Text = "Reglage PID Bras";
-					this.tabPage1.UseVisualStyleBackColor = true;
+					this.tabPIDBras.Controls.Add(this.numPS);
+					this.tabPIDBras.Controls.Add(this.cmbAskLog);
+					this.tabPIDBras.Controls.Add(this.label9);
+					this.tabPIDBras.Controls.Add(this.numDZ);
+					this.tabPIDBras.Controls.Add(this.label10);
+					this.tabPIDBras.Controls.Add(this.numPZ);
+					this.tabPIDBras.Controls.Add(this.numDS);
+					this.tabPIDBras.Controls.Add(this.label11);
+					this.tabPIDBras.Controls.Add(this.numPE);
+					this.tabPIDBras.Controls.Add(this.numDE);
+					this.tabPIDBras.Location = new System.Drawing.Point(4, 22);
+					this.tabPIDBras.Name = "tabPIDBras";
+					this.tabPIDBras.Padding = new System.Windows.Forms.Padding(3);
+					this.tabPIDBras.Size = new System.Drawing.Size(248, 125);
+					this.tabPIDBras.TabIndex = 0;
+					this.tabPIDBras.Text = "Reglage PID Bras";
+					this.tabPIDBras.UseVisualStyleBackColor = true;
 					// 
-					// tabPage2
+					// tabPIDDep
 					// 
-					this.tabPage2.Controls.Add(this.numDistP);
-					this.tabPage2.Controls.Add(this.cmbAskLog2);
-					this.tabPage2.Controls.Add(this.label12);
-					this.tabPage2.Controls.Add(this.label13);
-					this.tabPage2.Controls.Add(this.numDistD);
-					this.tabPage2.Controls.Add(this.numAngP);
-					this.tabPage2.Controls.Add(this.numAngD);
-					this.tabPage2.Location = new System.Drawing.Point(4, 22);
-					this.tabPage2.Name = "tabPage2";
-					this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-					this.tabPage2.Size = new System.Drawing.Size(248, 125);
-					this.tabPage2.TabIndex = 1;
-					this.tabPage2.Text = "PID Dep";
-					this.tabPage2.UseVisualStyleBackColor = true;
+					this.tabPIDDep.Controls.Add(this.numDistP);
+					this.tabPIDDep.Controls.Add(this.cmbAskLog2);
+					this.tabPIDDep.Controls.Add(this.label12);
+					this.tabPIDDep.Controls.Add(this.label13);
+					this.tabPIDDep.Controls.Add(this.numDistD);
+					this.tabPIDDep.Controls.Add(this.numAngP);
+					this.tabPIDDep.Controls.Add(this.numAngD);
+					this.tabPIDDep.Location = new System.Drawing.Point(4, 22);
+					this.tabPIDDep.Name = "tabPIDDep";
+					this.tabPIDDep.Padding = new System.Windows.Forms.Padding(3);
+					this.tabPIDDep.Size = new System.Drawing.Size(248, 125);
+					this.tabPIDDep.TabIndex = 1;
+					this.tabPIDDep.Text = "PID Dep";
+					this.tabPIDDep.UseVisualStyleBackColor = true;
 					// 
 					// numDistP
 					// 
@@ -1181,7 +1200,8 @@
             "5:robot.right_arm.elbow",
             "6:robot.left_arm.z_axis",
             "7:robot.left_arm.shoulder",
-            "8:robot.left_arm.elbow"});
+            "8:robot.left_arm.elbow",
+            "9:Silence"});
 					this.cmbAskLog2.Location = new System.Drawing.Point(11, 86);
 					this.cmbAskLog2.Name = "cmbAskLog2";
 					this.cmbAskLog2.Size = new System.Drawing.Size(215, 21);
@@ -1245,6 +1265,404 @@
 					this.numAngD.TabIndex = 45;
 					this.numAngD.ValueChanged += new System.EventHandler(this.numAngD_ValueChanged);
 					// 
+					// ArmBras
+					// 
+					this.ArmBras.Controls.Add(this.butArmBrasD);
+					this.ArmBras.Controls.Add(this.butArmBrasG);
+					this.ArmBras.Controls.Add(this.numArmDX);
+					this.ArmBras.Controls.Add(this.numArmGX);
+					this.ArmBras.Controls.Add(this.numArmDZ);
+					this.ArmBras.Controls.Add(this.numArmGY);
+					this.ArmBras.Controls.Add(this.numArmDY);
+					this.ArmBras.Controls.Add(this.numArmGZ);
+					this.ArmBras.Location = new System.Drawing.Point(4, 22);
+					this.ArmBras.Name = "ArmBras";
+					this.ArmBras.Padding = new System.Windows.Forms.Padding(3);
+					this.ArmBras.Size = new System.Drawing.Size(248, 125);
+					this.ArmBras.TabIndex = 2;
+					this.ArmBras.Text = "Arm Bras";
+					this.ArmBras.UseVisualStyleBackColor = true;
+					// 
+					// butArmBrasD
+					// 
+					this.butArmBrasD.Location = new System.Drawing.Point(92, 86);
+					this.butArmBrasD.Name = "butArmBrasD";
+					this.butArmBrasD.Size = new System.Drawing.Size(83, 23);
+					this.butArmBrasD.TabIndex = 30;
+					this.butArmBrasD.Text = "Send";
+					this.butArmBrasD.UseVisualStyleBackColor = true;
+					this.butArmBrasD.Click += new System.EventHandler(this.butArmBrasD_Click);
+					// 
+					// butArmBrasG
+					// 
+					this.butArmBrasG.Location = new System.Drawing.Point(6, 86);
+					this.butArmBrasG.Name = "butArmBrasG";
+					this.butArmBrasG.Size = new System.Drawing.Size(83, 23);
+					this.butArmBrasG.TabIndex = 29;
+					this.butArmBrasG.Text = "Send";
+					this.butArmBrasG.UseVisualStyleBackColor = true;
+					this.butArmBrasG.Click += new System.EventHandler(this.butArmBrasG_Click);
+					// 
+					// ArmRobot
+					// 
+					this.ArmRobot.Controls.Add(this.butArmRobotD);
+					this.ArmRobot.Controls.Add(this.butArmRobotL);
+					this.ArmRobot.Controls.Add(this.num3X);
+					this.ArmRobot.Controls.Add(this.num2X);
+					this.ArmRobot.Controls.Add(this.num3Z);
+					this.ArmRobot.Controls.Add(this.num2Y);
+					this.ArmRobot.Controls.Add(this.num3Y);
+					this.ArmRobot.Controls.Add(this.num2Z);
+					this.ArmRobot.Location = new System.Drawing.Point(4, 22);
+					this.ArmRobot.Name = "ArmRobot";
+					this.ArmRobot.Padding = new System.Windows.Forms.Padding(3);
+					this.ArmRobot.Size = new System.Drawing.Size(248, 125);
+					this.ArmRobot.TabIndex = 3;
+					this.ArmRobot.Text = "Arm robot";
+					this.ArmRobot.UseVisualStyleBackColor = true;
+					// 
+					// butArmRobotD
+					// 
+					this.butArmRobotD.Location = new System.Drawing.Point(92, 86);
+					this.butArmRobotD.Name = "butArmRobotD";
+					this.butArmRobotD.Size = new System.Drawing.Size(83, 23);
+					this.butArmRobotD.TabIndex = 38;
+					this.butArmRobotD.Text = "Send";
+					this.butArmRobotD.UseVisualStyleBackColor = true;
+					this.butArmRobotD.Click += new System.EventHandler(this.butArmRobotD_Click);
+					// 
+					// butArmRobotL
+					// 
+					this.butArmRobotL.Location = new System.Drawing.Point(6, 86);
+					this.butArmRobotL.Name = "butArmRobotL";
+					this.butArmRobotL.Size = new System.Drawing.Size(83, 23);
+					this.butArmRobotL.TabIndex = 37;
+					this.butArmRobotL.Text = "Send";
+					this.butArmRobotL.UseVisualStyleBackColor = true;
+					this.butArmRobotL.Click += new System.EventHandler(this.butArmRobotL_Click);
+					// 
+					// num3X
+					// 
+					this.num3X.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num3X.Location = new System.Drawing.Point(92, 8);
+					this.num3X.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+					this.num3X.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+					this.num3X.Name = "num3X";
+					this.num3X.Size = new System.Drawing.Size(83, 20);
+					this.num3X.TabIndex = 34;
+					this.num3X.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+					// 
+					// num2X
+					// 
+					this.num2X.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num2X.Location = new System.Drawing.Point(6, 8);
+					this.num2X.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+					this.num2X.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+					this.num2X.Name = "num2X";
+					this.num2X.Size = new System.Drawing.Size(83, 20);
+					this.num2X.TabIndex = 31;
+					this.num2X.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+					// 
+					// num3Z
+					// 
+					this.num3Z.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num3Z.Location = new System.Drawing.Point(92, 60);
+					this.num3Z.Maximum = new decimal(new int[] {
+            230,
+            0,
+            0,
+            0});
+					this.num3Z.Name = "num3Z";
+					this.num3Z.Size = new System.Drawing.Size(83, 20);
+					this.num3Z.TabIndex = 36;
+					this.num3Z.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+					// 
+					// num2Y
+					// 
+					this.num2Y.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num2Y.Location = new System.Drawing.Point(6, 34);
+					this.num2Y.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+					this.num2Y.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+					this.num2Y.Name = "num2Y";
+					this.num2Y.Size = new System.Drawing.Size(83, 20);
+					this.num2Y.TabIndex = 32;
+					// 
+					// num3Y
+					// 
+					this.num3Y.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num3Y.Location = new System.Drawing.Point(92, 34);
+					this.num3Y.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+					this.num3Y.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+					this.num3Y.Name = "num3Y";
+					this.num3Y.Size = new System.Drawing.Size(83, 20);
+					this.num3Y.TabIndex = 35;
+					// 
+					// num2Z
+					// 
+					this.num2Z.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num2Z.Location = new System.Drawing.Point(6, 60);
+					this.num2Z.Maximum = new decimal(new int[] {
+            230,
+            0,
+            0,
+            0});
+					this.num2Z.Name = "num2Z";
+					this.num2Z.Size = new System.Drawing.Size(83, 20);
+					this.num2Z.TabIndex = 33;
+					this.num2Z.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+					// 
+					// tabArmTable
+					// 
+					this.tabArmTable.Controls.Add(this.butArmTableR);
+					this.tabArmTable.Controls.Add(this.butArmTableL);
+					this.tabArmTable.Controls.Add(this.num5X);
+					this.tabArmTable.Controls.Add(this.num4X);
+					this.tabArmTable.Controls.Add(this.num5Z);
+					this.tabArmTable.Controls.Add(this.num4Y);
+					this.tabArmTable.Controls.Add(this.num5Y);
+					this.tabArmTable.Controls.Add(this.num4Z);
+					this.tabArmTable.Location = new System.Drawing.Point(4, 22);
+					this.tabArmTable.Name = "tabArmTable";
+					this.tabArmTable.Padding = new System.Windows.Forms.Padding(3);
+					this.tabArmTable.Size = new System.Drawing.Size(248, 125);
+					this.tabArmTable.TabIndex = 4;
+					this.tabArmTable.Text = "Arm Table";
+					this.tabArmTable.UseVisualStyleBackColor = true;
+					// 
+					// butArmTableR
+					// 
+					this.butArmTableR.Location = new System.Drawing.Point(92, 86);
+					this.butArmTableR.Name = "butArmTableR";
+					this.butArmTableR.Size = new System.Drawing.Size(83, 23);
+					this.butArmTableR.TabIndex = 38;
+					this.butArmTableR.Text = "Send";
+					this.butArmTableR.UseVisualStyleBackColor = true;
+					this.butArmTableR.Click += new System.EventHandler(this.butArmTableR_Click);
+					// 
+					// butArmTableL
+					// 
+					this.butArmTableL.Location = new System.Drawing.Point(6, 86);
+					this.butArmTableL.Name = "butArmTableL";
+					this.butArmTableL.Size = new System.Drawing.Size(83, 23);
+					this.butArmTableL.TabIndex = 37;
+					this.butArmTableL.Text = "Send";
+					this.butArmTableL.UseVisualStyleBackColor = true;
+					this.butArmTableL.Click += new System.EventHandler(this.butArmTableL_Click);
+					// 
+					// num5X
+					// 
+					this.num5X.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num5X.Location = new System.Drawing.Point(92, 8);
+					this.num5X.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+					this.num5X.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+					this.num5X.Name = "num5X";
+					this.num5X.Size = new System.Drawing.Size(83, 20);
+					this.num5X.TabIndex = 34;
+					this.num5X.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+					// 
+					// num4X
+					// 
+					this.num4X.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num4X.Location = new System.Drawing.Point(6, 8);
+					this.num4X.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+					this.num4X.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+					this.num4X.Name = "num4X";
+					this.num4X.Size = new System.Drawing.Size(83, 20);
+					this.num4X.TabIndex = 31;
+					this.num4X.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+					// 
+					// num5Z
+					// 
+					this.num5Z.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num5Z.Location = new System.Drawing.Point(92, 60);
+					this.num5Z.Maximum = new decimal(new int[] {
+            230,
+            0,
+            0,
+            0});
+					this.num5Z.Name = "num5Z";
+					this.num5Z.Size = new System.Drawing.Size(83, 20);
+					this.num5Z.TabIndex = 36;
+					this.num5Z.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+					// 
+					// num4Y
+					// 
+					this.num4Y.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num4Y.Location = new System.Drawing.Point(6, 34);
+					this.num4Y.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+					this.num4Y.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+					this.num4Y.Name = "num4Y";
+					this.num4Y.Size = new System.Drawing.Size(83, 20);
+					this.num4Y.TabIndex = 32;
+					// 
+					// num5Y
+					// 
+					this.num5Y.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num5Y.Location = new System.Drawing.Point(92, 34);
+					this.num5Y.Maximum = new decimal(new int[] {
+            3000,
+            0,
+            0,
+            0});
+					this.num5Y.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+					this.num5Y.Name = "num5Y";
+					this.num5Y.Size = new System.Drawing.Size(83, 20);
+					this.num5Y.TabIndex = 35;
+					// 
+					// num4Z
+					// 
+					this.num4Z.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+					this.num4Z.Location = new System.Drawing.Point(6, 60);
+					this.num4Z.Maximum = new decimal(new int[] {
+            230,
+            0,
+            0,
+            0});
+					this.num4Z.Name = "num4Z";
+					this.num4Z.Size = new System.Drawing.Size(83, 20);
+					this.num4Z.TabIndex = 33;
+					this.num4Z.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+					// 
 					// frmMain
 					// 
 					this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1252,12 +1670,6 @@
 					this.ClientSize = new System.Drawing.Size(1264, 732);
 					this.Controls.Add(this.tabControl1);
 					this.Controls.Add(this.butSendGenFunc);
-					this.Controls.Add(this.numArmDZ);
-					this.Controls.Add(this.numArmDY);
-					this.Controls.Add(this.numArmDX);
-					this.Controls.Add(this.numArmGZ);
-					this.Controls.Add(this.numArmGY);
-					this.Controls.Add(this.numArmGX);
 					this.Controls.Add(this.numGenFunc);
 					this.Controls.Add(this.cmbGenFunc);
 					this.Controls.Add(this.propertyVar);
@@ -1301,14 +1713,29 @@
 					((System.ComponentModel.ISupportInitialize)(this.numDZ)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numPZ)).EndInit();
 					this.tabControl1.ResumeLayout(false);
-					this.tabPage1.ResumeLayout(false);
-					this.tabPage1.PerformLayout();
-					this.tabPage2.ResumeLayout(false);
-					this.tabPage2.PerformLayout();
+					this.tabPIDBras.ResumeLayout(false);
+					this.tabPIDBras.PerformLayout();
+					this.tabPIDDep.ResumeLayout(false);
+					this.tabPIDDep.PerformLayout();
 					((System.ComponentModel.ISupportInitialize)(this.numDistP)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numDistD)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numAngP)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numAngD)).EndInit();
+					this.ArmBras.ResumeLayout(false);
+					this.ArmRobot.ResumeLayout(false);
+					((System.ComponentModel.ISupportInitialize)(this.num3X)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num2X)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num3Z)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num2Y)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num3Y)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num2Z)).EndInit();
+					this.tabArmTable.ResumeLayout(false);
+					((System.ComponentModel.ISupportInitialize)(this.num5X)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num4X)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num5Z)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num4Y)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num5Y)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.num4Z)).EndInit();
 					this.ResumeLayout(false);
 					this.PerformLayout();
 
@@ -1391,9 +1818,8 @@
         private System.Windows.Forms.Label label11;
 				private System.Windows.Forms.ComboBox cmbAskLog;
 				private System.Windows.Forms.TabControl tabControl1;
-				private System.Windows.Forms.TabPage tabPage1;
-				private System.Windows.Forms.TabPage tabPage2;
-				private System.Windows.Forms.ComboBox cmbTypePos;
+				private System.Windows.Forms.TabPage tabPIDBras;
+				private System.Windows.Forms.TabPage tabPIDDep;
 				private System.Windows.Forms.NumericUpDown numDistP;
 				private System.Windows.Forms.ComboBox cmbAskLog2;
 				private System.Windows.Forms.Label label12;
@@ -1403,6 +1829,27 @@
 				private System.Windows.Forms.NumericUpDown numAngD;
 				private System.Windows.Forms.Button butRangerBras;
 				private System.Windows.Forms.Button butInitBras;
+				private System.Windows.Forms.TabPage ArmBras;
+				private System.Windows.Forms.Button butArmBrasD;
+				private System.Windows.Forms.Button butArmBrasG;
+				private System.Windows.Forms.TabPage ArmRobot;
+				private System.Windows.Forms.TabPage tabArmTable;
+				private System.Windows.Forms.Button butArmRobotD;
+				private System.Windows.Forms.Button butArmRobotL;
+				private System.Windows.Forms.NumericUpDown num3X;
+				private System.Windows.Forms.NumericUpDown num2X;
+				private System.Windows.Forms.NumericUpDown num3Z;
+				private System.Windows.Forms.NumericUpDown num2Y;
+				private System.Windows.Forms.NumericUpDown num3Y;
+				private System.Windows.Forms.NumericUpDown num2Z;
+				private System.Windows.Forms.Button butArmTableR;
+				private System.Windows.Forms.Button butArmTableL;
+				private System.Windows.Forms.NumericUpDown num5X;
+				private System.Windows.Forms.NumericUpDown num4X;
+				private System.Windows.Forms.NumericUpDown num5Z;
+				private System.Windows.Forms.NumericUpDown num4Y;
+				private System.Windows.Forms.NumericUpDown num5Y;
+				private System.Windows.Forms.NumericUpDown num4Z;
     }
 }
 
