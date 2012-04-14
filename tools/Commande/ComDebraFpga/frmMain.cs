@@ -10,315 +10,325 @@ using ComDebraFpga.Properties;
 
 namespace ComDebraFpga
 {
-  public partial class frmMain : Form
-  {
-    public frmMain()
-    {
-      InitializeComponent();
-      drawTable = new clDrawTable(picTable);
+	public partial class frmMain : Form
+	{
+		public frmMain()
+		{
+			InitializeComponent();
+			drawTable = new clDrawTable(picTable);
 
-      txtPort.Text = Settings.Default.comPort;
+			txtPort.Text = Settings.Default.comPort;
 
-      // Demande variables
-      lstCmd.Add(new ComCmd(LstPos.ask_blocking, "Ask blocking", ""));
-      lstCmd.Add(new ComCmd(LstPos.ask_position, "Ask position", ""));
-      lstCmd.Add(new ComCmd(LstPos.ask_all_adc, "Ask all adc", ""));
+			// Mode bras
+			lstCmd.Add(new ComCmd(LstPos.arm_mode, "0=Arm Off", "0,0"));
+			lstCmd.Add(new ComCmd(LstPos.arm_mode, "1=Arm On", "1,1"));
+			lstCmd.Add(new ComCmd(LstPos.arm_mode, "2=Arm Pos init", "2,2"));
 
-      // Set variables
-      lstCmd.Add(new ComCmd(LstPos.speed, "Speed", "200,100"));
-      lstCmd.Add(new ComCmd(LstPos.position_set, "Set pos", "100,110,67"));
-      lstCmd.Add(new ComCmd(LstPos.acceleration, "Set acc", "8,4"));
-      lstCmd.Add(new ComCmd(LstPos.set_blocking, "Set blocking", "500,500"));
+			// Fonction génériques
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "0=Start strat", "0"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "1=sequence bras", "1"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "2=retour depart", "2"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "3=Arm slow", "3"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "4=Arm fast", "4"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "5=ask log", "5,0"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "6=Ranger bras", "6"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "7=Test func", "7"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "8=Init bras", "8"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "9=Arm rot rel", "9,90"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "10=Arm go down ventouse", "10,1"));
 
-      // Actions
-      lstCmd.Add(new ComCmd(LstPos.reset, "Reset", ""));
-      lstCmd.Add(new ComCmd(LstPos.power, "Power", "1"));
+			// Demande variables
+			//      lstCmd.Add(new ComCmd(LstPos.ask_blocking, "Ask blocking", ""));
+			//      lstCmd.Add(new ComCmd(LstPos.ask_position, "Ask position", ""));
+			//      lstCmd.Add(new ComCmd(LstPos.ask_all_adc, "Ask all adc", ""));
 
+			// Set variables
+			lstCmd.Add(new ComCmd(LstPos.speed, "Speed", "200,100"));
+			lstCmd.Add(new ComCmd(LstPos.position_set, "Set pos", "100,110,67"));
+			lstCmd.Add(new ComCmd(LstPos.acceleration, "Set acc", "8,4"));
+			//      lstCmd.Add(new ComCmd(LstPos.set_blocking, "Set blocking", "500,500"));
 
-      // Commande déplacement
-      lstCmd.Add(new ComCmd(LstPos.hard_stop, "Hard stop", ""));
-      lstCmd.Add(new ComCmd(LstPos.traj_finished, "TrajFini", "0"));
-      lstCmd.Add(new ComCmd(LstPos.blocking_reset, "Block reset", ""));
+			// Actions
+			lstCmd.Add(new ComCmd(LstPos.reset, "Reset", ""));
+			lstCmd.Add(new ComCmd(LstPos.power, "Power", "1"));
 
-      for (int i = 0; i < lstCmd.Count; i++)
-      {
-        dataButs.Rows.Add(new string[] { lstCmd[i].label, lstCmd[i].defaultVal });
-      }
+			// Commande déplacement
+			lstCmd.Add(new ComCmd(LstPos.hard_stop, "Hard stop", ""));
+			//      lstCmd.Add(new ComCmd(LstPos.traj_finished, "TrajFini", "0"));
+			lstCmd.Add(new ComCmd(LstPos.blocking_reset, "Block reset", ""));
 
-      m = new clMain(this);
+			for (int i = 0; i < lstCmd.Count; i++)
+			{
+				dataButs.Rows.Add(new string[] { lstCmd[i].label, lstCmd[i].defaultVal });
+			}
 
-    }
-   
-    private void butConnect_Click(object sender, EventArgs e)
-    {
-      if (butConnect.Text == "Connect")
-      {
-        butConnect.Enabled = false;
-        m.Connect(txtPort.Text);
-      }
-      else
-      {
-        butConnect.Enabled = false;
-        m.Disconnect();
-      }
-    }
+			m = new clMain(this);
 
-    private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
-    {
-      m.Dispose();
-      Settings.Default.comPort = txtPort.Text;
-      Settings.Default.Save();
-    }
+		}
 
-    private void timLog_Tick(object sender, EventArgs e)
-    {
-      while (lstLog.Count > 0)
-      {
-        traitLastLog();
-        lstLog.RemoveAt(0);
-      }
+		private void butConnect_Click(object sender, EventArgs e)
+		{
+			if (butConnect.Text == "Connect")
+			{
+				butConnect.Enabled = false;
+				m.Connect(txtPort.Text);
+			}
+			else
+			{
+				butConnect.Enabled = false;
+				m.Disconnect();
+			}
+		}
 
-      if (m.info.hasNewData)
-      {
-        propertyVar.SelectedObject = m.info;
-        m.info.hasNewData = false;
-      }
+		private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			m.Dispose();
+			Settings.Default.comPort = txtPort.Text;
+			Settings.Default.Save();
+		}
 
-      // Pour le débug
-      //m.info.PosRobot = "1400,344,5";
-      m.info.hasNewData = true;
-      //info.status = getInt16(cmd[k++], cmd[k++]).ToString();
-      //info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]) + ", " + getInt16(cmd[k++], cmd[k++]);
-      //info.ArmRight = "";
-      //info.uptime = getInt16(cmd[k++], cmd[k++]);
-      //info.CPU = getInt16(cmd[k++], cmd[k++]);
-      //info.hasNewData = true;
-      // Fin de pour le debug
+		private void timLog_Tick(object sender, EventArgs e)
+		{
+			while (lstLog.Count > 0)
+			{
+				traitLastLog();
+				lstLog.RemoveAt(0);
+			}
 
-      if (m.info.PosRobot != null)
-      {
-        string[] s = m.info.PosRobot.Split(new char[] { ',' });
+			if (m.info.hasNewData)
+			{
+				propertyVar.SelectedObject = m.info;
 
-        float.TryParse(s[0], out drawTable.robot.X);
-        float.TryParse(s[1], out drawTable.robot.Y);
-        float.TryParse(s[2], out drawTable.robot.angle);
-      }
-      if (m.info.PosRobotAdv != null)
-      {
-        string[] s = m.info.PosRobotAdv.Split(new char[] { ',' });
+				if (m.info.PosRobot != null)
+				{
+					string[] s = m.info.PosRobot.Split(new char[] { ',' });
 
-        float.TryParse(s[0], out drawTable.robotAdv.X);
-        float.TryParse(s[1], out drawTable.robotAdv.Y);
-      }
-      picTable.Invalidate();
-    }
+					float.TryParse(s[0], out drawTable.robot.X);
+					float.TryParse(s[1], out drawTable.robot.Y);
+					float.TryParse(s[2], out drawTable.robot.angle);
+				}
+				if (m.info.PosRobotAdv != null)
+				{
+					string[] s = m.info.PosRobotAdv.Split(new char[] { ',' });
 
-    private void dataButs_CellContentClick(object sender, DataGridViewCellEventArgs e)
-    {
-      if (e.ColumnIndex == 0)
-      {
-        ProcessCmd(e.RowIndex);
-      }
-    }
+					float.TryParse(s[0], out drawTable.robotAdv.X);
+					float.TryParse(s[1], out drawTable.robotAdv.Y);
+				}
 
-    private void butDirUp_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.go_straight, (int)numDist.Value);
-    }
+				m.info.hasNewData = false;
+				picTable.Invalidate();
+			}
 
-    private void butClearLog_Click(object sender, EventArgs e)
-    {
-      rtbLog.Text = "";
-    }
+			if (butConnect.Text == "Connect")
+				m.info.status++;
 
-    private void butDirRear_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.go_straight, (int)-numDist.Value);
-    }
+			picMoving.BackColor = (m.info.status & 0x01) > 0 ? Color.Red : Color.LightGreen;
+			picArmLZ.BackColor = (m.info.status & 0x02) > 0 ? Color.Red : Color.LightGreen;
+			picArmLSh.BackColor = (m.info.status & 0x04) > 0 ? Color.Red : Color.LightGreen;
+			picArmLEl.BackColor = (m.info.status & 0x08) > 0 ? Color.Red : Color.LightGreen;
+			picArmRZ.BackColor = (m.info.status & 0x10) > 0 ? Color.Red : Color.LightGreen;
+			picArmRSh.BackColor = (m.info.status & 0x20) > 0 ? Color.Red : Color.LightGreen;
+			picArmREl.BackColor = (m.info.status & 0x40) > 0 ? Color.Red : Color.LightGreen;
+			picRot.BackColor = (m.info.status & 0x80) > 0 ? Color.Red : Color.LightGreen;
+			picDist.BackColor = (m.info.status & 0x100) > 0 ? Color.Red : Color.LightGreen;
+		}
 
-    private void butDirTurnR_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.turn_to, (int)numAngle.Value);
-    }
+		private void dataButs_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex == 0)
+			{
+				ProcessCmd(e.RowIndex);
+			}
+		}
 
-    private void button24_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.turn_to, 270);
-    }
+		private void butDirUp_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.go_straight, (int)numDist.Value);
+		}
 
-    private void button20_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.turn_to, 225);
-    }
+		private void butClearLog_Click(object sender, EventArgs e)
+		{
+			rtbLog.Text = "";
+		}
 
-    private void button23_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.turn_to, 180);
-    }
+		private void butDirRear_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.go_straight, (int)-numDist.Value);
+		}
 
-    private void button22_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.turn_to, 135);
-    }
+		private void butDirTurnR_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.turn_to, (int)numAngle.Value);
+		}
 
-    private void button21_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.turn_to, 90);
-    }
+		private void button24_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.turn_to, 270);
+		}
 
-    private void button27_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.turn_to, 45);
-    }
+		private void button20_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.turn_to, 225);
+		}
 
-    private void button26_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.turn_to, 0);
-    }
+		private void button23_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.turn_to, 180);
+		}
 
-    private void button25_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.turn_to, 315);
-    }
+		private void button22_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.turn_to, 135);
+		}
 
-    private void butCallageStart_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.prepare_start, new int[] { 82, 250, 250, 45, 160 });
-    }
+		private void button21_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.turn_to, 90);
+		}
 
-    private void butGoInit_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.goto_type, new int[] { 3, 250, 250 });
-    }
+		private void button27_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.turn_to, 45);
+		}
 
- 
+		private void button26_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.turn_to, 0);
+		}
 
-    private void cmbBrasGauche_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      m.sendCmdByte(LstPos.arm_mode, new int[] { cmbBrasGauche.SelectedIndex, cmbBrasGauche.SelectedIndex });
-    }
+		private void button25_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.turn_to, 315);
+		}
 
+		private void butCallageStart_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.prepare_start, new int[] { 82, 250, 250, 45, 160 });
+		}
 
-    private void picTable_Paint(object sender, PaintEventArgs e)
-    {
-      drawTable.Paint(e.Graphics);
-    }
+		private void butGoInit_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.goto_type, new int[] { 3, 250, 250 });
+		}
 
-    private void picTable_MouseDown(object sender, MouseEventArgs e)
-    {
-      if (e.Button == MouseButtons.Left)
-      {
-        if (Control.ModifierKeys == Keys.Control)
-        {
-          m.sendCmd(LstPos.goto_type, new int[]{ 0,
+		private void picTable_Paint(object sender, PaintEventArgs e)
+		{
+			drawTable.Paint(e.Graphics);
+		}
+
+		private void picTable_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				if (Control.ModifierKeys == Keys.Control)
+				{
+					m.sendCmd(LstPos.goto_type, new int[]{ 0,
             (int)((picTable.Width - e.X) / drawTable.RatioPixelInc),
             (int)(e.Y / drawTable.RatioPixelInc)});
-        }
-        else if (Control.ModifierKeys == Keys.Shift)
-        {
-          // Set point de dépose
-        }
-        else if (Control.ModifierKeys == Keys.Alt)
-        {
-          // Set point de prise
-        }
-        else
-        {
-          m.info.PosRobot =
-  ((int)((picTable.Width - e.X) / drawTable.RatioPixelInc)).ToString() + "," +
-  ((int)(e.Y / drawTable.RatioPixelInc) + "," + numAngle.Value.ToString()).ToString();
+				}
+				else if (Control.ModifierKeys == Keys.Shift)
+				{
+					// Set point de dépose
+				}
+				else if (Control.ModifierKeys == Keys.Alt)
+				{
+					// Set point de prise
+				}
+				else
+				{
+					m.info.PosRobot =
+	((int)((picTable.Width - e.X) / drawTable.RatioPixelInc)).ToString() + "," +
+	((int)(e.Y / drawTable.RatioPixelInc) + "," + numAngle.Value.ToString()).ToString();
 
-          m.sendCmd(LstPos.goto_type, new int[]{ 3,
+					m.sendCmd(LstPos.goto_type, new int[]{ 3,
             (int)((picTable.Width - e.X) / drawTable.RatioPixelInc),
             (int)(e.Y / drawTable.RatioPixelInc)});
-        }
-      }
-      else if (e.Button == MouseButtons.Right)
-      {
-        m.info.PosRobotAdv =
-          ((int)((picTable.Width - e.X) / drawTable.RatioPixelInc)).ToString() + "," +
-          ((int)(e.Y / drawTable.RatioPixelInc)).ToString();
-      }
+					m.info.hasNewData = true;
+				}
+			}
+			else if (e.Button == MouseButtons.Right)
+			{
+				m.info.PosRobotAdv =
+					((int)((picTable.Width - e.X) / drawTable.RatioPixelInc)).ToString() + "," +
+					((int)(e.Y / drawTable.RatioPixelInc)).ToString();
+				m.info.hasNewData = true;
+			}
 
-      drawTable.ActionMouse(e);
-    }
+			drawTable.ActionMouse(e);
+			picTable.Invalidate();
+		}
 
-    private void butPG1_Click(object sender, EventArgs e)
-    {
-      sendCmdPump(1, 1);
-    }
+		private void butPG1_Click(object sender, EventArgs e)
+		{
+			sendCmdPump(1, 1);
+		}
 
-    private void butPG3_Click(object sender, EventArgs e)
-    {
-      sendCmdPump(1, 2);
-    }
+		private void butPG3_Click(object sender, EventArgs e)
+		{
+			sendCmdPump(1, 2);
+		}
 
-    private void butPG2_Click(object sender, EventArgs e)
-    {
-      sendCmdPump(1, 0);
-    }
+		private void butPG2_Click(object sender, EventArgs e)
+		{
+			sendCmdPump(1, 0);
+		}
 
-    private void butPD1_Click(object sender, EventArgs e)
-    {
-      sendCmdPump(0, 1);
-    }
+		private void butPD1_Click(object sender, EventArgs e)
+		{
+			sendCmdPump(0, 1);
+		}
 
-    private void butPD2_Click(object sender, EventArgs e)
-    {
-      sendCmdPump(0, 0);
-    }
+		private void butPD2_Click(object sender, EventArgs e)
+		{
+			sendCmdPump(0, 0);
+		}
 
-    private void butPD3_Click(object sender, EventArgs e)
-    {
-      sendCmdPump(0, 2);
-    }
+		private void butPD3_Click(object sender, EventArgs e)
+		{
+			sendCmdPump(0, 2);
+		}
 
-    private void butSendGenFunc_Click(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.gen_func, new int[] { cmbGenFunc.SelectedIndex, (int)numGenFunc.Value });
-    }
+		private void butGraph_Click(object sender, EventArgs e)
+		{
+			if (gr == null || gr.IsDisposed)
+				gr = new frmGraph();
+			gr.Show();
+		}
 
-    private void butGraph_Click(object sender, EventArgs e)
-    {
-      if (gr == null || gr.IsDisposed)
-        gr = new frmGraph();
-      gr.Show();
-    }
+		private void numPS_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.set_PID, new int[] { 4, (int)numPS.Value });
+		}
 
-    private void numPS_ValueChanged(object sender, EventArgs e)
-    {
-        m.sendCmd(LstPos.set_PID, new int[] { 4, (int)numPS.Value });
-    }
-
-    private void numDS_ValueChanged(object sender, EventArgs e)
-    {
+		private void numDS_ValueChanged(object sender, EventArgs e)
+		{
 			m.sendCmd(LstPos.set_PID, new int[] { 5, (int)numDS.Value });
-    }
+		}
 
-    private void numPE_ValueChanged(object sender, EventArgs e)
-    {
+		private void numPE_ValueChanged(object sender, EventArgs e)
+		{
 			m.sendCmd(LstPos.set_PID, new int[] { 8, (int)numPE.Value });
-    }
+		}
 
-    private void numDE_ValueChanged(object sender, EventArgs e)
-    {
+		private void numDE_ValueChanged(object sender, EventArgs e)
+		{
 			m.sendCmd(LstPos.set_PID, new int[] { 9, (int)numDE.Value });
-    }
+		}
 
-    private void numPZ_ValueChanged(object sender, EventArgs e)
-    {
+		private void numPZ_ValueChanged(object sender, EventArgs e)
+		{
 			m.sendCmd(LstPos.set_PID, new int[] { 6, (int)numPZ.Value });
-    }
+		}
 
-    private void numDZ_ValueChanged(object sender, EventArgs e)
-    {
+		private void numDZ_ValueChanged(object sender, EventArgs e)
+		{
 			m.sendCmd(LstPos.set_PID, new int[] { 7, (int)numDZ.Value });
-    }
+		}
 
-    private void cmbAskLog_SelectedIndexChanged(object sender, EventArgs e)
-    {
+		private void cmbAskLog_SelectedIndexChanged(object sender, EventArgs e)
+		{
 			m.sendCmd(LstPos.gen_func, new int[] { 5, cmbAskLog.SelectedIndex });
-    }
+		}
 
 		private void numDistP_ValueChanged(object sender, EventArgs e)
 		{
@@ -347,12 +357,12 @@ namespace ComDebraFpga
 
 		private void butInitBras_Click(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.gen_func, new int[] { 8, (int)numGenFunc.Value });
+			m.sendCmd(LstPos.gen_func, new int[] { 8, (int)0 });
 		}
 
 		private void butRangerBras_Click(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.gen_func, new int[] { 6, (int)numGenFunc.Value });
+			m.sendCmd(LstPos.gen_func, new int[] { 6, (int)0 });
 		}
 
 		private void butArmBrasG_Click(object sender, EventArgs e)
@@ -385,5 +395,30 @@ namespace ComDebraFpga
 			sendArmRight(1, (int)num5X.Value, (int)num5Y.Value, (int)num5Z.Value);
 		}
 
-  }
+		private void numBdAngle_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.set_blocking, new int[] { 0, (int)numBdAngle.Value });
+		}
+
+		private void numBdDist_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.set_blocking, new int[] { 1, (int)numBdDist.Value });
+		}
+
+		private void numArmZBd_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.set_blocking, new int[] { 2, (int)numArmZBd.Value });
+		}
+
+		private void numArmBdSh_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.set_blocking, new int[] { 3, (int)numArmBdSh.Value });
+		}
+
+		private void numArmBdElb_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.set_blocking, new int[] { 4, (int)numArmBdElb.Value });
+		}
+
+	}
 }

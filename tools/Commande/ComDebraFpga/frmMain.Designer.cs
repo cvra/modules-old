@@ -62,7 +62,6 @@
 					this.numAngle = new System.Windows.Forms.NumericUpDown();
 					this.numDist = new System.Windows.Forms.NumericUpDown();
 					this.label4 = new System.Windows.Forms.Label();
-					this.groupBox2 = new System.Windows.Forms.GroupBox();
 					this.butRangerBras = new System.Windows.Forms.Button();
 					this.butInitBras = new System.Windows.Forms.Button();
 					this.butPD2 = new System.Windows.Forms.Button();
@@ -71,30 +70,13 @@
 					this.butPD1 = new System.Windows.Forms.Button();
 					this.butPG2 = new System.Windows.Forms.Button();
 					this.butPG1 = new System.Windows.Forms.Button();
-					this.lbltrackPumpD = new System.Windows.Forms.Label();
-					this.label1 = new System.Windows.Forms.Label();
-					this.groupBox6 = new System.Windows.Forms.GroupBox();
-					this.label6 = new System.Windows.Forms.Label();
-					this.label5 = new System.Windows.Forms.Label();
-					this.numDropX = new System.Windows.Forms.NumericUpDown();
-					this.numDropY = new System.Windows.Forms.NumericUpDown();
-					this.butDropG = new System.Windows.Forms.Button();
-					this.butDropD = new System.Windows.Forms.Button();
-					this.label8 = new System.Windows.Forms.Label();
-					this.label7 = new System.Windows.Forms.Label();
-					this.cmbBrasGauche = new System.Windows.Forms.ComboBox();
-					this.cmbBrasDroit = new System.Windows.Forms.ComboBox();
-					this.butStopAll = new System.Windows.Forms.Button();
 					this.propertyVar = new System.Windows.Forms.PropertyGrid();
-					this.cmbGenFunc = new System.Windows.Forms.ComboBox();
-					this.numGenFunc = new System.Windows.Forms.NumericUpDown();
 					this.numArmGX = new System.Windows.Forms.NumericUpDown();
 					this.numArmGY = new System.Windows.Forms.NumericUpDown();
 					this.numArmGZ = new System.Windows.Forms.NumericUpDown();
 					this.numArmDZ = new System.Windows.Forms.NumericUpDown();
 					this.numArmDY = new System.Windows.Forms.NumericUpDown();
 					this.numArmDX = new System.Windows.Forms.NumericUpDown();
-					this.butSendGenFunc = new System.Windows.Forms.Button();
 					this.picTable = new System.Windows.Forms.PictureBox();
 					this.label9 = new System.Windows.Forms.Label();
 					this.label10 = new System.Windows.Forms.Label();
@@ -137,17 +119,34 @@
 					this.numAngP = new System.Windows.Forms.NumericUpDown();
 					this.numAngD = new System.Windows.Forms.NumericUpDown();
 					this.tabPIDBras = new System.Windows.Forms.TabPage();
+					this.picArmRZ = new System.Windows.Forms.PictureBox();
+					this.picArmRSh = new System.Windows.Forms.PictureBox();
+					this.picArmREl = new System.Windows.Forms.PictureBox();
+					this.picArmLZ = new System.Windows.Forms.PictureBox();
+					this.picArmLSh = new System.Windows.Forms.PictureBox();
+					this.picArmLEl = new System.Windows.Forms.PictureBox();
+					this.picRot = new System.Windows.Forms.PictureBox();
+					this.picDist = new System.Windows.Forms.PictureBox();
+					this.groupBox1 = new System.Windows.Forms.GroupBox();
+					this.picMoving = new System.Windows.Forms.PictureBox();
+					this.tabPage1 = new System.Windows.Forms.TabPage();
+					this.label7 = new System.Windows.Forms.Label();
+					this.label8 = new System.Windows.Forms.Label();
+					this.label14 = new System.Windows.Forms.Label();
+					this.label15 = new System.Windows.Forms.Label();
+					this.label16 = new System.Windows.Forms.Label();
+					this.numBdAngle = new System.Windows.Forms.NumericUpDown();
+					this.numArmBdSh = new System.Windows.Forms.NumericUpDown();
+					this.numBdDist = new System.Windows.Forms.NumericUpDown();
+					this.numArmZBd = new System.Windows.Forms.NumericUpDown();
+					this.numArmBdElb = new System.Windows.Forms.NumericUpDown();
+					this.groupBox4 = new System.Windows.Forms.GroupBox();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
 					this.panel1.SuspendLayout();
 					((System.ComponentModel.ISupportInitialize)(this.numAngle)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numDist)).BeginInit();
-					this.groupBox2.SuspendLayout();
-					this.groupBox6.SuspendLayout();
-					((System.ComponentModel.ISupportInitialize)(this.numDropX)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numDropY)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numGenFunc)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmGX)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmGY)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmGZ)).BeginInit();
@@ -183,6 +182,23 @@
 					((System.ComponentModel.ISupportInitialize)(this.numAngP)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numAngD)).BeginInit();
 					this.tabPIDBras.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.picArmRZ)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmRSh)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmREl)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmLZ)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmLSh)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmLEl)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.picRot)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.picDist)).BeginInit();
+					this.groupBox1.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.picMoving)).BeginInit();
+					this.tabPage1.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numBdAngle)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmBdSh)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numBdDist)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmZBd)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmBdElb)).BeginInit();
+					this.groupBox4.SuspendLayout();
 					this.SuspendLayout();
 					// 
 					// dataButs
@@ -194,10 +210,10 @@
 					this.dataButs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colButton,
             this.colParam});
-					this.dataButs.Location = new System.Drawing.Point(983, 398);
+					this.dataButs.Location = new System.Drawing.Point(983, 306);
 					this.dataButs.Name = "dataButs";
 					this.dataButs.RowHeadersVisible = false;
-					this.dataButs.Size = new System.Drawing.Size(269, 322);
+					this.dataButs.Size = new System.Drawing.Size(269, 414);
 					this.dataButs.TabIndex = 0;
 					this.dataButs.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataButs_CellContentClick);
 					// 
@@ -514,41 +530,17 @@
 					// label4
 					// 
 					this.label4.AutoSize = true;
-					this.label4.Location = new System.Drawing.Point(498, 487);
+					this.label4.BackColor = System.Drawing.Color.Transparent;
+					this.label4.Location = new System.Drawing.Point(231, 630);
 					this.label4.Name = "label4";
 					this.label4.Size = new System.Drawing.Size(143, 65);
 					this.label4.TabIndex = 9;
 					this.label4.Text = "lck: Goto with avoid\r\nlck+crl: Goto direct\r\nlck+shift: Set Point depose\r\nlck+alt:" +
 							" Set Point prise au sol\r\nrck: set Adv";
 					// 
-					// groupBox2
-					// 
-					this.groupBox2.Controls.Add(this.butRangerBras);
-					this.groupBox2.Controls.Add(this.butInitBras);
-					this.groupBox2.Controls.Add(this.butPD2);
-					this.groupBox2.Controls.Add(this.butPG3);
-					this.groupBox2.Controls.Add(this.butPD3);
-					this.groupBox2.Controls.Add(this.butPD1);
-					this.groupBox2.Controls.Add(this.butPG2);
-					this.groupBox2.Controls.Add(this.butPG1);
-					this.groupBox2.Controls.Add(this.lbltrackPumpD);
-					this.groupBox2.Controls.Add(this.label1);
-					this.groupBox2.Controls.Add(this.groupBox6);
-					this.groupBox2.Controls.Add(this.label8);
-					this.groupBox2.Controls.Add(this.label7);
-					this.groupBox2.Controls.Add(this.cmbBrasGauche);
-					this.groupBox2.Controls.Add(this.cmbBrasDroit);
-					this.groupBox2.Controls.Add(this.butStopAll);
-					this.groupBox2.Location = new System.Drawing.Point(187, 488);
-					this.groupBox2.Name = "groupBox2";
-					this.groupBox2.Size = new System.Drawing.Size(213, 245);
-					this.groupBox2.TabIndex = 10;
-					this.groupBox2.TabStop = false;
-					this.groupBox2.Text = "Commandes";
-					// 
 					// butRangerBras
 					// 
-					this.butRangerBras.Location = new System.Drawing.Point(76, 184);
+					this.butRangerBras.Location = new System.Drawing.Point(269, 500);
 					this.butRangerBras.Name = "butRangerBras";
 					this.butRangerBras.Size = new System.Drawing.Size(61, 21);
 					this.butRangerBras.TabIndex = 34;
@@ -558,7 +550,7 @@
 					// 
 					// butInitBras
 					// 
-					this.butInitBras.Location = new System.Drawing.Point(9, 184);
+					this.butInitBras.Location = new System.Drawing.Point(292, 531);
 					this.butInitBras.Name = "butInitBras";
 					this.butInitBras.Size = new System.Drawing.Size(61, 21);
 					this.butInitBras.TabIndex = 33;
@@ -569,7 +561,7 @@
 					// butPD2
 					// 
 					this.butPD2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-					this.butPD2.Location = new System.Drawing.Point(142, 140);
+					this.butPD2.Location = new System.Drawing.Point(29, 37);
 					this.butPD2.Name = "butPD2";
 					this.butPD2.Size = new System.Drawing.Size(19, 23);
 					this.butPD2.TabIndex = 31;
@@ -580,7 +572,7 @@
 					// butPG3
 					// 
 					this.butPG3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-					this.butPG3.Location = new System.Drawing.Point(167, 85);
+					this.butPG3.Location = new System.Drawing.Point(7, 13);
 					this.butPG3.Name = "butPG3";
 					this.butPG3.Size = new System.Drawing.Size(19, 23);
 					this.butPG3.TabIndex = 30;
@@ -591,7 +583,7 @@
 					// butPD3
 					// 
 					this.butPD3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-					this.butPD3.Location = new System.Drawing.Point(167, 140);
+					this.butPD3.Location = new System.Drawing.Point(29, 13);
 					this.butPD3.Name = "butPD3";
 					this.butPD3.Size = new System.Drawing.Size(19, 23);
 					this.butPD3.TabIndex = 29;
@@ -602,7 +594,7 @@
 					// butPD1
 					// 
 					this.butPD1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-					this.butPD1.Location = new System.Drawing.Point(117, 140);
+					this.butPD1.Location = new System.Drawing.Point(29, 61);
 					this.butPD1.Name = "butPD1";
 					this.butPD1.Size = new System.Drawing.Size(19, 23);
 					this.butPD1.TabIndex = 28;
@@ -613,7 +605,7 @@
 					// butPG2
 					// 
 					this.butPG2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-					this.butPG2.Location = new System.Drawing.Point(142, 85);
+					this.butPG2.Location = new System.Drawing.Point(7, 37);
 					this.butPG2.Name = "butPG2";
 					this.butPG2.Size = new System.Drawing.Size(19, 23);
 					this.butPG2.TabIndex = 27;
@@ -624,7 +616,7 @@
 					// butPG1
 					// 
 					this.butPG1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-					this.butPG1.Location = new System.Drawing.Point(117, 85);
+					this.butPG1.Location = new System.Drawing.Point(7, 61);
 					this.butPG1.Name = "butPG1";
 					this.butPG1.Size = new System.Drawing.Size(19, 23);
 					this.butPG1.TabIndex = 26;
@@ -632,206 +624,13 @@
 					this.butPG1.UseVisualStyleBackColor = false;
 					this.butPG1.Click += new System.EventHandler(this.butPG1_Click);
 					// 
-					// lbltrackPumpD
-					// 
-					this.lbltrackPumpD.AutoSize = true;
-					this.lbltrackPumpD.Location = new System.Drawing.Point(114, 123);
-					this.lbltrackPumpD.Name = "lbltrackPumpD";
-					this.lbltrackPumpD.Size = new System.Drawing.Size(51, 13);
-					this.lbltrackPumpD.TabIndex = 25;
-					this.lbltrackPumpD.Text = "Pompe D";
-					// 
-					// label1
-					// 
-					this.label1.AutoSize = true;
-					this.label1.Location = new System.Drawing.Point(114, 69);
-					this.label1.Name = "label1";
-					this.label1.Size = new System.Drawing.Size(51, 13);
-					this.label1.TabIndex = 23;
-					this.label1.Text = "Pompe G";
-					// 
-					// groupBox6
-					// 
-					this.groupBox6.Controls.Add(this.label6);
-					this.groupBox6.Controls.Add(this.label5);
-					this.groupBox6.Controls.Add(this.numDropX);
-					this.groupBox6.Controls.Add(this.numDropY);
-					this.groupBox6.Controls.Add(this.butDropG);
-					this.groupBox6.Controls.Add(this.butDropD);
-					this.groupBox6.Location = new System.Drawing.Point(6, 69);
-					this.groupBox6.Name = "groupBox6";
-					this.groupBox6.Size = new System.Drawing.Size(100, 108);
-					this.groupBox6.TabIndex = 13;
-					this.groupBox6.TabStop = false;
-					this.groupBox6.Text = "Drop";
-					// 
-					// label6
-					// 
-					this.label6.AutoSize = true;
-					this.label6.Location = new System.Drawing.Point(6, 46);
-					this.label6.Name = "label6";
-					this.label6.Size = new System.Drawing.Size(17, 13);
-					this.label6.TabIndex = 14;
-					this.label6.Text = "Y:";
-					// 
-					// label5
-					// 
-					this.label5.AutoSize = true;
-					this.label5.Location = new System.Drawing.Point(6, 21);
-					this.label5.Name = "label5";
-					this.label5.Size = new System.Drawing.Size(17, 13);
-					this.label5.TabIndex = 13;
-					this.label5.Text = "X:";
-					// 
-					// numDropX
-					// 
-					this.numDropX.Location = new System.Drawing.Point(29, 19);
-					this.numDropX.Maximum = new decimal(new int[] {
-            3500,
-            0,
-            0,
-            0});
-					this.numDropX.Name = "numDropX";
-					this.numDropX.Size = new System.Drawing.Size(62, 20);
-					this.numDropX.TabIndex = 12;
-					// 
-					// numDropY
-					// 
-					this.numDropY.Location = new System.Drawing.Point(29, 44);
-					this.numDropY.Maximum = new decimal(new int[] {
-            3500,
-            0,
-            0,
-            0});
-					this.numDropY.Name = "numDropY";
-					this.numDropY.Size = new System.Drawing.Size(62, 20);
-					this.numDropY.TabIndex = 11;
-					// 
-					// butDropG
-					// 
-					this.butDropG.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-					this.butDropG.Location = new System.Drawing.Point(8, 71);
-					this.butDropG.Name = "butDropG";
-					this.butDropG.Size = new System.Drawing.Size(32, 23);
-					this.butDropG.TabIndex = 9;
-					this.butDropG.Text = "G";
-					this.butDropG.UseVisualStyleBackColor = false;
-					// 
-					// butDropD
-					// 
-					this.butDropD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-					this.butDropD.Location = new System.Drawing.Point(60, 71);
-					this.butDropD.Name = "butDropD";
-					this.butDropD.Size = new System.Drawing.Size(31, 23);
-					this.butDropD.TabIndex = 11;
-					this.butDropD.Text = "D";
-					this.butDropD.UseVisualStyleBackColor = false;
-					// 
-					// label8
-					// 
-					this.label8.AutoSize = true;
-					this.label8.Location = new System.Drawing.Point(104, 22);
-					this.label8.Name = "label8";
-					this.label8.Size = new System.Drawing.Size(51, 13);
-					this.label8.TabIndex = 22;
-					this.label8.Text = "Bras droit";
-					this.label8.Visible = false;
-					// 
-					// label7
-					// 
-					this.label7.AutoSize = true;
-					this.label7.Location = new System.Drawing.Point(6, 22);
-					this.label7.Name = "label7";
-					this.label7.Size = new System.Drawing.Size(28, 13);
-					this.label7.TabIndex = 21;
-					this.label7.Text = "Bras";
-					// 
-					// cmbBrasGauche
-					// 
-					this.cmbBrasGauche.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-					this.cmbBrasGauche.FormattingEnabled = true;
-					this.cmbBrasGauche.Items.AddRange(new object[] {
-            "0=desactive",
-            "1=pos manuelle",
-            "2=pos initiale"});
-					this.cmbBrasGauche.Location = new System.Drawing.Point(6, 41);
-					this.cmbBrasGauche.Name = "cmbBrasGauche";
-					this.cmbBrasGauche.Size = new System.Drawing.Size(98, 21);
-					this.cmbBrasGauche.TabIndex = 20;
-					this.cmbBrasGauche.SelectedIndexChanged += new System.EventHandler(this.cmbBrasGauche_SelectedIndexChanged);
-					// 
-					// cmbBrasDroit
-					// 
-					this.cmbBrasDroit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-					this.cmbBrasDroit.FormattingEnabled = true;
-					this.cmbBrasDroit.Items.AddRange(new object[] {
-            "0=desactive",
-            "1=pos manuelle",
-            "2=pos initiale"});
-					this.cmbBrasDroit.Location = new System.Drawing.Point(107, 41);
-					this.cmbBrasDroit.Name = "cmbBrasDroit";
-					this.cmbBrasDroit.Size = new System.Drawing.Size(98, 21);
-					this.cmbBrasDroit.TabIndex = 19;
-					this.cmbBrasDroit.Visible = false;
-					this.cmbBrasDroit.SelectedIndexChanged += new System.EventHandler(this.cmbBrasGauche_SelectedIndexChanged);
-					// 
-					// butStopAll
-					// 
-					this.butStopAll.BackColor = System.Drawing.Color.Red;
-					this.butStopAll.Location = new System.Drawing.Point(187, 5);
-					this.butStopAll.Name = "butStopAll";
-					this.butStopAll.Size = new System.Drawing.Size(26, 23);
-					this.butStopAll.TabIndex = 18;
-					this.butStopAll.Text = "Stop ALL";
-					this.butStopAll.UseVisualStyleBackColor = false;
-					this.butStopAll.Visible = false;
-					// 
 					// propertyVar
 					// 
 					this.propertyVar.HelpVisible = false;
 					this.propertyVar.Location = new System.Drawing.Point(983, 28);
 					this.propertyVar.Name = "propertyVar";
-					this.propertyVar.Size = new System.Drawing.Size(269, 364);
+					this.propertyVar.Size = new System.Drawing.Size(269, 272);
 					this.propertyVar.TabIndex = 11;
-					// 
-					// cmbGenFunc
-					// 
-					this.cmbGenFunc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-					this.cmbGenFunc.DropDownWidth = 150;
-					this.cmbGenFunc.FormattingEnabled = true;
-					this.cmbGenFunc.Items.AddRange(new object[] {
-            "0=Start strat",
-            "1=sequence bras",
-            "2=retour depart",
-            "3=Arm slow",
-            "4=Arm fast",
-            "5=ask log",
-            "6=Ranger bras",
-            "7=Test func",
-            "8=Init bras",
-            "9=Arm rot rel",
-            "10=Arm go down ventouse"});
-					this.cmbGenFunc.Location = new System.Drawing.Point(12, 616);
-					this.cmbGenFunc.Name = "cmbGenFunc";
-					this.cmbGenFunc.Size = new System.Drawing.Size(74, 21);
-					this.cmbGenFunc.TabIndex = 21;
-					// 
-					// numGenFunc
-					// 
-					this.numGenFunc.Location = new System.Drawing.Point(92, 617);
-					this.numGenFunc.Maximum = new decimal(new int[] {
-            32000,
-            0,
-            0,
-            0});
-					this.numGenFunc.Minimum = new decimal(new int[] {
-            32000,
-            0,
-            0,
-            -2147483648});
-					this.numGenFunc.Name = "numGenFunc";
-					this.numGenFunc.Size = new System.Drawing.Size(69, 20);
-					this.numGenFunc.TabIndex = 22;
 					// 
 					// numArmGX
 					// 
@@ -974,16 +773,6 @@
             0,
             0,
             0});
-					// 
-					// butSendGenFunc
-					// 
-					this.butSendGenFunc.Location = new System.Drawing.Point(167, 614);
-					this.butSendGenFunc.Name = "butSendGenFunc";
-					this.butSendGenFunc.Size = new System.Drawing.Size(14, 23);
-					this.butSendGenFunc.TabIndex = 29;
-					this.butSendGenFunc.Text = "S";
-					this.butSendGenFunc.UseVisualStyleBackColor = true;
-					this.butSendGenFunc.Click += new System.EventHandler(this.butSendGenFunc_Click);
 					// 
 					// picTable
 					// 
@@ -1131,10 +920,11 @@
 					this.tabControl1.Controls.Add(this.tabArmTable);
 					this.tabControl1.Controls.Add(this.tabPIDDep);
 					this.tabControl1.Controls.Add(this.tabPIDBras);
-					this.tabControl1.Location = new System.Drawing.Point(413, 566);
+					this.tabControl1.Controls.Add(this.tabPage1);
+					this.tabControl1.Location = new System.Drawing.Point(380, 503);
 					this.tabControl1.Name = "tabControl1";
 					this.tabControl1.SelectedIndex = 0;
-					this.tabControl1.Size = new System.Drawing.Size(256, 151);
+					this.tabControl1.Size = new System.Drawing.Size(277, 196);
 					this.tabControl1.TabIndex = 40;
 					// 
 					// ArmBras
@@ -1664,17 +1454,261 @@
 					this.tabPIDBras.Text = "Reglage PID Bras";
 					this.tabPIDBras.UseVisualStyleBackColor = true;
 					// 
+					// picArmRZ
+					// 
+					this.picArmRZ.BackColor = System.Drawing.Color.Red;
+					this.picArmRZ.Location = new System.Drawing.Point(75, 15);
+					this.picArmRZ.Name = "picArmRZ";
+					this.picArmRZ.Size = new System.Drawing.Size(10, 10);
+					this.picArmRZ.TabIndex = 41;
+					this.picArmRZ.TabStop = false;
+					// 
+					// picArmRSh
+					// 
+					this.picArmRSh.BackColor = System.Drawing.Color.Red;
+					this.picArmRSh.Location = new System.Drawing.Point(91, 15);
+					this.picArmRSh.Name = "picArmRSh";
+					this.picArmRSh.Size = new System.Drawing.Size(10, 10);
+					this.picArmRSh.TabIndex = 42;
+					this.picArmRSh.TabStop = false;
+					// 
+					// picArmREl
+					// 
+					this.picArmREl.BackColor = System.Drawing.Color.Red;
+					this.picArmREl.Location = new System.Drawing.Point(107, 15);
+					this.picArmREl.Name = "picArmREl";
+					this.picArmREl.Size = new System.Drawing.Size(10, 10);
+					this.picArmREl.TabIndex = 43;
+					this.picArmREl.TabStop = false;
+					// 
+					// picArmLZ
+					// 
+					this.picArmLZ.BackColor = System.Drawing.Color.Red;
+					this.picArmLZ.Location = new System.Drawing.Point(40, 15);
+					this.picArmLZ.Name = "picArmLZ";
+					this.picArmLZ.Size = new System.Drawing.Size(10, 10);
+					this.picArmLZ.TabIndex = 46;
+					this.picArmLZ.TabStop = false;
+					// 
+					// picArmLSh
+					// 
+					this.picArmLSh.BackColor = System.Drawing.Color.Red;
+					this.picArmLSh.Location = new System.Drawing.Point(24, 15);
+					this.picArmLSh.Name = "picArmLSh";
+					this.picArmLSh.Size = new System.Drawing.Size(10, 10);
+					this.picArmLSh.TabIndex = 45;
+					this.picArmLSh.TabStop = false;
+					// 
+					// picArmLEl
+					// 
+					this.picArmLEl.BackColor = System.Drawing.Color.Red;
+					this.picArmLEl.Location = new System.Drawing.Point(8, 15);
+					this.picArmLEl.Name = "picArmLEl";
+					this.picArmLEl.Size = new System.Drawing.Size(10, 10);
+					this.picArmLEl.TabIndex = 44;
+					this.picArmLEl.TabStop = false;
+					// 
+					// picRot
+					// 
+					this.picRot.BackColor = System.Drawing.Color.Red;
+					this.picRot.Location = new System.Drawing.Point(67, 28);
+					this.picRot.Name = "picRot";
+					this.picRot.Size = new System.Drawing.Size(10, 10);
+					this.picRot.TabIndex = 48;
+					this.picRot.TabStop = false;
+					// 
+					// picDist
+					// 
+					this.picDist.BackColor = System.Drawing.Color.Red;
+					this.picDist.Location = new System.Drawing.Point(51, 28);
+					this.picDist.Name = "picDist";
+					this.picDist.Size = new System.Drawing.Size(10, 10);
+					this.picDist.TabIndex = 47;
+					this.picDist.TabStop = false;
+					// 
+					// groupBox1
+					// 
+					this.groupBox1.Controls.Add(this.picMoving);
+					this.groupBox1.Controls.Add(this.picRot);
+					this.groupBox1.Controls.Add(this.picDist);
+					this.groupBox1.Controls.Add(this.picArmLZ);
+					this.groupBox1.Controls.Add(this.picArmLSh);
+					this.groupBox1.Controls.Add(this.picArmLEl);
+					this.groupBox1.Controls.Add(this.picArmREl);
+					this.groupBox1.Controls.Add(this.picArmRSh);
+					this.groupBox1.Controls.Add(this.picArmRZ);
+					this.groupBox1.Location = new System.Drawing.Point(6, 615);
+					this.groupBox1.Name = "groupBox1";
+					this.groupBox1.Size = new System.Drawing.Size(126, 53);
+					this.groupBox1.TabIndex = 49;
+					this.groupBox1.TabStop = false;
+					this.groupBox1.Text = "Blocage";
+					// 
+					// picMoving
+					// 
+					this.picMoving.BackColor = System.Drawing.Color.Red;
+					this.picMoving.Location = new System.Drawing.Point(59, 40);
+					this.picMoving.Name = "picMoving";
+					this.picMoving.Size = new System.Drawing.Size(10, 10);
+					this.picMoving.TabIndex = 49;
+					this.picMoving.TabStop = false;
+					// 
+					// tabPage1
+					// 
+					this.tabPage1.Controls.Add(this.numBdAngle);
+					this.tabPage1.Controls.Add(this.numArmBdSh);
+					this.tabPage1.Controls.Add(this.numBdDist);
+					this.tabPage1.Controls.Add(this.numArmZBd);
+					this.tabPage1.Controls.Add(this.numArmBdElb);
+					this.tabPage1.Controls.Add(this.label16);
+					this.tabPage1.Controls.Add(this.label15);
+					this.tabPage1.Controls.Add(this.label14);
+					this.tabPage1.Controls.Add(this.label8);
+					this.tabPage1.Controls.Add(this.label7);
+					this.tabPage1.Location = new System.Drawing.Point(4, 22);
+					this.tabPage1.Name = "tabPage1";
+					this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+					this.tabPage1.Size = new System.Drawing.Size(269, 170);
+					this.tabPage1.TabIndex = 5;
+					this.tabPage1.Text = "Blocage";
+					this.tabPage1.UseVisualStyleBackColor = true;
+					// 
+					// label7
+					// 
+					this.label7.AutoSize = true;
+					this.label7.Location = new System.Drawing.Point(7, 34);
+					this.label7.Name = "label7";
+					this.label7.Size = new System.Drawing.Size(25, 13);
+					this.label7.TabIndex = 0;
+					this.label7.Text = "Dist";
+					// 
+					// label8
+					// 
+					this.label8.AutoSize = true;
+					this.label8.Location = new System.Drawing.Point(7, 8);
+					this.label8.Name = "label8";
+					this.label8.Size = new System.Drawing.Size(34, 13);
+					this.label8.TabIndex = 1;
+					this.label8.Text = "Angle";
+					// 
+					// label14
+					// 
+					this.label14.AutoSize = true;
+					this.label14.Location = new System.Drawing.Point(7, 85);
+					this.label14.Name = "label14";
+					this.label14.Size = new System.Drawing.Size(68, 13);
+					this.label14.TabIndex = 2;
+					this.label14.Text = "Arm shoulder";
+					// 
+					// label15
+					// 
+					this.label15.AutoSize = true;
+					this.label15.Location = new System.Drawing.Point(7, 110);
+					this.label15.Name = "label15";
+					this.label15.Size = new System.Drawing.Size(56, 13);
+					this.label15.TabIndex = 3;
+					this.label15.Text = "Arm elbow";
+					// 
+					// label16
+					// 
+					this.label16.AutoSize = true;
+					this.label16.Location = new System.Drawing.Point(7, 59);
+					this.label16.Name = "label16";
+					this.label16.Size = new System.Drawing.Size(35, 13);
+					this.label16.TabIndex = 4;
+					this.label16.Text = "Arm Z";
+					// 
+					// numBdAngle
+					// 
+					this.numBdAngle.Location = new System.Drawing.Point(75, 6);
+					this.numBdAngle.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numBdAngle.Name = "numBdAngle";
+					this.numBdAngle.Size = new System.Drawing.Size(69, 20);
+					this.numBdAngle.TabIndex = 38;
+					this.numBdAngle.ValueChanged += new System.EventHandler(this.numBdAngle_ValueChanged);
+					// 
+					// numArmBdSh
+					// 
+					this.numArmBdSh.Location = new System.Drawing.Point(75, 83);
+					this.numArmBdSh.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numArmBdSh.Name = "numArmBdSh";
+					this.numArmBdSh.Size = new System.Drawing.Size(69, 20);
+					this.numArmBdSh.TabIndex = 42;
+					this.numArmBdSh.ValueChanged += new System.EventHandler(this.numArmBdSh_ValueChanged);
+					// 
+					// numBdDist
+					// 
+					this.numBdDist.Location = new System.Drawing.Point(75, 32);
+					this.numBdDist.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numBdDist.Name = "numBdDist";
+					this.numBdDist.Size = new System.Drawing.Size(69, 20);
+					this.numBdDist.TabIndex = 39;
+					this.numBdDist.ValueChanged += new System.EventHandler(this.numBdDist_ValueChanged);
+					// 
+					// numArmZBd
+					// 
+					this.numArmZBd.Location = new System.Drawing.Point(75, 57);
+					this.numArmZBd.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numArmZBd.Name = "numArmZBd";
+					this.numArmZBd.Size = new System.Drawing.Size(69, 20);
+					this.numArmZBd.TabIndex = 40;
+					this.numArmZBd.ValueChanged += new System.EventHandler(this.numArmZBd_ValueChanged);
+					// 
+					// numArmBdElb
+					// 
+					this.numArmBdElb.Location = new System.Drawing.Point(75, 108);
+					this.numArmBdElb.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numArmBdElb.Name = "numArmBdElb";
+					this.numArmBdElb.Size = new System.Drawing.Size(69, 20);
+					this.numArmBdElb.TabIndex = 41;
+					this.numArmBdElb.ValueChanged += new System.EventHandler(this.numArmBdElb_ValueChanged);
+					// 
+					// groupBox4
+					// 
+					this.groupBox4.Controls.Add(this.butPG1);
+					this.groupBox4.Controls.Add(this.butPG2);
+					this.groupBox4.Controls.Add(this.butPG3);
+					this.groupBox4.Controls.Add(this.butPD3);
+					this.groupBox4.Controls.Add(this.butPD2);
+					this.groupBox4.Controls.Add(this.butPD1);
+					this.groupBox4.Location = new System.Drawing.Point(187, 488);
+					this.groupBox4.Name = "groupBox4";
+					this.groupBox4.Size = new System.Drawing.Size(60, 90);
+					this.groupBox4.TabIndex = 35;
+					this.groupBox4.TabStop = false;
+					this.groupBox4.Text = "Pompes";
+					// 
 					// frmMain
 					// 
 					this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 					this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 					this.ClientSize = new System.Drawing.Size(1263, 729);
+					this.Controls.Add(this.butInitBras);
+					this.Controls.Add(this.butRangerBras);
+					this.Controls.Add(this.groupBox4);
+					this.Controls.Add(this.groupBox1);
 					this.Controls.Add(this.tabControl1);
-					this.Controls.Add(this.butSendGenFunc);
-					this.Controls.Add(this.numGenFunc);
-					this.Controls.Add(this.cmbGenFunc);
 					this.Controls.Add(this.propertyVar);
-					this.Controls.Add(this.groupBox2);
 					this.Controls.Add(this.label4);
 					this.Controls.Add(this.groupBox3);
 					this.Controls.Add(this.picTable);
@@ -1693,13 +1727,6 @@
 					this.panel1.ResumeLayout(false);
 					((System.ComponentModel.ISupportInitialize)(this.numAngle)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numDist)).EndInit();
-					this.groupBox2.ResumeLayout(false);
-					this.groupBox2.PerformLayout();
-					this.groupBox6.ResumeLayout(false);
-					this.groupBox6.PerformLayout();
-					((System.ComponentModel.ISupportInitialize)(this.numDropX)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numDropY)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numGenFunc)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmGX)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmGY)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmGZ)).EndInit();
@@ -1737,6 +1764,24 @@
 					((System.ComponentModel.ISupportInitialize)(this.numAngD)).EndInit();
 					this.tabPIDBras.ResumeLayout(false);
 					this.tabPIDBras.PerformLayout();
+					((System.ComponentModel.ISupportInitialize)(this.picArmRZ)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmRSh)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmREl)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmLZ)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmLSh)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.picArmLEl)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.picRot)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.picDist)).EndInit();
+					this.groupBox1.ResumeLayout(false);
+					((System.ComponentModel.ISupportInitialize)(this.picMoving)).EndInit();
+					this.tabPage1.ResumeLayout(false);
+					this.tabPage1.PerformLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numBdAngle)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmBdSh)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numBdDist)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmZBd)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmBdElb)).EndInit();
+					this.groupBox4.ResumeLayout(false);
 					this.ResumeLayout(false);
 					this.PerformLayout();
 
@@ -1774,26 +1819,9 @@
         private System.Windows.Forms.Button butDirUp;
         private System.Windows.Forms.NumericUpDown numAngle;
         private System.Windows.Forms.NumericUpDown numDist;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown numDropX;
-        private System.Windows.Forms.NumericUpDown numDropY;
-        private System.Windows.Forms.Button butDropG;
-        private System.Windows.Forms.Button butDropD;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cmbBrasGauche;
-        private System.Windows.Forms.ComboBox cmbBrasDroit;
-        private System.Windows.Forms.Button butStopAll;
+				private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PropertyGrid propertyVar;
-        private System.Windows.Forms.ToolStripButton butClearLog;
-        private System.Windows.Forms.Label lbltrackPumpD;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cmbGenFunc;
-        private System.Windows.Forms.NumericUpDown numGenFunc;
+				private System.Windows.Forms.ToolStripButton butClearLog;
         private System.Windows.Forms.NumericUpDown numArmGX;
         private System.Windows.Forms.NumericUpDown numArmGY;
         private System.Windows.Forms.NumericUpDown numArmGZ;
@@ -1805,8 +1833,7 @@
         private System.Windows.Forms.Button butPD3;
         private System.Windows.Forms.Button butPD1;
         private System.Windows.Forms.Button butPG2;
-        private System.Windows.Forms.Button butPG1;
-        private System.Windows.Forms.Button butSendGenFunc;
+				private System.Windows.Forms.Button butPG1;
         private System.Windows.Forms.ToolStripButton butGraph;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
@@ -1851,6 +1878,28 @@
 				private System.Windows.Forms.NumericUpDown num4Y;
 				private System.Windows.Forms.NumericUpDown num5Y;
 				private System.Windows.Forms.NumericUpDown num4Z;
+				private System.Windows.Forms.PictureBox picArmRZ;
+				private System.Windows.Forms.PictureBox picArmRSh;
+				private System.Windows.Forms.PictureBox picArmREl;
+				private System.Windows.Forms.PictureBox picArmLZ;
+				private System.Windows.Forms.PictureBox picArmLSh;
+				private System.Windows.Forms.PictureBox picArmLEl;
+				private System.Windows.Forms.PictureBox picRot;
+				private System.Windows.Forms.PictureBox picDist;
+				private System.Windows.Forms.GroupBox groupBox1;
+				private System.Windows.Forms.PictureBox picMoving;
+				private System.Windows.Forms.TabPage tabPage1;
+				private System.Windows.Forms.GroupBox groupBox4;
+				private System.Windows.Forms.NumericUpDown numBdAngle;
+				private System.Windows.Forms.NumericUpDown numArmBdSh;
+				private System.Windows.Forms.NumericUpDown numBdDist;
+				private System.Windows.Forms.NumericUpDown numArmZBd;
+				private System.Windows.Forms.NumericUpDown numArmBdElb;
+				private System.Windows.Forms.Label label16;
+				private System.Windows.Forms.Label label15;
+				private System.Windows.Forms.Label label14;
+				private System.Windows.Forms.Label label8;
+				private System.Windows.Forms.Label label7;
     }
 }
 

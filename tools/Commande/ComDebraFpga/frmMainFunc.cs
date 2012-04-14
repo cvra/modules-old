@@ -113,6 +113,7 @@ namespace ComDebraFpga
 				//******************** 1 paramètres ****************************
 				case LstPos.go_straight:
 				case LstPos.turn_to:
+				case LstPos.gen_func:
 				//******************** 2 paramètres ****************************
 				case LstPos.acceleration:
 				case LstPos.speed:

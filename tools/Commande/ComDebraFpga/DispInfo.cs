@@ -12,7 +12,7 @@ namespace ComDebraFpga
     public string PosRobotAdv { get; set; }
     public string ArmLeft { get; set; }
     public string ArmRight { get; set; }
-    public string status { get; set; }
+    public int status { get; set; }
     public int uptime { get; set; }
     public int CPU { get; set; }
     public string ADC1_4 { get; set; }
