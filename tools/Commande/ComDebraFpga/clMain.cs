@@ -171,6 +171,7 @@ namespace ComDebraFpga
             else if (buffer[0] == '\n')
             {
               //main.addLog(new ComElem(TypeVal.info, "Cmd ACK"));
+							Console.Beep(800,100);
               info.nbAck++;
               info.hasNewData = true;
             }
@@ -244,7 +245,16 @@ namespace ComDebraFpga
 
     public bool sendCmd(byte[] val)
     {
-      return com.Send(val);
+			byte[] cmd = new byte[15];
+			byte check = 0;
+
+			for (int i = 0; i < val.Length - 1; i++)
+			{
+				cmd[i] = val[i];
+				check += cmd[i];
+			}
+			cmd[14] = check;
+			return com.Send(cmd);
     }
 
     public bool sendCmd(LstPos cmd)
@@ -365,7 +375,6 @@ namespace ComDebraFpga
       com.End();
     }
 
-
     internal void Connect(string comPort)
     {
       com.Connect(comPort, 115200);
@@ -375,7 +384,6 @@ namespace ComDebraFpga
     {
       com.Disconnect();
     }
-
 
 
     static double sq(double x)

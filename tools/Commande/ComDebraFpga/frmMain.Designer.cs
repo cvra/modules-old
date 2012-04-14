@@ -107,15 +107,6 @@
 					this.label11 = new System.Windows.Forms.Label();
 					this.cmbAskLog = new System.Windows.Forms.ComboBox();
 					this.tabControl1 = new System.Windows.Forms.TabControl();
-					this.tabPIDBras = new System.Windows.Forms.TabPage();
-					this.tabPIDDep = new System.Windows.Forms.TabPage();
-					this.numDistP = new System.Windows.Forms.NumericUpDown();
-					this.cmbAskLog2 = new System.Windows.Forms.ComboBox();
-					this.label12 = new System.Windows.Forms.Label();
-					this.label13 = new System.Windows.Forms.Label();
-					this.numDistD = new System.Windows.Forms.NumericUpDown();
-					this.numAngP = new System.Windows.Forms.NumericUpDown();
-					this.numAngD = new System.Windows.Forms.NumericUpDown();
 					this.ArmBras = new System.Windows.Forms.TabPage();
 					this.butArmBrasD = new System.Windows.Forms.Button();
 					this.butArmBrasG = new System.Windows.Forms.Button();
@@ -137,6 +128,15 @@
 					this.num4Y = new System.Windows.Forms.NumericUpDown();
 					this.num5Y = new System.Windows.Forms.NumericUpDown();
 					this.num4Z = new System.Windows.Forms.NumericUpDown();
+					this.tabPIDDep = new System.Windows.Forms.TabPage();
+					this.numDistP = new System.Windows.Forms.NumericUpDown();
+					this.cmbAskLog2 = new System.Windows.Forms.ComboBox();
+					this.label12 = new System.Windows.Forms.Label();
+					this.label13 = new System.Windows.Forms.Label();
+					this.numDistD = new System.Windows.Forms.NumericUpDown();
+					this.numAngP = new System.Windows.Forms.NumericUpDown();
+					this.numAngD = new System.Windows.Forms.NumericUpDown();
+					this.tabPIDBras = new System.Windows.Forms.TabPage();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -162,12 +162,6 @@
 					((System.ComponentModel.ISupportInitialize)(this.numDZ)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numPZ)).BeginInit();
 					this.tabControl1.SuspendLayout();
-					this.tabPIDBras.SuspendLayout();
-					this.tabPIDDep.SuspendLayout();
-					((System.ComponentModel.ISupportInitialize)(this.numDistP)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numDistD)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numAngP)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numAngD)).BeginInit();
 					this.ArmBras.SuspendLayout();
 					this.ArmRobot.SuspendLayout();
 					((System.ComponentModel.ISupportInitialize)(this.num3X)).BeginInit();
@@ -183,6 +177,12 @@
 					((System.ComponentModel.ISupportInitialize)(this.num4Y)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.num5Y)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.num4Z)).BeginInit();
+					this.tabPIDDep.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numDistP)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numDistD)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numAngP)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numAngD)).BeginInit();
+					this.tabPIDBras.SuspendLayout();
 					this.SuspendLayout();
 					// 
 					// dataButs
@@ -233,7 +233,7 @@
             this.butGraph});
 					this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 					this.toolStrip1.Name = "toolStrip1";
-					this.toolStrip1.Size = new System.Drawing.Size(1264, 25);
+					this.toolStrip1.Size = new System.Drawing.Size(1263, 25);
 					this.toolStrip1.TabIndex = 2;
 					this.toolStrip1.Text = "toolStrip1";
 					// 
@@ -809,7 +809,8 @@
             "6=Ranger bras",
             "7=Test func",
             "8=Init bras",
-            "9=Arm rot rel"});
+            "9=Arm rot rel",
+            "10=Arm go down ventouse"});
 					this.cmbGenFunc.Location = new System.Drawing.Point(12, 616);
 					this.cmbGenFunc.Name = "cmbGenFunc";
 					this.cmbGenFunc.Size = new System.Drawing.Size(74, 21);
@@ -1135,135 +1136,6 @@
 					this.tabControl1.SelectedIndex = 0;
 					this.tabControl1.Size = new System.Drawing.Size(256, 151);
 					this.tabControl1.TabIndex = 40;
-					// 
-					// tabPIDBras
-					// 
-					this.tabPIDBras.Controls.Add(this.numPS);
-					this.tabPIDBras.Controls.Add(this.cmbAskLog);
-					this.tabPIDBras.Controls.Add(this.label9);
-					this.tabPIDBras.Controls.Add(this.numDZ);
-					this.tabPIDBras.Controls.Add(this.label10);
-					this.tabPIDBras.Controls.Add(this.numPZ);
-					this.tabPIDBras.Controls.Add(this.numDS);
-					this.tabPIDBras.Controls.Add(this.label11);
-					this.tabPIDBras.Controls.Add(this.numPE);
-					this.tabPIDBras.Controls.Add(this.numDE);
-					this.tabPIDBras.Location = new System.Drawing.Point(4, 22);
-					this.tabPIDBras.Name = "tabPIDBras";
-					this.tabPIDBras.Padding = new System.Windows.Forms.Padding(3);
-					this.tabPIDBras.Size = new System.Drawing.Size(248, 125);
-					this.tabPIDBras.TabIndex = 0;
-					this.tabPIDBras.Text = "Reglage PID Bras";
-					this.tabPIDBras.UseVisualStyleBackColor = true;
-					// 
-					// tabPIDDep
-					// 
-					this.tabPIDDep.Controls.Add(this.numDistP);
-					this.tabPIDDep.Controls.Add(this.cmbAskLog2);
-					this.tabPIDDep.Controls.Add(this.label12);
-					this.tabPIDDep.Controls.Add(this.label13);
-					this.tabPIDDep.Controls.Add(this.numDistD);
-					this.tabPIDDep.Controls.Add(this.numAngP);
-					this.tabPIDDep.Controls.Add(this.numAngD);
-					this.tabPIDDep.Location = new System.Drawing.Point(4, 22);
-					this.tabPIDDep.Name = "tabPIDDep";
-					this.tabPIDDep.Padding = new System.Windows.Forms.Padding(3);
-					this.tabPIDDep.Size = new System.Drawing.Size(248, 125);
-					this.tabPIDDep.TabIndex = 1;
-					this.tabPIDDep.Text = "PID Dep";
-					this.tabPIDDep.UseVisualStyleBackColor = true;
-					// 
-					// numDistP
-					// 
-					this.numDistP.Location = new System.Drawing.Point(49, 8);
-					this.numDistP.Maximum = new decimal(new int[] {
-            32000,
-            0,
-            0,
-            0});
-					this.numDistP.Name = "numDistP";
-					this.numDistP.Size = new System.Drawing.Size(69, 20);
-					this.numDistP.TabIndex = 42;
-					this.numDistP.ValueChanged += new System.EventHandler(this.numDistP_ValueChanged);
-					// 
-					// cmbAskLog2
-					// 
-					this.cmbAskLog2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-					this.cmbAskLog2.DropDownWidth = 150;
-					this.cmbAskLog2.FormattingEnabled = true;
-					this.cmbAskLog2.Items.AddRange(new object[] {
-            "0:Std log",
-            "1:robot.distance",
-            "2:robot.angle",
-            "3:robot.right_arm.z_axis",
-            "4:robot.right_arm.shoulder",
-            "5:robot.right_arm.elbow",
-            "6:robot.left_arm.z_axis",
-            "7:robot.left_arm.shoulder",
-            "8:robot.left_arm.elbow",
-            "9:Silence"});
-					this.cmbAskLog2.Location = new System.Drawing.Point(11, 86);
-					this.cmbAskLog2.Name = "cmbAskLog2";
-					this.cmbAskLog2.Size = new System.Drawing.Size(215, 21);
-					this.cmbAskLog2.TabIndex = 46;
-					this.cmbAskLog2.SelectedIndexChanged += new System.EventHandler(this.cmbAskLog2_SelectedIndexChanged);
-					// 
-					// label12
-					// 
-					this.label12.AutoSize = true;
-					this.label12.Location = new System.Drawing.Point(8, 10);
-					this.label12.Name = "label12";
-					this.label12.Size = new System.Drawing.Size(25, 13);
-					this.label12.TabIndex = 40;
-					this.label12.Text = "Dist";
-					// 
-					// label13
-					// 
-					this.label13.AutoSize = true;
-					this.label13.Location = new System.Drawing.Point(8, 36);
-					this.label13.Name = "label13";
-					this.label13.Size = new System.Drawing.Size(34, 13);
-					this.label13.TabIndex = 41;
-					this.label13.Text = "Angle";
-					// 
-					// numDistD
-					// 
-					this.numDistD.Location = new System.Drawing.Point(124, 8);
-					this.numDistD.Maximum = new decimal(new int[] {
-            32000,
-            0,
-            0,
-            0});
-					this.numDistD.Name = "numDistD";
-					this.numDistD.Size = new System.Drawing.Size(69, 20);
-					this.numDistD.TabIndex = 43;
-					this.numDistD.ValueChanged += new System.EventHandler(this.numDistD_ValueChanged);
-					// 
-					// numAngP
-					// 
-					this.numAngP.Location = new System.Drawing.Point(49, 34);
-					this.numAngP.Maximum = new decimal(new int[] {
-            32000,
-            0,
-            0,
-            0});
-					this.numAngP.Name = "numAngP";
-					this.numAngP.Size = new System.Drawing.Size(69, 20);
-					this.numAngP.TabIndex = 44;
-					this.numAngP.ValueChanged += new System.EventHandler(this.numAngP_ValueChanged);
-					// 
-					// numAngD
-					// 
-					this.numAngD.Location = new System.Drawing.Point(124, 34);
-					this.numAngD.Maximum = new decimal(new int[] {
-            32000,
-            0,
-            0,
-            0});
-					this.numAngD.Name = "numAngD";
-					this.numAngD.Size = new System.Drawing.Size(69, 20);
-					this.numAngD.TabIndex = 45;
-					this.numAngD.ValueChanged += new System.EventHandler(this.numAngD_ValueChanged);
 					// 
 					// ArmBras
 					// 
@@ -1663,11 +1535,140 @@
             0,
             0});
 					// 
+					// tabPIDDep
+					// 
+					this.tabPIDDep.Controls.Add(this.numDistP);
+					this.tabPIDDep.Controls.Add(this.cmbAskLog2);
+					this.tabPIDDep.Controls.Add(this.label12);
+					this.tabPIDDep.Controls.Add(this.label13);
+					this.tabPIDDep.Controls.Add(this.numDistD);
+					this.tabPIDDep.Controls.Add(this.numAngP);
+					this.tabPIDDep.Controls.Add(this.numAngD);
+					this.tabPIDDep.Location = new System.Drawing.Point(4, 22);
+					this.tabPIDDep.Name = "tabPIDDep";
+					this.tabPIDDep.Padding = new System.Windows.Forms.Padding(3);
+					this.tabPIDDep.Size = new System.Drawing.Size(248, 125);
+					this.tabPIDDep.TabIndex = 1;
+					this.tabPIDDep.Text = "PID Dep";
+					this.tabPIDDep.UseVisualStyleBackColor = true;
+					// 
+					// numDistP
+					// 
+					this.numDistP.Location = new System.Drawing.Point(49, 8);
+					this.numDistP.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numDistP.Name = "numDistP";
+					this.numDistP.Size = new System.Drawing.Size(69, 20);
+					this.numDistP.TabIndex = 42;
+					this.numDistP.ValueChanged += new System.EventHandler(this.numDistP_ValueChanged);
+					// 
+					// cmbAskLog2
+					// 
+					this.cmbAskLog2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+					this.cmbAskLog2.DropDownWidth = 150;
+					this.cmbAskLog2.FormattingEnabled = true;
+					this.cmbAskLog2.Items.AddRange(new object[] {
+            "0:Std log",
+            "1:robot.distance",
+            "2:robot.angle",
+            "3:robot.right_arm.z_axis",
+            "4:robot.right_arm.shoulder",
+            "5:robot.right_arm.elbow",
+            "6:robot.left_arm.z_axis",
+            "7:robot.left_arm.shoulder",
+            "8:robot.left_arm.elbow",
+            "9:Silence"});
+					this.cmbAskLog2.Location = new System.Drawing.Point(11, 86);
+					this.cmbAskLog2.Name = "cmbAskLog2";
+					this.cmbAskLog2.Size = new System.Drawing.Size(215, 21);
+					this.cmbAskLog2.TabIndex = 46;
+					this.cmbAskLog2.SelectedIndexChanged += new System.EventHandler(this.cmbAskLog2_SelectedIndexChanged);
+					// 
+					// label12
+					// 
+					this.label12.AutoSize = true;
+					this.label12.Location = new System.Drawing.Point(8, 10);
+					this.label12.Name = "label12";
+					this.label12.Size = new System.Drawing.Size(25, 13);
+					this.label12.TabIndex = 40;
+					this.label12.Text = "Dist";
+					// 
+					// label13
+					// 
+					this.label13.AutoSize = true;
+					this.label13.Location = new System.Drawing.Point(8, 36);
+					this.label13.Name = "label13";
+					this.label13.Size = new System.Drawing.Size(34, 13);
+					this.label13.TabIndex = 41;
+					this.label13.Text = "Angle";
+					// 
+					// numDistD
+					// 
+					this.numDistD.Location = new System.Drawing.Point(124, 8);
+					this.numDistD.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numDistD.Name = "numDistD";
+					this.numDistD.Size = new System.Drawing.Size(69, 20);
+					this.numDistD.TabIndex = 43;
+					this.numDistD.ValueChanged += new System.EventHandler(this.numDistD_ValueChanged);
+					// 
+					// numAngP
+					// 
+					this.numAngP.Location = new System.Drawing.Point(49, 34);
+					this.numAngP.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numAngP.Name = "numAngP";
+					this.numAngP.Size = new System.Drawing.Size(69, 20);
+					this.numAngP.TabIndex = 44;
+					this.numAngP.ValueChanged += new System.EventHandler(this.numAngP_ValueChanged);
+					// 
+					// numAngD
+					// 
+					this.numAngD.Location = new System.Drawing.Point(124, 34);
+					this.numAngD.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numAngD.Name = "numAngD";
+					this.numAngD.Size = new System.Drawing.Size(69, 20);
+					this.numAngD.TabIndex = 45;
+					this.numAngD.ValueChanged += new System.EventHandler(this.numAngD_ValueChanged);
+					// 
+					// tabPIDBras
+					// 
+					this.tabPIDBras.Controls.Add(this.numPS);
+					this.tabPIDBras.Controls.Add(this.cmbAskLog);
+					this.tabPIDBras.Controls.Add(this.label9);
+					this.tabPIDBras.Controls.Add(this.numDZ);
+					this.tabPIDBras.Controls.Add(this.label10);
+					this.tabPIDBras.Controls.Add(this.numPZ);
+					this.tabPIDBras.Controls.Add(this.numDS);
+					this.tabPIDBras.Controls.Add(this.label11);
+					this.tabPIDBras.Controls.Add(this.numPE);
+					this.tabPIDBras.Controls.Add(this.numDE);
+					this.tabPIDBras.Location = new System.Drawing.Point(4, 22);
+					this.tabPIDBras.Name = "tabPIDBras";
+					this.tabPIDBras.Padding = new System.Windows.Forms.Padding(3);
+					this.tabPIDBras.Size = new System.Drawing.Size(248, 125);
+					this.tabPIDBras.TabIndex = 0;
+					this.tabPIDBras.Text = "Reglage PID Bras";
+					this.tabPIDBras.UseVisualStyleBackColor = true;
+					// 
 					// frmMain
 					// 
 					this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 					this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-					this.ClientSize = new System.Drawing.Size(1264, 732);
+					this.ClientSize = new System.Drawing.Size(1263, 729);
 					this.Controls.Add(this.tabControl1);
 					this.Controls.Add(this.butSendGenFunc);
 					this.Controls.Add(this.numGenFunc);
@@ -1713,14 +1714,6 @@
 					((System.ComponentModel.ISupportInitialize)(this.numDZ)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numPZ)).EndInit();
 					this.tabControl1.ResumeLayout(false);
-					this.tabPIDBras.ResumeLayout(false);
-					this.tabPIDBras.PerformLayout();
-					this.tabPIDDep.ResumeLayout(false);
-					this.tabPIDDep.PerformLayout();
-					((System.ComponentModel.ISupportInitialize)(this.numDistP)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numDistD)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numAngP)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numAngD)).EndInit();
 					this.ArmBras.ResumeLayout(false);
 					this.ArmRobot.ResumeLayout(false);
 					((System.ComponentModel.ISupportInitialize)(this.num3X)).EndInit();
@@ -1736,6 +1729,14 @@
 					((System.ComponentModel.ISupportInitialize)(this.num4Y)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.num5Y)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.num4Z)).EndInit();
+					this.tabPIDDep.ResumeLayout(false);
+					this.tabPIDDep.PerformLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numDistP)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numDistD)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numAngP)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numAngD)).EndInit();
+					this.tabPIDBras.ResumeLayout(false);
+					this.tabPIDBras.PerformLayout();
 					this.ResumeLayout(false);
 					this.PerformLayout();
 

@@ -45,8 +45,8 @@ void cvra_adc_start_scan(cvra_adc_t *adc);
 
 #define ADC_DISTANCE_LEFT 0
 #define ADC_DISTANCE_RIGHT 1
-#define ADC_PUMP_CURRENT_RIGHT 2
-#define ADC_PUMP_CURRENT_LEFT 3
+#define ADC_PUMP_CURRENT_RIGHT 3
+#define ADC_PUMP_CURRENT_LEFT 2
 #define ADC_STARTER 4
 #define ADC_OBSTACLE_LEFT 5
 #define ADC_OBSTACLE_RIGHT 6

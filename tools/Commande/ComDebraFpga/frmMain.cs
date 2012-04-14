@@ -47,8 +47,6 @@ namespace ComDebraFpga
 
       m = new clMain(this);
 
-      cmbBrasDroit.SelectedIndex = 0;
-      cmbBrasGauche.SelectedIndex = 0;
     }
    
     private void butConnect_Click(object sender, EventArgs e)
