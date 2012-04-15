@@ -32,6 +32,7 @@ namespace ComDebraFpga
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "9=Arm rot rel", "9,90"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "10=Arm go down ventouse", "10,1"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "11=Arm wanted pos", "11"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "12=Arm go down vent CD", "12,1"));
 
 			// Demande variables
 			//      lstCmd.Add(new ComCmd(LstPos.ask_blocking, "Ask blocking", ""));

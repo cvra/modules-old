@@ -233,10 +233,10 @@
 					this.dataButs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colButton,
             this.colParam});
-					this.dataButs.Location = new System.Drawing.Point(983, 306);
+					this.dataButs.Location = new System.Drawing.Point(983, 335);
 					this.dataButs.Name = "dataButs";
 					this.dataButs.RowHeadersVisible = false;
-					this.dataButs.Size = new System.Drawing.Size(269, 414);
+					this.dataButs.Size = new System.Drawing.Size(269, 385);
 					this.dataButs.TabIndex = 0;
 					this.dataButs.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataButs_CellContentClick);
 					// 
@@ -652,7 +652,7 @@
 					this.propertyVar.HelpVisible = false;
 					this.propertyVar.Location = new System.Drawing.Point(983, 28);
 					this.propertyVar.Name = "propertyVar";
-					this.propertyVar.Size = new System.Drawing.Size(269, 272);
+					this.propertyVar.Size = new System.Drawing.Size(269, 301);
 					this.propertyVar.TabIndex = 11;
 					// 
 					// numArmGX
