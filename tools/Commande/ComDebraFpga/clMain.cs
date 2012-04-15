@@ -283,6 +283,22 @@ namespace ComDebraFpga
       return sendCmd(val.ToArray());
     }
 
+		public bool sendCmdInt32(LstPos cmd, int[] v)
+		{
+			List<byte> val = new List<byte>();
+			val.AddRange(new byte[] { 65, 66, 67, (byte)cmd });
+
+			for (int i = 0; i < v.Length; i++)
+			{
+				val.Add((byte)((v[i]) >> 24));
+				val.Add((byte)((v[i]) >> 16));
+				val.Add((byte)((v[i]) >> 8));
+				val.Add((byte)(v[i]));
+			}
+			val.Add(10);
+			return sendCmd(val.ToArray());
+		}
+
     public bool sendCmdByte(LstPos cmd, int[] v)
     {
       List<byte> val = new List<byte>();

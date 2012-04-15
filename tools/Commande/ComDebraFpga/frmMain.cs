@@ -19,23 +19,19 @@ namespace ComDebraFpga
 
 			txtPort.Text = Settings.Default.comPort;
 
-			// Mode bras
-			lstCmd.Add(new ComCmd(LstPos.arm_mode, "0=Arm Off", "0,0"));
-			lstCmd.Add(new ComCmd(LstPos.arm_mode, "1=Arm On", "1,1"));
-			lstCmd.Add(new ComCmd(LstPos.arm_mode, "2=Arm Pos init", "2,2"));
-
 			// Fonction génériques
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "0=Start strat", "0"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "1=sequence bras", "1"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "2=retour depart", "2"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "3=Arm slow", "3"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "4=Arm fast", "4"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "2=retour depart", "2"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "3=Arm slow", "3"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "4=Arm fast", "4"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "5=ask log", "5,0"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "6=Ranger bras", "6"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "6=Ranger bras", "6"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "7=Test func", "7"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "8=Init bras", "8"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "8=Init bras", "8"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "9=Arm rot rel", "9,90"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "10=Arm go down ventouse", "10,1"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "11=Arm wanted pos", "11"));
 
 			// Demande variables
 			//      lstCmd.Add(new ComCmd(LstPos.ask_blocking, "Ask blocking", ""));
@@ -397,27 +393,62 @@ namespace ComDebraFpga
 
 		private void numBdAngle_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.set_blocking, new int[] { 0, (int)numBdAngle.Value });
+			m.sendCmdInt32(LstPos.set_blocking, new int[] { 0, (int)numBdAngle.Value });
 		}
 
 		private void numBdDist_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.set_blocking, new int[] { 1, (int)numBdDist.Value });
+			m.sendCmdInt32(LstPos.set_blocking, new int[] { 1, (int)numBdDist.Value });
 		}
 
 		private void numArmZBd_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.set_blocking, new int[] { 2, (int)numArmZBd.Value });
+			m.sendCmdInt32(LstPos.set_blocking, new int[] { 2, (int)numArmZBd.Value });
 		}
 
 		private void numArmBdSh_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.set_blocking, new int[] { 3, (int)numArmBdSh.Value });
+			m.sendCmdInt32(LstPos.set_blocking, new int[] { 3, (int)numArmBdSh.Value });
 		}
 
 		private void numArmBdElb_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.set_blocking, new int[] { 4, (int)numArmBdElb.Value });
+			m.sendCmdInt32(LstPos.set_blocking, new int[] { 4, (int)numArmBdElb.Value });
+		}
+
+		private void butArmOn_Click(object sender, EventArgs e)
+		{
+			m.sendCmdByte(LstPos.arm_mode, new int[] { 1, 1 });
+		}
+
+		private void butArmOff_Click(object sender, EventArgs e)
+		{
+			m.sendCmdByte(LstPos.arm_mode, new int[] { 0, 0 });
+		}
+
+		private void butArmGoInit_Click(object sender, EventArgs e)
+		{
+			m.sendCmdByte(LstPos.arm_mode, new int[] { 2, 2 });
+		}
+
+		private void butArmSlow_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 3});
+		}
+
+		private void butArmFast_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 4 });
+		}
+
+		private void numArmAnglL_Click(object sender, EventArgs e)
+		{
+			sendArmLeft(3, (int)numArmAnglLa.Value, (int)numArmAnglLb.Value, (int)numArmAnglLz.Value);
+		}
+
+		private void numArmAnglR_Click(object sender, EventArgs e)
+		{
+			sendArmRight(3, (int)numArmAnglRa.Value, (int)numArmAnglRb.Value, (int)numArmAnglRz.Value);
 		}
 
 	}
