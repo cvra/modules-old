@@ -30,9 +30,11 @@ namespace ComDebraFpga
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "7=Test func", "7"));
 			//lstCmd.Add(new ComCmd(LstPos.gen_func, "8=Init bras", "8"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "9=Arm rot rel", "9,90"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "10=Arm go down ventouse", "10,1"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "10=Arm go down ventouse", "10,2"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "11=Arm wanted pos", "11"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "12=Arm go down vent CD", "12,1"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "12=Arm go down vent CD", "12,2"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "13=Arm sortir lingot", "13,2"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "14=Arm sortir CD", "13,2"));
 
 			// Demande variables
 			//      lstCmd.Add(new ComCmd(LstPos.ask_blocking, "Ask blocking", ""));
