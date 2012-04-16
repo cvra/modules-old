@@ -65,6 +65,11 @@ void quadramp_set_1st_order_vars(struct quadramp_filter *q,
 }
 
 
+void quadramp_set_position(struct quadramp_filter *q, int32_t pos) {
+	q->previous_out = pos;
+	q->previous_var = 0;
+}
+
 uint8_t quadramp_is_finished(struct quadramp_filter *q)
 {
 	return ((int32_t)q->previous_out == q->previous_in &&

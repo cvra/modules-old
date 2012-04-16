@@ -57,6 +57,10 @@ void quadramp_set_1st_order_vars(struct quadramp_filter *q,
 				 double var_1st_ord_pos,
 				 double var_1st_ord_neg);
 
+/** Set position (bypass filter) */
+void quadramp_set_position(struct quadramp_filter *q, int32_t pos);
+
+
 /**
  * Return 1 when (filter_input == filter_output && 1st_ord variation
  * is 0 --speed is 0-- ).
