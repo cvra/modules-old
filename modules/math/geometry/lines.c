@@ -46,8 +46,7 @@
  *  p argument is the crossing point coordinates (dummy for 0 or 2
  *  result)
  */
-uint8_t
-intersect_line(const line_t *l1, const line_t *l2, point_t *p)
+uint8_t intersect_line(const line_t *l1, const line_t *l2, point_t *p)
 {
 	double tmp1, tmp2;
 
