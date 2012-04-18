@@ -130,6 +130,15 @@
 					this.label14 = new System.Windows.Forms.Label();
 					this.label8 = new System.Windows.Forms.Label();
 					this.label7 = new System.Windows.Forms.Label();
+					this.tabPage2 = new System.Windows.Forms.TabPage();
+					this.numArmAnglR = new System.Windows.Forms.Button();
+					this.numArmAnglL = new System.Windows.Forms.Button();
+					this.numArmAnglRa = new System.Windows.Forms.NumericUpDown();
+					this.numArmAnglLa = new System.Windows.Forms.NumericUpDown();
+					this.numArmAnglRz = new System.Windows.Forms.NumericUpDown();
+					this.numArmAnglLb = new System.Windows.Forms.NumericUpDown();
+					this.numArmAnglRb = new System.Windows.Forms.NumericUpDown();
+					this.numArmAnglLz = new System.Windows.Forms.NumericUpDown();
 					this.picArmRZ = new System.Windows.Forms.PictureBox();
 					this.picArmRSh = new System.Windows.Forms.PictureBox();
 					this.picArmREl = new System.Windows.Forms.PictureBox();
@@ -142,20 +151,11 @@
 					this.picMoving = new System.Windows.Forms.PictureBox();
 					this.groupBox4 = new System.Windows.Forms.GroupBox();
 					this.groupBox2 = new System.Windows.Forms.GroupBox();
-					this.butArmOn = new System.Windows.Forms.Button();
-					this.butArmOff = new System.Windows.Forms.Button();
-					this.butArmGoInit = new System.Windows.Forms.Button();
-					this.butArmSlow = new System.Windows.Forms.Button();
 					this.butArmFast = new System.Windows.Forms.Button();
-					this.tabPage2 = new System.Windows.Forms.TabPage();
-					this.numArmAnglR = new System.Windows.Forms.Button();
-					this.numArmAnglL = new System.Windows.Forms.Button();
-					this.numArmAnglRa = new System.Windows.Forms.NumericUpDown();
-					this.numArmAnglLa = new System.Windows.Forms.NumericUpDown();
-					this.numArmAnglRz = new System.Windows.Forms.NumericUpDown();
-					this.numArmAnglLb = new System.Windows.Forms.NumericUpDown();
-					this.numArmAnglRb = new System.Windows.Forms.NumericUpDown();
-					this.numArmAnglLz = new System.Windows.Forms.NumericUpDown();
+					this.butArmSlow = new System.Windows.Forms.Button();
+					this.butArmGoInit = new System.Windows.Forms.Button();
+					this.butArmOff = new System.Windows.Forms.Button();
+					this.butArmOn = new System.Windows.Forms.Button();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -203,6 +203,13 @@
 					((System.ComponentModel.ISupportInitialize)(this.numBdDist)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmZBd)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmBdElb)).BeginInit();
+					this.tabPage2.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRa)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLa)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRz)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLb)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRb)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLz)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.picArmRZ)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.picArmRSh)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.picArmREl)).BeginInit();
@@ -215,13 +222,6 @@
 					((System.ComponentModel.ISupportInitialize)(this.picMoving)).BeginInit();
 					this.groupBox4.SuspendLayout();
 					this.groupBox2.SuspendLayout();
-					this.tabPage2.SuspendLayout();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRa)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLa)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRz)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLb)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRb)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLz)).BeginInit();
 					this.SuspendLayout();
 					// 
 					// dataButs
@@ -285,7 +285,7 @@
 					// txtPort
 					// 
 					this.txtPort.Name = "txtPort";
-					this.txtPort.Size = new System.Drawing.Size(50, 25);
+					this.txtPort.Size = new System.Drawing.Size(100, 25);
 					// 
 					// butConnect
 					// 
@@ -979,7 +979,7 @@
 					this.ArmBras.Location = new System.Drawing.Point(4, 22);
 					this.ArmBras.Name = "ArmBras";
 					this.ArmBras.Padding = new System.Windows.Forms.Padding(3);
-					this.ArmBras.Size = new System.Drawing.Size(269, 170);
+					this.ArmBras.Size = new System.Drawing.Size(346, 170);
 					this.ArmBras.TabIndex = 2;
 					this.ArmBras.Text = "Arm Bras";
 					this.ArmBras.UseVisualStyleBackColor = true;
@@ -1017,7 +1017,7 @@
 					this.ArmRobot.Location = new System.Drawing.Point(4, 22);
 					this.ArmRobot.Name = "ArmRobot";
 					this.ArmRobot.Padding = new System.Windows.Forms.Padding(3);
-					this.ArmRobot.Size = new System.Drawing.Size(293, 170);
+					this.ArmRobot.Size = new System.Drawing.Size(346, 170);
 					this.ArmRobot.TabIndex = 3;
 					this.ArmRobot.Text = "A robot";
 					this.ArmRobot.UseVisualStyleBackColor = true;
@@ -1197,7 +1197,7 @@
 					this.tabArmTable.Location = new System.Drawing.Point(4, 22);
 					this.tabArmTable.Name = "tabArmTable";
 					this.tabArmTable.Padding = new System.Windows.Forms.Padding(3);
-					this.tabArmTable.Size = new System.Drawing.Size(293, 170);
+					this.tabArmTable.Size = new System.Drawing.Size(346, 170);
 					this.tabArmTable.TabIndex = 4;
 					this.tabArmTable.Text = "A Tbl";
 					this.tabArmTable.UseVisualStyleBackColor = true;
@@ -1376,7 +1376,7 @@
 					this.tabPIDDep.Location = new System.Drawing.Point(4, 22);
 					this.tabPIDDep.Name = "tabPIDDep";
 					this.tabPIDDep.Padding = new System.Windows.Forms.Padding(3);
-					this.tabPIDDep.Size = new System.Drawing.Size(269, 170);
+					this.tabPIDDep.Size = new System.Drawing.Size(346, 170);
 					this.tabPIDDep.TabIndex = 1;
 					this.tabPIDDep.Text = "PID Dep";
 					this.tabPIDDep.UseVisualStyleBackColor = true;
@@ -1488,7 +1488,7 @@
 					this.tabPIDBras.Location = new System.Drawing.Point(4, 22);
 					this.tabPIDBras.Name = "tabPIDBras";
 					this.tabPIDBras.Padding = new System.Windows.Forms.Padding(3);
-					this.tabPIDBras.Size = new System.Drawing.Size(293, 170);
+					this.tabPIDBras.Size = new System.Drawing.Size(346, 170);
 					this.tabPIDBras.TabIndex = 0;
 					this.tabPIDBras.Text = "PID Arm";
 					this.tabPIDBras.UseVisualStyleBackColor = true;
@@ -1647,186 +1647,6 @@
 					this.label7.Size = new System.Drawing.Size(25, 13);
 					this.label7.TabIndex = 0;
 					this.label7.Text = "Dist";
-					// 
-					// picArmRZ
-					// 
-					this.picArmRZ.BackColor = System.Drawing.Color.Red;
-					this.picArmRZ.Location = new System.Drawing.Point(75, 15);
-					this.picArmRZ.Name = "picArmRZ";
-					this.picArmRZ.Size = new System.Drawing.Size(10, 10);
-					this.picArmRZ.TabIndex = 41;
-					this.picArmRZ.TabStop = false;
-					// 
-					// picArmRSh
-					// 
-					this.picArmRSh.BackColor = System.Drawing.Color.Red;
-					this.picArmRSh.Location = new System.Drawing.Point(91, 15);
-					this.picArmRSh.Name = "picArmRSh";
-					this.picArmRSh.Size = new System.Drawing.Size(10, 10);
-					this.picArmRSh.TabIndex = 42;
-					this.picArmRSh.TabStop = false;
-					// 
-					// picArmREl
-					// 
-					this.picArmREl.BackColor = System.Drawing.Color.Red;
-					this.picArmREl.Location = new System.Drawing.Point(107, 15);
-					this.picArmREl.Name = "picArmREl";
-					this.picArmREl.Size = new System.Drawing.Size(10, 10);
-					this.picArmREl.TabIndex = 43;
-					this.picArmREl.TabStop = false;
-					// 
-					// picArmLZ
-					// 
-					this.picArmLZ.BackColor = System.Drawing.Color.Red;
-					this.picArmLZ.Location = new System.Drawing.Point(40, 15);
-					this.picArmLZ.Name = "picArmLZ";
-					this.picArmLZ.Size = new System.Drawing.Size(10, 10);
-					this.picArmLZ.TabIndex = 46;
-					this.picArmLZ.TabStop = false;
-					// 
-					// picArmLSh
-					// 
-					this.picArmLSh.BackColor = System.Drawing.Color.Red;
-					this.picArmLSh.Location = new System.Drawing.Point(24, 15);
-					this.picArmLSh.Name = "picArmLSh";
-					this.picArmLSh.Size = new System.Drawing.Size(10, 10);
-					this.picArmLSh.TabIndex = 45;
-					this.picArmLSh.TabStop = false;
-					// 
-					// picArmLEl
-					// 
-					this.picArmLEl.BackColor = System.Drawing.Color.Red;
-					this.picArmLEl.Location = new System.Drawing.Point(8, 15);
-					this.picArmLEl.Name = "picArmLEl";
-					this.picArmLEl.Size = new System.Drawing.Size(10, 10);
-					this.picArmLEl.TabIndex = 44;
-					this.picArmLEl.TabStop = false;
-					// 
-					// picRot
-					// 
-					this.picRot.BackColor = System.Drawing.Color.Red;
-					this.picRot.Location = new System.Drawing.Point(67, 28);
-					this.picRot.Name = "picRot";
-					this.picRot.Size = new System.Drawing.Size(10, 10);
-					this.picRot.TabIndex = 48;
-					this.picRot.TabStop = false;
-					// 
-					// picDist
-					// 
-					this.picDist.BackColor = System.Drawing.Color.Red;
-					this.picDist.Location = new System.Drawing.Point(51, 28);
-					this.picDist.Name = "picDist";
-					this.picDist.Size = new System.Drawing.Size(10, 10);
-					this.picDist.TabIndex = 47;
-					this.picDist.TabStop = false;
-					// 
-					// groupBox1
-					// 
-					this.groupBox1.Controls.Add(this.picMoving);
-					this.groupBox1.Controls.Add(this.picRot);
-					this.groupBox1.Controls.Add(this.picDist);
-					this.groupBox1.Controls.Add(this.picArmLZ);
-					this.groupBox1.Controls.Add(this.picArmLSh);
-					this.groupBox1.Controls.Add(this.picArmLEl);
-					this.groupBox1.Controls.Add(this.picArmREl);
-					this.groupBox1.Controls.Add(this.picArmRSh);
-					this.groupBox1.Controls.Add(this.picArmRZ);
-					this.groupBox1.Location = new System.Drawing.Point(6, 615);
-					this.groupBox1.Name = "groupBox1";
-					this.groupBox1.Size = new System.Drawing.Size(126, 53);
-					this.groupBox1.TabIndex = 49;
-					this.groupBox1.TabStop = false;
-					this.groupBox1.Text = "Blocage";
-					// 
-					// picMoving
-					// 
-					this.picMoving.BackColor = System.Drawing.Color.Red;
-					this.picMoving.Location = new System.Drawing.Point(59, 40);
-					this.picMoving.Name = "picMoving";
-					this.picMoving.Size = new System.Drawing.Size(10, 10);
-					this.picMoving.TabIndex = 49;
-					this.picMoving.TabStop = false;
-					// 
-					// groupBox4
-					// 
-					this.groupBox4.Controls.Add(this.butPG1);
-					this.groupBox4.Controls.Add(this.butPG2);
-					this.groupBox4.Controls.Add(this.butPG3);
-					this.groupBox4.Controls.Add(this.butPD3);
-					this.groupBox4.Controls.Add(this.butPD2);
-					this.groupBox4.Controls.Add(this.butPD1);
-					this.groupBox4.Location = new System.Drawing.Point(187, 488);
-					this.groupBox4.Name = "groupBox4";
-					this.groupBox4.Size = new System.Drawing.Size(60, 90);
-					this.groupBox4.TabIndex = 35;
-					this.groupBox4.TabStop = false;
-					this.groupBox4.Text = "Pompes";
-					// 
-					// groupBox2
-					// 
-					this.groupBox2.Controls.Add(this.butArmFast);
-					this.groupBox2.Controls.Add(this.butArmSlow);
-					this.groupBox2.Controls.Add(this.butArmGoInit);
-					this.groupBox2.Controls.Add(this.butArmOff);
-					this.groupBox2.Controls.Add(this.butArmOn);
-					this.groupBox2.Controls.Add(this.butInitBras);
-					this.groupBox2.Controls.Add(this.butRangerBras);
-					this.groupBox2.Location = new System.Drawing.Point(194, 580);
-					this.groupBox2.Name = "groupBox2";
-					this.groupBox2.Size = new System.Drawing.Size(106, 137);
-					this.groupBox2.TabIndex = 50;
-					this.groupBox2.TabStop = false;
-					this.groupBox2.Text = "Bras";
-					// 
-					// butArmOn
-					// 
-					this.butArmOn.Location = new System.Drawing.Point(6, 19);
-					this.butArmOn.Name = "butArmOn";
-					this.butArmOn.Size = new System.Drawing.Size(30, 21);
-					this.butArmOn.TabIndex = 35;
-					this.butArmOn.Text = "On";
-					this.butArmOn.UseVisualStyleBackColor = true;
-					this.butArmOn.Click += new System.EventHandler(this.butArmOn_Click);
-					// 
-					// butArmOff
-					// 
-					this.butArmOff.Location = new System.Drawing.Point(36, 19);
-					this.butArmOff.Name = "butArmOff";
-					this.butArmOff.Size = new System.Drawing.Size(30, 21);
-					this.butArmOff.TabIndex = 36;
-					this.butArmOff.Text = "Off";
-					this.butArmOff.UseVisualStyleBackColor = true;
-					this.butArmOff.Click += new System.EventHandler(this.butArmOff_Click);
-					// 
-					// butArmGoInit
-					// 
-					this.butArmGoInit.Location = new System.Drawing.Point(6, 43);
-					this.butArmGoInit.Name = "butArmGoInit";
-					this.butArmGoInit.Size = new System.Drawing.Size(45, 21);
-					this.butArmGoInit.TabIndex = 37;
-					this.butArmGoInit.Text = "Go init";
-					this.butArmGoInit.UseVisualStyleBackColor = true;
-					this.butArmGoInit.Click += new System.EventHandler(this.butArmGoInit_Click);
-					// 
-					// butArmSlow
-					// 
-					this.butArmSlow.Location = new System.Drawing.Point(68, 19);
-					this.butArmSlow.Name = "butArmSlow";
-					this.butArmSlow.Size = new System.Drawing.Size(38, 21);
-					this.butArmSlow.TabIndex = 38;
-					this.butArmSlow.Text = "Slow";
-					this.butArmSlow.UseVisualStyleBackColor = true;
-					this.butArmSlow.Click += new System.EventHandler(this.butArmSlow_Click);
-					// 
-					// butArmFast
-					// 
-					this.butArmFast.Location = new System.Drawing.Point(68, 41);
-					this.butArmFast.Name = "butArmFast";
-					this.butArmFast.Size = new System.Drawing.Size(38, 21);
-					this.butArmFast.TabIndex = 39;
-					this.butArmFast.Text = "Fast";
-					this.butArmFast.UseVisualStyleBackColor = true;
-					this.butArmFast.Click += new System.EventHandler(this.butArmFast_Click);
 					// 
 					// tabPage2
 					// 
@@ -1998,6 +1818,186 @@
             0,
             0});
 					// 
+					// picArmRZ
+					// 
+					this.picArmRZ.BackColor = System.Drawing.Color.Red;
+					this.picArmRZ.Location = new System.Drawing.Point(75, 15);
+					this.picArmRZ.Name = "picArmRZ";
+					this.picArmRZ.Size = new System.Drawing.Size(10, 10);
+					this.picArmRZ.TabIndex = 41;
+					this.picArmRZ.TabStop = false;
+					// 
+					// picArmRSh
+					// 
+					this.picArmRSh.BackColor = System.Drawing.Color.Red;
+					this.picArmRSh.Location = new System.Drawing.Point(91, 15);
+					this.picArmRSh.Name = "picArmRSh";
+					this.picArmRSh.Size = new System.Drawing.Size(10, 10);
+					this.picArmRSh.TabIndex = 42;
+					this.picArmRSh.TabStop = false;
+					// 
+					// picArmREl
+					// 
+					this.picArmREl.BackColor = System.Drawing.Color.Red;
+					this.picArmREl.Location = new System.Drawing.Point(107, 15);
+					this.picArmREl.Name = "picArmREl";
+					this.picArmREl.Size = new System.Drawing.Size(10, 10);
+					this.picArmREl.TabIndex = 43;
+					this.picArmREl.TabStop = false;
+					// 
+					// picArmLZ
+					// 
+					this.picArmLZ.BackColor = System.Drawing.Color.Red;
+					this.picArmLZ.Location = new System.Drawing.Point(40, 15);
+					this.picArmLZ.Name = "picArmLZ";
+					this.picArmLZ.Size = new System.Drawing.Size(10, 10);
+					this.picArmLZ.TabIndex = 46;
+					this.picArmLZ.TabStop = false;
+					// 
+					// picArmLSh
+					// 
+					this.picArmLSh.BackColor = System.Drawing.Color.Red;
+					this.picArmLSh.Location = new System.Drawing.Point(24, 15);
+					this.picArmLSh.Name = "picArmLSh";
+					this.picArmLSh.Size = new System.Drawing.Size(10, 10);
+					this.picArmLSh.TabIndex = 45;
+					this.picArmLSh.TabStop = false;
+					// 
+					// picArmLEl
+					// 
+					this.picArmLEl.BackColor = System.Drawing.Color.Red;
+					this.picArmLEl.Location = new System.Drawing.Point(8, 15);
+					this.picArmLEl.Name = "picArmLEl";
+					this.picArmLEl.Size = new System.Drawing.Size(10, 10);
+					this.picArmLEl.TabIndex = 44;
+					this.picArmLEl.TabStop = false;
+					// 
+					// picRot
+					// 
+					this.picRot.BackColor = System.Drawing.Color.Red;
+					this.picRot.Location = new System.Drawing.Point(67, 28);
+					this.picRot.Name = "picRot";
+					this.picRot.Size = new System.Drawing.Size(10, 10);
+					this.picRot.TabIndex = 48;
+					this.picRot.TabStop = false;
+					// 
+					// picDist
+					// 
+					this.picDist.BackColor = System.Drawing.Color.Red;
+					this.picDist.Location = new System.Drawing.Point(51, 28);
+					this.picDist.Name = "picDist";
+					this.picDist.Size = new System.Drawing.Size(10, 10);
+					this.picDist.TabIndex = 47;
+					this.picDist.TabStop = false;
+					// 
+					// groupBox1
+					// 
+					this.groupBox1.Controls.Add(this.picMoving);
+					this.groupBox1.Controls.Add(this.picRot);
+					this.groupBox1.Controls.Add(this.picDist);
+					this.groupBox1.Controls.Add(this.picArmLZ);
+					this.groupBox1.Controls.Add(this.picArmLSh);
+					this.groupBox1.Controls.Add(this.picArmLEl);
+					this.groupBox1.Controls.Add(this.picArmREl);
+					this.groupBox1.Controls.Add(this.picArmRSh);
+					this.groupBox1.Controls.Add(this.picArmRZ);
+					this.groupBox1.Location = new System.Drawing.Point(6, 615);
+					this.groupBox1.Name = "groupBox1";
+					this.groupBox1.Size = new System.Drawing.Size(126, 53);
+					this.groupBox1.TabIndex = 49;
+					this.groupBox1.TabStop = false;
+					this.groupBox1.Text = "Blocage";
+					// 
+					// picMoving
+					// 
+					this.picMoving.BackColor = System.Drawing.Color.Red;
+					this.picMoving.Location = new System.Drawing.Point(59, 40);
+					this.picMoving.Name = "picMoving";
+					this.picMoving.Size = new System.Drawing.Size(10, 10);
+					this.picMoving.TabIndex = 49;
+					this.picMoving.TabStop = false;
+					// 
+					// groupBox4
+					// 
+					this.groupBox4.Controls.Add(this.butPG1);
+					this.groupBox4.Controls.Add(this.butPG2);
+					this.groupBox4.Controls.Add(this.butPG3);
+					this.groupBox4.Controls.Add(this.butPD3);
+					this.groupBox4.Controls.Add(this.butPD2);
+					this.groupBox4.Controls.Add(this.butPD1);
+					this.groupBox4.Location = new System.Drawing.Point(187, 488);
+					this.groupBox4.Name = "groupBox4";
+					this.groupBox4.Size = new System.Drawing.Size(60, 90);
+					this.groupBox4.TabIndex = 35;
+					this.groupBox4.TabStop = false;
+					this.groupBox4.Text = "Pompes";
+					// 
+					// groupBox2
+					// 
+					this.groupBox2.Controls.Add(this.butArmFast);
+					this.groupBox2.Controls.Add(this.butArmSlow);
+					this.groupBox2.Controls.Add(this.butArmGoInit);
+					this.groupBox2.Controls.Add(this.butArmOff);
+					this.groupBox2.Controls.Add(this.butArmOn);
+					this.groupBox2.Controls.Add(this.butInitBras);
+					this.groupBox2.Controls.Add(this.butRangerBras);
+					this.groupBox2.Location = new System.Drawing.Point(194, 580);
+					this.groupBox2.Name = "groupBox2";
+					this.groupBox2.Size = new System.Drawing.Size(106, 137);
+					this.groupBox2.TabIndex = 50;
+					this.groupBox2.TabStop = false;
+					this.groupBox2.Text = "Bras";
+					// 
+					// butArmFast
+					// 
+					this.butArmFast.Location = new System.Drawing.Point(68, 41);
+					this.butArmFast.Name = "butArmFast";
+					this.butArmFast.Size = new System.Drawing.Size(38, 21);
+					this.butArmFast.TabIndex = 39;
+					this.butArmFast.Text = "Fast";
+					this.butArmFast.UseVisualStyleBackColor = true;
+					this.butArmFast.Click += new System.EventHandler(this.butArmFast_Click);
+					// 
+					// butArmSlow
+					// 
+					this.butArmSlow.Location = new System.Drawing.Point(68, 19);
+					this.butArmSlow.Name = "butArmSlow";
+					this.butArmSlow.Size = new System.Drawing.Size(38, 21);
+					this.butArmSlow.TabIndex = 38;
+					this.butArmSlow.Text = "Slow";
+					this.butArmSlow.UseVisualStyleBackColor = true;
+					this.butArmSlow.Click += new System.EventHandler(this.butArmSlow_Click);
+					// 
+					// butArmGoInit
+					// 
+					this.butArmGoInit.Location = new System.Drawing.Point(6, 43);
+					this.butArmGoInit.Name = "butArmGoInit";
+					this.butArmGoInit.Size = new System.Drawing.Size(45, 21);
+					this.butArmGoInit.TabIndex = 37;
+					this.butArmGoInit.Text = "Go init";
+					this.butArmGoInit.UseVisualStyleBackColor = true;
+					this.butArmGoInit.Click += new System.EventHandler(this.butArmGoInit_Click);
+					// 
+					// butArmOff
+					// 
+					this.butArmOff.Location = new System.Drawing.Point(36, 19);
+					this.butArmOff.Name = "butArmOff";
+					this.butArmOff.Size = new System.Drawing.Size(30, 21);
+					this.butArmOff.TabIndex = 36;
+					this.butArmOff.Text = "Off";
+					this.butArmOff.UseVisualStyleBackColor = true;
+					this.butArmOff.Click += new System.EventHandler(this.butArmOff_Click);
+					// 
+					// butArmOn
+					// 
+					this.butArmOn.Location = new System.Drawing.Point(6, 19);
+					this.butArmOn.Name = "butArmOn";
+					this.butArmOn.Size = new System.Drawing.Size(30, 21);
+					this.butArmOn.TabIndex = 35;
+					this.butArmOn.Text = "On";
+					this.butArmOn.UseVisualStyleBackColor = true;
+					this.butArmOn.Click += new System.EventHandler(this.butArmOn_Click);
+					// 
 					// frmMain
 					// 
 					this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2070,6 +2070,13 @@
 					((System.ComponentModel.ISupportInitialize)(this.numBdDist)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmZBd)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmBdElb)).EndInit();
+					this.tabPage2.ResumeLayout(false);
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRa)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLa)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRz)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLb)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRb)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLz)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.picArmRZ)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.picArmRSh)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.picArmREl)).EndInit();
@@ -2082,13 +2089,6 @@
 					((System.ComponentModel.ISupportInitialize)(this.picMoving)).EndInit();
 					this.groupBox4.ResumeLayout(false);
 					this.groupBox2.ResumeLayout(false);
-					this.tabPage2.ResumeLayout(false);
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRa)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLa)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRz)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLb)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRb)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLz)).EndInit();
 					this.ResumeLayout(false);
 					this.PerformLayout();
 

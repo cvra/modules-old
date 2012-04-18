@@ -135,6 +135,10 @@
       <Project>{950A6401-D8C8-48A9-B384-40C3C8140476}</Project>
       <Name>grinlib.clPortCom</Name>
     </ProjectReference>
+    <ProjectReference Include="..\lib.clTCPClient\lib.clTCPClient.csproj">
+      <Project>{605272F3-DFBB-4970-AE7B-3983A558F9AD}</Project>
+      <Name>lib.clTCPClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

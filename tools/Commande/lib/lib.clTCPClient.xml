@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>lib.clTCPClient</name>
+    </assembly>
+    <members>
+        <member name="T:lib.TCPClient.clTCPClient">
+            <summary>
+            Use TCP as client
+            </summary>
+        </member>
+        <member name="M:lib.TCPClient.clTCPClient.OnEventOccure(lib.TCPClient.clTCPClient.EtatConn,System.String,System.Byte[])">
+            <summary>
+            Event
+            </summary>
+            <param name="TypeEvent"></param>
+            <param name="Data"></param>
+            <param name="DataByte"></param>
+        </member>
+        <member name="M:lib.TCPClient.clTCPClient.Connect(System.String,System.Int32)">
+            <summary>
+            Connect to a server
+            </summary>
+            <param name="IPserver"></param>
+            <param name="inPort"></param>
+        </member>
+        <member name="M:lib.TCPClient.clTCPClient.Disconnect">
+            <summary>
+            Disconnect to the server
+            </summary>
+        </member>
+        <member name="M:lib.TCPClient.clTCPClient.Finalize">
+            <summary>
+            Close
+            </summary>
+        </member>
+        <member name="M:lib.TCPClient.clTCPClient.Send(System.String)">
+            <summary>
+            Send data to the server
+            </summary>
+            <param name="Data"></param>
+            <returns></returns>
+        </member>
+        <member name="P:lib.TCPClient.clTCPClient.Connected">
+            <summary>
+            State of connexion
+            </summary>
+        </member>
+        <member name="P:lib.TCPClient.clTCPClient.TimeoutRead">
+            <summary>
+            Timout avant arret de la connection si rien n'est transféré
+            </summary>
+        </member>
+        <member name="P:lib.TCPClient.clTCPClient.TimeoutWrite">
+            <summary>
+            Timout à l'écriture
+            </summary>
+        </member>
+        <member name="E:lib.TCPClient.clTCPClient.OnEvent">
+            <summary>
+            Event
+            </summary>
+        </member>
+        <member name="T:lib.TCPClient.clTCPClient.EtatConn">
+            <summary>
+            Events type
+            </summary>
+        </member>
+        <member name="F:lib.TCPClient.clTCPClient.EtatConn.CLIENT_CONNECTED">
+            <summary>
+            The client is connected
+            </summary>
+        </member>
+        <member name="F:lib.TCPClient.clTCPClient.EtatConn.CLIENT_DISCONNECTED">
+            <summary>
+            The client is disconnected
+            </summary>
+        </member>
+        <member name="F:lib.TCPClient.clTCPClient.EtatConn.DATA_RECEIVED">
+            <summary>
+            Data is received
+            </summary>
+        </member>
+        <member name="F:lib.TCPClient.clTCPClient.EtatConn.DATA_SENT">
+            <summary>
+            Data is sent
+            </summary>
+        </member>
+        <member name="F:lib.TCPClient.clTCPClient.EtatConn.TCP_ERROR">
+            <summary>
+            Error
+            </summary>
+        </member>
+        <member name="T:lib.TCPClient.clTCPClient.EventDelegate">
+            <summary>
+            Event of TCPClient
+            </summary>
+            <param name="sender">TCPClient who sent event</param>
+            <param name="e">Data of event</param>
+        </member>
+        <member name="T:lib.TCPClient.clTCPClient.EventEventArgs">
+            <summary>
+            Event class
+            </summary>
+        </member>
+        <member name="M:lib.TCPClient.clTCPClient.EventEventArgs.#ctor(lib.TCPClient.clTCPClient.EtatConn,System.String,System.Byte[])">
+            <summary>
+            Init event
+            </summary>
+            <param name="typeevent">Type of event</param>
+            <param name="data">Data of event</param>
+            <param name="dataByte">Data of event in byte</param>
+        </member>
+        <member name="M:lib.TCPClient.clTCPClient.EventEventArgs.#ctor">
+            <summary>
+            Initialisation
+            </summary>
+        </member>
+        <member name="F:lib.TCPClient.clTCPClient.EventEventArgs.Data">
+            <summary>
+            Data receivd or sent
+            </summary>
+        </member>
+        <member name="F:lib.TCPClient.clTCPClient.EventEventArgs.DataByte">
+            <summary>
+            Data in byte
+            </summary>
+        </member>
+        <member name="F:lib.TCPClient.clTCPClient.EventEventArgs.TypeEvent">
+            <summary>
+            Type of event
+            </summary>
+        </member>
+    </members>
+</doc>

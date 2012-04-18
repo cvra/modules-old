@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComDebraFpga", "ComDebraFpg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "grinlib.clPortCom", "..\grinlib.clPortCom\grinlib.clPortCom.csproj", "{950A6401-D8C8-48A9-B384-40C3C8140476}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib.clTCPClient", "..\lib.clTCPClient\lib.clTCPClient.csproj", "{605272F3-DFBB-4970-AE7B-3983A558F9AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,12 @@ Global
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release|Any CPU.Build.0 = Release|Any CPU
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release|x86.ActiveCfg = Release|x86
 		{950A6401-D8C8-48A9-B384-40C3C8140476}.Release|x86.Build.0 = Release|x86
+		{605272F3-DFBB-4970-AE7B-3983A558F9AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{605272F3-DFBB-4970-AE7B-3983A558F9AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{605272F3-DFBB-4970-AE7B-3983A558F9AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{605272F3-DFBB-4970-AE7B-3983A558F9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{605272F3-DFBB-4970-AE7B-3983A558F9AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{605272F3-DFBB-4970-AE7B-3983A558F9AD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

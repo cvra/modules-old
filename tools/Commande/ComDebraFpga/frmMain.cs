@@ -202,7 +202,7 @@ namespace ComDebraFpga
 
 		private void butCallageStart_Click(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.prepare_start, new int[] { 82, 250, 250, 45, 160 });
+			m.sendCmd(LstPos.prepare_start, new int[] { 82, 250, 250, 0, 160 });
 		}
 
 		private void butGoInit_Click(object sender, EventArgs e)
