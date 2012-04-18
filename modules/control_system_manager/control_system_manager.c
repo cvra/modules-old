@@ -307,6 +307,10 @@ int32_t cs_get_filtered_feedback(struct cs* cs)
     return tmp;
 }
 
+int32_t cs_get_feedback(struct cs* cs) {
+	return safe_getprocessout(cs->process_out, cs->process_out_params);
+}
+
 void cs_set_consign(struct cs* cs, int32_t v)
 {
     uint8_t flags;
