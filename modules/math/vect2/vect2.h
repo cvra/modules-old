@@ -43,6 +43,7 @@ typedef double Real;
 
 #define TO_RAD(x) (((double)x)*(M_PI/180.0))
 #define TO_DEG(x) (((double)x)*(180.0/M_PI))
+#define Dist2Vect(v1,v2) (sqrt((v1.x - v2.x)*(v1.x - v2.x)+(v1.y - v2.y)*(v1.y - v2.y)))
 
 /** \brief Cartesian vector structure
 **/
