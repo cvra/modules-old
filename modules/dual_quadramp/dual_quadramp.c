@@ -5,7 +5,7 @@
  *      Author: Antoine Albertelli (CVRA)
  */
 
-#include <dual_quadramp.h>
+#include "dual_quadramp.h"
 
 #define abs(x) ((x)<0 ? -(x) : (x))
 
