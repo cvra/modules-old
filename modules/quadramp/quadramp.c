@@ -28,7 +28,7 @@
 
 void quadramp_init(struct quadramp_filter *q)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	memset(q, 0, sizeof(*q));
 	IRQ_UNLOCK(flags);
@@ -46,7 +46,7 @@ void quadramp_set_2nd_order_vars(struct quadramp_filter *q,
 				 double var_2nd_ord_pos,
 				 double var_2nd_ord_neg)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	q->var_2nd_ord_pos = var_2nd_ord_pos;
 	q->var_2nd_ord_neg = var_2nd_ord_neg;
@@ -57,7 +57,7 @@ void quadramp_set_1st_order_vars(struct quadramp_filter *q,
 				 double var_1st_ord_pos,
 				 double var_1st_ord_neg)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	q->var_1st_ord_pos = var_1st_ord_pos;
 	q->var_1st_ord_neg = var_1st_ord_neg;

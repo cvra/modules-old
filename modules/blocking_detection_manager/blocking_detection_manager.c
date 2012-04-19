@@ -35,7 +35,7 @@
 /** init module, give the robot system to use as a parameter */
 void bd_init(struct blocking_detection * bd, struct cs *cs)
 {
-    uint8_t flags;
+    uint32_t flags;
     IRQ_LOCK(flags);
     memset(bd, 0, sizeof(*bd));
     bd->cs = cs;
@@ -47,7 +47,7 @@ void bd_init(struct blocking_detection * bd, struct cs *cs)
 /** reset current blocking */
 void bd_reset(struct blocking_detection * bd)
 {
-    uint8_t flags;
+    uint32_t flags;
     IRQ_LOCK(flags);
     bd->cpt = 0;
     IRQ_UNLOCK(flags);
@@ -57,7 +57,7 @@ void bd_reset(struct blocking_detection * bd)
  *
  */
 void bd_set_thresholds(struct blocking_detection *bd, uint32_t err_thres, uint16_t cpt_thres) {
-    uint8_t flags;
+    uint32_t flags;
     IRQ_LOCK(flags);
     bd->cpt_thres = cpt_thres;
     bd->err_thres = err_thres;

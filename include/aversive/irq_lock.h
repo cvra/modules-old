@@ -49,22 +49,10 @@
  * ensuite. */
 
 #if 0
-#define IRQ_LOCK(flags) do {	                                    \
-                            uint32_t t;                             \
-                            NIOS2_READ_STATUS(t);                   \
-                            flags = !!(t & NIOS2_STATUS_PIE_MSK);   \
-                            t = t & ~(NIOS2_STATUS_PIE_MSK);        \
-                            NIOS2_WRITE_STATUS(t);					\
-                        } while(0);									\
+#define IRQ_LOCK(flags) (flags) = alt_irq_disable_all()
                         
 
-#define IRQ_UNLOCK(flags) do {                                      \
-                            uint32_t t;                             \
-                            NIOS2_READ_STATUS(t);                   \
-                            t |= ((flags) << NIOS2_STATUS_PIE_OFST);  \
-                            NIOS2_WRITE_STATUS(t);                 \
-                        } while(0);									\
-
+#define IRQ_UNLOCK(flags)  alt_irq_enable_all((flags));
 
 #define cli() do { \
 	uint32_t t; \

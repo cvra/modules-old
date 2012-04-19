@@ -26,7 +26,7 @@
 /** this function will initialize all fieds of pid structure to 0 */
 void pid_init(struct pid_filter *p)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	memset(p, 0, sizeof(*p));
 	p->gain_P = 1 ;
@@ -38,7 +38,7 @@ void pid_init(struct pid_filter *p)
  *  except configuration */
 void pid_reset(struct pid_filter *p)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	memset(p->prev_samples, 0, sizeof(p->prev_samples));
 	p->integral = 0;
@@ -49,7 +49,7 @@ void pid_reset(struct pid_filter *p)
 
 void pid_set_gains(struct pid_filter *p, int16_t gp, int16_t gi, int16_t gd)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	p->gain_P  = gp;
 	p->gain_I  = gi;
@@ -59,7 +59,7 @@ void pid_set_gains(struct pid_filter *p, int16_t gp, int16_t gi, int16_t gd)
 
 void pid_set_maximums(struct pid_filter *p, int32_t max_in, int32_t max_I, int32_t max_out)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	p->max_in  = max_in;
 	p->max_I   = max_I;
@@ -69,7 +69,7 @@ void pid_set_maximums(struct pid_filter *p, int32_t max_in, int32_t max_I, int32
 
 void pid_set_out_shift(struct pid_filter *p, uint8_t out_shift)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	p->out_shift=out_shift;
 	IRQ_UNLOCK(flags);
@@ -77,7 +77,7 @@ void pid_set_out_shift(struct pid_filter *p, uint8_t out_shift)
 
 int8_t pid_set_derivate_filter(struct pid_filter *p, uint8_t nb_samples)
 {
-	uint8_t flags;
+	uint32_t flags;
 	int8_t ret;
 	IRQ_LOCK(flags);
 	if (nb_samples > PID_DERIVATE_FILTER_MAX_SIZE) {
@@ -135,7 +135,7 @@ uint8_t pid_get_derivate_filter(struct pid_filter *p)
 
 int32_t pid_get_value_I(struct pid_filter *p)
 {
-	uint8_t flags;
+	uint32_t flags;
 	int32_t ret;
 	IRQ_LOCK(flags);
 	ret = (p->integral);
@@ -145,7 +145,7 @@ int32_t pid_get_value_I(struct pid_filter *p)
 
 int32_t pid_get_value_in(struct pid_filter *p)
 {
-	uint8_t flags;
+	uint32_t flags;
 	int32_t ret;
 	IRQ_LOCK(flags);
 	ret = p->prev_samples[p->index];
@@ -155,7 +155,7 @@ int32_t pid_get_value_in(struct pid_filter *p)
 
 int32_t pid_get_value_D(struct pid_filter *p)
 {
-	uint8_t flags;
+	uint32_t flags;
 	int32_t ret;
 	IRQ_LOCK(flags);
 	ret = p->prev_D;
@@ -165,7 +165,7 @@ int32_t pid_get_value_D(struct pid_filter *p)
 
 int32_t pid_get_value_out(struct pid_filter *p)
 {
-	uint8_t flags;
+	uint32_t flags;
 	int32_t ret;
 	IRQ_LOCK(flags);
 	ret = (p->prev_out);

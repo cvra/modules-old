@@ -30,7 +30,7 @@ struct error_fct g_error_fct;
 /** All fcts pointers to NULL */
 void error_init(void)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	memset(&g_error_fct, 0, sizeof(g_error_fct));
 	IRQ_UNLOCK(flags);
@@ -62,7 +62,7 @@ struct error error_generate(uint8_t num, uint8_t severity, PGM_P t,
 /** Register log function for EMERG level */
 void error_register_emerg(void (*f)(struct error *, ...))
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	g_error_fct.emerg = f;
 	IRQ_UNLOCK(flags);
@@ -71,7 +71,7 @@ void error_register_emerg(void (*f)(struct error *, ...))
 /** Register log function for ERROR level */
 void error_register_error(void (*f)(struct error *, ...))
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	g_error_fct.error = f;
 	IRQ_UNLOCK(flags);
@@ -80,7 +80,7 @@ void error_register_error(void (*f)(struct error *, ...))
 /** Register log function for WARNING level */
 void error_register_warning(void (*f)(struct error *, ...))
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	g_error_fct.warning = f;
 	IRQ_UNLOCK(flags);
@@ -89,7 +89,7 @@ void error_register_warning(void (*f)(struct error *, ...))
 /** Register log function for NOTICE level */
 void error_register_notice(void (*f)(struct error *, ...))
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	g_error_fct.notice = f;
 	IRQ_UNLOCK(flags);
@@ -98,7 +98,7 @@ void error_register_notice(void (*f)(struct error *, ...))
 /** Register log function for DEBUG level */
 void error_register_debug(void (*f)(struct error *, ...))
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	g_error_fct.debug = f;
 	IRQ_UNLOCK(flags);

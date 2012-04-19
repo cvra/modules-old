@@ -52,7 +52,7 @@ safe_setpwm(void (*f)(void *, int32_t), void * param, int32_t value)
 {
 	void (*f_tmp)(void *, int32_t);
 	void * param_tmp;
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	f_tmp = f;
 	param_tmp = param;
@@ -74,7 +74,7 @@ safe_getencoder(int32_t (*f)(void *), void * param)
 {
 	int32_t (*f_tmp)(void *);
 	void * param_tmp;
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	f_tmp = f;
 	param_tmp = param;
@@ -88,7 +88,7 @@ safe_getencoder(int32_t (*f)(void *), void * param)
 /** Set the structure to 0 */
 void rs_init( struct robot_system * rs)
 {
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	memset(rs, 0, sizeof(struct robot_system));
@@ -102,7 +102,7 @@ void rs_init( struct robot_system * rs)
 /** define ratio between mot and ext track. (track_mot / track_ext) */
 void rs_set_ratio(struct robot_system * rs, double ratio)
 {
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	rs->ratio_mot_ext = f64_from_double(ratio);
@@ -113,7 +113,7 @@ void rs_set_ratio(struct robot_system * rs, double ratio)
 /** define left PWM function and param */
 void rs_set_left_pwm(struct robot_system * rs, void (*left_pwm)(void *, int32_t), void *left_pwm_param)
 {
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	rs->left_pwm = left_pwm;
@@ -124,7 +124,7 @@ void rs_set_left_pwm(struct robot_system * rs, void (*left_pwm)(void *, int32_t)
 /** define right PWM function and param */
 void rs_set_right_pwm(struct robot_system * rs, void (*right_pwm)(void *, int32_t), void *right_pwm_param)
 {
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	rs->right_pwm = right_pwm;
@@ -137,7 +137,7 @@ void rs_set_right_pwm(struct robot_system * rs, void (*right_pwm)(void *, int32_
 void rs_set_left_mot_encoder(struct robot_system * rs, int32_t (*left_mot_encoder)(void *),
 			     void *left_mot_encoder_param, double gain)
 {
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	rs->left_mot_encoder = left_mot_encoder;
@@ -150,7 +150,7 @@ void rs_set_left_mot_encoder(struct robot_system * rs, int32_t (*left_mot_encode
 void rs_set_right_mot_encoder(struct robot_system * rs, int32_t (*right_mot_encoder)(void *),
 			      void *right_mot_encoder_param, double gain)
 {
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	rs->right_mot_encoder = right_mot_encoder;
@@ -164,7 +164,7 @@ void rs_set_right_mot_encoder(struct robot_system * rs, int32_t (*right_mot_enco
 void rs_set_left_ext_encoder(struct robot_system * rs, int32_t (*left_ext_encoder)(void *),
 			     void *left_ext_encoder_param, double gain)
 {
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	rs->left_ext_encoder = left_ext_encoder;
@@ -181,7 +181,7 @@ void rs_set_left_ext_encoder(struct robot_system * rs, int32_t (*left_ext_encode
 void rs_set_right_ext_encoder(struct robot_system * rs, int32_t (*right_ext_encoder)(void *),
 			      void *right_ext_encoder_param, double gain)
 {
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	rs->right_ext_encoder = right_ext_encoder;
@@ -205,7 +205,7 @@ void rs_set_angle(void * data, int32_t angle)
 	struct rs_polar p;
 	struct rs_wheels w;
 	struct robot_system * rs = data;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	p.distance = rs->virtual_pwm.distance ;
@@ -228,7 +228,7 @@ void rs_set_distance(void * data, int32_t distance)
 	struct robot_system * rs = data;
 	struct rs_polar p;
 	struct rs_wheels w;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	p.angle = rs->virtual_pwm.angle ;
@@ -249,7 +249,7 @@ int32_t rs_get_angle(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t angle;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	angle = rs->virtual_encoders.angle ;
@@ -264,7 +264,7 @@ int32_t rs_get_distance(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t distance;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	distance = rs->virtual_encoders.distance ;
@@ -276,7 +276,7 @@ int32_t rs_get_ext_angle(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t angle;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	angle = rs->pext_prev.angle ;
@@ -288,7 +288,7 @@ int32_t rs_get_ext_distance(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t distance;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	distance = rs->pext_prev.distance ;
@@ -301,7 +301,7 @@ int32_t rs_get_mot_angle(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t angle;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	angle = rs->pmot_prev.angle ;
@@ -313,7 +313,7 @@ int32_t rs_get_mot_distance(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t distance;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	distance = rs->pmot_prev.distance ;
@@ -326,7 +326,7 @@ int32_t rs_get_ext_left(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t left;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	left = rs->wext_prev.left ;
@@ -338,7 +338,7 @@ int32_t rs_get_ext_right(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t right;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	right = rs->wext_prev.right ;
@@ -351,7 +351,7 @@ int32_t rs_get_mot_left(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t left;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	left = rs->wmot_prev.left ;
@@ -363,7 +363,7 @@ int32_t rs_get_mot_right(void * data)
 {
 	struct robot_system * rs = data;
 	int32_t right;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	right = rs->wmot_prev.right ;
@@ -397,7 +397,7 @@ void rs_update(void * data)
 	struct rs_polar pmot;
 #endif
 	int32_t delta_angle, delta_distance;
-	uint8_t flags;
+	uint32_t flags;
 
 	/* read encoders */
 	wext.left = safe_getencoder(rs->left_ext_encoder, rs->left_ext_encoder_param);

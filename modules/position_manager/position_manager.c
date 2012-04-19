@@ -28,7 +28,7 @@
 /** initialization of the robot_position pos, everthing is set to 0 */
 void position_init(struct robot_position *pos)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	memset(pos, 0, sizeof(struct robot_position));
 	IRQ_UNLOCK(flags);
@@ -37,7 +37,7 @@ void position_init(struct robot_position *pos)
 /** Set a new robot position */
 void position_set(struct robot_position *pos, int16_t x, int16_t y, double a_deg)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	pos->pos_d.a = (a_deg * M_PI)/ 180.0;
 	pos->pos_d.x = x;
@@ -62,7 +62,7 @@ void position_set_centrifugal_coef(struct robot_position *pos, double coef)
  */
 void position_set_related_robot_system(struct robot_position *pos, struct robot_system *rs)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	pos->rs = rs;
 	IRQ_UNLOCK(flags);
@@ -76,7 +76,7 @@ void position_set_related_robot_system(struct robot_position *pos, struct robot_
 void position_set_physical_params(struct robot_position *pos, double track_mm,
 				  double distance_imp_per_mm)
 {
-	uint8_t flags;
+	uint32_t flags;
 	IRQ_LOCK(flags);
 	pos->phys.track_mm = track_mm;
 	pos->phys.distance_imp_per_mm = distance_imp_per_mm;
@@ -86,7 +86,7 @@ void position_set_physical_params(struct robot_position *pos, double track_mm,
 void position_use_ext(struct robot_position *pos)
 {
 	struct rs_polar encoders;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	encoders.distance = rs_get_ext_distance(pos->rs);
@@ -100,7 +100,7 @@ void position_use_ext(struct robot_position *pos)
 void position_use_mot(struct robot_position *pos)
 {
 	struct rs_polar encoders;
-	uint8_t flags;
+	uint32_t flags;
 
 	IRQ_LOCK(flags);
 	encoders.distance = rs_get_mot_distance(pos->rs);
@@ -124,7 +124,7 @@ void position_manage(struct robot_position *pos)
 	struct rs_polar encoders;
 	struct rs_polar delta;
 	struct robot_system * rs;
-	uint8_t flags;
+	uint32_t flags;
  
 	IRQ_LOCK(flags);
 	rs = pos->rs;
