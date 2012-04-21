@@ -436,7 +436,7 @@ namespace ComDebraFpga
 					string tmpVal5 = "";
 					while (k < cmd.Length - 1)
 					{
-						tmpVal5 += getInt32(cmd[k++], cmd[k++], cmd[k++], cmd[k++]);
+						tmpVal5 += getInt32(cmd[k++], cmd[k++], cmd[k++], cmd[k++]).ToString("") + " ";
 					}
 					main.addLog(new ComElem(TypeVal.vals, tmpVal5));
 					break;

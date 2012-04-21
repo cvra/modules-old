@@ -34,6 +34,7 @@ namespace ComDebraFpga
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "13=Arm sortir lingot", "13,2"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "14=Arm sortir CD", "14,2"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "15=Arm prendre lingot lat", "15,2"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "16=Arm get angle init", "16,2"));
 
 			// Demande variables
 			//      lstCmd.Add(new ComCmd(LstPos.ask_blocking, "Ask blocking", ""));
@@ -451,6 +452,18 @@ namespace ComDebraFpga
 		private void numArmAnglR_Click(object sender, EventArgs e)
 		{
 			sendArmRight(3, (int)numArmAnglRa.Value, (int)numArmAnglRb.Value, (int)numArmAnglRz.Value);
+		}
+
+		private void butArmGoNearInit_Click(object sender, EventArgs e)
+		{
+			sendArmLeft(3, 109, 200, 200);
+			sendArmRight(3, 109, 200, 200);
+		}
+
+		private void butGoCtrl_Click(object sender, EventArgs e)
+		{
+			sendArmLeft(2, -83, -75, 150);
+			sendArmRight(2, 83, -75, 150);
 		}
 
 	}

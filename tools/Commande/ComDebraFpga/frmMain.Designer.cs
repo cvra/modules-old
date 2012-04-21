@@ -156,6 +156,8 @@
 					this.butArmGoInit = new System.Windows.Forms.Button();
 					this.butArmOff = new System.Windows.Forms.Button();
 					this.butArmOn = new System.Windows.Forms.Button();
+					this.butArmGoNearInit = new System.Windows.Forms.Button();
+					this.butGoCtrl = new System.Windows.Forms.Button();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -1934,6 +1936,8 @@
 					// 
 					// groupBox2
 					// 
+					this.groupBox2.Controls.Add(this.butGoCtrl);
+					this.groupBox2.Controls.Add(this.butArmGoNearInit);
 					this.groupBox2.Controls.Add(this.butArmFast);
 					this.groupBox2.Controls.Add(this.butArmSlow);
 					this.groupBox2.Controls.Add(this.butArmGoInit);
@@ -1943,7 +1947,7 @@
 					this.groupBox2.Controls.Add(this.butRangerBras);
 					this.groupBox2.Location = new System.Drawing.Point(194, 580);
 					this.groupBox2.Name = "groupBox2";
-					this.groupBox2.Size = new System.Drawing.Size(106, 137);
+					this.groupBox2.Size = new System.Drawing.Size(119, 140);
 					this.groupBox2.TabIndex = 50;
 					this.groupBox2.TabStop = false;
 					this.groupBox2.Text = "Bras";
@@ -1997,6 +2001,26 @@
 					this.butArmOn.Text = "On";
 					this.butArmOn.UseVisualStyleBackColor = true;
 					this.butArmOn.Click += new System.EventHandler(this.butArmOn_Click);
+					// 
+					// butArmGoNearInit
+					// 
+					this.butArmGoNearInit.Location = new System.Drawing.Point(6, 116);
+					this.butArmGoNearInit.Name = "butArmGoNearInit";
+					this.butArmGoNearInit.Size = new System.Drawing.Size(73, 21);
+					this.butArmGoNearInit.TabIndex = 40;
+					this.butArmGoNearInit.Text = "Go near init";
+					this.butArmGoNearInit.UseVisualStyleBackColor = true;
+					this.butArmGoNearInit.Click += new System.EventHandler(this.butArmGoNearInit_Click);
+					// 
+					// butGoCtrl
+					// 
+					this.butGoCtrl.Location = new System.Drawing.Point(72, 65);
+					this.butGoCtrl.Name = "butGoCtrl";
+					this.butGoCtrl.Size = new System.Drawing.Size(34, 23);
+					this.butGoCtrl.TabIndex = 41;
+					this.butGoCtrl.Text = "Ctrl";
+					this.butGoCtrl.UseVisualStyleBackColor = true;
+					this.butGoCtrl.Click += new System.EventHandler(this.butGoCtrl_Click);
 					// 
 					// frmMain
 					// 
@@ -2222,6 +2246,8 @@
 				private System.Windows.Forms.NumericUpDown numArmAnglLb;
 				private System.Windows.Forms.NumericUpDown numArmAnglRb;
 				private System.Windows.Forms.NumericUpDown numArmAnglLz;
+				private System.Windows.Forms.Button butArmGoNearInit;
+				private System.Windows.Forms.Button butGoCtrl;
     }
 }
 
