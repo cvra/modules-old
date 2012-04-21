@@ -6,25 +6,6 @@ using System.Windows.Forms;
 
 namespace ComDebraFpga
 {
-	public struct TYPE_ODO
-	{
-		public float X;
-		public float Y;
-		public float angle;
-		public char EtatDeplacement;
-	}
-
-	public enum ETAT_OBJ
-	{
-		VIDE = 0,
-		PION = 1,
-		ROI = 3,
-		REINE = 2,
-		OBST = 255,
-		VISION = 999,
-		VISIONT = 998
-	}
-
 	public class clDrawTable
 	{
 		private PictureBox pic;
@@ -45,6 +26,8 @@ namespace ComDebraFpga
 		public PointF p1;
 		public PointF p2;
 		public PointF pBout;
+
+		clMain m;
 
 		// Pen
 
@@ -117,9 +100,10 @@ namespace ComDebraFpga
 			return getCaseX(x) + getCaseY(y) * NB_X;
 		}
 
-		public clDrawTable(PictureBox inPic)
+		internal clDrawTable(PictureBox inPic, clMain M)
 		{
 			pic = inPic;
+			m = M;
 
 			robotAdv.X = 2750;
 			robotAdv.Y = 250;
@@ -276,6 +260,40 @@ namespace ComDebraFpga
 					lstAvoid[i][lstAvoid[i].Count - 1].X, lstAvoid[i][lstAvoid[i].Count - 1].Y);
 			}
 
+			// Dessin des objets
+			InitView(Dessin);
+			Point[] p = new Point[m.info.objState.Length];
+			for (int i = 0; i < p.Length; i++)
+			{
+				p[i] = new Point(m.info.objPosXY[i].X,m.info.objPosXY[i].Y);
+			}
+			Dessin.TransformPoints(System.Drawing.Drawing2D.CoordinateSpace.Device,
+				System.Drawing.Drawing2D.CoordinateSpace.World, p);
+			Dessin.ResetTransform();
+			SizeF txtSize;
+			for (int i = 0; i < p.Length; i++)
+			{
+				Dessin.ResetTransform();
+				txtSize = Dessin.MeasureString(i.ToString(), clDrawTable.FontTxt);
+
+				Brush cur;
+				switch (m.info.objState[i])
+				{
+					case 0:
+						cur = brushPion;
+						break;
+					case 1:
+						cur = brushPionVision;
+						break;
+					case 2:
+						cur = brushPionVisionT;
+						break;
+					default:
+						cur = brushBlack;
+						break;
+				}
+				Dessin.DrawString(i.ToString(), clDrawTable.FontTxt, cur, p[i].X - txtSize.Width / 2, p[i].Y - txtSize.Height / 2);
+			}
 
 			//// Dessin de la position finale
 			//InitView(Dessin);
@@ -438,5 +456,24 @@ namespace ComDebraFpga
 			//  //Strat.traj.calcTraj();
 			//}
 		}
+	}
+
+	public struct TYPE_ODO
+	{
+		public float X;
+		public float Y;
+		public float angle;
+		public char EtatDeplacement;
+	}
+
+	public enum ETAT_OBJ
+	{
+		VIDE = 0,
+		PION = 1,
+		ROI = 3,
+		REINE = 2,
+		OBST = 255,
+		VISION = 999,
+		VISIONT = 998
 	}
 }

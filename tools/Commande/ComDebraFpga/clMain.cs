@@ -6,6 +6,7 @@ using grinlib.PortCom;
 using System.Threading;
 using System.ComponentModel;
 using lib.TCPClient;
+using System.Drawing;
 
 namespace ComDebraFpga
 {
@@ -99,7 +100,7 @@ namespace ComDebraFpga
 
 
 		// Taille complète du paquet ABC + \n compris
-		private int[] packetSize = new int[] { 0, 5 + 2 * 13, 6, 21, 5 + 4 * 4 };
+		private int[] packetSize = new int[] { 0, 5 + 2 * 13, 6, 21, 5 + 2 + 2 * 3, 5 + 4 * 4 };
 		private bool isRunning = true;
 		public DispInfo info = new DispInfo();
 
@@ -355,15 +356,13 @@ namespace ComDebraFpga
 
 		private void traitLine(byte[] cmd)
 		{
+			int k = 4;
 			switch (cmd[3])
 			{
 				// Position du robot
 				case 1:
-					int k = 4;
 					info.PosRobot = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
-
 					int statuts = getInt16(cmd[k++], cmd[k++], false);
-
 					info.status = statuts;
 					//status |= trajectory_finished(&robot.traj);
 					//status |= bd_get(&robot.left_arm.z_axis_bd)<<1;
@@ -374,7 +373,6 @@ namespace ComDebraFpga
 					//status |= bd_get(&robot.right_arm.elbow_bd)<<6;
 					//status |= bd_get(&robot.angle_bd)<<7;
 					//status |= bd_get(&robot.distance_bd)<<8;
-
 
 					//info.status = getInt16(cmd[k++], cmd[k++]).ToString();
 					//info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
@@ -391,10 +389,6 @@ namespace ComDebraFpga
 					{
 						info.ADC5_8 += getInt16(cmd[k++], cmd[k++]).ToString() + " ";
 					}
-
-
-
-
 
 					//info.ArmG = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
 					//info.ArmD = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
@@ -433,13 +427,18 @@ namespace ComDebraFpga
 					main.addLog(new ComElem(TypeVal.info, tmpVal3));
 					break;
 				case 4:
-					string tmpVal4 = "";
-					int i4 = 4;
-					while (i4 < cmd.Length - 1)
+					int index = cmd[k++];
+					info.objState[index] = cmd[k++];
+					info.objPosXY[index] = new Point(getInt16(cmd[k++], cmd[k++]), getInt16(cmd[k++], cmd[k++]));
+					info.objZ[index] = getInt16(cmd[k++], cmd[k++]);
+					break;
+				case 5:
+					string tmpVal5 = "";
+					while (k < cmd.Length - 1)
 					{
-						tmpVal4 += getInt32(cmd[i4++], cmd[i4++], cmd[i4++], cmd[i4++]).ToString("") + " ";
+						tmpVal5 += getInt32(cmd[k++], cmd[k++], cmd[k++], cmd[k++]);
 					}
-					main.addLog(new ComElem(TypeVal.vals, tmpVal4));
+					main.addLog(new ComElem(TypeVal.vals, tmpVal5));
 					break;
 				default:
 					break;
@@ -454,7 +453,7 @@ namespace ComDebraFpga
 
 		internal void Connect(string comPort)
 		{
-			if(comPort.Contains("."))
+			if (comPort.Contains("."))
 				comTcp.Connect(comPort, 5000);
 			else
 				com.Connect(comPort, 115200);

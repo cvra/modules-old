@@ -15,8 +15,6 @@ namespace ComDebraFpga
 		public frmMain()
 		{
 			InitializeComponent();
-			drawTable = new clDrawTable(picTable);
-
 			txtPort.Text = Settings.Default.comPort;
 
 			// Fonction génériques
@@ -63,7 +61,7 @@ namespace ComDebraFpga
 			}
 
 			m = new clMain(this);
-
+			drawTable = new clDrawTable(picTable, m);
 		}
 
 		private void butConnect_Click(object sender, EventArgs e)
@@ -99,7 +97,7 @@ namespace ComDebraFpga
 			{
 				propertyVar.SelectedObject = m.info;
 
-				if (m.info.PosRobot != null)
+				if (!String.IsNullOrEmpty(m.info.PosRobot))
 				{
 					string[] s = m.info.PosRobot.Split(new char[] { ',' });
 
@@ -107,7 +105,7 @@ namespace ComDebraFpga
 					float.TryParse(s[1], out drawTable.robot.Y);
 					float.TryParse(s[2], out drawTable.robot.angle);
 				}
-				if (m.info.PosRobotAdv != null)
+				if (!String.IsNullOrEmpty(m.info.PosRobotAdv))
 				{
 					string[] s = m.info.PosRobotAdv.Split(new char[] { ',' });
 
