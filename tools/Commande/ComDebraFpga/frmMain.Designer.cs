@@ -151,13 +151,13 @@
 					this.picMoving = new System.Windows.Forms.PictureBox();
 					this.groupBox4 = new System.Windows.Forms.GroupBox();
 					this.groupBox2 = new System.Windows.Forms.GroupBox();
+					this.butGoCtrl = new System.Windows.Forms.Button();
+					this.butArmGoNearInit = new System.Windows.Forms.Button();
 					this.butArmFast = new System.Windows.Forms.Button();
 					this.butArmSlow = new System.Windows.Forms.Button();
 					this.butArmGoInit = new System.Windows.Forms.Button();
 					this.butArmOff = new System.Windows.Forms.Button();
 					this.butArmOn = new System.Windows.Forms.Button();
-					this.butArmGoNearInit = new System.Windows.Forms.Button();
-					this.butGoCtrl = new System.Windows.Forms.Button();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -235,10 +235,10 @@
 					this.dataButs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colButton,
             this.colParam});
-					this.dataButs.Location = new System.Drawing.Point(983, 335);
+					this.dataButs.Location = new System.Drawing.Point(983, 369);
 					this.dataButs.Name = "dataButs";
 					this.dataButs.RowHeadersVisible = false;
-					this.dataButs.Size = new System.Drawing.Size(269, 385);
+					this.dataButs.Size = new System.Drawing.Size(269, 351);
 					this.dataButs.TabIndex = 0;
 					this.dataButs.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataButs_CellContentClick);
 					// 
@@ -654,7 +654,7 @@
 					this.propertyVar.HelpVisible = false;
 					this.propertyVar.Location = new System.Drawing.Point(983, 28);
 					this.propertyVar.Name = "propertyVar";
-					this.propertyVar.Size = new System.Drawing.Size(269, 301);
+					this.propertyVar.Size = new System.Drawing.Size(269, 335);
 					this.propertyVar.TabIndex = 11;
 					// 
 					// numArmGX
@@ -1066,7 +1066,7 @@
 					this.num3X.Size = new System.Drawing.Size(83, 20);
 					this.num3X.TabIndex = 34;
 					this.num3X.Value = new decimal(new int[] {
-            300,
+            200,
             0,
             0,
             0});
@@ -1093,10 +1093,10 @@
 					this.num2X.Size = new System.Drawing.Size(83, 20);
 					this.num2X.TabIndex = 31;
 					this.num2X.Value = new decimal(new int[] {
-            300,
+            200,
             0,
             0,
-            0});
+            -2147483648});
 					// 
 					// num3Z
 					// 
@@ -1141,6 +1141,11 @@
 					this.num2Y.Name = "num2Y";
 					this.num2Y.Size = new System.Drawing.Size(83, 20);
 					this.num2Y.TabIndex = 32;
+					this.num2Y.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            -2147483648});
 					// 
 					// num3Y
 					// 
@@ -1163,6 +1168,11 @@
 					this.num3Y.Name = "num3Y";
 					this.num3Y.Size = new System.Drawing.Size(83, 20);
 					this.num3Y.TabIndex = 35;
+					this.num3Y.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            -2147483648});
 					// 
 					// num2Z
 					// 
@@ -1952,6 +1962,26 @@
 					this.groupBox2.TabStop = false;
 					this.groupBox2.Text = "Bras";
 					// 
+					// butGoCtrl
+					// 
+					this.butGoCtrl.Location = new System.Drawing.Point(72, 65);
+					this.butGoCtrl.Name = "butGoCtrl";
+					this.butGoCtrl.Size = new System.Drawing.Size(34, 23);
+					this.butGoCtrl.TabIndex = 41;
+					this.butGoCtrl.Text = "Ctrl";
+					this.butGoCtrl.UseVisualStyleBackColor = true;
+					this.butGoCtrl.Click += new System.EventHandler(this.butGoCtrl_Click);
+					// 
+					// butArmGoNearInit
+					// 
+					this.butArmGoNearInit.Location = new System.Drawing.Point(6, 116);
+					this.butArmGoNearInit.Name = "butArmGoNearInit";
+					this.butArmGoNearInit.Size = new System.Drawing.Size(73, 21);
+					this.butArmGoNearInit.TabIndex = 40;
+					this.butArmGoNearInit.Text = "Go near init";
+					this.butArmGoNearInit.UseVisualStyleBackColor = true;
+					this.butArmGoNearInit.Click += new System.EventHandler(this.butArmGoNearInit_Click);
+					// 
 					// butArmFast
 					// 
 					this.butArmFast.Location = new System.Drawing.Point(68, 41);
@@ -2001,26 +2031,6 @@
 					this.butArmOn.Text = "On";
 					this.butArmOn.UseVisualStyleBackColor = true;
 					this.butArmOn.Click += new System.EventHandler(this.butArmOn_Click);
-					// 
-					// butArmGoNearInit
-					// 
-					this.butArmGoNearInit.Location = new System.Drawing.Point(6, 116);
-					this.butArmGoNearInit.Name = "butArmGoNearInit";
-					this.butArmGoNearInit.Size = new System.Drawing.Size(73, 21);
-					this.butArmGoNearInit.TabIndex = 40;
-					this.butArmGoNearInit.Text = "Go near init";
-					this.butArmGoNearInit.UseVisualStyleBackColor = true;
-					this.butArmGoNearInit.Click += new System.EventHandler(this.butArmGoNearInit_Click);
-					// 
-					// butGoCtrl
-					// 
-					this.butGoCtrl.Location = new System.Drawing.Point(72, 65);
-					this.butGoCtrl.Name = "butGoCtrl";
-					this.butGoCtrl.Size = new System.Drawing.Size(34, 23);
-					this.butGoCtrl.TabIndex = 41;
-					this.butGoCtrl.Text = "Ctrl";
-					this.butGoCtrl.UseVisualStyleBackColor = true;
-					this.butGoCtrl.Click += new System.EventHandler(this.butGoCtrl_Click);
 					// 
 					// frmMain
 					// 
