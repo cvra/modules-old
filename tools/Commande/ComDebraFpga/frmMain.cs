@@ -359,11 +359,6 @@ namespace ComDebraFpga
 			m.sendCmd(LstPos.gen_func, new int[] { 8, (int)0 });
 		}
 
-		private void butRangerBras_Click(object sender, EventArgs e)
-		{
-			m.sendCmd(LstPos.gen_func, new int[] { 6, (int)0 });
-		}
-
 		private void butArmBrasG_Click(object sender, EventArgs e)
 		{
 			sendArmLeft(0, (int)numArmGX.Value, (int)numArmGY.Value, (int)numArmGZ.Value);
@@ -419,21 +414,6 @@ namespace ComDebraFpga
 			m.sendCmdInt32(LstPos.set_blocking, new int[] { 4, (int)numArmBdElb.Value });
 		}
 
-		private void butArmOn_Click(object sender, EventArgs e)
-		{
-			m.sendCmdByte(LstPos.arm_mode, new int[] { 1, 1 });
-		}
-
-		private void butArmOff_Click(object sender, EventArgs e)
-		{
-			m.sendCmdByte(LstPos.arm_mode, new int[] { 0, 0 });
-		}
-
-		private void butArmGoInit_Click(object sender, EventArgs e)
-		{
-			m.sendCmdByte(LstPos.arm_mode, new int[] { 2, 2 });
-		}
-
 		private void butArmSlow_Click(object sender, EventArgs e)
 		{
 			m.sendCmd(LstPos.gen_func, new int[] { 3});
@@ -464,6 +444,11 @@ namespace ComDebraFpga
 		{
 			sendArmLeft(2, -83, -75, 150);
 			sendArmRight(2, 83, -75, 150);
+		}
+
+		private void cmbArmMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			m.sendCmdByte(LstPos.arm_mode, new int[] { cmbArmMode.SelectedIndex, cmbArmMode.SelectedIndex });
 		}
 
 	}

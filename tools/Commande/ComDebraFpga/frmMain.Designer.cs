@@ -62,7 +62,6 @@
 					this.numAngle = new System.Windows.Forms.NumericUpDown();
 					this.numDist = new System.Windows.Forms.NumericUpDown();
 					this.label4 = new System.Windows.Forms.Label();
-					this.butRangerBras = new System.Windows.Forms.Button();
 					this.butInitBras = new System.Windows.Forms.Button();
 					this.butPD2 = new System.Windows.Forms.Button();
 					this.butPG3 = new System.Windows.Forms.Button();
@@ -151,13 +150,11 @@
 					this.picMoving = new System.Windows.Forms.PictureBox();
 					this.groupBox4 = new System.Windows.Forms.GroupBox();
 					this.groupBox2 = new System.Windows.Forms.GroupBox();
+					this.cmbArmMode = new System.Windows.Forms.ComboBox();
 					this.butGoCtrl = new System.Windows.Forms.Button();
 					this.butArmGoNearInit = new System.Windows.Forms.Button();
 					this.butArmFast = new System.Windows.Forms.Button();
 					this.butArmSlow = new System.Windows.Forms.Button();
-					this.butArmGoInit = new System.Windows.Forms.Button();
-					this.butArmOff = new System.Windows.Forms.Button();
-					this.butArmOn = new System.Windows.Forms.Button();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -563,19 +560,9 @@
 					this.label4.Text = "lck: Goto with avoid\r\nlck+crl: Goto direct\r\nlck+shift: Set Point depose\r\nlck+alt:" +
 							" Set Point prise au sol\r\nrck: set Adv";
 					// 
-					// butRangerBras
-					// 
-					this.butRangerBras.Location = new System.Drawing.Point(6, 65);
-					this.butRangerBras.Name = "butRangerBras";
-					this.butRangerBras.Size = new System.Drawing.Size(60, 21);
-					this.butRangerBras.TabIndex = 34;
-					this.butRangerBras.Text = "Go rangé";
-					this.butRangerBras.UseVisualStyleBackColor = true;
-					this.butRangerBras.Click += new System.EventHandler(this.butRangerBras_Click);
-					// 
 					// butInitBras
 					// 
-					this.butInitBras.Location = new System.Drawing.Point(6, 92);
+					this.butInitBras.Location = new System.Drawing.Point(94, 46);
 					this.butInitBras.Name = "butInitBras";
 					this.butInitBras.Size = new System.Drawing.Size(61, 21);
 					this.butInitBras.TabIndex = 33;
@@ -1946,35 +1933,52 @@
 					// 
 					// groupBox2
 					// 
+					this.groupBox2.Controls.Add(this.cmbArmMode);
 					this.groupBox2.Controls.Add(this.butGoCtrl);
 					this.groupBox2.Controls.Add(this.butArmGoNearInit);
 					this.groupBox2.Controls.Add(this.butArmFast);
 					this.groupBox2.Controls.Add(this.butArmSlow);
-					this.groupBox2.Controls.Add(this.butArmGoInit);
-					this.groupBox2.Controls.Add(this.butArmOff);
-					this.groupBox2.Controls.Add(this.butArmOn);
 					this.groupBox2.Controls.Add(this.butInitBras);
-					this.groupBox2.Controls.Add(this.butRangerBras);
-					this.groupBox2.Location = new System.Drawing.Point(194, 580);
+					this.groupBox2.Location = new System.Drawing.Point(143, 616);
 					this.groupBox2.Name = "groupBox2";
-					this.groupBox2.Size = new System.Drawing.Size(119, 140);
+					this.groupBox2.Size = new System.Drawing.Size(170, 104);
 					this.groupBox2.TabIndex = 50;
 					this.groupBox2.TabStop = false;
 					this.groupBox2.Text = "Bras";
 					// 
+					// cmbArmMode
+					// 
+					this.cmbArmMode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+											| System.Windows.Forms.AnchorStyles.Right)));
+					this.cmbArmMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+					this.cmbArmMode.FormattingEnabled = true;
+					this.cmbArmMode.Items.AddRange(new object[] {
+            "ARM_STATE_OFF",
+            "ARM_STATE_MANUEL",
+            "ARM_STATE_ECARTE",
+            "ARM_STATE_RANGE",
+            "ARM_STATE_PRISE_AUTO",
+            "ARM_STATE_VIDER",
+            "ARM_STATE_PRISE_LATHERALE"});
+					this.cmbArmMode.Location = new System.Drawing.Point(6, 19);
+					this.cmbArmMode.Name = "cmbArmMode";
+					this.cmbArmMode.Size = new System.Drawing.Size(158, 21);
+					this.cmbArmMode.TabIndex = 42;
+					this.cmbArmMode.SelectedIndexChanged += new System.EventHandler(this.cmbArmMode_SelectedIndexChanged);
+					// 
 					// butGoCtrl
 					// 
-					this.butGoCtrl.Location = new System.Drawing.Point(72, 65);
+					this.butGoCtrl.Location = new System.Drawing.Point(6, 73);
 					this.butGoCtrl.Name = "butGoCtrl";
-					this.butGoCtrl.Size = new System.Drawing.Size(34, 23);
+					this.butGoCtrl.Size = new System.Drawing.Size(52, 22);
 					this.butGoCtrl.TabIndex = 41;
-					this.butGoCtrl.Text = "Ctrl";
+					this.butGoCtrl.Text = "Go Ctrl";
 					this.butGoCtrl.UseVisualStyleBackColor = true;
 					this.butGoCtrl.Click += new System.EventHandler(this.butGoCtrl_Click);
 					// 
 					// butArmGoNearInit
 					// 
-					this.butArmGoNearInit.Location = new System.Drawing.Point(6, 116);
+					this.butArmGoNearInit.Location = new System.Drawing.Point(64, 74);
 					this.butArmGoNearInit.Name = "butArmGoNearInit";
 					this.butArmGoNearInit.Size = new System.Drawing.Size(73, 21);
 					this.butArmGoNearInit.TabIndex = 40;
@@ -1984,7 +1988,7 @@
 					// 
 					// butArmFast
 					// 
-					this.butArmFast.Location = new System.Drawing.Point(68, 41);
+					this.butArmFast.Location = new System.Drawing.Point(50, 46);
 					this.butArmFast.Name = "butArmFast";
 					this.butArmFast.Size = new System.Drawing.Size(38, 21);
 					this.butArmFast.TabIndex = 39;
@@ -1994,43 +1998,13 @@
 					// 
 					// butArmSlow
 					// 
-					this.butArmSlow.Location = new System.Drawing.Point(68, 19);
+					this.butArmSlow.Location = new System.Drawing.Point(6, 46);
 					this.butArmSlow.Name = "butArmSlow";
 					this.butArmSlow.Size = new System.Drawing.Size(38, 21);
 					this.butArmSlow.TabIndex = 38;
 					this.butArmSlow.Text = "Slow";
 					this.butArmSlow.UseVisualStyleBackColor = true;
 					this.butArmSlow.Click += new System.EventHandler(this.butArmSlow_Click);
-					// 
-					// butArmGoInit
-					// 
-					this.butArmGoInit.Location = new System.Drawing.Point(6, 43);
-					this.butArmGoInit.Name = "butArmGoInit";
-					this.butArmGoInit.Size = new System.Drawing.Size(45, 21);
-					this.butArmGoInit.TabIndex = 37;
-					this.butArmGoInit.Text = "Go init";
-					this.butArmGoInit.UseVisualStyleBackColor = true;
-					this.butArmGoInit.Click += new System.EventHandler(this.butArmGoInit_Click);
-					// 
-					// butArmOff
-					// 
-					this.butArmOff.Location = new System.Drawing.Point(36, 19);
-					this.butArmOff.Name = "butArmOff";
-					this.butArmOff.Size = new System.Drawing.Size(30, 21);
-					this.butArmOff.TabIndex = 36;
-					this.butArmOff.Text = "Off";
-					this.butArmOff.UseVisualStyleBackColor = true;
-					this.butArmOff.Click += new System.EventHandler(this.butArmOff_Click);
-					// 
-					// butArmOn
-					// 
-					this.butArmOn.Location = new System.Drawing.Point(6, 19);
-					this.butArmOn.Name = "butArmOn";
-					this.butArmOn.Size = new System.Drawing.Size(30, 21);
-					this.butArmOn.TabIndex = 35;
-					this.butArmOn.Text = "On";
-					this.butArmOn.UseVisualStyleBackColor = true;
-					this.butArmOn.Click += new System.EventHandler(this.butArmOn_Click);
 					// 
 					// frmMain
 					// 
@@ -2196,7 +2170,6 @@
 				private System.Windows.Forms.NumericUpDown numDistD;
 				private System.Windows.Forms.NumericUpDown numAngP;
 				private System.Windows.Forms.NumericUpDown numAngD;
-				private System.Windows.Forms.Button butRangerBras;
 				private System.Windows.Forms.Button butInitBras;
 				private System.Windows.Forms.TabPage ArmBras;
 				private System.Windows.Forms.Button butArmBrasD;
@@ -2242,9 +2215,6 @@
 				private System.Windows.Forms.Label label8;
 				private System.Windows.Forms.Label label7;
 				private System.Windows.Forms.GroupBox groupBox2;
-				private System.Windows.Forms.Button butArmOff;
-				private System.Windows.Forms.Button butArmOn;
-				private System.Windows.Forms.Button butArmGoInit;
 				private System.Windows.Forms.Button butArmFast;
 				private System.Windows.Forms.Button butArmSlow;
 				private System.Windows.Forms.TabPage tabPage2;
@@ -2258,6 +2228,7 @@
 				private System.Windows.Forms.NumericUpDown numArmAnglLz;
 				private System.Windows.Forms.Button butArmGoNearInit;
 				private System.Windows.Forms.Button butGoCtrl;
+				private System.Windows.Forms.ComboBox cmbArmMode;
     }
 }
 
