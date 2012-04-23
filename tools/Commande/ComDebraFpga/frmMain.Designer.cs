@@ -62,7 +62,6 @@
 					this.numAngle = new System.Windows.Forms.NumericUpDown();
 					this.numDist = new System.Windows.Forms.NumericUpDown();
 					this.label4 = new System.Windows.Forms.Label();
-					this.butInitBras = new System.Windows.Forms.Button();
 					this.butPD2 = new System.Windows.Forms.Button();
 					this.butPG3 = new System.Windows.Forms.Button();
 					this.butPD3 = new System.Windows.Forms.Button();
@@ -559,16 +558,6 @@
 					this.label4.TabIndex = 9;
 					this.label4.Text = "lck: Goto with avoid\r\nlck+crl: Goto direct\r\nlck+shift: Set Point depose\r\nlck+alt:" +
 							" Set Point prise au sol\r\nrck: set Adv";
-					// 
-					// butInitBras
-					// 
-					this.butInitBras.Location = new System.Drawing.Point(94, 46);
-					this.butInitBras.Name = "butInitBras";
-					this.butInitBras.Size = new System.Drawing.Size(61, 21);
-					this.butInitBras.TabIndex = 33;
-					this.butInitBras.Text = "Init bras";
-					this.butInitBras.UseVisualStyleBackColor = true;
-					this.butInitBras.Click += new System.EventHandler(this.butInitBras_Click);
 					// 
 					// butPD2
 					// 
@@ -1938,7 +1927,6 @@
 					this.groupBox2.Controls.Add(this.butArmGoNearInit);
 					this.groupBox2.Controls.Add(this.butArmFast);
 					this.groupBox2.Controls.Add(this.butArmSlow);
-					this.groupBox2.Controls.Add(this.butInitBras);
 					this.groupBox2.Location = new System.Drawing.Point(143, 616);
 					this.groupBox2.Name = "groupBox2";
 					this.groupBox2.Size = new System.Drawing.Size(170, 104);
@@ -1959,7 +1947,8 @@
             "ARM_STATE_RANGE",
             "ARM_STATE_PRISE_AUTO",
             "ARM_STATE_VIDER",
-            "ARM_STATE_PRISE_LATHERALE"});
+            "ARM_STATE_PRISE_LATHERALE",
+            "ARM_STATE_INIT"});
 					this.cmbArmMode.Location = new System.Drawing.Point(6, 19);
 					this.cmbArmMode.Name = "cmbArmMode";
 					this.cmbArmMode.Size = new System.Drawing.Size(158, 21);
@@ -2170,7 +2159,6 @@
 				private System.Windows.Forms.NumericUpDown numDistD;
 				private System.Windows.Forms.NumericUpDown numAngP;
 				private System.Windows.Forms.NumericUpDown numAngD;
-				private System.Windows.Forms.Button butInitBras;
 				private System.Windows.Forms.TabPage ArmBras;
 				private System.Windows.Forms.Button butArmBrasD;
 				private System.Windows.Forms.Button butArmBrasG;

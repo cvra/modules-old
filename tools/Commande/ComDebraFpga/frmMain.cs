@@ -354,11 +354,6 @@ namespace ComDebraFpga
 			m.sendCmd(LstPos.gen_func, new int[] { 5, cmbAskLog2.SelectedIndex });
 		}
 
-		private void butInitBras_Click(object sender, EventArgs e)
-		{
-			m.sendCmd(LstPos.gen_func, new int[] { 8, (int)0 });
-		}
-
 		private void butArmBrasG_Click(object sender, EventArgs e)
 		{
 			sendArmLeft(0, (int)numArmGX.Value, (int)numArmGY.Value, (int)numArmGZ.Value);
