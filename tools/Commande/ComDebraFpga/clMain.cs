@@ -100,7 +100,7 @@ namespace ComDebraFpga
 
 
 		// Taille complète du paquet ABC + \n compris
-		private int[] packetSize = new int[] { 0, 5 + 2 * 13, 6, 21, 5 + 2 + 2 * 3, 5 + 4 * 4 };
+		private int[] packetSize = new int[] { 0, 5 + 2 * 14, 6, 21, 5 + 2 + 2 * 3, 5 + 4 * 4 };
 		private bool isRunning = true;
 		public DispInfo info = new DispInfo();
 
@@ -390,6 +390,7 @@ namespace ComDebraFpga
 						info.ADC5_8 += getInt16(cmd[k++], cmd[k++]).ToString() + " ";
 					}
 
+					info.armProcTime = getInt16(cmd[k++], cmd[k++], false);
 					//info.ArmG = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
 					//info.ArmD = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
 
