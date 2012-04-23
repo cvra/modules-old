@@ -46,11 +46,11 @@ namespace ComDebraFpga
 		// Brushes
 		public static Brush brushBlack = new SolidBrush(Color.Black);
 		public static Brush brushRed = new SolidBrush(Color.Red);
-		public static Brush brushPion = new SolidBrush(Color.Yellow);
-		public static Brush brushPionVision = new SolidBrush(Color.Fuchsia);
-		public static Brush brushPionVisionT = new SolidBrush(Color.Pink);
-		public static Brush brushRoi = new SolidBrush(Color.YellowGreen);
-		public static Brush brushReine = new SolidBrush(Color.Beige);
+		public static Brush brushYellow = new SolidBrush(Color.Yellow);
+		public static Brush brushFuchsia = new SolidBrush(Color.Fuchsia);
+		public static Brush brushPink = new SolidBrush(Color.Pink);
+		public static Brush brushYellowGreen = new SolidBrush(Color.YellowGreen);
+		public static Brush brushBeige = new SolidBrush(Color.Beige);
 		public static Brush brushWhite = new SolidBrush(Color.White);
 		// Text
 		public static Font FontTxt = new Font("Arial", 8);
@@ -148,35 +148,11 @@ namespace ComDebraFpga
 			updRatio();
 		}
 
-		private void DrawReine(Graphics Dessin)
-		{
-			Dessin.FillEllipse(brushReine, 0, 0, pionWidth, pionWidth);
-		}
-
-		private void DrawRoi(Graphics Dessin)
-		{
-			Dessin.FillEllipse(brushRoi, 0, 0, pionWidth, pionWidth);
-		}
-
+	
 		private void DrawPointAdv(Graphics Dessin)
 		{
 			Dessin.DrawEllipse(Penblack, 0, 0, pionWidth, pionWidth);
 		}
-
-		private void DrawPion(Graphics Dessin)
-		{
-			Dessin.FillEllipse(brushPion, 0, 0, pionWidth, pionWidth);
-		}
-
-		private void DrawPionVision(Graphics Dessin)
-		{
-			Dessin.FillEllipse(brushPionVision, 0, 0, pionVisionWidth, pionVisionWidth);
-		}
-		private void DrawPionVisionT(Graphics Dessin)
-		{
-			Dessin.FillEllipse(brushPionVisionT, 0, 0, pionVisionWidth, pionVisionWidth);
-		}
-
 
 		private void InitView(Graphics Dessin)
 		{
@@ -280,13 +256,13 @@ namespace ComDebraFpga
 				switch (m.info.objState[i])
 				{
 					case 0:
-						cur = brushPion;
+						cur = brushYellowGreen;
 						break;
 					case 1:
-						cur = brushPionVision;
+						cur = brushRed;
 						break;
 					case 2:
-						cur = brushPionVisionT;
+						cur = brushPink;
 						break;
 					default:
 						cur = brushBlack;
@@ -300,26 +276,26 @@ namespace ComDebraFpga
 			//Dessin.TranslateTransform(ProtoTraj.PointFinal.Y, ProtoTraj.PointFinal.X);
 			//Dessin.DrawEllipse(PenLightCoral, 0, 0, 50, 50);
 
-			// Dessin de la trajectoire
-			InitView(Dessin);
-			//ProtoTraj.GoPos(Dessin);
+			//// Dessin de la trajectoire
+			//InitView(Dessin);
+			////ProtoTraj.GoPos(Dessin);
 
-			// Dessin des objets
-			int posY;
-			for (int i = 0; i < PosObj.Length; i++)
-			{
-				drawObj(PosObj[i], getPosX(i), getPosY(i), Dessin);
-				drawObj(PosObjVision[i], getPosX(i), getPosY(i), Dessin);
-				drawObj(PosObjVisionT[i], getPosX(i), getPosY(i), Dessin);
-			}
-			for (int i = 0; i < PosObjR.Length; i++)
-			{
-				posY = 400 + 160 + 320 * i;
-				drawObj(PosObjB[i], 200, posY, Dessin);
-				drawObj(PosObjR[i], 3000 - 200, posY, Dessin);
-				drawObj(PosObjAdvVision[i], 3000 - 200, posY, Dessin);
-				drawObj(PosObjAdvVisionT[i], 3000 - 200, posY, Dessin);
-			}
+			//// Dessin des objets
+			//int posY;
+			//for (int i = 0; i < PosObj.Length; i++)
+			//{
+			//  drawObj(PosObj[i], getPosX(i), getPosY(i), Dessin);
+			//  drawObj(PosObjVision[i], getPosX(i), getPosY(i), Dessin);
+			//  drawObj(PosObjVisionT[i], getPosX(i), getPosY(i), Dessin);
+			//}
+			//for (int i = 0; i < PosObjR.Length; i++)
+			//{
+			//  posY = 400 + 160 + 320 * i;
+			//  drawObj(PosObjB[i], 200, posY, Dessin);
+			//  drawObj(PosObjR[i], 3000 - 200, posY, Dessin);
+			//  drawObj(PosObjAdvVision[i], 3000 - 200, posY, Dessin);
+			//  drawObj(PosObjAdvVisionT[i], 3000 - 200, posY, Dessin);
+			//}
 
 			//// Dessin Points ADV
 			//for (int i = 0; i < PosRobotAdv.Length; i++)
@@ -366,37 +342,6 @@ namespace ComDebraFpga
 			Dessin.Flush();
 		}
 
-		private void drawObj(ETAT_OBJ eTAT_OBJ, int posX, int posY, Graphics Dessin)
-		{
-			InitView(Dessin);
-			switch (eTAT_OBJ)
-			{
-				case ETAT_OBJ.VIDE:
-					break;
-				case ETAT_OBJ.PION:
-					Dessin.TranslateTransform(posX - pionWidth / 2, posY - pionWidth / 2);
-					DrawPion(Dessin);
-					break;
-				case ETAT_OBJ.REINE:
-					Dessin.TranslateTransform(posX - pionWidth / 2, posY - pionWidth / 2);
-					DrawReine(Dessin);
-					break;
-				case ETAT_OBJ.ROI:
-					Dessin.TranslateTransform(posX - pionWidth / 2, posY - pionWidth / 2);
-					DrawRoi(Dessin);
-					break;
-				case ETAT_OBJ.VISION:
-					Dessin.TranslateTransform(posX - pionVisionWidth / 2, posY - pionVisionWidth / 2);
-					DrawPionVision(Dessin);
-					break;
-				case ETAT_OBJ.VISIONT:
-					Dessin.TranslateTransform(posX - pionVisionWidth / 2, posY - pionVisionWidth / 2);
-					DrawPionVisionT(Dessin);
-					break;
-				default:
-					break;
-			}
-		}
 
 		//private Point[] getPointPath()
 		//{

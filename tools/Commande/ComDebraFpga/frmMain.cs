@@ -24,16 +24,16 @@ namespace ComDebraFpga
 			//lstCmd.Add(new ComCmd(LstPos.gen_func, "3=Arm slow", "3"));
 			//lstCmd.Add(new ComCmd(LstPos.gen_func, "4=Arm fast", "4"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "5=ask log", "5,0"));
-			//lstCmd.Add(new ComCmd(LstPos.gen_func, "6=Ranger bras", "6"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "6=Objet prenable", "6"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "7=Test func", "7"));
-			//lstCmd.Add(new ComCmd(LstPos.gen_func, "8=Init bras", "8"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "8=Init pos objet", "8"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "9=Arm rot rel", "9,90"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "10=Arm prende lingot", "10,2"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "10=Arm prende lingot", "10,2"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "11=Arm ask wanted pos", "11"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "12=Arm prendre CD", "12,2"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "13=Arm sortir lingot", "13,2"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "14=Arm sortir CD", "14,2"));
-			lstCmd.Add(new ComCmd(LstPos.gen_func, "15=Arm prendre lingot lat", "15,2"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "12=Arm prendre CD", "12,2"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "13=Arm sortir lingot", "13,2"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "14=Arm sortir CD", "14,2"));
+			//lstCmd.Add(new ComCmd(LstPos.gen_func, "15=Arm prendre lingot lat", "15,2"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "16=Arm get angle init", "16,2"));
 
 			// Demande variables
@@ -444,6 +444,12 @@ namespace ComDebraFpga
 		private void cmbArmMode_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			m.sendCmdByte(LstPos.arm_mode, new int[] { cmbArmMode.SelectedIndex, cmbArmMode.SelectedIndex });
+		}
+
+		private void picTable_MouseMove(object sender, MouseEventArgs e)
+		{
+			lblMousePos.Text = ((int)((picTable.Width - e.X) / drawTable.RatioPixelInc)).ToString() + "," +
+((int)(e.Y / drawTable.RatioPixelInc)).ToString();
 		}
 
 	}

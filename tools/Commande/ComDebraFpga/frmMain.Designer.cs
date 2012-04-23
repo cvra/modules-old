@@ -154,6 +154,7 @@
 					this.butArmGoNearInit = new System.Windows.Forms.Button();
 					this.butArmFast = new System.Windows.Forms.Button();
 					this.butArmSlow = new System.Windows.Forms.Button();
+					this.lblMousePos = new System.Windows.Forms.ToolStripLabel();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -267,7 +268,8 @@
             this.txtPort,
             this.butConnect,
             this.butClearLog,
-            this.butGraph});
+            this.butGraph,
+            this.lblMousePos});
 					this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 					this.toolStrip1.Name = "toolStrip1";
 					this.toolStrip1.Size = new System.Drawing.Size(1263, 25);
@@ -786,6 +788,7 @@
 					this.picTable.TabStop = false;
 					this.picTable.Paint += new System.Windows.Forms.PaintEventHandler(this.picTable_Paint);
 					this.picTable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picTable_MouseDown);
+					this.picTable.MouseMove += new System.Windows.Forms.MouseEventHandler(this.picTable_MouseMove);
 					// 
 					// label9
 					// 
@@ -1995,6 +1998,12 @@
 					this.butArmSlow.UseVisualStyleBackColor = true;
 					this.butArmSlow.Click += new System.EventHandler(this.butArmSlow_Click);
 					// 
+					// lblMousePos
+					// 
+					this.lblMousePos.Name = "lblMousePos";
+					this.lblMousePos.Size = new System.Drawing.Size(22, 22);
+					this.lblMousePos.Text = "0:0";
+					// 
 					// frmMain
 					// 
 					this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2217,6 +2226,7 @@
 				private System.Windows.Forms.Button butArmGoNearInit;
 				private System.Windows.Forms.Button butGoCtrl;
 				private System.Windows.Forms.ComboBox cmbArmMode;
+				private System.Windows.Forms.ToolStripLabel lblMousePos;
     }
 }
 
