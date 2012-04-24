@@ -1,5 +1,6 @@
 import socket
-from threading import Thread
+# from threading import Thread
+from thread import *
 
 from sys import argv
 
