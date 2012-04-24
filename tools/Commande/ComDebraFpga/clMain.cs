@@ -100,7 +100,7 @@ namespace ComDebraFpga
 
 
 		// Taille complète du paquet ABC + \n compris
-		private int[] packetSize = new int[] { 0, 5 + 2 * 14, 6, 21, 5 + 2 + 2 * 3, 5 + 4 * 4 };
+		private int[] packetSize = new int[] { 0, 5 + 2 * 16, 6, 21, 5 + 2 + 2 * 3, 5 + 4 * 4 };
 		private bool isRunning = true;
 		public DispInfo info = new DispInfo();
 
@@ -364,21 +364,8 @@ namespace ComDebraFpga
 					info.PosRobot = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
 					int statuts = getInt16(cmd[k++], cmd[k++], false);
 					info.status = statuts;
-					//status |= trajectory_finished(&robot.traj);
-					//status |= bd_get(&robot.left_arm.z_axis_bd)<<1;
-					//status |= bd_get(&robot.left_arm.shoulder_bd)<<2;
-					//status |= bd_get(&robot.left_arm.elbow_bd)<<3;
-					//status |= bd_get(&robot.right_arm.z_axis_bd)<<4;
-					//status |= bd_get(&robot.right_arm.shoulder_bd)<<5;
-					//status |= bd_get(&robot.right_arm.elbow_bd)<<6;
-					//status |= bd_get(&robot.angle_bd)<<7;
-					//status |= bd_get(&robot.distance_bd)<<8;
-
-					//info.status = getInt16(cmd[k++], cmd[k++]).ToString();
-					//info.ArmLeft = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
-					//info.ArmRight = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
 					info.uptime = getInt16(cmd[k++], cmd[k++], false);
-					//info.CPU = getInt16(cmd[k++], cmd[k++], false);
+					info.longestTask = getInt16(cmd[k++], cmd[k++], false);
 					info.ADC1_4 = "";
 					for (int i = 0; i < 4; i++)
 					{
@@ -391,24 +378,8 @@ namespace ComDebraFpga
 					}
 
 					info.armProcTime = getInt16(cmd[k++], cmd[k++], false);
-					//info.ArmG = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
-					//info.ArmD = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
-
-					//info.armPosOk = getInt16(cmd[k++], cmd[k++]);
-					//info.computedArmPosR = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
-					//info.computedArmPosL = "" + getInt16(cmd[k++], cmd[k++]) + " " + getInt16(cmd[k++], cmd[k++]);
+					info.armMProcTime = getInt16(cmd[k++], cmd[k++], false);
 					info.hasNewData = true;
-					//main.addLog(new ComElem(TypeVal.posX, getInt16(cmd[4], cmd[5]).ToString()));
-					//main.addLog(new ComElem(TypeVal.posY, getInt16(cmd[6], cmd[7]).ToString()));
-					//main.addLog(new ComElem(TypeVal.angle, getInt16(cmd[8], cmd[9]).ToString()));
-					//main.addLog(new ComElem(TypeVal.status, getInt16(cmd[10], cmd[11]).ToString()));
-
-					//string tmpVal = "";
-					//for (int i = 0; i < cmd.Length; i++)
-					//{
-					//  tmpVal += cmd[i].ToString() + " ";
-					//}
-					////    main.addLog(new ComElem(TypeVal.info,tmpVal));
 					break;
 				case 2:
 					string tmpVal2 = "";

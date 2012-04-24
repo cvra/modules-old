@@ -10,6 +10,7 @@ namespace ComDebraFpga
 	public partial class frmMain : Form
 	{
 		frmGraph gr = new frmGraph();
+		frmGraph grCpu = new frmGraph();
 		List<ComElem> lstLog = new List<ComElem>();
 		List<ComCmd> lstCmd = new List<ComCmd>();
 

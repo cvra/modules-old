@@ -40,6 +40,7 @@
 					this.butConnect = new System.Windows.Forms.ToolStripButton();
 					this.butClearLog = new System.Windows.Forms.ToolStripButton();
 					this.butGraph = new System.Windows.Forms.ToolStripButton();
+					this.lblMousePos = new System.Windows.Forms.ToolStripLabel();
 					this.timLog = new System.Windows.Forms.Timer(this.components);
 					this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 					this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -154,7 +155,7 @@
 					this.butArmGoNearInit = new System.Windows.Forms.Button();
 					this.butArmFast = new System.Windows.Forms.Button();
 					this.butArmSlow = new System.Windows.Forms.Button();
-					this.lblMousePos = new System.Windows.Forms.ToolStripLabel();
+					this.butCPU = new System.Windows.Forms.ToolStripButton();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -269,6 +270,7 @@
             this.butConnect,
             this.butClearLog,
             this.butGraph,
+            this.butCPU,
             this.lblMousePos});
 					this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 					this.toolStrip1.Name = "toolStrip1";
@@ -316,6 +318,12 @@
 					this.butGraph.Size = new System.Drawing.Size(52, 22);
 					this.butGraph.Text = "Graphic";
 					this.butGraph.Click += new System.EventHandler(this.butGraph_Click);
+					// 
+					// lblMousePos
+					// 
+					this.lblMousePos.Name = "lblMousePos";
+					this.lblMousePos.Size = new System.Drawing.Size(22, 22);
+					this.lblMousePos.Text = "0:0";
 					// 
 					// timLog
 					// 
@@ -1998,11 +2006,15 @@
 					this.butArmSlow.UseVisualStyleBackColor = true;
 					this.butArmSlow.Click += new System.EventHandler(this.butArmSlow_Click);
 					// 
-					// lblMousePos
+					// butCPU
 					// 
-					this.lblMousePos.Name = "lblMousePos";
-					this.lblMousePos.Size = new System.Drawing.Size(22, 22);
-					this.lblMousePos.Text = "0:0";
+					this.butCPU.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+					this.butCPU.Image = ((System.Drawing.Image)(resources.GetObject("butCPU.Image")));
+					this.butCPU.ImageTransparentColor = System.Drawing.Color.Magenta;
+					this.butCPU.Name = "butCPU";
+					this.butCPU.Size = new System.Drawing.Size(34, 22);
+					this.butCPU.Text = "CPU";
+					this.butCPU.Click += new System.EventHandler(this.butCPU_Click);
 					// 
 					// frmMain
 					// 
@@ -2227,6 +2239,7 @@
 				private System.Windows.Forms.Button butGoCtrl;
 				private System.Windows.Forms.ComboBox cmbArmMode;
 				private System.Windows.Forms.ToolStripLabel lblMousePos;
+				private System.Windows.Forms.ToolStripButton butCPU;
     }
 }
 

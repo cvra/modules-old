@@ -116,6 +116,9 @@ namespace ComDebraFpga
 
 				m.info.hasNewData = false;
 				picTable.Invalidate();
+
+				if (grCpu != null && grCpu.IsDisposed == false)
+					grCpu.addData(m.info.longestTask + " " + m.info.armProcTime + " " + m.info.armMProcTime);
 			}
 
 			if (butConnect.Text == "Connect")
@@ -450,6 +453,13 @@ namespace ComDebraFpga
 		{
 			lblMousePos.Text = ((int)((picTable.Width - e.X) / drawTable.RatioPixelInc)).ToString() + "," +
 ((int)(e.Y / drawTable.RatioPixelInc)).ToString();
+		}
+
+		private void butCPU_Click(object sender, EventArgs e)
+		{
+			if (grCpu == null || grCpu.IsDisposed)
+				grCpu = new frmGraph();
+			grCpu.Show();
 		}
 
 	}
