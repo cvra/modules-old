@@ -26,9 +26,9 @@
  * @{ */
 
 typedef struct _line {
-	double a;
-	double b;
-	double c;
+	float a;
+	float b;
+	float c;
 } line_t;
 
 

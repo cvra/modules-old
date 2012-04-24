@@ -33,9 +33,9 @@
  */
 
 typedef struct _circle {
-	double x;
-	double y;
-	double r;
+	float x;
+	float y;
+	float r;
 } circle_t;
 
 

@@ -48,7 +48,7 @@
  */
 uint8_t intersect_line(const line_t *l1, const line_t *l2, point_t *p)
 {
-	double tmp1, tmp2;
+	float tmp1, tmp2;
 
 	debug_printf("l1:%2.2f,%2.2f,%2.2f l2:%2.2f,%2.2f,%2.2f\n",
 		     l1->a, l1->b, l1->c, l2->a, l2->b, l2->c);
@@ -111,7 +111,7 @@ uint8_t intersect_line(const line_t *l1, const line_t *l2, point_t *p)
 
 void pts2line(const point_t *p1, const point_t *p2, line_t *l)
 {
-	double p1x, p1y, p2x, p2y;
+	float p1x, p1y, p2x, p2y;
 
 	p1x = p1->x;
 	p1y = p1->y;

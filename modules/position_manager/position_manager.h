@@ -149,16 +149,18 @@ int16_t position_get_a_deg_s16(struct robot_position *pos);
  * returns current x
  */
 double position_get_x_double(struct robot_position *pos);
-
+float position_get_x_float(struct robot_position *pos);
 /**
  * returns current y
  */
 double position_get_y_double(struct robot_position *pos);
+float position_get_y_float(struct robot_position *pos);
 
 /**
  * returns current alpha
  */
 double position_get_a_rad_double(struct robot_position *pos);
+float position_get_a_rad_float(struct robot_position *pos);
 
 /** @} */
 
