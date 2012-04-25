@@ -41,51 +41,46 @@
 #define _AVERSIVE_IRQ_LOCK_H_
 
 #ifdef COMPILE_ON_ROBOT
-#include <nios2.h>
-#define GLOBAL_IRQ_ARE_MASKED() (0)
+	#include <nios2.h>
+	#define GLOBAL_IRQ_ARE_MASKED() (0)
 
 
-/** Sauvegarde la valeur de STATUS.PIE dans flags, et desactive STATUS.PIE
- * ensuite. */
+	/** Sauvegarde la valeur de STATUS.PIE dans flags, et desactive STATUS.PIE
+	 * ensuite. */
 
-#if 0
-#define IRQ_LOCK(flags) (flags) = alt_irq_disable_all()
-                        
-
-#define IRQ_UNLOCK(flags)  alt_irq_enable_all((flags));
-
-#define cli() do { \
-	uint32_t t; \
-	NIOS2_READ_STATUS(t); \
-    t = t & ~(NIOS2_STATUS_PIE_MSK);        \
-    NIOS2_WRITE_STATUS(t); \
-} while(0); \
+	#if 0
+		#define IRQ_LOCK(flags) (flags) = alt_irq_disable_all()
 
 
-#define sei() do { 							    \
-		uint32_t t;                             \
-        NIOS2_READ_STATUS(t);                   \
-        t |= NIOS2_STATUS_PIE_MSK;  \
-        NIOS2_WRITE_STATUS(t);                 \
-} while(0); \
+		#define IRQ_UNLOCK(flags)  alt_irq_enable_all((flags));
 
-#else
-
-
-#define IRQ_LOCK(flags) do {flags++; } while(0)
-#define IRQ_UNLOCK(flags) do {flags--; } while(0)
-#define cli() do { } while(0)
-#define sei() do { } while(0)
-
-#endif
+		#define cli() do { \
+			uint32_t t; \
+			NIOS2_READ_STATUS(t); \
+				t = t & ~(NIOS2_STATUS_PIE_MSK);        \
+				NIOS2_WRITE_STATUS(t); \
+		} while(0); \
 
 
+		#define sei() do { 							    \
+				uint32_t t;                             \
+						NIOS2_READ_STATUS(t);                   \
+						t |= NIOS2_STATUS_PIE_MSK;  \
+						NIOS2_WRITE_STATUS(t);                 \
+		} while(0); \
+
+	#else
+		#define IRQ_LOCK(flags) do {flags++; } while(0)
+		#define IRQ_UNLOCK(flags) do {flags--; } while(0)
+		#define cli() do { } while(0)
+		#define sei() do { } while(0)
+	#endif
 #else 
 
-#define IRQ_LOCK(flags) do { while(!flags); flags=1; } while(0)
-#define IRQ_UNLOCK(flags) do {flags=0;} while(0)
-#define cli() do { } while(0)
-#define sei() do { } while(0)
+	#define IRQ_LOCK(flags) do { while(!flags); flags=1; } while(0)
+	#define IRQ_UNLOCK(flags) do {flags=0;} while(0)
+	#define cli() do { } while(0)
+	#define sei() do { } while(0)
 
 #endif /*COMPILE_ON_ROBOT*/
 

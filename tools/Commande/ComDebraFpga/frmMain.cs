@@ -32,7 +32,7 @@ namespace ComDebraFpga
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "11=Arm ask wanted pos", "11"));
 			//lstCmd.Add(new ComCmd(LstPos.gen_func, "12=Arm prendre CD", "12,2"));
 			//lstCmd.Add(new ComCmd(LstPos.gen_func, "13=Arm sortir lingot", "13,2"));
-			//lstCmd.Add(new ComCmd(LstPos.gen_func, "14=Arm sortir CD", "14,2"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "14=Arm sense coude", "14,1"));
 			//lstCmd.Add(new ComCmd(LstPos.gen_func, "15=Arm prendre lingot lat", "15,2"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "16=Arm get angle init", "16,2"));
 
@@ -460,6 +460,26 @@ namespace ComDebraFpga
 			if (grCpu == null || grCpu.IsDisposed)
 				grCpu = new frmGraph();
 			grCpu.Show();
+		}
+
+		private void butLeftSize1_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 13, 0 });
+		}
+
+		private void butLeftSize2_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 13, 1 });
+		}
+
+		private void butRightSize1_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 13, 2 });
+		}
+
+		private void butRightSize2_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 13, 3 });
 		}
 
 	}

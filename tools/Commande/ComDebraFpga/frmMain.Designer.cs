@@ -40,19 +40,20 @@
 					this.butConnect = new System.Windows.Forms.ToolStripButton();
 					this.butClearLog = new System.Windows.Forms.ToolStripButton();
 					this.butGraph = new System.Windows.Forms.ToolStripButton();
+					this.butCPU = new System.Windows.Forms.ToolStripButton();
 					this.lblMousePos = new System.Windows.Forms.ToolStripLabel();
 					this.timLog = new System.Windows.Forms.Timer(this.components);
 					this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 					this.groupBox3 = new System.Windows.Forms.GroupBox();
 					this.panel1 = new System.Windows.Forms.Panel();
-					this.button25 = new System.Windows.Forms.Button();
-					this.button23 = new System.Windows.Forms.Button();
-					this.button27 = new System.Windows.Forms.Button();
-					this.button22 = new System.Windows.Forms.Button();
-					this.button24 = new System.Windows.Forms.Button();
-					this.button21 = new System.Windows.Forms.Button();
-					this.button26 = new System.Windows.Forms.Button();
-					this.button20 = new System.Windows.Forms.Button();
+					this.butDir8 = new System.Windows.Forms.Button();
+					this.butDir5 = new System.Windows.Forms.Button();
+					this.butDir2 = new System.Windows.Forms.Button();
+					this.butDir4 = new System.Windows.Forms.Button();
+					this.butDir7 = new System.Windows.Forms.Button();
+					this.butDir3 = new System.Windows.Forms.Button();
+					this.butDir1 = new System.Windows.Forms.Button();
+					this.butDir6 = new System.Windows.Forms.Button();
 					this.butCallageStart = new System.Windows.Forms.Button();
 					this.butGoInit = new System.Windows.Forms.Button();
 					this.label3 = new System.Windows.Forms.Label();
@@ -155,7 +156,10 @@
 					this.butArmGoNearInit = new System.Windows.Forms.Button();
 					this.butArmFast = new System.Windows.Forms.Button();
 					this.butArmSlow = new System.Windows.Forms.Button();
-					this.butCPU = new System.Windows.Forms.ToolStripButton();
+					this.butLeftSize1 = new System.Windows.Forms.Button();
+					this.butLeftSize2 = new System.Windows.Forms.Button();
+					this.butRightSize1 = new System.Windows.Forms.Button();
+					this.butRightSize2 = new System.Windows.Forms.Button();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -319,6 +323,16 @@
 					this.butGraph.Text = "Graphic";
 					this.butGraph.Click += new System.EventHandler(this.butGraph_Click);
 					// 
+					// butCPU
+					// 
+					this.butCPU.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+					this.butCPU.Image = ((System.Drawing.Image)(resources.GetObject("butCPU.Image")));
+					this.butCPU.ImageTransparentColor = System.Drawing.Color.Magenta;
+					this.butCPU.Name = "butCPU";
+					this.butCPU.Size = new System.Drawing.Size(34, 22);
+					this.butCPU.Text = "CPU";
+					this.butCPU.Click += new System.EventHandler(this.butCPU_Click);
+					// 
 					// lblMousePos
 					// 
 					this.lblMousePos.Name = "lblMousePos";
@@ -351,90 +365,90 @@
 					// 
 					// panel1
 					// 
-					this.panel1.Controls.Add(this.button25);
-					this.panel1.Controls.Add(this.button23);
-					this.panel1.Controls.Add(this.button27);
-					this.panel1.Controls.Add(this.button22);
-					this.panel1.Controls.Add(this.button24);
-					this.panel1.Controls.Add(this.button21);
-					this.panel1.Controls.Add(this.button26);
-					this.panel1.Controls.Add(this.button20);
+					this.panel1.Controls.Add(this.butDir8);
+					this.panel1.Controls.Add(this.butDir5);
+					this.panel1.Controls.Add(this.butDir2);
+					this.panel1.Controls.Add(this.butDir4);
+					this.panel1.Controls.Add(this.butDir7);
+					this.panel1.Controls.Add(this.butDir3);
+					this.panel1.Controls.Add(this.butDir1);
+					this.panel1.Controls.Add(this.butDir6);
 					this.panel1.Location = new System.Drawing.Point(128, 41);
 					this.panel1.Name = "panel1";
 					this.panel1.Size = new System.Drawing.Size(44, 44);
 					this.panel1.TabIndex = 15;
 					// 
-					// button25
+					// butDir8
 					// 
-					this.button25.Location = new System.Drawing.Point(0, 0);
-					this.button25.Name = "button25";
-					this.button25.Size = new System.Drawing.Size(14, 14);
-					this.button25.TabIndex = 12;
-					this.button25.UseVisualStyleBackColor = true;
-					this.button25.Click += new System.EventHandler(this.button25_Click);
+					this.butDir8.Location = new System.Drawing.Point(0, 0);
+					this.butDir8.Name = "butDir8";
+					this.butDir8.Size = new System.Drawing.Size(14, 14);
+					this.butDir8.TabIndex = 12;
+					this.butDir8.UseVisualStyleBackColor = true;
+					this.butDir8.Click += new System.EventHandler(this.button25_Click);
 					// 
-					// button23
+					// butDir5
 					// 
-					this.button23.Location = new System.Drawing.Point(30, 15);
-					this.button23.Name = "button23";
-					this.button23.Size = new System.Drawing.Size(14, 14);
-					this.button23.TabIndex = 10;
-					this.button23.UseVisualStyleBackColor = true;
-					this.button23.Click += new System.EventHandler(this.button23_Click);
+					this.butDir5.Location = new System.Drawing.Point(30, 15);
+					this.butDir5.Name = "butDir5";
+					this.butDir5.Size = new System.Drawing.Size(14, 14);
+					this.butDir5.TabIndex = 10;
+					this.butDir5.UseVisualStyleBackColor = true;
+					this.butDir5.Click += new System.EventHandler(this.button23_Click);
 					// 
-					// button27
+					// butDir2
 					// 
-					this.button27.Location = new System.Drawing.Point(0, 30);
-					this.button27.Name = "button27";
-					this.button27.Size = new System.Drawing.Size(14, 14);
-					this.button27.TabIndex = 14;
-					this.button27.UseVisualStyleBackColor = true;
-					this.button27.Click += new System.EventHandler(this.button27_Click);
+					this.butDir2.Location = new System.Drawing.Point(0, 30);
+					this.butDir2.Name = "butDir2";
+					this.butDir2.Size = new System.Drawing.Size(14, 14);
+					this.butDir2.TabIndex = 14;
+					this.butDir2.UseVisualStyleBackColor = true;
+					this.butDir2.Click += new System.EventHandler(this.button27_Click);
 					// 
-					// button22
+					// butDir4
 					// 
-					this.button22.Location = new System.Drawing.Point(30, 30);
-					this.button22.Name = "button22";
-					this.button22.Size = new System.Drawing.Size(14, 14);
-					this.button22.TabIndex = 9;
-					this.button22.UseVisualStyleBackColor = true;
-					this.button22.Click += new System.EventHandler(this.button22_Click);
+					this.butDir4.Location = new System.Drawing.Point(30, 30);
+					this.butDir4.Name = "butDir4";
+					this.butDir4.Size = new System.Drawing.Size(14, 14);
+					this.butDir4.TabIndex = 9;
+					this.butDir4.UseVisualStyleBackColor = true;
+					this.butDir4.Click += new System.EventHandler(this.button22_Click);
 					// 
-					// button24
+					// butDir7
 					// 
-					this.button24.Location = new System.Drawing.Point(15, 0);
-					this.button24.Name = "button24";
-					this.button24.Size = new System.Drawing.Size(14, 14);
-					this.button24.TabIndex = 11;
-					this.button24.UseVisualStyleBackColor = true;
-					this.button24.Click += new System.EventHandler(this.button24_Click);
+					this.butDir7.Location = new System.Drawing.Point(15, 0);
+					this.butDir7.Name = "butDir7";
+					this.butDir7.Size = new System.Drawing.Size(14, 14);
+					this.butDir7.TabIndex = 11;
+					this.butDir7.UseVisualStyleBackColor = true;
+					this.butDir7.Click += new System.EventHandler(this.button24_Click);
 					// 
-					// button21
+					// butDir3
 					// 
-					this.button21.Location = new System.Drawing.Point(15, 30);
-					this.button21.Name = "button21";
-					this.button21.Size = new System.Drawing.Size(14, 14);
-					this.button21.TabIndex = 8;
-					this.button21.UseVisualStyleBackColor = true;
-					this.button21.Click += new System.EventHandler(this.button21_Click);
+					this.butDir3.Location = new System.Drawing.Point(15, 30);
+					this.butDir3.Name = "butDir3";
+					this.butDir3.Size = new System.Drawing.Size(14, 14);
+					this.butDir3.TabIndex = 8;
+					this.butDir3.UseVisualStyleBackColor = true;
+					this.butDir3.Click += new System.EventHandler(this.button21_Click);
 					// 
-					// button26
+					// butDir1
 					// 
-					this.button26.Location = new System.Drawing.Point(0, 15);
-					this.button26.Name = "button26";
-					this.button26.Size = new System.Drawing.Size(14, 14);
-					this.button26.TabIndex = 13;
-					this.button26.UseVisualStyleBackColor = true;
-					this.button26.Click += new System.EventHandler(this.button26_Click);
+					this.butDir1.Location = new System.Drawing.Point(0, 15);
+					this.butDir1.Name = "butDir1";
+					this.butDir1.Size = new System.Drawing.Size(14, 14);
+					this.butDir1.TabIndex = 13;
+					this.butDir1.UseVisualStyleBackColor = true;
+					this.butDir1.Click += new System.EventHandler(this.button26_Click);
 					// 
-					// button20
+					// butDir6
 					// 
-					this.button20.Location = new System.Drawing.Point(30, 0);
-					this.button20.Name = "button20";
-					this.button20.Size = new System.Drawing.Size(14, 14);
-					this.button20.TabIndex = 7;
-					this.button20.UseVisualStyleBackColor = true;
-					this.button20.Click += new System.EventHandler(this.button20_Click);
+					this.butDir6.Location = new System.Drawing.Point(30, 0);
+					this.butDir6.Name = "butDir6";
+					this.butDir6.Size = new System.Drawing.Size(14, 14);
+					this.butDir6.TabIndex = 7;
+					this.butDir6.UseVisualStyleBackColor = true;
+					this.butDir6.Click += new System.EventHandler(this.button20_Click);
 					// 
 					// butCallageStart
 					// 
@@ -2006,24 +2020,58 @@
 					this.butArmSlow.UseVisualStyleBackColor = true;
 					this.butArmSlow.Click += new System.EventHandler(this.butArmSlow_Click);
 					// 
-					// butCPU
+					// butLeftSize1
 					// 
-					this.butCPU.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-					this.butCPU.Image = ((System.Drawing.Image)(resources.GetObject("butCPU.Image")));
-					this.butCPU.ImageTransparentColor = System.Drawing.Color.Magenta;
-					this.butCPU.Name = "butCPU";
-					this.butCPU.Size = new System.Drawing.Size(34, 22);
-					this.butCPU.Text = "CPU";
-					this.butCPU.Click += new System.EventHandler(this.butCPU_Click);
+					this.butLeftSize1.Location = new System.Drawing.Point(253, 493);
+					this.butLeftSize1.Name = "butLeftSize1";
+					this.butLeftSize1.Size = new System.Drawing.Size(48, 23);
+					this.butLeftSize1.TabIndex = 31;
+					this.butLeftSize1.Text = "L size1";
+					this.butLeftSize1.UseVisualStyleBackColor = true;
+					this.butLeftSize1.Click += new System.EventHandler(this.butLeftSize1_Click);
+					// 
+					// butLeftSize2
+					// 
+					this.butLeftSize2.Location = new System.Drawing.Point(253, 522);
+					this.butLeftSize2.Name = "butLeftSize2";
+					this.butLeftSize2.Size = new System.Drawing.Size(48, 23);
+					this.butLeftSize2.TabIndex = 32;
+					this.butLeftSize2.Text = "L size2";
+					this.butLeftSize2.UseVisualStyleBackColor = true;
+					this.butLeftSize2.Click += new System.EventHandler(this.butLeftSize2_Click);
+					// 
+					// butRightSize1
+					// 
+					this.butRightSize1.Location = new System.Drawing.Point(263, 549);
+					this.butRightSize1.Name = "butRightSize1";
+					this.butRightSize1.Size = new System.Drawing.Size(50, 23);
+					this.butRightSize1.TabIndex = 33;
+					this.butRightSize1.Text = "R size1";
+					this.butRightSize1.UseVisualStyleBackColor = true;
+					this.butRightSize1.Click += new System.EventHandler(this.butRightSize1_Click);
+					// 
+					// butRightSize2
+					// 
+					this.butRightSize2.Location = new System.Drawing.Point(263, 578);
+					this.butRightSize2.Name = "butRightSize2";
+					this.butRightSize2.Size = new System.Drawing.Size(50, 23);
+					this.butRightSize2.TabIndex = 34;
+					this.butRightSize2.Text = "R size2";
+					this.butRightSize2.UseVisualStyleBackColor = true;
+					this.butRightSize2.Click += new System.EventHandler(this.butRightSize2_Click);
 					// 
 					// frmMain
 					// 
 					this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 					this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 					this.ClientSize = new System.Drawing.Size(1263, 729);
+					this.Controls.Add(this.butRightSize2);
 					this.Controls.Add(this.groupBox2);
+					this.Controls.Add(this.butRightSize1);
 					this.Controls.Add(this.groupBox4);
+					this.Controls.Add(this.butLeftSize2);
 					this.Controls.Add(this.groupBox1);
+					this.Controls.Add(this.butLeftSize1);
 					this.Controls.Add(this.tabControl1);
 					this.Controls.Add(this.propertyVar);
 					this.Controls.Add(this.label4);
@@ -2127,14 +2175,14 @@
         private System.Windows.Forms.PictureBox picTable;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button25;
-        private System.Windows.Forms.Button button23;
-        private System.Windows.Forms.Button button27;
-        private System.Windows.Forms.Button button22;
-        private System.Windows.Forms.Button button24;
-        private System.Windows.Forms.Button button21;
-        private System.Windows.Forms.Button button26;
-        private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.Button butDir8;
+        private System.Windows.Forms.Button butDir5;
+        private System.Windows.Forms.Button butDir2;
+        private System.Windows.Forms.Button butDir4;
+        private System.Windows.Forms.Button butDir7;
+        private System.Windows.Forms.Button butDir3;
+        private System.Windows.Forms.Button butDir1;
+        private System.Windows.Forms.Button butDir6;
         private System.Windows.Forms.Button butCallageStart;
         private System.Windows.Forms.Button butGoInit;
         private System.Windows.Forms.Label label3;
@@ -2240,6 +2288,10 @@
 				private System.Windows.Forms.ComboBox cmbArmMode;
 				private System.Windows.Forms.ToolStripLabel lblMousePos;
 				private System.Windows.Forms.ToolStripButton butCPU;
+				private System.Windows.Forms.Button butLeftSize1;
+				private System.Windows.Forms.Button butRightSize2;
+				private System.Windows.Forms.Button butRightSize1;
+				private System.Windows.Forms.Button butLeftSize2;
     }
 }
 
