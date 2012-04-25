@@ -426,7 +426,10 @@ namespace ComDebraFpga
 		internal void Connect(string comPort)
 		{
 			if (comPort.Contains("."))
-				comTcp.Connect(comPort, 5000);
+			{
+				string[] splt = comPort.Split(new char[] { ':' });
+				comTcp.Connect(splt[0], int.Parse(splt[1]));
+			}
 			else
 				com.Connect(comPort, 115200);
 		}
