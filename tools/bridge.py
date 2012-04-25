@@ -1,10 +1,18 @@
+#!/usr/bin/env python2
+
 import socket
-# from threading import Thread
-from thread import *
+
+try:
+	from threading import Thread
+except:
+	from thread import Thread
 
 from sys import argv
 
-import serial
+try:
+	import serial
+except:
+	print("Cannot import Pyserial")
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -24,8 +32,8 @@ class SerialToTcpThread(Thread):
 		
 	def run(self):
 		while self.running:
-			c = robot.read(1)
-			self.conn.write(c)
+			c = robot.read(50)
+			self.conn.send(c)
 
 	def kill(self):
 		self.running = False
@@ -38,8 +46,8 @@ class TcpToSerialThread(Thread):
 	
 	def run(self):
 		
+		print("Waiting for client...")
 		# accept "call" from client
-		print("Start waiting client")
 		s.listen(1)
 		conn, addr = s.accept()
 		print('client is at' + str(addr))
@@ -54,8 +62,7 @@ class TcpToSerialThread(Thread):
 				data = 0
 			if data == 0:
 				break
-			print(data)
-			
+				
 			robot.write(data)
 			
 		thread.kill()
@@ -75,4 +82,5 @@ if __name__ == "__main__":
 			pass
 	except:
 		t.kill()
-	
+		print("Exit soon, flushing TCP/IP buffers...")
+		s.close()
