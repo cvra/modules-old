@@ -7,7 +7,7 @@ try:
 except:
 	from thread import Thread
 
-from sys import argv
+from sys import argv, exit
 
 try:
 	import serial
@@ -17,9 +17,16 @@ except:
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # associate the socket with a port
+
+
+if len(argv) < 3:
+	print "Yo try to run me without port ? Better hide yo kids and yo woman !"
+	print "Usage : bridge.py [ip port] [serial port]"
+	exit(0)
+
 s.bind(('', int(argv[1])))
 
-robot = serial.Serial("/dev/ttyUSB0", baudrate=57600, timeout = 1)
+robot = serial.Serial(argv[2], baudrate=57600, timeout = 1)
 
 
 class SerialToTcpThread(Thread):
