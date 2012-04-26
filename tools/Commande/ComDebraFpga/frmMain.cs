@@ -61,6 +61,14 @@ namespace ComDebraFpga
 				dataButs.Rows.Add(new string[] { lstCmd[i].label, lstCmd[i].defaultVal });
 			}
 
+			if (Settings.Default.dataMove != null)
+			{
+				for (int i = 0; i < Settings.Default.dataMove.Count; i++)
+				{
+					dataMove.Rows.Add(Settings.Default.dataMove[i].Split(new char[]{'|'}));
+				}
+			}
+
 			m = new clMain(this);
 			drawTable = new clDrawTable(picTable, m);
 		}
@@ -541,9 +549,9 @@ namespace ComDebraFpga
 					default:
 						return;
 				}
-				if (dataMove.Rows[e.RowIndex].Cells[0].Value.ToString() == "D")
+				if (dataMove.Rows[e.RowIndex].Cells[4].Value.ToString() == "D")
 					sendArmRight(typeMove, x, y, z);
-				else if (dataMove.Rows[e.RowIndex].Cells[0].Value.ToString() == "G")
+				else if (dataMove.Rows[e.RowIndex].Cells[4].Value.ToString() == "G")
 					sendArmLeft(typeMove, x, y, z);
 			}
 		}
