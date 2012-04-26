@@ -39,6 +39,11 @@ namespace ComDebraFpga
 			{
         if (double.TryParse(s[i], out v))
           chart.Series[i].Points.AddY(v);
+
+				while (chart.Series[i].Points.Count > 5000)
+				{
+					chart.Series[i].Points.RemoveAt(0);
+				}
 			}
     }
 

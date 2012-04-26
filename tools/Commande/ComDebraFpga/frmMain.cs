@@ -82,6 +82,17 @@ namespace ComDebraFpga
 		private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			m.Dispose();
+
+			Settings.Default.dataMove = new System.Collections.Specialized.StringCollection();
+			for (int i = 0; i < dataMove.Rows.Count - 1; i++)
+			{
+				Settings.Default.dataMove.Add(dataMove.Rows[i].Cells[0].Value.ToString() + "|" +
+					dataMove.Rows[i].Cells[1].Value.ToString() + "|" +
+					dataMove.Rows[i].Cells[2].Value.ToString() + "|" +
+					dataMove.Rows[i].Cells[3].Value.ToString() + "|" +
+					dataMove.Rows[i].Cells[4].Value.ToString());
+			}
+			
 			Settings.Default.comPort = txtPort.Text;
 			Settings.Default.Save();
 		}
@@ -414,7 +425,7 @@ namespace ComDebraFpga
 
 		private void butArmSlow_Click(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.gen_func, new int[] { 3});
+			m.sendCmd(LstPos.gen_func, new int[] { 3 });
 		}
 
 		private void butArmFast_Click(object sender, EventArgs e)
@@ -442,11 +453,6 @@ namespace ComDebraFpga
 		{
 			sendArmLeft(2, -83, -75, 150);
 			sendArmRight(2, 83, -75, 150);
-		}
-
-		private void cmbArmMode_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			m.sendCmdByte(LstPos.arm_mode, new int[] { cmbArmMode.SelectedIndex, cmbArmMode.SelectedIndex });
 		}
 
 		private void picTable_MouseMove(object sender, MouseEventArgs e)
@@ -480,6 +486,98 @@ namespace ComDebraFpga
 		private void butRightSize2_Click(object sender, EventArgs e)
 		{
 			m.sendCmd(LstPos.gen_func, new int[] { 13, 3 });
+		}
+
+		private void butSetZ200_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 15, 0 });
+		}
+
+		private void butInitCheckPoint1_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 17, 0 });
+		}
+
+		private void butInitCheckPoint2_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 17, 1 });
+		}
+
+		private void lstArmMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			m.sendCmdByte(LstPos.arm_mode, new int[] { lstArmMode.SelectedIndex, lstArmMode.SelectedIndex });
+		}
+
+		private void dataMove_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (dataMove.Rows[e.RowIndex].Cells[0].Value == null ||
+				dataMove.Rows[e.RowIndex].Cells[1].Value == null ||
+				dataMove.Rows[e.RowIndex].Cells[2].Value == null ||
+				dataMove.Rows[e.RowIndex].Cells[3].Value == null ||
+				dataMove.Rows[e.RowIndex].Cells[4].Value == null ||
+				e.ColumnIndex != 5)
+				return;
+
+			int x, y, z;
+			if (int.TryParse(dataMove.Rows[e.RowIndex].Cells[0].Value.ToString(), out x) &&
+					int.TryParse(dataMove.Rows[e.RowIndex].Cells[1].Value.ToString(), out y) &&
+					int.TryParse(dataMove.Rows[e.RowIndex].Cells[2].Value.ToString(), out z))
+			{
+				int typeMove;
+				switch (dataMove.Rows[e.RowIndex].Cells[3].Value.ToString())
+				{
+					case "Arm":
+						typeMove = 0;
+						break;
+					case "Robot":
+						typeMove = 2;
+						break;
+					case "Table":
+						typeMove = 1;
+						break;
+					case "Angle":
+						typeMove = 3;
+						break;
+					default:
+						return;
+				}
+				if (dataMove.Rows[e.RowIndex].Cells[0].Value.ToString() == "D")
+					sendArmRight(typeMove, x, y, z);
+				else if (dataMove.Rows[e.RowIndex].Cells[0].Value.ToString() == "G")
+					sendArmLeft(typeMove, x, y, z);
+			}
+		}
+
+		private void armToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dataMove.SelectedCells.Count == 1)
+			{
+				dataMove.Rows[dataMove.SelectedCells[0].RowIndex].Cells[3].Value = "Arm";
+			}
+		}
+
+		private void robotToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dataMove.SelectedCells.Count == 1)
+			{
+				dataMove.Rows[dataMove.SelectedCells[0].RowIndex].Cells[3].Value = "Robot";
+			}
+		}
+
+		private void tableToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dataMove.SelectedCells.Count == 1)
+			{
+				dataMove.Rows[dataMove.SelectedCells[0].RowIndex].Cells[3].Value = "Table";
+			}
+		}
+
+		private void angleToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dataMove.SelectedCells.Count == 1)
+			{
+				dataMove.Rows[dataMove.SelectedCells[0].RowIndex].Cells[3].Value = "Angle";
+			}
 		}
 
 	}

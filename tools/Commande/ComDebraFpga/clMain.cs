@@ -18,7 +18,8 @@ namespace ComDebraFpga
 		posY,
 		angle,
 		status,
-		vals
+		vals,
+		TcpEvent
 	}
 
 	enum LstPos
@@ -73,13 +74,15 @@ namespace ComDebraFpga
 
 	class ComElem
 	{
-		public string val;
-		public TypeVal typeVal;
+		internal string val;
+		internal TypeVal typeVal;
+		internal int valInt;
 
-		public ComElem(TypeVal inType, string Val)
+		public ComElem(TypeVal inType, string Val, int ValInt = 0)
 		{
 			typeVal = inType;
 			val = Val;
+			valInt = ValInt;
 		}
 
 		public override string ToString()
@@ -124,14 +127,10 @@ namespace ComDebraFpga
 			switch (e.TypeEvent)
 			{
 				case clTCPClient.EtatConn.CLIENT_CONNECTED:
-					main.butConnect.Text = "Disconnect";
-					main.butConnect.Enabled = true;
-					main.addLog(new ComElem(TypeVal.info, "Connected"));
+					main.addLog(new ComElem(TypeVal.TcpEvent, e.Data, (int)e.TypeEvent));
 					break;
 				case clTCPClient.EtatConn.CLIENT_DISCONNECTED:
-					main.butConnect.Text = "Connect";
-					main.butConnect.Enabled = true;
-					main.addLog(new ComElem(TypeVal.info, "Disconnected"));
+					main.addLog(new ComElem(TypeVal.TcpEvent, e.Data, (int)e.TypeEvent));
 					break;
 				case clTCPClient.EtatConn.DATA_RECEIVED:
 					buffer.AddRange(e.DataByte);
@@ -141,9 +140,7 @@ namespace ComDebraFpga
 
 					break;
 				case clTCPClient.EtatConn.TCP_ERROR:
-					main.butConnect.Text = "Connect";
-					main.butConnect.Enabled = true;
-					main.addLog(new ComElem(TypeVal.info, e.Data));
+					main.addLog(new ComElem(TypeVal.TcpEvent, e.Data, (int)e.TypeEvent));
 					break;
 			}
 
@@ -421,6 +418,7 @@ namespace ComDebraFpga
 		{
 			com.Disconnect();
 			com.End();
+			comTcp.Disconnect();
 		}
 
 		internal void Connect(string comPort)
