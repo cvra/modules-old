@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
 import socket
+import struct
 
 from threading import Thread
 
@@ -32,12 +33,14 @@ class SerialToTcpThread(Thread):
 		Thread.__init__(self)
 		self.running = True
 		self.conn = sock
+		self.packer = struct.Struct("B")
 		
 		
 	def run(self):
 		while self.running:
 			c = robot.read(1)
-			self.conn.send(c)
+			if len(c) != 0:
+				self.conn.send(self.packer.pack(ord(c)))
 
 	def kill(self):
 		self.running = False
@@ -53,16 +56,15 @@ class TcpToSerialThread(Thread):
 		print("Waiting for client...")
 		# accept "call" from client
 		s.listen(1)
-		print("Phallus")
 		conn, addr = s.accept()
 		print('client is at' + str(addr))
-		conn.send("Procty, Robot proctologue \r\n")
+		conn.send("Bienvenue chez Procty, Robot proctologue \r\n")
 		thread = SerialToTcpThread(conn)
 		thread.start()
 		
 		while self.running:
 			try:
-				data = conn.recv(1024)
+				data = conn.recv(1)
 			except:
 				data = 0
 			if data == 0:
