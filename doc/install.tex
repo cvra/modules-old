@@ -116,7 +116,29 @@ ALT_INCLUDE_DIRS += modules/couple_limiter
 ALT_INCLUDE_DIRS += modules/cvra_logger
 \end{lstlisting}
 
+\section{Réglage du BSP}
+La dernière chose à faire est de configurer le BSP. Pour ca faire un clic droit sur le
+projet BSP et aller dans \"Nios II -> BSP editor\". Régler stderr sur le jtag\_uart et stdin et stdout sur commPC.
 
+\section{Compilation et upload}
+Pour compiler le projet le plus simple est de le faire en ligne de commande. Pour
+ouvrir un shell, click droit sur le projet et ensuite "Nios II -> Nios II command shell". 
+Un shell UNIX s'ouvre alors.
+
+Pour compiler, faire
+\begin{lstlisting}[frame=trBL]
+$ make
+\end{lstlisting}
+
+et pour programmer le microcontrolleur (compile automatiquement avant) :
+\begin{lstlisting}[frame=trBL]
+$ make download-elf
+\end{lstlisting}
+
+\textbf{Attention :} Seule la RAM du microcontrolleur est programmée. Une fois la
+version définitive (utilisée en match) terminée, consulter la section \ref{program-flash}
+pour mettre le programme dans l'\textsc{EPCS}\footnote{Puce contenant la configuration du FPGA
+et le programme pour le Nios II de façon persistante}.
 
 
 \end{document}
