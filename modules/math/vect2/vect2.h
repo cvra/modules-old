@@ -39,11 +39,11 @@
 #define _VECT2_H_
 
 /** \brief Definition of reals used in vector 2d */
-typedef double Real;
+typedef float Real;
 
-#define TO_RAD(x) (((double)x)*(M_PI/180.0))
-#define TO_DEG(x) (((double)x)*(180.0/M_PI))
-#define Dist2Vect(v1,v2) (sqrt((v1.x - v2.x)*(v1.x - v2.x)+(v1.y - v2.y)*(v1.y - v2.y)))
+#define TO_RAD(x) (((Real)x)*(0.01745329251994329577f))
+#define TO_DEG(x) (((Real)x)*(57.2957795130823208768f))
+#define Dist2Vect(v1,v2) (sqrtf((v1.x - v2.x)*(v1.x - v2.x)+(v1.y - v2.y)*(v1.y - v2.y)))
 
 /** \brief Cartesian vector structure
 **/

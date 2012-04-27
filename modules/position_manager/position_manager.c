@@ -261,6 +261,10 @@ double position_get_x_double(struct robot_position *pos)
 {
 	return pos->pos_d.x;
 }
+float position_get_x_float(struct robot_position *pos)
+{
+	return (float)pos->pos_d.x;
+}
 
 /**
  * returns current y
@@ -269,6 +273,10 @@ double position_get_y_double(struct robot_position *pos)
 {
 	return pos->pos_d.y;
 }
+float position_get_y_float(struct robot_position *pos)
+{
+	return (float)pos->pos_d.y;
+}
 
 /**
  * returns current alpha
@@ -276,5 +284,13 @@ double position_get_y_double(struct robot_position *pos)
 double position_get_a_rad_double(struct robot_position *pos)
 {
 	return pos->pos_d.a;
+}
+
+/**
+ * returns current alpha
+ */
+float position_get_a_rad_float(struct robot_position *pos)
+{
+	return (float)(pos->pos_d.a);
 }
 

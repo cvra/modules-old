@@ -212,9 +212,9 @@ namespace lib.TCPClient
 				Int32 i;
 
 				// Read the first batch of the TcpServer response bytes.
-				stream.ReadTimeout = 10000;
-				client.ReceiveTimeout = 10000;
-				client.SendTimeout = 10000;
+				stream.ReadTimeout = 1000000;
+				client.ReceiveTimeout = 1000000;
+				client.SendTimeout = 1000000;
 
 				Connecting = false;
 

@@ -26,7 +26,7 @@
 #include <vect_base.h>
 #include <circles.h>
 
-static inline double sq(double x)
+static inline float sq(float x)
 {
 	return x*x;
 }
@@ -55,7 +55,7 @@ int circle_intersect(const circle_t *c1, const circle_t *c2,
 			 point_t *p1, point_t *p2)
 {
 	circle_t ca, cb;
-	double a, b, c, d, e;
+	float a, b, c, d, e;
 	uint8_t ret = 0;
 
 	/* create circles with same radius, but centered on 0,0 : it
@@ -69,36 +69,36 @@ int circle_intersect(const circle_t *c1, const circle_t *c2,
 
 	/* inspired from http://www.loria.fr/~roegel/notes/note0001.pdf 
 	 * which can be found in doc. */
-	a = 2. * cb.x;
-	b = 2. * cb.y;
+	a = 2.0f * cb.x;
+	b = 2.0f * cb.y;
 	c = sq(cb.x) + sq(cb.y) - sq(cb.r) + sq(ca.r);
-	d = sq(2. * a * c) -
-		(4. * (sq(a) + sq(b)) * (sq(c) - sq(b) * sq(ca.r)) );
+	d = sq(2.0f * a * c) -
+		(4.0f * (sq(a) + sq(b)) * (sq(c) - sq(b) * sq(ca.r)) );
 
 	/* no intersection */
-	if (d < 0)
+	if (d < 0.0f)
 		return 0;
 
 	
-	if (fabs(b) < 1e-4) {
+	if (fabsf(b) <  0.0001f) {
 		/* special case */
-		e = sq(cb.r) - sq((2. * c - sq(a)) / (2. * a));
+		e = sq(cb.r) - sq((2.0f * c - sq(a)) / (2.0f * a));
 
 		/* no intersection */
-		if (e < 0)
+		if (e < 0.0f)
 			return 0;
 
-		p1->x = (2. * a * c - sqrt(d)) / (2. * (sq(a) + sq(b)));
-		p1->y = sqrt(e);
+		p1->x = (2.0f * a * c - sqrtf(d)) / (2.0f * (sq(a) + sq(b)));
+		p1->y = sqrtf(e);
 		p2->x = p1->x;
 		p2->y = p1->y;
 		ret = 1;
 	}
 	else {
 		/* usual case */
-		p1->x = (2. * a * c - sqrt(d)) / (2. * (sq(a) + sq(b)));
+		p1->x = (2.0f * a * c - sqrtf(d)) / (2.0f * (sq(a) + sq(b)));
 		p1->y = (c - a * p1->x) / b;
-		p2->x = (2. * a * c + sqrt(d)) / (2. * (sq(a) + sq(b)));
+		p2->x = (2.0f * a * c + sqrtf(d)) / (2.0f * (sq(a) + sq(b)));
 		p2->y = (c - a * p2->x) / b;
 		ret = 2;
 	}

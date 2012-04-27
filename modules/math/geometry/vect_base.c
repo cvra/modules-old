@@ -63,20 +63,20 @@ float xy_norm(float x1, float y1, float x2, float y2)
 {
 	float x = x2 - x1;
 	float y = y2 - y1;
-	return sqrt(x*x + y*y);
+	return sqrtf(x*x + y*y);
 }
 
 float pt_norm(const point_t *p1, const point_t *p2)
 {
 	float x = p2->x - p1->x;
 	float y = p2->y - p1->y;
-	return sqrt(x*x + y*y);
+	return sqrtf(x*x + y*y);
 }
 
 /* norm of a vector */
 float vect_norm(const vect_t *v)
 {
-	return sqrt(v->x*v->x+v->y*v->y);
+	return sqrtf(v->x*v->x+v->y*v->y);
 }
 
 void vect_rot_trigo(vect_t *v)
@@ -106,7 +106,7 @@ float vect_get_angle(vect_t *v, vect_t *w)
 	ps = vect_pscal(v, w);
 	n = vect_norm(v) * vect_norm(w);
 
-	return acos((float)ps/n);
+	return acosf((float)ps/n);
 }
 
 void vect_resize(vect_t *v, float l)

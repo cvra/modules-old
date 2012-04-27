@@ -32,7 +32,7 @@ namespace ComDebraFpga
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "11=Arm ask wanted pos", "11"));
 			//lstCmd.Add(new ComCmd(LstPos.gen_func, "12=Arm prendre CD", "12,2"));
 			//lstCmd.Add(new ComCmd(LstPos.gen_func, "13=Arm sortir lingot", "13,2"));
-			//lstCmd.Add(new ComCmd(LstPos.gen_func, "14=Arm sortir CD", "14,2"));
+			lstCmd.Add(new ComCmd(LstPos.gen_func, "14=Arm sense coude", "14,1"));
 			//lstCmd.Add(new ComCmd(LstPos.gen_func, "15=Arm prendre lingot lat", "15,2"));
 			lstCmd.Add(new ComCmd(LstPos.gen_func, "16=Arm get angle init", "16,2"));
 
@@ -61,6 +61,14 @@ namespace ComDebraFpga
 				dataButs.Rows.Add(new string[] { lstCmd[i].label, lstCmd[i].defaultVal });
 			}
 
+			if (Settings.Default.dataMove != null)
+			{
+				for (int i = 0; i < Settings.Default.dataMove.Count; i++)
+				{
+					dataMove.Rows.Add(Settings.Default.dataMove[i].Split(new char[]{'|'}));
+				}
+			}
+
 			m = new clMain(this);
 			drawTable = new clDrawTable(picTable, m);
 		}
@@ -82,6 +90,17 @@ namespace ComDebraFpga
 		private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			m.Dispose();
+
+			Settings.Default.dataMove = new System.Collections.Specialized.StringCollection();
+			for (int i = 0; i < dataMove.Rows.Count - 1; i++)
+			{
+				Settings.Default.dataMove.Add(dataMove.Rows[i].Cells[0].Value.ToString() + "|" +
+					dataMove.Rows[i].Cells[1].Value.ToString() + "|" +
+					dataMove.Rows[i].Cells[2].Value.ToString() + "|" +
+					dataMove.Rows[i].Cells[3].Value.ToString() + "|" +
+					dataMove.Rows[i].Cells[4].Value.ToString());
+			}
+			
 			Settings.Default.comPort = txtPort.Text;
 			Settings.Default.Save();
 		}
@@ -116,6 +135,9 @@ namespace ComDebraFpga
 
 				m.info.hasNewData = false;
 				picTable.Invalidate();
+
+				if (grCpu != null && grCpu.IsDisposed == false)
+					grCpu.addData(m.info.longestTask + " " + m.info.armProcTime + " " + m.info.armMProcTime);
 			}
 
 			if (butConnect.Text == "Connect")
@@ -411,7 +433,7 @@ namespace ComDebraFpga
 
 		private void butArmSlow_Click(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.gen_func, new int[] { 3});
+			m.sendCmd(LstPos.gen_func, new int[] { 3 });
 		}
 
 		private void butArmFast_Click(object sender, EventArgs e)
@@ -441,15 +463,129 @@ namespace ComDebraFpga
 			sendArmRight(2, 83, -75, 150);
 		}
 
-		private void cmbArmMode_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			m.sendCmdByte(LstPos.arm_mode, new int[] { cmbArmMode.SelectedIndex, cmbArmMode.SelectedIndex });
-		}
-
 		private void picTable_MouseMove(object sender, MouseEventArgs e)
 		{
 			lblMousePos.Text = ((int)((picTable.Width - e.X) / drawTable.RatioPixelInc)).ToString() + "," +
 ((int)(e.Y / drawTable.RatioPixelInc)).ToString();
+		}
+
+		private void butCPU_Click(object sender, EventArgs e)
+		{
+			if (grCpu == null || grCpu.IsDisposed)
+				grCpu = new frmGraph();
+			grCpu.Show();
+		}
+
+		private void butLeftSize1_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 13, 0 });
+		}
+
+		private void butLeftSize2_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 13, 1 });
+		}
+
+		private void butRightSize1_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 13, 2 });
+		}
+
+		private void butRightSize2_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 13, 3 });
+		}
+
+		private void butSetZ200_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 15, 0 });
+		}
+
+		private void butInitCheckPoint1_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 17, 0 });
+		}
+
+		private void butInitCheckPoint2_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 17, 1 });
+		}
+
+		private void lstArmMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			m.sendCmdByte(LstPos.arm_mode, new int[] { lstArmMode.SelectedIndex, lstArmMode.SelectedIndex });
+		}
+
+		private void dataMove_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (dataMove.Rows[e.RowIndex].Cells[0].Value == null ||
+				dataMove.Rows[e.RowIndex].Cells[1].Value == null ||
+				dataMove.Rows[e.RowIndex].Cells[2].Value == null ||
+				dataMove.Rows[e.RowIndex].Cells[3].Value == null ||
+				dataMove.Rows[e.RowIndex].Cells[4].Value == null ||
+				e.ColumnIndex != 5)
+				return;
+
+			int x, y, z;
+			if (int.TryParse(dataMove.Rows[e.RowIndex].Cells[0].Value.ToString(), out x) &&
+					int.TryParse(dataMove.Rows[e.RowIndex].Cells[1].Value.ToString(), out y) &&
+					int.TryParse(dataMove.Rows[e.RowIndex].Cells[2].Value.ToString(), out z))
+			{
+				int typeMove;
+				switch (dataMove.Rows[e.RowIndex].Cells[3].Value.ToString())
+				{
+					case "Arm":
+						typeMove = 0;
+						break;
+					case "Robot":
+						typeMove = 2;
+						break;
+					case "Table":
+						typeMove = 1;
+						break;
+					case "Angle":
+						typeMove = 3;
+						break;
+					default:
+						return;
+				}
+				if (dataMove.Rows[e.RowIndex].Cells[4].Value.ToString() == "D")
+					sendArmRight(typeMove, x, y, z);
+				else if (dataMove.Rows[e.RowIndex].Cells[4].Value.ToString() == "G")
+					sendArmLeft(typeMove, x, y, z);
+			}
+		}
+
+		private void armToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dataMove.SelectedCells.Count == 1)
+			{
+				dataMove.Rows[dataMove.SelectedCells[0].RowIndex].Cells[3].Value = "Arm";
+			}
+		}
+
+		private void robotToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dataMove.SelectedCells.Count == 1)
+			{
+				dataMove.Rows[dataMove.SelectedCells[0].RowIndex].Cells[3].Value = "Robot";
+			}
+		}
+
+		private void tableToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dataMove.SelectedCells.Count == 1)
+			{
+				dataMove.Rows[dataMove.SelectedCells[0].RowIndex].Cells[3].Value = "Table";
+			}
+		}
+
+		private void angleToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (dataMove.SelectedCells.Count == 1)
+			{
+				dataMove.Rows[dataMove.SelectedCells[0].RowIndex].Cells[3].Value = "Angle";
+			}
 		}
 
 	}

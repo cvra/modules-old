@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using lib.TCPClient;
 
 namespace ComDebraFpga
 {
 	public partial class frmMain : Form
 	{
 		frmGraph gr = new frmGraph();
+		frmGraph grCpu = new frmGraph();
 		List<ComElem> lstLog = new List<ComElem>();
 		List<ComCmd> lstCmd = new List<ComCmd>();
 
@@ -47,6 +49,24 @@ namespace ComDebraFpga
 				case TypeVal.vals:
 					gr.addData(lstLog[0].val);
 					// rtbLog.AppendText(lstLog[0].val + "\r\n");
+					break;
+				case TypeVal.TcpEvent:
+					switch ((clTCPClient.EtatConn)lstLog[0].valInt)
+					{
+						case clTCPClient.EtatConn.TCP_ERROR:
+							butConnect.Text = "Connect";
+							butConnect.Enabled = true;
+							rtbLog.AppendText(lstLog[0].val + "\r\n");
+							break;
+						case clTCPClient.EtatConn.CLIENT_CONNECTED:
+							butConnect.Text = "Disconnect";
+							butConnect.Enabled = true;
+							break;
+						case clTCPClient.EtatConn.CLIENT_DISCONNECTED:
+							butConnect.Text = "Connect";
+							butConnect.Enabled = true;
+							break;
+					}
 					break;
 				default:
 					rtbLog.AppendText(lstLog[0].val + "\r\n");
@@ -156,12 +176,12 @@ namespace ComDebraFpga
 
 		private void sendArmLeft(int typePos, int x, int y, int z)
 		{
-			m.sendCmd(LstPos.arm_position, new int[] { typePos | (0 << 8), x,y,z});
+			m.sendCmd(LstPos.arm_position, new int[] { typePos | (0 << 8), x, y, z });
 		}
 
 		private void sendArmRight(int typePos, int x, int y, int z)
 		{
-			m.sendCmd(LstPos.arm_position, new int[] { typePos | (1 << 8), x,y,z });
+			m.sendCmd(LstPos.arm_position, new int[] { typePos | (1 << 8), x, y, z });
 
 			if (typePos != 0)
 				return;
@@ -190,16 +210,16 @@ namespace ComDebraFpga
 			/* Si on a 2 possibilites, on essaye de mettre l'epaule le plus au milieu possible */
 			if (nbPos == 2)
 			{
-					if (p1.x < p2.x)
-					{
-						pVoulu = p2;
-						pNonVoulu = p1;
-					}
-					else
-					{
-						pVoulu = p1;
-						pNonVoulu = p2;
-					}
+				if (p1.x < p2.x)
+				{
+					pVoulu = p2;
+					pNonVoulu = p1;
+				}
+				else
+				{
+					pVoulu = p1;
+					pNonVoulu = p2;
+				}
 			}
 			else
 			{

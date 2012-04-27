@@ -40,7 +40,6 @@ void bd_init(struct blocking_detection * bd, struct cs *cs)
     memset(bd, 0, sizeof(*bd));
     bd->cs = cs;
     IRQ_UNLOCK(flags);
-    
 }
 
 

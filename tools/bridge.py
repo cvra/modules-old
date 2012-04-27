@@ -1,16 +1,29 @@
+#!/usr/bin/env python2
+
 import socket
+
 from threading import Thread
 
-from sys import argv
+from sys import argv, exit
 
-import serial
+try:
+	import serial
+except:
+	print("Cannot import Pyserial")
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # associate the socket with a port
+
+
+if len(argv) < 3:
+	print "Yo try to run me without port ? Better hide yo kids and yo woman !"
+	print "Usage : bridge.py [ip port] [serial port]"
+	exit(0)
+
 s.bind(('', int(argv[1])))
 
-robot = serial.Serial("/dev/ttyUSB0", baudrate=57600, timeout = 1)
+robot = serial.Serial(argv[2], baudrate=115200, timeout = 1)
 
 
 class SerialToTcpThread(Thread):
@@ -24,7 +37,7 @@ class SerialToTcpThread(Thread):
 	def run(self):
 		while self.running:
 			c = robot.read(1)
-			self.conn.write(c)
+			self.conn.send(c)
 
 	def kill(self):
 		self.running = False
@@ -37,12 +50,13 @@ class TcpToSerialThread(Thread):
 	
 	def run(self):
 		
+		print("Waiting for client...")
 		# accept "call" from client
-		print("Start waiting client")
 		s.listen(1)
+		print("Phallus")
 		conn, addr = s.accept()
 		print('client is at' + str(addr))
-		
+		conn.send("Procty, Robot proctologue \r\n")
 		thread = SerialToTcpThread(conn)
 		thread.start()
 		
@@ -53,8 +67,7 @@ class TcpToSerialThread(Thread):
 				data = 0
 			if data == 0:
 				break
-			print(data)
-			
+				
 			robot.write(data)
 			
 		thread.kill()
@@ -74,4 +87,5 @@ if __name__ == "__main__":
 			pass
 	except:
 		t.kill()
-	
+		print("Exit soon, flushing TCP/IP buffers...")
+		s.close()
