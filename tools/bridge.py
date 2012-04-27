@@ -2,10 +2,7 @@
 
 import socket
 
-try:
-	from threading import Thread
-except:
-	from thread import Thread
+from threading import Thread
 
 from sys import argv, exit
 
@@ -26,7 +23,7 @@ if len(argv) < 3:
 
 s.bind(('', int(argv[1])))
 
-robot = serial.Serial(argv[2], baudrate=57600, timeout = 1)
+robot = serial.Serial(argv[2], baudrate=115200, timeout = 1)
 
 
 class SerialToTcpThread(Thread):
@@ -39,7 +36,7 @@ class SerialToTcpThread(Thread):
 		
 	def run(self):
 		while self.running:
-			c = robot.read(50)
+			c = robot.read(1)
 			self.conn.send(c)
 
 	def kill(self):
@@ -56,9 +53,10 @@ class TcpToSerialThread(Thread):
 		print("Waiting for client...")
 		# accept "call" from client
 		s.listen(1)
+		print("Phallus")
 		conn, addr = s.accept()
 		print('client is at' + str(addr))
-		
+		conn.send("Procty, Robot proctologue \r\n")
 		thread = SerialToTcpThread(conn)
 		thread.start()
 		
