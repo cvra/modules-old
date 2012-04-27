@@ -211,7 +211,9 @@ namespace ComDebraFpga
 							info.hasNewData = true;
 						}
 						else
+						{
 							reportError("A");
+						}
 						break;
 					case 1:
 						if (buffer[0] == 'B')
@@ -354,6 +356,8 @@ namespace ComDebraFpga
 		private void traitLine(byte[] cmd)
 		{
 			int k = 4;
+			if (cmd == null)
+				return;
 			switch (cmd[3])
 			{
 				// Position du robot

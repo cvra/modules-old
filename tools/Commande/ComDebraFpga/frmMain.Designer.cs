@@ -89,7 +89,23 @@
 					this.label11 = new System.Windows.Forms.Label();
 					this.cmbAskLog = new System.Windows.Forms.ComboBox();
 					this.tabControl1 = new System.Windows.Forms.TabControl();
+					this.tabArmMove = new System.Windows.Forms.TabPage();
+					this.dataMove = new System.Windows.Forms.DataGridView();
+					this.colX = new System.Windows.Forms.DataGridViewTextBoxColumn();
+					this.colY = new System.Windows.Forms.DataGridViewTextBoxColumn();
+					this.colZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+					this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+					this.colD_G = new System.Windows.Forms.DataGridViewTextBoxColumn();
+					this.colSend = new System.Windows.Forms.DataGridViewButtonColumn();
+					this.cMenuTypeBras = new System.Windows.Forms.ContextMenuStrip(this.components);
+					this.armToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+					this.robotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+					this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+					this.angleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 					this.ArmBras = new System.Windows.Forms.TabPage();
+					this.butInitCheckPoint2 = new System.Windows.Forms.Button();
+					this.butInitCheckPoint1 = new System.Windows.Forms.Button();
+					this.butSetZ200 = new System.Windows.Forms.Button();
 					this.butArmBrasD = new System.Windows.Forms.Button();
 					this.butArmBrasG = new System.Windows.Forms.Button();
 					this.ArmRobot = new System.Windows.Forms.TabPage();
@@ -152,30 +168,15 @@
 					this.groupBox4 = new System.Windows.Forms.GroupBox();
 					this.groupBox2 = new System.Windows.Forms.GroupBox();
 					this.butGoCtrl = new System.Windows.Forms.Button();
+					this.lstArmSetSpeed = new System.Windows.Forms.ListBox();
 					this.butArmGoNearInit = new System.Windows.Forms.Button();
-					this.butArmFast = new System.Windows.Forms.Button();
-					this.butArmSlow = new System.Windows.Forms.Button();
 					this.butLeftSize1 = new System.Windows.Forms.Button();
 					this.butLeftSize2 = new System.Windows.Forms.Button();
 					this.butRightSize1 = new System.Windows.Forms.Button();
 					this.butRightSize2 = new System.Windows.Forms.Button();
-					this.butSetZ200 = new System.Windows.Forms.Button();
-					this.butInitCheckPoint1 = new System.Windows.Forms.Button();
-					this.butInitCheckPoint2 = new System.Windows.Forms.Button();
 					this.lstArmMode = new System.Windows.Forms.ListBox();
-					this.tabArmMove = new System.Windows.Forms.TabPage();
-					this.dataMove = new System.Windows.Forms.DataGridView();
-					this.cMenuTypeBras = new System.Windows.Forms.ContextMenuStrip(this.components);
-					this.armToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-					this.robotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-					this.tableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-					this.angleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-					this.colX = new System.Windows.Forms.DataGridViewTextBoxColumn();
-					this.colY = new System.Windows.Forms.DataGridViewTextBoxColumn();
-					this.colZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-					this.colType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-					this.colD_G = new System.Windows.Forms.DataGridViewTextBoxColumn();
-					this.colSend = new System.Windows.Forms.DataGridViewButtonColumn();
+					this.numIS = new System.Windows.Forms.NumericUpDown();
+					this.numIE = new System.Windows.Forms.NumericUpDown();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -196,6 +197,9 @@
 					((System.ComponentModel.ISupportInitialize)(this.numDZ)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numPZ)).BeginInit();
 					this.tabControl1.SuspendLayout();
+					this.tabArmMove.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.dataMove)).BeginInit();
+					this.cMenuTypeBras.SuspendLayout();
 					this.ArmBras.SuspendLayout();
 					this.ArmRobot.SuspendLayout();
 					((System.ComponentModel.ISupportInitialize)(this.num3X)).BeginInit();
@@ -242,9 +246,8 @@
 					((System.ComponentModel.ISupportInitialize)(this.picMoving)).BeginInit();
 					this.groupBox4.SuspendLayout();
 					this.groupBox2.SuspendLayout();
-					this.tabArmMove.SuspendLayout();
-					((System.ComponentModel.ISupportInitialize)(this.dataMove)).BeginInit();
-					this.cMenuTypeBras.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numIS)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numIE)).BeginInit();
 					this.SuspendLayout();
 					// 
 					// dataButs
@@ -989,6 +992,115 @@
 					this.tabControl1.Size = new System.Drawing.Size(354, 196);
 					this.tabControl1.TabIndex = 40;
 					// 
+					// tabArmMove
+					// 
+					this.tabArmMove.Controls.Add(this.dataMove);
+					this.tabArmMove.Location = new System.Drawing.Point(4, 22);
+					this.tabArmMove.Name = "tabArmMove";
+					this.tabArmMove.Padding = new System.Windows.Forms.Padding(3);
+					this.tabArmMove.Size = new System.Drawing.Size(346, 170);
+					this.tabArmMove.TabIndex = 7;
+					this.tabArmMove.Text = "Arm mv";
+					this.tabArmMove.UseVisualStyleBackColor = true;
+					// 
+					// dataMove
+					// 
+					this.dataMove.AllowUserToOrderColumns = true;
+					this.dataMove.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+					this.dataMove.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colX,
+            this.colY,
+            this.colZ,
+            this.colType,
+            this.colD_G,
+            this.colSend});
+					this.dataMove.ContextMenuStrip = this.cMenuTypeBras;
+					this.dataMove.Location = new System.Drawing.Point(6, 3);
+					this.dataMove.Name = "dataMove";
+					this.dataMove.Size = new System.Drawing.Size(334, 156);
+					this.dataMove.TabIndex = 0;
+					this.dataMove.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataMove_CellContentClick);
+					// 
+					// colX
+					// 
+					this.colX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+					this.colX.HeaderText = "X";
+					this.colX.Name = "colX";
+					this.colX.Width = 39;
+					// 
+					// colY
+					// 
+					this.colY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+					this.colY.HeaderText = "Y";
+					this.colY.Name = "colY";
+					this.colY.Width = 39;
+					// 
+					// colZ
+					// 
+					this.colZ.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+					this.colZ.HeaderText = "Z";
+					this.colZ.Name = "colZ";
+					this.colZ.Width = 39;
+					// 
+					// colType
+					// 
+					this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+					this.colType.HeaderText = "Type";
+					this.colType.Name = "colType";
+					this.colType.Width = 56;
+					// 
+					// colD_G
+					// 
+					this.colD_G.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+					this.colD_G.HeaderText = "D/G";
+					this.colD_G.Name = "colD_G";
+					this.colD_G.Width = 53;
+					// 
+					// colSend
+					// 
+					this.colSend.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+					this.colSend.HeaderText = "Send";
+					this.colSend.Name = "colSend";
+					this.colSend.Width = 38;
+					// 
+					// cMenuTypeBras
+					// 
+					this.cMenuTypeBras.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.armToolStripMenuItem,
+            this.robotToolStripMenuItem,
+            this.tableToolStripMenuItem,
+            this.angleToolStripMenuItem});
+					this.cMenuTypeBras.Name = "cMenuTypeBras";
+					this.cMenuTypeBras.Size = new System.Drawing.Size(107, 92);
+					// 
+					// armToolStripMenuItem
+					// 
+					this.armToolStripMenuItem.Name = "armToolStripMenuItem";
+					this.armToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+					this.armToolStripMenuItem.Text = "Arm";
+					this.armToolStripMenuItem.Click += new System.EventHandler(this.armToolStripMenuItem_Click);
+					// 
+					// robotToolStripMenuItem
+					// 
+					this.robotToolStripMenuItem.Name = "robotToolStripMenuItem";
+					this.robotToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+					this.robotToolStripMenuItem.Text = "Robot";
+					this.robotToolStripMenuItem.Click += new System.EventHandler(this.robotToolStripMenuItem_Click);
+					// 
+					// tableToolStripMenuItem
+					// 
+					this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
+					this.tableToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+					this.tableToolStripMenuItem.Text = "Table";
+					this.tableToolStripMenuItem.Click += new System.EventHandler(this.tableToolStripMenuItem_Click);
+					// 
+					// angleToolStripMenuItem
+					// 
+					this.angleToolStripMenuItem.Name = "angleToolStripMenuItem";
+					this.angleToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
+					this.angleToolStripMenuItem.Text = "Angle";
+					this.angleToolStripMenuItem.Click += new System.EventHandler(this.angleToolStripMenuItem_Click);
+					// 
 					// ArmBras
 					// 
 					this.ArmBras.Controls.Add(this.butInitCheckPoint2);
@@ -1009,6 +1121,36 @@
 					this.ArmBras.TabIndex = 2;
 					this.ArmBras.Text = "Arm Bras";
 					this.ArmBras.UseVisualStyleBackColor = true;
+					// 
+					// butInitCheckPoint2
+					// 
+					this.butInitCheckPoint2.Location = new System.Drawing.Point(181, 58);
+					this.butInitCheckPoint2.Name = "butInitCheckPoint2";
+					this.butInitCheckPoint2.Size = new System.Drawing.Size(159, 21);
+					this.butInitCheckPoint2.TabIndex = 41;
+					this.butInitCheckPoint2.Text = "Init with check points step 2";
+					this.butInitCheckPoint2.UseVisualStyleBackColor = true;
+					this.butInitCheckPoint2.Click += new System.EventHandler(this.butInitCheckPoint2_Click);
+					// 
+					// butInitCheckPoint1
+					// 
+					this.butInitCheckPoint1.Location = new System.Drawing.Point(181, 32);
+					this.butInitCheckPoint1.Name = "butInitCheckPoint1";
+					this.butInitCheckPoint1.Size = new System.Drawing.Size(159, 21);
+					this.butInitCheckPoint1.TabIndex = 40;
+					this.butInitCheckPoint1.Text = "Init with check points step 1";
+					this.butInitCheckPoint1.UseVisualStyleBackColor = true;
+					this.butInitCheckPoint1.Click += new System.EventHandler(this.butInitCheckPoint1_Click);
+					// 
+					// butSetZ200
+					// 
+					this.butSetZ200.Location = new System.Drawing.Point(181, 6);
+					this.butSetZ200.Name = "butSetZ200";
+					this.butSetZ200.Size = new System.Drawing.Size(64, 21);
+					this.butSetZ200.TabIndex = 39;
+					this.butSetZ200.Text = "Set Z 200";
+					this.butSetZ200.UseVisualStyleBackColor = true;
+					this.butSetZ200.Click += new System.EventHandler(this.butSetZ200_Click);
 					// 
 					// butArmBrasD
 					// 
@@ -1511,6 +1653,8 @@
 					// 
 					// tabPIDBras
 					// 
+					this.tabPIDBras.Controls.Add(this.numIS);
+					this.tabPIDBras.Controls.Add(this.numIE);
 					this.tabPIDBras.Controls.Add(this.numPS);
 					this.tabPIDBras.Controls.Add(this.cmbAskLog);
 					this.tabPIDBras.Controls.Add(this.label9);
@@ -1971,9 +2115,8 @@
 					// groupBox2
 					// 
 					this.groupBox2.Controls.Add(this.butGoCtrl);
+					this.groupBox2.Controls.Add(this.lstArmSetSpeed);
 					this.groupBox2.Controls.Add(this.butArmGoNearInit);
-					this.groupBox2.Controls.Add(this.butArmFast);
-					this.groupBox2.Controls.Add(this.butArmSlow);
 					this.groupBox2.Location = new System.Drawing.Point(143, 616);
 					this.groupBox2.Name = "groupBox2";
 					this.groupBox2.Size = new System.Drawing.Size(170, 104);
@@ -1991,6 +2134,21 @@
 					this.butGoCtrl.UseVisualStyleBackColor = true;
 					this.butGoCtrl.Click += new System.EventHandler(this.butGoCtrl_Click);
 					// 
+					// lstArmSetSpeed
+					// 
+					this.lstArmSetSpeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+					this.lstArmSetSpeed.FormattingEnabled = true;
+					this.lstArmSetSpeed.Items.AddRange(new object[] {
+            "ARM_SPEED_INIT",
+            "ARM_SPEED_SLOW",
+            "ARM_SPEED_FAST",
+            "ARM_SPEED_VERY_SLOW"});
+					this.lstArmSetSpeed.Location = new System.Drawing.Point(7, 14);
+					this.lstArmSetSpeed.Name = "lstArmSetSpeed";
+					this.lstArmSetSpeed.Size = new System.Drawing.Size(157, 56);
+					this.lstArmSetSpeed.TabIndex = 52;
+					this.lstArmSetSpeed.SelectedIndexChanged += new System.EventHandler(this.lstArmSetSpeed_SelectedIndexChanged);
+					// 
 					// butArmGoNearInit
 					// 
 					this.butArmGoNearInit.Location = new System.Drawing.Point(64, 74);
@@ -2000,26 +2158,6 @@
 					this.butArmGoNearInit.Text = "Go near init";
 					this.butArmGoNearInit.UseVisualStyleBackColor = true;
 					this.butArmGoNearInit.Click += new System.EventHandler(this.butArmGoNearInit_Click);
-					// 
-					// butArmFast
-					// 
-					this.butArmFast.Location = new System.Drawing.Point(50, 46);
-					this.butArmFast.Name = "butArmFast";
-					this.butArmFast.Size = new System.Drawing.Size(38, 21);
-					this.butArmFast.TabIndex = 39;
-					this.butArmFast.Text = "Fast";
-					this.butArmFast.UseVisualStyleBackColor = true;
-					this.butArmFast.Click += new System.EventHandler(this.butArmFast_Click);
-					// 
-					// butArmSlow
-					// 
-					this.butArmSlow.Location = new System.Drawing.Point(6, 46);
-					this.butArmSlow.Name = "butArmSlow";
-					this.butArmSlow.Size = new System.Drawing.Size(38, 21);
-					this.butArmSlow.TabIndex = 38;
-					this.butArmSlow.Text = "Slow";
-					this.butArmSlow.UseVisualStyleBackColor = true;
-					this.butArmSlow.Click += new System.EventHandler(this.butArmSlow_Click);
 					// 
 					// butLeftSize1
 					// 
@@ -2061,36 +2199,6 @@
 					this.butRightSize2.UseVisualStyleBackColor = true;
 					this.butRightSize2.Click += new System.EventHandler(this.butRightSize2_Click);
 					// 
-					// butSetZ200
-					// 
-					this.butSetZ200.Location = new System.Drawing.Point(181, 6);
-					this.butSetZ200.Name = "butSetZ200";
-					this.butSetZ200.Size = new System.Drawing.Size(64, 21);
-					this.butSetZ200.TabIndex = 39;
-					this.butSetZ200.Text = "Set Z 200";
-					this.butSetZ200.UseVisualStyleBackColor = true;
-					this.butSetZ200.Click += new System.EventHandler(this.butSetZ200_Click);
-					// 
-					// butInitCheckPoint1
-					// 
-					this.butInitCheckPoint1.Location = new System.Drawing.Point(181, 32);
-					this.butInitCheckPoint1.Name = "butInitCheckPoint1";
-					this.butInitCheckPoint1.Size = new System.Drawing.Size(159, 21);
-					this.butInitCheckPoint1.TabIndex = 40;
-					this.butInitCheckPoint1.Text = "Init with check points step 1";
-					this.butInitCheckPoint1.UseVisualStyleBackColor = true;
-					this.butInitCheckPoint1.Click += new System.EventHandler(this.butInitCheckPoint1_Click);
-					// 
-					// butInitCheckPoint2
-					// 
-					this.butInitCheckPoint2.Location = new System.Drawing.Point(181, 58);
-					this.butInitCheckPoint2.Name = "butInitCheckPoint2";
-					this.butInitCheckPoint2.Size = new System.Drawing.Size(159, 21);
-					this.butInitCheckPoint2.TabIndex = 41;
-					this.butInitCheckPoint2.Text = "Init with check points step 2";
-					this.butInitCheckPoint2.UseVisualStyleBackColor = true;
-					this.butInitCheckPoint2.Click += new System.EventHandler(this.butInitCheckPoint2_Click);
-					// 
 					// lstArmMode
 					// 
 					this.lstArmMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -2110,114 +2218,31 @@
 					this.lstArmMode.TabIndex = 51;
 					this.lstArmMode.SelectedIndexChanged += new System.EventHandler(this.lstArmMode_SelectedIndexChanged);
 					// 
-					// tabArmMove
+					// numIS
 					// 
-					this.tabArmMove.Controls.Add(this.dataMove);
-					this.tabArmMove.Location = new System.Drawing.Point(4, 22);
-					this.tabArmMove.Name = "tabArmMove";
-					this.tabArmMove.Padding = new System.Windows.Forms.Padding(3);
-					this.tabArmMove.Size = new System.Drawing.Size(346, 170);
-					this.tabArmMove.TabIndex = 7;
-					this.tabArmMove.Text = "Arm mv";
-					this.tabArmMove.UseVisualStyleBackColor = true;
+					this.numIS.Location = new System.Drawing.Point(195, 6);
+					this.numIS.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numIS.Name = "numIS";
+					this.numIS.Size = new System.Drawing.Size(69, 20);
+					this.numIS.TabIndex = 40;
+					this.numIS.ValueChanged += new System.EventHandler(this.numIS_ValueChanged);
 					// 
-					// dataMove
+					// numIE
 					// 
-					this.dataMove.AllowUserToOrderColumns = true;
-					this.dataMove.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-					this.dataMove.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colX,
-            this.colY,
-            this.colZ,
-            this.colType,
-            this.colD_G,
-            this.colSend});
-					this.dataMove.ContextMenuStrip = this.cMenuTypeBras;
-					this.dataMove.Location = new System.Drawing.Point(6, 8);
-					this.dataMove.Name = "dataMove";
-					this.dataMove.Size = new System.Drawing.Size(334, 156);
-					this.dataMove.TabIndex = 0;
-					this.dataMove.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataMove_CellContentClick);
-					// 
-					// cMenuTypeBras
-					// 
-					this.cMenuTypeBras.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.armToolStripMenuItem,
-            this.robotToolStripMenuItem,
-            this.tableToolStripMenuItem,
-            this.angleToolStripMenuItem});
-					this.cMenuTypeBras.Name = "cMenuTypeBras";
-					this.cMenuTypeBras.Size = new System.Drawing.Size(107, 92);
-					// 
-					// armToolStripMenuItem
-					// 
-					this.armToolStripMenuItem.Name = "armToolStripMenuItem";
-					this.armToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
-					this.armToolStripMenuItem.Text = "Arm";
-					this.armToolStripMenuItem.Click += new System.EventHandler(this.armToolStripMenuItem_Click);
-					// 
-					// robotToolStripMenuItem
-					// 
-					this.robotToolStripMenuItem.Name = "robotToolStripMenuItem";
-					this.robotToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
-					this.robotToolStripMenuItem.Text = "Robot";
-					this.robotToolStripMenuItem.Click += new System.EventHandler(this.robotToolStripMenuItem_Click);
-					// 
-					// tableToolStripMenuItem
-					// 
-					this.tableToolStripMenuItem.Name = "tableToolStripMenuItem";
-					this.tableToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
-					this.tableToolStripMenuItem.Text = "Table";
-					this.tableToolStripMenuItem.Click += new System.EventHandler(this.tableToolStripMenuItem_Click);
-					// 
-					// angleToolStripMenuItem
-					// 
-					this.angleToolStripMenuItem.Name = "angleToolStripMenuItem";
-					this.angleToolStripMenuItem.Size = new System.Drawing.Size(106, 22);
-					this.angleToolStripMenuItem.Text = "Angle";
-					this.angleToolStripMenuItem.Click += new System.EventHandler(this.angleToolStripMenuItem_Click);
-					// 
-					// colX
-					// 
-					this.colX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-					this.colX.HeaderText = "X";
-					this.colX.Name = "colX";
-					this.colX.Width = 39;
-					// 
-					// colY
-					// 
-					this.colY.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-					this.colY.HeaderText = "Y";
-					this.colY.Name = "colY";
-					this.colY.Width = 39;
-					// 
-					// colZ
-					// 
-					this.colZ.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-					this.colZ.HeaderText = "Z";
-					this.colZ.Name = "colZ";
-					this.colZ.Width = 39;
-					// 
-					// colType
-					// 
-					this.colType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-					this.colType.HeaderText = "Type";
-					this.colType.Name = "colType";
-					this.colType.Width = 56;
-					// 
-					// colD_G
-					// 
-					this.colD_G.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-					this.colD_G.HeaderText = "D/G";
-					this.colD_G.Name = "colD_G";
-					this.colD_G.Width = 53;
-					// 
-					// colSend
-					// 
-					this.colSend.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-					this.colSend.HeaderText = "Send";
-					this.colSend.Name = "colSend";
-					this.colSend.Width = 38;
+					this.numIE.Location = new System.Drawing.Point(195, 32);
+					this.numIE.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numIE.Name = "numIE";
+					this.numIE.Size = new System.Drawing.Size(69, 20);
+					this.numIE.TabIndex = 41;
+					this.numIE.ValueChanged += new System.EventHandler(this.numIE_ValueChanged);
 					// 
 					// frmMain
 					// 
@@ -2266,6 +2291,9 @@
 					((System.ComponentModel.ISupportInitialize)(this.numDZ)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numPZ)).EndInit();
 					this.tabControl1.ResumeLayout(false);
+					this.tabArmMove.ResumeLayout(false);
+					((System.ComponentModel.ISupportInitialize)(this.dataMove)).EndInit();
+					this.cMenuTypeBras.ResumeLayout(false);
 					this.ArmBras.ResumeLayout(false);
 					this.ArmRobot.ResumeLayout(false);
 					((System.ComponentModel.ISupportInitialize)(this.num3X)).EndInit();
@@ -2315,9 +2343,8 @@
 					((System.ComponentModel.ISupportInitialize)(this.picMoving)).EndInit();
 					this.groupBox4.ResumeLayout(false);
 					this.groupBox2.ResumeLayout(false);
-					this.tabArmMove.ResumeLayout(false);
-					((System.ComponentModel.ISupportInitialize)(this.dataMove)).EndInit();
-					this.cMenuTypeBras.ResumeLayout(false);
+					((System.ComponentModel.ISupportInitialize)(this.numIS)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numIE)).EndInit();
 					this.ResumeLayout(false);
 					this.PerformLayout();
 
@@ -2435,8 +2462,6 @@
 				private System.Windows.Forms.Label label8;
 				private System.Windows.Forms.Label label7;
 				private System.Windows.Forms.GroupBox groupBox2;
-				private System.Windows.Forms.Button butArmFast;
-				private System.Windows.Forms.Button butArmSlow;
 				private System.Windows.Forms.TabPage tabPage2;
 				private System.Windows.Forms.Button numArmAnglR;
 				private System.Windows.Forms.Button numArmAnglL;
@@ -2471,6 +2496,9 @@
 				private System.Windows.Forms.DataGridViewTextBoxColumn colType;
 				private System.Windows.Forms.DataGridViewTextBoxColumn colD_G;
 				private System.Windows.Forms.DataGridViewButtonColumn colSend;
+				private System.Windows.Forms.ListBox lstArmSetSpeed;
+				private System.Windows.Forms.NumericUpDown numIS;
+				private System.Windows.Forms.NumericUpDown numIE;
     }
 }
 

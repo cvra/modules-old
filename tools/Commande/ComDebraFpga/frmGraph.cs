@@ -11,6 +11,7 @@ namespace ComDebraFpga
 {
   public partial class frmGraph : Form
   {
+		StringBuilder strLastVal = new StringBuilder();
     public frmGraph()
     {
       InitializeComponent();
@@ -23,28 +24,40 @@ namespace ComDebraFpga
 
     internal void addData(string val)
     {
-      if (!butEnable.Checked)
-        return;
-
-      string[] s = val.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-      while (s.Length > chart.Series.Count)
-      {
-        chart.Series.Add(chart.Series.Count.ToString());
-        chart.Series[chart.Series.Count - 1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-      }
-
-      double v = 0;
-      for (int i = 0; i < s.Length; i++)
+			try
 			{
-        if (double.TryParse(s[i], out v))
-          chart.Series[i].Points.AddY(v);
+				if (!butEnable.Checked)
+					return;
 
-				while (chart.Series[i].Points.Count > 5000)
+				string[] s = val.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+				while (s.Length > chart.Series.Count)
 				{
-					chart.Series[i].Points.RemoveAt(0);
+					chart.Series.Add(chart.Series.Count.ToString());
+					chart.Series[chart.Series.Count - 1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
 				}
+
+				double v = 0;
+				strLastVal.Clear();
+				for (int i = 0; i < s.Length; i++)
+				{
+					if (double.TryParse(s[i], out v))
+					{
+						chart.Series[i].Points.AddY(v);
+						strLastVal.Append(s[i] + " / ");
+					}
+					while (chart.Series[i].Points.Count > 5000)
+					{
+						chart.Series[i].Points.RemoveAt(0);
+					}
+				}
+				lblLastData.Text = strLastVal.ToString();
 			}
+			catch (Exception)
+			{
+			
+			}
+   
     }
 
     private void butClear_Click(object sender, EventArgs e)

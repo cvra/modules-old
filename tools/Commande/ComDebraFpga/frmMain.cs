@@ -431,16 +431,6 @@ namespace ComDebraFpga
 			m.sendCmdInt32(LstPos.set_blocking, new int[] { 4, (int)numArmBdElb.Value });
 		}
 
-		private void butArmSlow_Click(object sender, EventArgs e)
-		{
-			m.sendCmd(LstPos.gen_func, new int[] { 3 });
-		}
-
-		private void butArmFast_Click(object sender, EventArgs e)
-		{
-			m.sendCmd(LstPos.gen_func, new int[] { 4 });
-		}
-
 		private void numArmAnglL_Click(object sender, EventArgs e)
 		{
 			sendArmLeft(3, (int)numArmAnglLa.Value, (int)numArmAnglLb.Value, (int)numArmAnglLz.Value);
@@ -586,6 +576,21 @@ namespace ComDebraFpga
 			{
 				dataMove.Rows[dataMove.SelectedCells[0].RowIndex].Cells[3].Value = "Angle";
 			}
+		}
+
+		private void lstArmSetSpeed_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.gen_func, new int[] { 3, lstArmSetSpeed.SelectedIndex  });
+		}
+
+		private void numIS_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.set_PID, new int[] { 11, (int)numIS.Value });
+		}
+
+		private void numIE_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.set_PID, new int[] { 10, (int)numIE.Value });
 		}
 
 	}

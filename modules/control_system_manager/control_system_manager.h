@@ -139,6 +139,7 @@ int32_t cs_get_filtered_consign(struct cs* cs);
 /** Return the last feedback value, after filter */
 int32_t cs_get_filtered_feedback(struct cs* cs);
 
+
 /** Gets the feedback value, with no filter
  *
  * @warning Cette fonction appelle la fonction de feedback,
@@ -149,6 +150,8 @@ int32_t cs_get_feedback(struct cs* cs);
 void cs_set_consign(struct cs* cs, int32_t v);
 
 void cs_stop(struct cs * cs);
+
+
 
 /** @} */
 

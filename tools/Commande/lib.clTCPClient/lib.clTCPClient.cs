@@ -205,7 +205,7 @@ namespace lib.TCPClient
 				// Receive the TcpServer.response.
 
 				// Buffer for reading data
-				Byte[] bytes = new Byte[256];
+				Byte[] bytes = new Byte[1024];
 				String data = null;
 
 				// String to store the response ASCII representation.
@@ -221,7 +221,12 @@ namespace lib.TCPClient
 				while (((i = stream.Read(bytes, 0, bytes.Length)) != 0))
 				{
 					data = System.Text.Encoding.UTF8.GetString(bytes, 0, i);
-					OnEventOccure(clTCPClient.EtatConn.DATA_RECEIVED, data, bytes);
+					Byte[] r = new Byte[i];
+					for (int j = 0; j < i; j++)
+					{
+						r[j] = bytes[j];
+					}
+					OnEventOccure(clTCPClient.EtatConn.DATA_RECEIVED, data, r);
 				}
 			}
 			catch (ArgumentNullException e)
@@ -297,8 +302,14 @@ namespace lib.TCPClient
 					return false;
 				}
 				//				client.Client.Send(msg);
-				stream.Write(Data, 0, Data.Length);
-				stream.Flush();
+				
+				for (int i = 0; i < Data.Length; i++)
+				{
+					stream.Write(Data, i, 1);
+					stream.Flush();
+					System.Threading.Thread.Sleep(10);
+				}
+				
 				OnEventOccure(clTCPClient.EtatConn.DATA_SENT, "", Data);
 
 				return true;
