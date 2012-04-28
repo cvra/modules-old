@@ -438,8 +438,8 @@ namespace ComDebraFpga
 
     private void butArmGoNearInit_Click(object sender, EventArgs e)
     {
-      sendArmLeft(3, 109, 200, 200);
-      sendArmRight(3, 109, 200, 200);
+      sendArmLeft(3, 107, 200, 200);
+      sendArmRight(3, 107, 200, 200);
     }
 
     private void butGoCtrl_Click(object sender, EventArgs e)
