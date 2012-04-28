@@ -42,6 +42,7 @@
 					this.butGraph = new System.Windows.Forms.ToolStripButton();
 					this.butCPU = new System.Windows.Forms.ToolStripButton();
 					this.lblMousePos = new System.Windows.Forms.ToolStripLabel();
+					this.butTestArm = new System.Windows.Forms.ToolStripButton();
 					this.timLog = new System.Windows.Forms.Timer(this.components);
 					this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 					this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -135,6 +136,8 @@
 					this.numAngP = new System.Windows.Forms.NumericUpDown();
 					this.numAngD = new System.Windows.Forms.NumericUpDown();
 					this.tabPIDBras = new System.Windows.Forms.TabPage();
+					this.numIS = new System.Windows.Forms.NumericUpDown();
+					this.numIE = new System.Windows.Forms.NumericUpDown();
 					this.tabPage1 = new System.Windows.Forms.TabPage();
 					this.numBdAngle = new System.Windows.Forms.NumericUpDown();
 					this.numArmBdSh = new System.Windows.Forms.NumericUpDown();
@@ -175,8 +178,7 @@
 					this.butRightSize1 = new System.Windows.Forms.Button();
 					this.butRightSize2 = new System.Windows.Forms.Button();
 					this.lstArmMode = new System.Windows.Forms.ListBox();
-					this.numIS = new System.Windows.Forms.NumericUpDown();
-					this.numIE = new System.Windows.Forms.NumericUpDown();
+					this.numIZ = new System.Windows.Forms.NumericUpDown();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -221,6 +223,8 @@
 					((System.ComponentModel.ISupportInitialize)(this.numAngP)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numAngD)).BeginInit();
 					this.tabPIDBras.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numIS)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numIE)).BeginInit();
 					this.tabPage1.SuspendLayout();
 					((System.ComponentModel.ISupportInitialize)(this.numBdAngle)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmBdSh)).BeginInit();
@@ -246,8 +250,7 @@
 					((System.ComponentModel.ISupportInitialize)(this.picMoving)).BeginInit();
 					this.groupBox4.SuspendLayout();
 					this.groupBox2.SuspendLayout();
-					((System.ComponentModel.ISupportInitialize)(this.numIS)).BeginInit();
-					((System.ComponentModel.ISupportInitialize)(this.numIE)).BeginInit();
+					((System.ComponentModel.ISupportInitialize)(this.numIZ)).BeginInit();
 					this.SuspendLayout();
 					// 
 					// dataButs
@@ -297,7 +300,8 @@
             this.butClearLog,
             this.butGraph,
             this.butCPU,
-            this.lblMousePos});
+            this.lblMousePos,
+            this.butTestArm});
 					this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 					this.toolStrip1.Name = "toolStrip1";
 					this.toolStrip1.Size = new System.Drawing.Size(1263, 25);
@@ -360,6 +364,16 @@
 					this.lblMousePos.Name = "lblMousePos";
 					this.lblMousePos.Size = new System.Drawing.Size(22, 22);
 					this.lblMousePos.Text = "0:0";
+					// 
+					// butTestArm
+					// 
+					this.butTestArm.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+					this.butTestArm.Image = ((System.Drawing.Image)(resources.GetObject("butTestArm.Image")));
+					this.butTestArm.ImageTransparentColor = System.Drawing.Color.Magenta;
+					this.butTestArm.Name = "butTestArm";
+					this.butTestArm.Size = new System.Drawing.Size(70, 22);
+					this.butTestArm.Text = "Arm Check";
+					this.butTestArm.Click += new System.EventHandler(this.butTestArm_Click);
 					// 
 					// timLog
 					// 
@@ -1653,6 +1667,7 @@
 					// 
 					// tabPIDBras
 					// 
+					this.tabPIDBras.Controls.Add(this.numIZ);
 					this.tabPIDBras.Controls.Add(this.numIS);
 					this.tabPIDBras.Controls.Add(this.numIE);
 					this.tabPIDBras.Controls.Add(this.numPS);
@@ -1672,6 +1687,32 @@
 					this.tabPIDBras.TabIndex = 0;
 					this.tabPIDBras.Text = "PID Arm";
 					this.tabPIDBras.UseVisualStyleBackColor = true;
+					// 
+					// numIS
+					// 
+					this.numIS.Location = new System.Drawing.Point(195, 6);
+					this.numIS.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numIS.Name = "numIS";
+					this.numIS.Size = new System.Drawing.Size(69, 20);
+					this.numIS.TabIndex = 40;
+					this.numIS.ValueChanged += new System.EventHandler(this.numIS_ValueChanged);
+					// 
+					// numIE
+					// 
+					this.numIE.Location = new System.Drawing.Point(195, 32);
+					this.numIE.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numIE.Name = "numIE";
+					this.numIE.Size = new System.Drawing.Size(69, 20);
+					this.numIE.TabIndex = 41;
+					this.numIE.ValueChanged += new System.EventHandler(this.numIE_ValueChanged);
 					// 
 					// tabPage1
 					// 
@@ -2218,31 +2259,18 @@
 					this.lstArmMode.TabIndex = 51;
 					this.lstArmMode.SelectedIndexChanged += new System.EventHandler(this.lstArmMode_SelectedIndexChanged);
 					// 
-					// numIS
+					// numIZ
 					// 
-					this.numIS.Location = new System.Drawing.Point(195, 6);
-					this.numIS.Maximum = new decimal(new int[] {
+					this.numIZ.Location = new System.Drawing.Point(195, 58);
+					this.numIZ.Maximum = new decimal(new int[] {
             32000,
             0,
             0,
             0});
-					this.numIS.Name = "numIS";
-					this.numIS.Size = new System.Drawing.Size(69, 20);
-					this.numIS.TabIndex = 40;
-					this.numIS.ValueChanged += new System.EventHandler(this.numIS_ValueChanged);
-					// 
-					// numIE
-					// 
-					this.numIE.Location = new System.Drawing.Point(195, 32);
-					this.numIE.Maximum = new decimal(new int[] {
-            32000,
-            0,
-            0,
-            0});
-					this.numIE.Name = "numIE";
-					this.numIE.Size = new System.Drawing.Size(69, 20);
-					this.numIE.TabIndex = 41;
-					this.numIE.ValueChanged += new System.EventHandler(this.numIE_ValueChanged);
+					this.numIZ.Name = "numIZ";
+					this.numIZ.Size = new System.Drawing.Size(69, 20);
+					this.numIZ.TabIndex = 42;
+					this.numIZ.ValueChanged += new System.EventHandler(this.numIZ_ValueChanged);
 					// 
 					// frmMain
 					// 
@@ -2317,6 +2345,8 @@
 					((System.ComponentModel.ISupportInitialize)(this.numAngD)).EndInit();
 					this.tabPIDBras.ResumeLayout(false);
 					this.tabPIDBras.PerformLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numIS)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numIE)).EndInit();
 					this.tabPage1.ResumeLayout(false);
 					this.tabPage1.PerformLayout();
 					((System.ComponentModel.ISupportInitialize)(this.numBdAngle)).EndInit();
@@ -2343,8 +2373,7 @@
 					((System.ComponentModel.ISupportInitialize)(this.picMoving)).EndInit();
 					this.groupBox4.ResumeLayout(false);
 					this.groupBox2.ResumeLayout(false);
-					((System.ComponentModel.ISupportInitialize)(this.numIS)).EndInit();
-					((System.ComponentModel.ISupportInitialize)(this.numIE)).EndInit();
+					((System.ComponentModel.ISupportInitialize)(this.numIZ)).EndInit();
 					this.ResumeLayout(false);
 					this.PerformLayout();
 
@@ -2499,6 +2528,8 @@
 				private System.Windows.Forms.ListBox lstArmSetSpeed;
 				private System.Windows.Forms.NumericUpDown numIS;
 				private System.Windows.Forms.NumericUpDown numIE;
+                private System.Windows.Forms.ToolStripButton butTestArm;
+								private System.Windows.Forms.NumericUpDown numIZ;
     }
 }
 
