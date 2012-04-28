@@ -1,9 +1,9 @@
-/* File        : modules/math/fast_math/fast_math.h
+/* File        : modules/math/fast_math/fast_math.c
  * Author      : Mathieu Rouvinez
  * Project     : CVRA Robot #1, SwissRobot 2012
  * State       : appears to work
  * Creation    : 2012.04.24  (yes, YYYY.MM.DD, because it's logical)
- * Last modif. : 2012.04.27
+ * Last modif. : 2012.04.28
  * Description : quite fast math function, accurate enough, nothing more
  * Notes       : some code borrowed from other programmers, didn't ask them...
  * Disclaimer  : works on my machine, check if it does on your machine too
@@ -23,14 +23,24 @@
 
 static unsigned int fast_sqrtf_lut[0x10000];    // fast_sqrtf lookup table
 
+
 // DEFINITIONS
 
+inline float fast_fabsf(float v)
+{
+    union {float f; unsigned int u;} i = {v};   // union, for aliasing
+    i.u &= 0x7FFFFFFFu;                         // bitmask, set MSB to 0
+    return i.f;                                 // done, neat !
+}
+
+/*
 inline float fast_fabsf(float v)
 {
     unsigned int* p = (unsigned int*) &v;   // pointer, for aliasing
     *p &= 0x7FFFFFFFu;                      // bitmask, set MSB to 0
     return v;                               // done, neat !
 }
+*/
 
 float fast_sinf(float v)    // ref: http://dotancohen.com/eng/taylor-sine.php
 {
@@ -74,8 +84,8 @@ float fast_cosf(float v)
 
 float fast_atan2f(float y, float x)
 {
-    const float absy = fast_fabsf(y);
-    const float absx = fast_fabsf(x);
+    const float absy = fabsf(y);
+    const float absx = fabsf(x);
 
     if (absy < 1e-5f)   // if y near 0, angle is 0 or PI, depending on x
     {
