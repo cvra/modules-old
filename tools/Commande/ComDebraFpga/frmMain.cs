@@ -595,8 +595,14 @@ namespace ComDebraFpga
 
     private void butTestArm_Click(object sender, EventArgs e)
     {
-      checkArmPos();
+			frmArmDebug frm = new frmArmDebug();
+			frm.Show();
     }
+
+		private void numIZ_ValueChanged(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.set_PID, new int[] { 12, (int)numIE.Value });
+		}
 
   }
 }
