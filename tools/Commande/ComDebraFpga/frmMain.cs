@@ -371,11 +371,6 @@ namespace ComDebraFpga
       m.sendCmd(LstPos.set_PID, new int[] { 3, (int)numAngD.Value });
     }
 
-    private void cmbAskLog2_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      m.sendCmd(LstPos.gen_func, new int[] { 5, cmbAskLog2.SelectedIndex });
-    }
-
     private void butArmBrasG_Click(object sender, EventArgs e)
     {
       sendArmLeft(0, (int)numArmGX.Value, (int)numArmGY.Value, (int)numArmGZ.Value);
@@ -601,7 +596,7 @@ namespace ComDebraFpga
 
 		private void numIZ_ValueChanged(object sender, EventArgs e)
 		{
-			m.sendCmd(LstPos.set_PID, new int[] { 12, (int)numIE.Value });
+			m.sendCmd(LstPos.set_PID, new int[] { 12, (int)numIZ.Value });
 		}
 
   }

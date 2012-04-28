@@ -45,6 +45,7 @@ struct blocking_detection {
 	uint16_t cpt_thres;
 	uint16_t cpt;
 	uint32_t err_thres;
+	uint32_t err_max;
 };
 
 /** init module, give the cs as parameter */
@@ -62,4 +63,6 @@ void bd_manage(struct blocking_detection *bd);
 /** get value of blocking detection */
 uint8_t bd_get(struct blocking_detection *bd);
 
+/** get value of blocking detection maximale value, reseted each time it's read*/
+int32_t bd_get_max(struct blocking_detection * bd);
 #endif

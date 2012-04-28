@@ -33,31 +33,21 @@ namespace ComDebraFpga
 					rtbLog.AppendText(lstLog[0].val + "\r\n");
 					break;
 				case TypeVal.infoNoLn:
-					rtbLog.AppendText(lstLog[0].val);
-					checkForGraph(lstLog[0].val);
-					break;        //case TypeVal.posX:
-				//  lblPosX.Text = "X:" + lstLog[0].val;
-				//  break;
-				//case TypeVal.posY:
-				//  lblPosY.Text = "Y:" + lstLog[0].val;
-				//  break;
-				//case TypeVal.angle:
-				//  lblPosA.Text = "A:" + lstLog[0].val;
-				//  break;
-				//case TypeVal.status:
-				//  lblStatus.Text = "S:" + lstLog[0].val;
-				//  break;
+					rtbLog.AppendText(lstLog[0].val.ToString());
+					break;       
 				case TypeVal.vals:
-					gr.addData(lstLog[0].val);
+					gr.addData((int[])lstLog[0].val);
 					// rtbLog.AppendText(lstLog[0].val + "\r\n");
 					break;
 				case TypeVal.TcpEvent:
-					switch ((clTCPClient.EtatConn)lstLog[0].valInt)
+					clTCPClient.EventEventArgs e = (clTCPClient.EventEventArgs)lstLog[0].val;
+
+					switch (e.TypeEvent)
 					{
 						case clTCPClient.EtatConn.TCP_ERROR:
 							butConnect.Text = "Connect";
 							butConnect.Enabled = true;
-							rtbLog.AppendText(lstLog[0].val + "\r\n");
+							rtbLog.AppendText(e.Data + "\r\n");
 							break;
 						case clTCPClient.EtatConn.CLIENT_CONNECTED:
 							butConnect.Text = "Disconnect";

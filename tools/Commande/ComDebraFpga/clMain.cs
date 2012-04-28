@@ -10,48 +10,7 @@ using System.Drawing;
 
 namespace ComDebraFpga
 {
-	enum TypeVal
-	{
-		info,
-		infoNoLn,
-		posX,
-		posY,
-		angle,
-		status,
-		vals,
-		TcpEvent
-	}
-
-	enum LstPos
-	{
-		acceleration = 1,
-		prepare_start = 2,
-		ask_blocking = 3,
-		blocking_reset = 4,
-		go_straight = 5,
-		goto_type = 6,
-		set_PID = 7,
-		position_set = 13,
-		power = 14,
-		hard_stop = 16,
-		reset = 17,
-		speed = 18,
-		stop = 19,
-		traj_finished = 20,
-		turn_to = 21,
-		windows = 22,
-		ask_position = 25,
-		set_blocking = 26,
-		magnet_front_pulse = 50,
-		magnet_back_pulse = 51,
-		pump = 52,
-		ask_all_adc = 53,
-		arm_mode = 100,
-		drop = 101,
-		arm_calibration = 102,
-		arm_position = 103,
-		gen_func = 250
-	}
+	
 
 	class ComCmd
 	{
@@ -74,20 +33,18 @@ namespace ComDebraFpga
 
 	class ComElem
 	{
-		internal string val;
+		internal object val;
 		internal TypeVal typeVal;
-		internal int valInt;
 
-		public ComElem(TypeVal inType, string Val, int ValInt = 0)
+		public ComElem(TypeVal inType, object Val)
 		{
 			typeVal = inType;
 			val = Val;
-			valInt = ValInt;
 		}
 
 		public override string ToString()
 		{
-			return typeVal.ToString() + " " + val;
+			return typeVal.ToString() + " " + val.ToString();
 		}
 	}
 
@@ -103,7 +60,7 @@ namespace ComDebraFpga
 
 
 		// Taille complète du paquet ABC + \n compris
-		private int[] packetSize = new int[] { 0, 5 + 2 * 16, 6, 21, 5 + 2 + 2 * 3, 5 + 4 * 4 };
+		private int[] packetSize = new int[] { 0, 5 + 2 * 16, 6, 21, 5 + 2 + 2 * 3, 5 + 4 * 4, 5 + 6 * 2 };
 		private bool isRunning = true;
 		public DispInfo info = new DispInfo();
 
@@ -127,10 +84,10 @@ namespace ComDebraFpga
 			switch (e.TypeEvent)
 			{
 				case clTCPClient.EtatConn.CLIENT_CONNECTED:
-					main.addLog(new ComElem(TypeVal.TcpEvent, e.Data, (int)e.TypeEvent));
+					main.addLog(new ComElem(TypeVal.TcpEvent, e));
 					break;
 				case clTCPClient.EtatConn.CLIENT_DISCONNECTED:
-					main.addLog(new ComElem(TypeVal.TcpEvent, e.Data, (int)e.TypeEvent));
+					main.addLog(new ComElem(TypeVal.TcpEvent, e));
 					break;
 				case clTCPClient.EtatConn.DATA_RECEIVED:
 					buffer.AddRange(e.DataByte);
@@ -140,7 +97,7 @@ namespace ComDebraFpga
 
 					break;
 				case clTCPClient.EtatConn.TCP_ERROR:
-					main.addLog(new ComElem(TypeVal.TcpEvent, e.Data, (int)e.TypeEvent));
+					main.addLog(new ComElem(TypeVal.TcpEvent, e));
 					break;
 			}
 
@@ -406,12 +363,24 @@ namespace ComDebraFpga
 					info.objZ[index] = getInt16(cmd[k++], cmd[k++]);
 					break;
 				case 5:
-					string tmpVal5 = "";
-					while (k < cmd.Length - 1)
+					int[] tmpVal5 = new int[4];
+
+					for (int i = 0; i < tmpVal5.Length; i++)
 					{
-						tmpVal5 += getInt32(cmd[k++], cmd[k++], cmd[k++], cmd[k++]).ToString("") + " ";
+						tmpVal5[i] = getInt32(cmd[k++], cmd[k++], cmd[k++], cmd[k++]);
 					}
+
 					main.addLog(new ComElem(TypeVal.vals, tmpVal5));
+					break;
+				case 6:
+					int[] tmpVal6 = new int[6];
+
+					for (int i = 0; i < tmpVal6.Length; i++)
+					{
+						tmpVal6[i] = getInt16(cmd[k++], cmd[k++]);
+					}
+
+					main.addLog(new ComElem(TypeVal.vals, tmpVal6));
 					break;
 				default:
 					break;
@@ -522,4 +491,47 @@ namespace ComDebraFpga
 		public float x;
 		public float y;
 	};
+
+	enum TypeVal
+	{
+		info,
+		infoNoLn,
+		posX,
+		posY,
+		angle,
+		status,
+		vals,
+		TcpEvent
+	}
+
+	enum LstPos
+	{
+		acceleration = 1,
+		prepare_start = 2,
+		ask_blocking = 3,
+		blocking_reset = 4,
+		go_straight = 5,
+		goto_type = 6,
+		set_PID = 7,
+		position_set = 13,
+		power = 14,
+		hard_stop = 16,
+		reset = 17,
+		speed = 18,
+		stop = 19,
+		traj_finished = 20,
+		turn_to = 21,
+		windows = 22,
+		ask_position = 25,
+		set_blocking = 26,
+		magnet_front_pulse = 50,
+		magnet_back_pulse = 51,
+		pump = 52,
+		ask_all_adc = 53,
+		arm_mode = 100,
+		drop = 101,
+		arm_calibration = 102,
+		arm_position = 103,
+		gen_func = 250
+	}
 }
