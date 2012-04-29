@@ -11,12 +11,13 @@
  */
 
 #include <math.h>
+#include <stdio.h>
 
-//#define M_PI   3.14159265358979323846f
-//#define M_PI_2 1.57079632679489661923f
-//#define M_PI_4 0.785398163397448309616f
-//#define M_1_PI 0.318309886183790671538f
-//#define M_2_PI 0.636619772367581343076f
+#define F_PI   3.14159265358979323846f
+#define F_PI_2 1.57079632679489661923f
+#define F_PI_4 0.785398163397448309616f
+#define F_1_PI 0.318309886183790671538f
+#define F_2_PI 0.636619772367581343076f
 
 
 // DECLARATIONS
@@ -44,13 +45,17 @@ inline float fast_fabsf(float v)    // DOES NOT WORK ON NIOS II
 
 float fast_sinf(float v)    // ref: http://dotancohen.com/eng/taylor-sine.php
 {
-    int q = -(int)(v<0.0f);     // get number of shifts from quadrant I
-    q = q + (int)(v*M_2_PI);    // get number of shifts from quadrant I
-    v = v - (float)(q)*M_PI_2;  // our angle now fits in the range [0,PI_2]
+		int q = -(int)(v<0.0f);     // get number of shifts from quadrant I
+		q = q + (int)(v*F_2_PI);    // get number of shifts from quadrant I
+	  v = fmodf(v, F_PI_2);  // our angle now fits in the range [0,PI_2]
+	  v = fabsf(v);
+  //v = v - (int)(v*F_2_PI);
 
     q = q&3;    // quadrant number = number of quadrant shifts modulo 4
 
-    if (q==1 || q==3) v = M_PI_2 - v;   // quad II or IV, complementary angle
+	//printf("q=%d\r", q);
+
+    if (q==1 || q==3) v = F_PI_2 - v;   // quad II or IV, complementary angle
     if (q==2 || q==3) v = -v;           // quad III or IV, flip sign of angle
 
     const float v2 = v*v;
@@ -64,14 +69,14 @@ float fast_sinf(float v)    // ref: http://dotancohen.com/eng/taylor-sine.php
 float fast_cosf(float v)
 {
     int q = -(int)(v<0.0f);     // get number of shifts from quadrant I
-    q = q + (int)(v*M_2_PI);    // get number of shifts from quadrant I
-    v = v - (float)(q)*M_PI_2;  // our angle now fits in the range [0,PI_2]
+    q = q + (int)(v*F_2_PI);    // get number of shifts from quadrant I
+    v = v - (float)(q)*F_PI_2;  // our angle now fits in the range [0,PI_2]
 
     q = q&3;    // quadrant number = number of quadrant shifts modulo 4
 
     float s = 1.0f;     // multiplicator, flipping or not the sign of the cos
 
-    if (q==1 || q==3) v = M_PI_2 - v;   // quad II or IV, complementary angle
+    if (q==1 || q==3) v = F_PI_2 - v;   // quad II or IV, complementary angle
     if (q==1 || q==2) s = -1.0f;        // quad II or III, flip sign of cos
 
     const float v2 = v*v;
@@ -90,13 +95,13 @@ float fast_atan2f(float y, float x)
     if (absy < 1e-5f)   // if y near 0, angle is 0 or PI, depending on x
     {
         if (x >= 0.0f) return 0.0f;
-        else           return M_PI;
+        else           return F_PI;
     }
 
     if (absx < 1e-5f)   // if x near 0, angle is +/-PI_2, depending on y
     {
-        if (y >= 0.0f) return  M_PI_2;
-        else           return -M_PI_2;
+        if (y >= 0.0f) return  F_PI_2;
+        else           return -F_PI_2;
     }
 
     float v;    // our angle, our value
@@ -107,7 +112,7 @@ float fast_atan2f(float y, float x)
     else      v = absy/absx;    // the ratio remains in the valid range [0,1]
 
     // source: Fast approximate arctan/atan function - http://nghiaho.com/?p=997
-    // angle = M_PI_4*v - v*(fabsf(v) - 1.0f)*(0.2447f + 0.0663f*fabsf(v));
+    // angle = F_PI_4*v - v*(fabsf(v) - 1.0f)*(0.2447f + 0.0663f*fabsf(v));
     //
     // simplification & restriction...
     // y = 0.785398163397448309616*v - v*(abs(v) - 1.0)*(0.2447 + 0.0663*abs(v))
@@ -123,7 +128,7 @@ float fast_atan2f(float y, float x)
 
     v = v*(c1 + v*(c2 + v*(c3)));   // compute angle
 
-    if (inv)  v = M_PI_2 - v;       // if inverse ratio, complementary angle
+    if (inv)  v = F_PI_2 - v;       // if inverse ratio, complementary angle
 
     const int y_neg = (int)(y < 0);
     const int x_neg = (int)(x < 0);
@@ -132,8 +137,8 @@ float fast_atan2f(float y, float x)
 
     if (x_neg)              // if x is negative, supplementary angle
     {
-        if (y_neg)  return -M_PI - v;
-        else        return  M_PI - v;
+        if (y_neg)  return -F_PI - v;
+        else        return  F_PI - v;
     }
 
     return v;

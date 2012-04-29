@@ -25,6 +25,7 @@
 
 #include <math.h>
 #include <robot_system.h>
+#include <vect2.h>
 
 /** \addtogroup Odometrie
  * This module manages the encoders to compute the robot's position.
@@ -155,6 +156,8 @@ float position_get_x_float(struct robot_position *pos);
  */
 double position_get_y_double(struct robot_position *pos);
 float position_get_y_float(struct robot_position *pos);
+
+vect2_cart position_get_xy_vect(struct robot_position *pos);
 
 /**
  * returns current alpha

@@ -278,6 +278,13 @@ float position_get_y_float(struct robot_position *pos)
 	return (float)pos->pos_d.y;
 }
 
+vect2_cart position_get_xy_vect(struct robot_position *pos)
+{
+	vect2_cart r;
+	r.x = (float)pos->pos_d.x;
+	r.y = (float)pos->pos_d.y;
+	return r;
+}
 /**
  * returns current alpha
  */

@@ -47,6 +47,7 @@
 #define SCHEDULER_UNIT 1000 /* us */
 #define SCHEDULER_NB_MAX_EVENT 10   
 #define SCHEDULER_NB_STACKING_MAX SCHEDULER_NB_MAX_EVENT
+#define SCHEDULER_UNIT_MS /1 /* pour afficher le temps en ms */
 
 
 #define SCHEDULER_PERIODICAL 0

@@ -69,7 +69,6 @@ class TcpToSerialThread(Thread):
 				data = 0
 			if data == 0:
 				break
-				
 			robot.write(data)
 			
 		thread.kill()
