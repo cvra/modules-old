@@ -45,17 +45,20 @@ inline float fast_fabsf(float v)    // DOES NOT WORK ON NIOS II
 
 float fast_sinf(float v)    // ref: http://dotancohen.com/eng/taylor-sine.php
 {
-		int q = -(int)(v<0.0f);     // get number of shifts from quadrant I
-		q = q + (int)(v*F_2_PI);    // get number of shifts from quadrant I
-	  v = fmodf(v, F_PI_2);  // our angle now fits in the range [0,PI_2]
-	  v = fabsf(v);
-  //v = v - (int)(v*F_2_PI);
+    int q = 0;
+    if (v < 0.0f) q = -1;
 
-    q = q&3;    // quadrant number = number of quadrant shifts modulo 4
+    int c = v * M_2_PI;     // turns
 
-	//printf("q=%d\r", q);
+    q = q + c;
 
-    if (q==1 || q==3) v = F_PI_2 - v;   // quad II or IV, complementary angle
+    float s = q * M_PI_2;   // turns shift
+
+    v = v - s;  // our angle now fits in the range [0,PI_2]
+
+    q = q&3;    // quadrant number
+
+    if (q==1 || q==3) v = M_PI_2 - v;   // quad II or IV, complementary angle
     if (q==2 || q==3) v = -v;           // quad III or IV, flip sign of angle
 
     const float v2 = v*v;
@@ -65,6 +68,7 @@ float fast_sinf(float v)    // ref: http://dotancohen.com/eng/taylor-sine.php
 
     return v*(c1+v2*(c2+v2*(c3)));  // compute Taylor series terms and return
 }
+
 
 float fast_cosf(float v)
 {
