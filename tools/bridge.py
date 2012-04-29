@@ -34,12 +34,12 @@ class SerialToTcpThread(Thread):
 		self.running = True
 		self.conn = sock
 		self.packer = struct.Struct("B")
-		
+		robot.flushInput()
 		
 	def run(self):
 		while self.running:
 			c = robot.read(1)
-			if len(c) != 0:
+			if len(c) != 0:		# Si on a pas timeout
 				self.conn.send(self.packer.pack(ord(c)))
 
 	def kill(self):
