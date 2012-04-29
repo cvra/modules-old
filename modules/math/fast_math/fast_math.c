@@ -34,8 +34,8 @@ inline float fast_fabsf(float v)
 }
 
 /*
-inline float fast_fabsf(float v)
-{
+inline float fast_fabsf(float v)    // DOES NOT WORK ON NIOS II
+{                                   //  endianness ? alignment ?
     unsigned int* p = (unsigned int*) &v;   // pointer, for aliasing
     *p &= 0x7FFFFFFFu;                      // bitmask, set MSB to 0
     return v;                               // done, neat !
@@ -141,43 +141,60 @@ float fast_atan2f(float y, float x)
 
 void fast_math_init()
 {
-    union { float f; unsigned int u; } s;
+    union { float f; unsigned int u; } i;
     unsigned int u;
-
+    
     for (u=0; u<=0x7FFF; u++)
     {
         // Build a float with the bit pattern u as mantissa
         //  and an exponent of 0, stored as 127
-        s.u = (u << 8) | (0x7F << 23);
-        s.f = (float)sqrt(s.f);
-
+        i.u = (u << 8) | (0x7F << 23);
+        i.f = (float)sqrt(i.f);
+        
         // Take the square root then strip the first 7 bits of
         //  the mantissa into the table
-        fast_sqrtf_lut[u + 0x8000] = (s.u & 0x7FFFFF);
-
-        // Repeat the process, this time with an exponent of 1,
+        fast_sqrtf_lut[u + 0x8000] = (i.u & 0x7FFFFF);
+        
+        // Repeat the process, this time with an exponent of 1, 
         //  stored as 128
-        s.u = (u << 8) | (0x80 << 23);
-        s.f = (float)sqrt(s.f);
-
-        fast_sqrtf_lut[u] = (s.u & 0x7FFFFF);
+        i.u = (u << 8) | (0x80 << 23);
+        i.f = (float)sqrt(i.f);
+        
+        fast_sqrtf_lut[u] = (i.u & 0x7FFFFF);
     }
 }
 
 float fast_sqrtf(float v)   // Paul Hsieh, http://www.azillionmonkeys.com/qed/sqroot.html
 {
-    unsigned int* p = (unsigned int*) &v;
-
-    if (*p == 0)    return 0.0;     // check for square root of 0
-
+    union { float f; unsigned int u; } i = {v};
+    
+    if (i.u == 0)    return 0.0;     // check for square root of 0
+    
     unsigned int dlo =     0xFFFF;
     unsigned int bm0 = 0x3F800000;  // 00111111100000000000000000000000
     unsigned int bm1 = 0x7F800000;  // 01111111100000000000000000000000
+    
+    i.u = fast_sqrtf_lut[(i.u >> 8) & dlo] | ((((i.u - bm0) >> 1) + bm0) & bm1);
+    
+    return i.f;
+}
 
+/*
+float fast_sqrtf(float v)   // DOES NOT WORK ON NIOS II
+{
+    unsigned int* p = (unsigned int*) &v;
+    
+    if (*p == 0)    return 0.0;     // check for square root of 0
+    
+    unsigned int dlo =     0xFFFF;
+    unsigned int bm0 = 0x3F800000;  // 00111111100000000000000000000000
+    unsigned int bm1 = 0x7F800000;  // 01111111100000000000000000000000
+    
     *p = fast_sqrtf_lut[(*p >> 8) & dlo] | ((((*p - bm0) >> 1) + bm0) & bm1);
-
+    
     return v;
 }
+*/
 
 float fast_invsqrtf(float v)    // Jan Kaldec, http://rrrola.wz.cz/inv_sqrt.html
 {
