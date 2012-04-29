@@ -129,16 +129,16 @@
 					this.num4Z = new System.Windows.Forms.NumericUpDown();
 					this.tabPIDDep = new System.Windows.Forms.TabPage();
 					this.numDistP = new System.Windows.Forms.NumericUpDown();
-					this.cmbAskLog2 = new System.Windows.Forms.ComboBox();
 					this.label12 = new System.Windows.Forms.Label();
 					this.label13 = new System.Windows.Forms.Label();
 					this.numDistD = new System.Windows.Forms.NumericUpDown();
 					this.numAngP = new System.Windows.Forms.NumericUpDown();
 					this.numAngD = new System.Windows.Forms.NumericUpDown();
 					this.tabPIDBras = new System.Windows.Forms.TabPage();
+					this.numIZ = new System.Windows.Forms.NumericUpDown();
 					this.numIS = new System.Windows.Forms.NumericUpDown();
 					this.numIE = new System.Windows.Forms.NumericUpDown();
-					this.tabPage1 = new System.Windows.Forms.TabPage();
+					this.tabBD = new System.Windows.Forms.TabPage();
 					this.numBdAngle = new System.Windows.Forms.NumericUpDown();
 					this.numArmBdSh = new System.Windows.Forms.NumericUpDown();
 					this.numBdDist = new System.Windows.Forms.NumericUpDown();
@@ -149,7 +149,7 @@
 					this.label14 = new System.Windows.Forms.Label();
 					this.label8 = new System.Windows.Forms.Label();
 					this.label7 = new System.Windows.Forms.Label();
-					this.tabPage2 = new System.Windows.Forms.TabPage();
+					this.ArmAngle = new System.Windows.Forms.TabPage();
 					this.numArmAnglR = new System.Windows.Forms.Button();
 					this.numArmAnglL = new System.Windows.Forms.Button();
 					this.numArmAnglRa = new System.Windows.Forms.NumericUpDown();
@@ -178,7 +178,6 @@
 					this.butRightSize1 = new System.Windows.Forms.Button();
 					this.butRightSize2 = new System.Windows.Forms.Button();
 					this.lstArmMode = new System.Windows.Forms.ListBox();
-					this.numIZ = new System.Windows.Forms.NumericUpDown();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -223,15 +222,16 @@
 					((System.ComponentModel.ISupportInitialize)(this.numAngP)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numAngD)).BeginInit();
 					this.tabPIDBras.SuspendLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numIZ)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numIS)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numIE)).BeginInit();
-					this.tabPage1.SuspendLayout();
+					this.tabBD.SuspendLayout();
 					((System.ComponentModel.ISupportInitialize)(this.numBdAngle)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmBdSh)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numBdDist)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmZBd)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmBdElb)).BeginInit();
-					this.tabPage2.SuspendLayout();
+					this.ArmAngle.SuspendLayout();
 					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRa)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLa)).BeginInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRz)).BeginInit();
@@ -250,7 +250,6 @@
 					((System.ComponentModel.ISupportInitialize)(this.picMoving)).BeginInit();
 					this.groupBox4.SuspendLayout();
 					this.groupBox2.SuspendLayout();
-					((System.ComponentModel.ISupportInitialize)(this.numIZ)).BeginInit();
 					this.SuspendLayout();
 					// 
 					// dataButs
@@ -983,7 +982,8 @@
             "6:robot.left_arm.z_axis",
             "7:robot.left_arm.shoulder",
             "8:robot.left_arm.elbow",
-            "9:Silence"});
+            "9:Silence",
+            "10:Erreur des bras"});
 					this.cmbAskLog.Location = new System.Drawing.Point(7, 84);
 					this.cmbAskLog.Name = "cmbAskLog";
 					this.cmbAskLog.Size = new System.Drawing.Size(215, 21);
@@ -993,13 +993,13 @@
 					// tabControl1
 					// 
 					this.tabControl1.Controls.Add(this.tabArmMove);
+					this.tabControl1.Controls.Add(this.tabPIDBras);
+					this.tabControl1.Controls.Add(this.tabBD);
+					this.tabControl1.Controls.Add(this.tabPIDDep);
+					this.tabControl1.Controls.Add(this.ArmAngle);
 					this.tabControl1.Controls.Add(this.ArmBras);
 					this.tabControl1.Controls.Add(this.ArmRobot);
 					this.tabControl1.Controls.Add(this.tabArmTable);
-					this.tabControl1.Controls.Add(this.tabPIDDep);
-					this.tabControl1.Controls.Add(this.tabPIDBras);
-					this.tabControl1.Controls.Add(this.tabPage1);
-					this.tabControl1.Controls.Add(this.tabPage2);
 					this.tabControl1.Location = new System.Drawing.Point(315, 503);
 					this.tabControl1.Name = "tabControl1";
 					this.tabControl1.SelectedIndex = 0;
@@ -1559,7 +1559,6 @@
 					// tabPIDDep
 					// 
 					this.tabPIDDep.Controls.Add(this.numDistP);
-					this.tabPIDDep.Controls.Add(this.cmbAskLog2);
 					this.tabPIDDep.Controls.Add(this.label12);
 					this.tabPIDDep.Controls.Add(this.label13);
 					this.tabPIDDep.Controls.Add(this.numDistD);
@@ -1585,28 +1584,6 @@
 					this.numDistP.Size = new System.Drawing.Size(69, 20);
 					this.numDistP.TabIndex = 42;
 					this.numDistP.ValueChanged += new System.EventHandler(this.numDistP_ValueChanged);
-					// 
-					// cmbAskLog2
-					// 
-					this.cmbAskLog2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-					this.cmbAskLog2.DropDownWidth = 150;
-					this.cmbAskLog2.FormattingEnabled = true;
-					this.cmbAskLog2.Items.AddRange(new object[] {
-            "0:Std log",
-            "1:robot.distance",
-            "2:robot.angle",
-            "3:robot.right_arm.z_axis",
-            "4:robot.right_arm.shoulder",
-            "5:robot.right_arm.elbow",
-            "6:robot.left_arm.z_axis",
-            "7:robot.left_arm.shoulder",
-            "8:robot.left_arm.elbow",
-            "9:Silence"});
-					this.cmbAskLog2.Location = new System.Drawing.Point(11, 86);
-					this.cmbAskLog2.Name = "cmbAskLog2";
-					this.cmbAskLog2.Size = new System.Drawing.Size(215, 21);
-					this.cmbAskLog2.TabIndex = 46;
-					this.cmbAskLog2.SelectedIndexChanged += new System.EventHandler(this.cmbAskLog2_SelectedIndexChanged);
 					// 
 					// label12
 					// 
@@ -1688,6 +1665,19 @@
 					this.tabPIDBras.Text = "PID Arm";
 					this.tabPIDBras.UseVisualStyleBackColor = true;
 					// 
+					// numIZ
+					// 
+					this.numIZ.Location = new System.Drawing.Point(195, 58);
+					this.numIZ.Maximum = new decimal(new int[] {
+            32000,
+            0,
+            0,
+            0});
+					this.numIZ.Name = "numIZ";
+					this.numIZ.Size = new System.Drawing.Size(69, 20);
+					this.numIZ.TabIndex = 42;
+					this.numIZ.ValueChanged += new System.EventHandler(this.numIZ_ValueChanged);
+					// 
 					// numIS
 					// 
 					this.numIS.Location = new System.Drawing.Point(195, 6);
@@ -1714,25 +1704,25 @@
 					this.numIE.TabIndex = 41;
 					this.numIE.ValueChanged += new System.EventHandler(this.numIE_ValueChanged);
 					// 
-					// tabPage1
+					// tabBD
 					// 
-					this.tabPage1.Controls.Add(this.numBdAngle);
-					this.tabPage1.Controls.Add(this.numArmBdSh);
-					this.tabPage1.Controls.Add(this.numBdDist);
-					this.tabPage1.Controls.Add(this.numArmZBd);
-					this.tabPage1.Controls.Add(this.numArmBdElb);
-					this.tabPage1.Controls.Add(this.label16);
-					this.tabPage1.Controls.Add(this.label15);
-					this.tabPage1.Controls.Add(this.label14);
-					this.tabPage1.Controls.Add(this.label8);
-					this.tabPage1.Controls.Add(this.label7);
-					this.tabPage1.Location = new System.Drawing.Point(4, 22);
-					this.tabPage1.Name = "tabPage1";
-					this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-					this.tabPage1.Size = new System.Drawing.Size(346, 170);
-					this.tabPage1.TabIndex = 5;
-					this.tabPage1.Text = "BD";
-					this.tabPage1.UseVisualStyleBackColor = true;
+					this.tabBD.Controls.Add(this.numBdAngle);
+					this.tabBD.Controls.Add(this.numArmBdSh);
+					this.tabBD.Controls.Add(this.numBdDist);
+					this.tabBD.Controls.Add(this.numArmZBd);
+					this.tabBD.Controls.Add(this.numArmBdElb);
+					this.tabBD.Controls.Add(this.label16);
+					this.tabBD.Controls.Add(this.label15);
+					this.tabBD.Controls.Add(this.label14);
+					this.tabBD.Controls.Add(this.label8);
+					this.tabBD.Controls.Add(this.label7);
+					this.tabBD.Location = new System.Drawing.Point(4, 22);
+					this.tabBD.Name = "tabBD";
+					this.tabBD.Padding = new System.Windows.Forms.Padding(3);
+					this.tabBD.Size = new System.Drawing.Size(346, 170);
+					this.tabBD.TabIndex = 5;
+					this.tabBD.Text = "BD";
+					this.tabBD.UseVisualStyleBackColor = true;
 					// 
 					// numBdAngle
 					// 
@@ -1869,23 +1859,23 @@
 					this.label7.TabIndex = 0;
 					this.label7.Text = "Dist";
 					// 
-					// tabPage2
+					// ArmAngle
 					// 
-					this.tabPage2.Controls.Add(this.numArmAnglR);
-					this.tabPage2.Controls.Add(this.numArmAnglL);
-					this.tabPage2.Controls.Add(this.numArmAnglRa);
-					this.tabPage2.Controls.Add(this.numArmAnglLa);
-					this.tabPage2.Controls.Add(this.numArmAnglRz);
-					this.tabPage2.Controls.Add(this.numArmAnglLb);
-					this.tabPage2.Controls.Add(this.numArmAnglRb);
-					this.tabPage2.Controls.Add(this.numArmAnglLz);
-					this.tabPage2.Location = new System.Drawing.Point(4, 22);
-					this.tabPage2.Name = "tabPage2";
-					this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-					this.tabPage2.Size = new System.Drawing.Size(346, 170);
-					this.tabPage2.TabIndex = 6;
-					this.tabPage2.Text = "Arm angl";
-					this.tabPage2.UseVisualStyleBackColor = true;
+					this.ArmAngle.Controls.Add(this.numArmAnglR);
+					this.ArmAngle.Controls.Add(this.numArmAnglL);
+					this.ArmAngle.Controls.Add(this.numArmAnglRa);
+					this.ArmAngle.Controls.Add(this.numArmAnglLa);
+					this.ArmAngle.Controls.Add(this.numArmAnglRz);
+					this.ArmAngle.Controls.Add(this.numArmAnglLb);
+					this.ArmAngle.Controls.Add(this.numArmAnglRb);
+					this.ArmAngle.Controls.Add(this.numArmAnglLz);
+					this.ArmAngle.Location = new System.Drawing.Point(4, 22);
+					this.ArmAngle.Name = "ArmAngle";
+					this.ArmAngle.Padding = new System.Windows.Forms.Padding(3);
+					this.ArmAngle.Size = new System.Drawing.Size(346, 170);
+					this.ArmAngle.TabIndex = 6;
+					this.ArmAngle.Text = "Arm angl";
+					this.ArmAngle.UseVisualStyleBackColor = true;
 					// 
 					// numArmAnglR
 					// 
@@ -2259,19 +2249,6 @@
 					this.lstArmMode.TabIndex = 51;
 					this.lstArmMode.SelectedIndexChanged += new System.EventHandler(this.lstArmMode_SelectedIndexChanged);
 					// 
-					// numIZ
-					// 
-					this.numIZ.Location = new System.Drawing.Point(195, 58);
-					this.numIZ.Maximum = new decimal(new int[] {
-            32000,
-            0,
-            0,
-            0});
-					this.numIZ.Name = "numIZ";
-					this.numIZ.Size = new System.Drawing.Size(69, 20);
-					this.numIZ.TabIndex = 42;
-					this.numIZ.ValueChanged += new System.EventHandler(this.numIZ_ValueChanged);
-					// 
 					// frmMain
 					// 
 					this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2345,16 +2322,17 @@
 					((System.ComponentModel.ISupportInitialize)(this.numAngD)).EndInit();
 					this.tabPIDBras.ResumeLayout(false);
 					this.tabPIDBras.PerformLayout();
+					((System.ComponentModel.ISupportInitialize)(this.numIZ)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numIS)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numIE)).EndInit();
-					this.tabPage1.ResumeLayout(false);
-					this.tabPage1.PerformLayout();
+					this.tabBD.ResumeLayout(false);
+					this.tabBD.PerformLayout();
 					((System.ComponentModel.ISupportInitialize)(this.numBdAngle)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmBdSh)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numBdDist)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmZBd)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmBdElb)).EndInit();
-					this.tabPage2.ResumeLayout(false);
+					this.ArmAngle.ResumeLayout(false);
 					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRa)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmAnglLa)).EndInit();
 					((System.ComponentModel.ISupportInitialize)(this.numArmAnglRz)).EndInit();
@@ -2373,7 +2351,6 @@
 					((System.ComponentModel.ISupportInitialize)(this.picMoving)).EndInit();
 					this.groupBox4.ResumeLayout(false);
 					this.groupBox2.ResumeLayout(false);
-					((System.ComponentModel.ISupportInitialize)(this.numIZ)).EndInit();
 					this.ResumeLayout(false);
 					this.PerformLayout();
 
@@ -2441,7 +2418,6 @@
 				private System.Windows.Forms.TabPage tabPIDBras;
 				private System.Windows.Forms.TabPage tabPIDDep;
 				private System.Windows.Forms.NumericUpDown numDistP;
-				private System.Windows.Forms.ComboBox cmbAskLog2;
 				private System.Windows.Forms.Label label12;
 				private System.Windows.Forms.Label label13;
 				private System.Windows.Forms.NumericUpDown numDistD;
@@ -2478,7 +2454,7 @@
 				private System.Windows.Forms.PictureBox picDist;
 				private System.Windows.Forms.GroupBox groupBox1;
 				private System.Windows.Forms.PictureBox picMoving;
-				private System.Windows.Forms.TabPage tabPage1;
+				private System.Windows.Forms.TabPage tabBD;
 				private System.Windows.Forms.GroupBox groupBox4;
 				private System.Windows.Forms.NumericUpDown numBdAngle;
 				private System.Windows.Forms.NumericUpDown numArmBdSh;
@@ -2491,7 +2467,7 @@
 				private System.Windows.Forms.Label label8;
 				private System.Windows.Forms.Label label7;
 				private System.Windows.Forms.GroupBox groupBox2;
-				private System.Windows.Forms.TabPage tabPage2;
+				private System.Windows.Forms.TabPage ArmAngle;
 				private System.Windows.Forms.Button numArmAnglR;
 				private System.Windows.Forms.Button numArmAnglL;
 				private System.Windows.Forms.NumericUpDown numArmAnglRa;

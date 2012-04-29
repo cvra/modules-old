@@ -73,9 +73,11 @@ void bd_manage(struct blocking_detection * bd)
 
 	if(bd->err_thres == 0) return;
 
-
 	if(err < 0)
 		err = -err;
+
+	if(bd->err_max < err)
+		bd->err_max = err;
 
 	if(err > bd->err_thres) {
 		bd->cpt++;
@@ -90,6 +92,18 @@ uint8_t bd_get(struct blocking_detection * bd)
     uint8_t ret, flags;
     IRQ_LOCK(flags);
     ret = (bd->cpt_thres && (bd->cpt >= bd->cpt_thres));
+    IRQ_UNLOCK(flags);
+    return ret;
+}
+
+/** get value of blocking detection maximale value, reseted each time it's read*/
+int32_t bd_get_max(struct blocking_detection * bd)
+{
+    uint8_t flags;
+    int32_t ret;
+    IRQ_LOCK(flags);
+    ret = bd->err_max;
+    bd->err_max = 0;
     IRQ_UNLOCK(flags);
     return ret;
 }

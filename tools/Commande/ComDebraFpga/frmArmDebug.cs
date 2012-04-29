@@ -83,7 +83,7 @@ namespace ComDebraFpga
 				l1.Clear();
 				l2.Clear();
 			}
-			File.WriteAllLines("resultArm.txt", r.ToArray());
+			//File.WriteAllLines("resultArm.txt", r.ToArray());
 		}
 
 		int compute_inverse_cinematics(float posX, float posY, ref float alpha, ref float beta)

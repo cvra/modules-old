@@ -9,21 +9,21 @@ using System.Windows.Forms;
 
 namespace ComDebraFpga
 {
-  public partial class frmGraph : Form
-  {
+	public partial class frmGraph : Form
+	{
 		StringBuilder strLastVal = new StringBuilder();
-    public frmGraph()
-    {
-      InitializeComponent();
-    }
+		public frmGraph()
+		{
+			InitializeComponent();
+		}
 
-    private void frmGraph_Load(object sender, EventArgs e)
-    {
+		private void frmGraph_Load(object sender, EventArgs e)
+		{
 
-    }
+		}
 
-    internal void addData(string val)
-    {
+		internal void addData(string val)
+		{
 			try
 			{
 				if (!butEnable.Checked)
@@ -55,58 +55,90 @@ namespace ComDebraFpga
 			}
 			catch (Exception)
 			{
-			
+
 			}
-   
-    }
 
-    private void butClear_Click(object sender, EventArgs e)
-    {
-      chart.Series.Clear();
-    }
+		}
 
-    private void butDisplayGraph_DropDownOpening(object sender, EventArgs e)
-    {
-      butDisplayGraph.DropDownItems.Clear();
-      butDisplayGraph.DropDownItems.Add("All");
+		internal void addData(int[] val)
+		{
+			try
+			{
+				if (!butEnable.Checked)
+					return;
 
-      for (int i = 0; i < chart.Series.Count; i++)
-      {
-        butDisplayGraph.DropDownItems.Add(i.ToString());
-      }
-    }
+				while (val.Length > chart.Series.Count)
+				{
+					chart.Series.Add(chart.Series.Count.ToString());
+					chart.Series[chart.Series.Count - 1].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+				}
 
-    private void butDisplayGraph_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
-    {
-      if (e.ClickedItem.Text == "All")
-      {
-        for (int i = 0; i < chart.Series.Count; i++)
-        {
-          chart.Series[i].YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;
-          chart.Series[i].Enabled = true;
-        }
-      }
-      else
-      {
-        int val = int.Parse(e.ClickedItem.Text);
+				strLastVal.Clear();
+				for (int i = 0; i < val.Length; i++)
+				{
+					chart.Series[i].Points.AddY(val[i]);
+					strLastVal.Append(val[i] + " / ");
+					while (chart.Series[i].Points.Count > 5000)
+					{
+						chart.Series[i].Points.RemoveAt(0);
+					}
+				}
+				lblLastData.Text = strLastVal.ToString();
+			}
+			catch (Exception)
+			{
 
-        for (int i = 0; i < chart.Series.Count; i++)
-        {
-          if(i == val)
-          {
-            chart.Series[i].YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;
-            chart.Series[i].Enabled = true;
-          }
-          else
-          {
-            chart.Series[i].YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
-            chart.Series[i].Enabled = false;
-          }
-        }
+			}
 
-      }
+		}
 
-      chart.ChartAreas[0].AxisY.Maximum = double.NaN;
-    }
-  }
+		private void butClear_Click(object sender, EventArgs e)
+		{
+			chart.Series.Clear();
+		}
+
+		private void butDisplayGraph_DropDownOpening(object sender, EventArgs e)
+		{
+			butDisplayGraph.DropDownItems.Clear();
+			butDisplayGraph.DropDownItems.Add("All");
+
+			for (int i = 0; i < chart.Series.Count; i++)
+			{
+				butDisplayGraph.DropDownItems.Add(i.ToString());
+			}
+		}
+
+		private void butDisplayGraph_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+		{
+			if (e.ClickedItem.Text == "All")
+			{
+				for (int i = 0; i < chart.Series.Count; i++)
+				{
+					chart.Series[i].YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;
+					chart.Series[i].Enabled = true;
+				}
+			}
+			else
+			{
+				int val = int.Parse(e.ClickedItem.Text);
+
+				for (int i = 0; i < chart.Series.Count; i++)
+				{
+					if (i == val)
+					{
+						chart.Series[i].YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;
+						chart.Series[i].Enabled = true;
+					}
+					else
+					{
+						chart.Series[i].YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+						chart.Series[i].Enabled = false;
+					}
+				}
+
+			}
+
+			chart.ChartAreas[0].AxisY.Maximum = double.NaN;
+		}
+	}
 }
