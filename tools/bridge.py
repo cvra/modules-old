@@ -24,7 +24,7 @@ if len(argv) < 3:
 
 s.bind(('', int(argv[1])))
 
-robot = serial.Serial(argv[2], baudrate=115200, timeout = 1)
+robot = serial.Serial(argv[2], baudrate=57600, timeout = 1)
 
 
 class SerialToTcpThread(Thread):
