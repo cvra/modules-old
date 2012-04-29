@@ -1,0 +1,4 @@
+== Comment installer le driver FIFO uart==
+Il faut ouvrir tools/fifoed_uart.zip et l'extraire dans c:\altera\<version>\ip\user_components\fifoed_avalon_uart
+
+Puis aller dans Eclipse, ouvrir le BSP editor et vérifier dans l'onglet driver si le driver est automatiquement choisi (Si ca ne marche pas, remplir un rapport de bug). Puis faire "Generate BSP" et compiler comme d'hab.
