@@ -40,15 +40,6 @@ inline float fast_fabsf(float v)
     return i.f;                                 // done, neat !
 }
 
-/*
-inline float fast_fabsf(float v)    // DOES NOT WORK ON NIOS II (x86 ok)
-{                                   //  endianness ? alignment ?
-    unsigned int* p = (unsigned int*) &v;   // pointer, for aliasing
-    *p &= 0x7FFFFFFFu;                      // bitmask, set MSB to 0
-    return v;                               // done, neat !
-}
-*/
-
 float fast_sinf(float v)
 {
     int q = -(int)(v<0.0f);     // get number of shifts from quadrant I
@@ -213,10 +204,7 @@ float fast_invsqrtf(float v)    // Jan Kaldec, http://rrrola.wz.cz/inv_sqrt.html
 
 int is_big_endian()
 {
-	union {char c[2]; short s;} i;
-	i.c[0] = (char)1;
-	i.c[1] = (char)0;
-	return i.s != 1;
+	return ALT_CPU_BIG_ENDIAN;
 }
 
 void fast_benchmark(void)
