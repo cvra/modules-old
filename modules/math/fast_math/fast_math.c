@@ -15,7 +15,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../../strat.h"
+
+#include <aversive.h>
+
 
 #define F_PI   3.14159265358979323846f
 #define F_PI_2 1.57079632679489661923f

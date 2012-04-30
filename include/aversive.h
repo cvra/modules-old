@@ -120,6 +120,8 @@ do {                                     \
 #define nothing() do {} while(0)
 #define reset() do {} while(0)
 
+#define UPTIME 0
+
 #else
 
 
@@ -134,6 +136,16 @@ do {                                     \
     NIOS2_WRITE_IENABLE(0);                  \
     ((void (*) (void)) 0x04000000) (); 		 \
     } while(0)
+
+
+/** @brief Lis le temps depuis le boot du robot.
+ *
+ * Le temps est exprime en us, et stocke sur 32 bits, ce qui correspond
+ * a 1h et 11 minutes avant overflow.
+ * Ce timer est gere en hardware, ce qui le rend beaucoup plus precis que
+ * le module time de Aversive.
+ */
+#define UPTIME (IORD(TIMECOUNTER_BASE, 0))
     
 #endif
 
