@@ -138,4 +138,11 @@ int8_t oa_process(void);
  */
 point_t * oa_get_path(void);
 
+
+/** Checks if a segment is intersecting any obstacle.
+ *
+ * @author Antoine Albertelli
+ */
+int oa_segment_intersect_obstacle(point_t p1, point_t p2);
+
 #endif /* _OBSTACLE_AVOIDANCE_H_ */

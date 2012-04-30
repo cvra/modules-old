@@ -135,6 +135,16 @@ poly_t *oa_new_poly(uint8_t size)
 	return &oa.polys[oa.cur_poly_idx++];
 }
 
+int oa_segment_intersect_obstacle(point_t p1, point_t p2) {
+	int i;
+	point_t dummy;
+	for(i=0;i<oa.cur_poly_idx;i++) {
+		if(is_crossing_poly(p1, p2, &dummy, &(oa.polys[i])))
+			return 1;
+	}
+	return 0;
+}
+
 /**
  * Add a point to the polygon.
  */
