@@ -314,20 +314,23 @@ oa_process(void)
 
 	/* First we compute the visibility graph */
 	ret = calc_rays(oa.polys, oa.cur_poly_idx, oa.u.rays);
-	DEBUG_OA_PRINTF("nb_rays = %d\r", ret);
+	printf("nbR%d\r", ret);
 
 	DEBUG_OA_PRINTF("Ray list\r");
 	for (i=0;i<ret;i+=4) {
 		DEBUG_OA_PRINTF("%d,%d -> %d,%d\r", oa.u.rays[i], oa.u.rays[i+1], oa.u.rays[i+2], oa.u.rays[i+3]);
 	}
+	// S'il n'y a pas de rayon, on dit qu'il faut aller direct
+	if(ret == 0)
+		return -3;
 	
 	/* Then we affect the rays lengths to their weights */
 	calc_rays_weight(oa.polys, oa.cur_poly_idx, 
 			 oa.u.rays, ret, oa.weight);
 	
-	DEBUG_OA_PRINTF("Ray weights\r");
+	DEBUG_OA_PRINTF("Ray weights:\r");
 	for (i=0;i<ret;i+=4) {
-		DEBUG_OA_PRINTF("%d,%d -> %d,%d (%d)\r",
+		DEBUG_OA_PRINTF("%d,%d->%d,%d (%d)\r",
 		       (int)oa.polys[oa.u.rays[i]].pts[oa.u.rays[i+1]].x,
 		       (int)oa.polys[oa.u.rays[i]].pts[oa.u.rays[i+1]].y,
 		       (int)oa.polys[oa.u.rays[i+2]].pts[oa.u.rays[i+3]].x,
@@ -338,7 +341,7 @@ oa_process(void)
 	/* We aplly dijkstra on the visibility graph from the start
 	 * point (point 0 of the polygon 0) */
 	oa.ray_n = ret;
-	DEBUG_OA_PRINTF( "dijkstra ray_n = %d\r", ret);
+	printf( "dijkstra ray_n = %d\r", ret);
 	dijkstra(0, 0);
 
 	/* As dijkstra sets the parent points in the resulting graph,

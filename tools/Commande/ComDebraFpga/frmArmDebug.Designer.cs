@@ -40,6 +40,7 @@
 			this.pic.Size = new System.Drawing.Size(615, 378);
 			this.pic.TabIndex = 0;
 			this.pic.TabStop = false;
+			this.pic.Click += new System.EventHandler(this.pic_Click);
 			this.pic.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Paint);
 			// 
 			// frmArmDebug

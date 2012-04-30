@@ -86,13 +86,14 @@ namespace ComDebraFpga
 			//File.WriteAllLines("resultArm.txt", r.ToArray());
 		}
 
+		float DEG_TO_RAD = (float)Math.PI / 180.0f;
 		int compute_inverse_cinematics(float posX, float posY, ref float alpha, ref float beta)
 		{
 			circle_t c1, c2;
 			point_t p1, p2, elbowPos;
 			float ROBOT_ARM_BUTEE_EPAULE = 1.91986f; /** Butee sur l'epaule en rad (equivalent a 110 deg) */
 			//float ROBOT_ARM_BUTEE_COUDE = 6.28318f ; /** Desactive via une grand valeur, sinon 150 deg */
-			float DEG_TO_RAD = (float)Math.PI / 180.0f;
+			
 			int sensCoude = 0;
 
 			p1.x = 0;
@@ -133,17 +134,8 @@ namespace ComDebraFpga
 				}
 				else
 				{
-					beta1 = (float)Math.Atan2(c2.y - p1.y, c2.x - p1.x);
-					beta2 = (float)Math.Atan2(c2.y - p2.y, c2.x - p2.x);
-
-					// Evitement passage + -> - pour l'angle
-					if (c2.x < 0)
-					{
-						if (beta1 < 0 && p1.y > 0)
-							beta1 += 360 * DEG_TO_RAD;
-						else if (beta1 > 0 && p1.y < 0)
-							beta1 -= 360 * DEG_TO_RAD;
-					}
+					beta1 = getBeta(c2,p1);
+					beta2 = getBeta(c2, p2);
 
 					//printf("%i:%2.1f %2.1f %2.1f %2.1f ",arm->sensCoude, alpha1, beta1, alpha2, beta2);
 					if ((sensCoude == 1 && (alpha1 - beta1) > 0) || (sensCoude == 0 && (alpha1 - beta1) < 0))
@@ -164,16 +156,7 @@ namespace ComDebraFpga
 			}
 
 			alpha = (float)Math.Atan2(elbowPos.y, elbowPos.x);
-			beta = (float)Math.Atan2(c2.y - elbowPos.y, c2.x - elbowPos.x);
-
-			// Evitement passage + -> - pour l'angle
-			if (c2.x < 0)
-			{
-				if (beta < 0 && elbowPos.y > 0)
-					beta += 360 * DEG_TO_RAD;
-				else if (beta > 0 && elbowPos.y < 0)
-					beta -= 360 * DEG_TO_RAD;
-			}
+			beta = getBeta(c2, elbowPos);
 
 			if (Math.Abs(alpha) > ROBOT_ARM_BUTEE_EPAULE)
 			{
@@ -182,6 +165,22 @@ namespace ComDebraFpga
 
 			//printf("%2.1f %2.1f\r",*alpha RAD_TO_DEG,*beta RAD_TO_DEG);
 			return 0;
+		}
+
+		private float getBeta(circle_t pointFinal, point_t coude)
+		{
+			float beta = (float)Math.Atan2(pointFinal.y - coude.y, pointFinal.x - coude.x);
+
+			// Evitement passage + -> - pour l'angle
+			if (pointFinal.x < 0-36)
+			{
+				if (beta < 0 && coude.y > 0)
+					beta += 360 * DEG_TO_RAD;
+				else if (beta > 0 && coude.y < 0)
+					beta -= 360 * DEG_TO_RAD;
+			}
+
+			return beta;
 		}
 
 		private void pic_Paint(object sender, PaintEventArgs e)
@@ -198,7 +197,11 @@ namespace ComDebraFpga
 					}
 					else
 					{
-						if (alphas[i][j] > 0)
+						if (Math.Abs(alphas[i][j] - Math.PI) < 0.02)
+						{
+							b.SetPixel(i, j, Color.HotPink);
+						}
+						else if (alphas[i][j] > 0)
 						{
 							b.SetPixel(i, j, Color.FromArgb(255, (int)(alphas[i][j] / MaxAlpha * 255), (int)(alphas[i][j] / MaxAlpha * 255)));
 						}
@@ -218,7 +221,11 @@ namespace ComDebraFpga
 					}
 					else
 					{
-						if (betas[i][j] > 0)
+						if (Math.Abs(betas[i][j] - Math.PI) < 0.02)
+						{
+							b.SetPixel(i + (maxX - minX), j, Color.HotPink);
+						}
+						else if (betas[i][j] > 0)
 						{
 							b.SetPixel(i + (maxX - minX), j, Color.FromArgb(255, (int)(betas[i][j] / MaxBeta * 255), (int)(betas[i][j] / MaxBeta * 255)));
 						}
@@ -242,6 +249,12 @@ namespace ComDebraFpga
 
 		private void frmArmDebug_Activated(object sender, EventArgs e)
 		{
+			pic.Invalidate();
+		}
+
+		private void pic_Click(object sender, EventArgs e)
+		{
+			checkArmPos();
 			pic.Invalidate();
 		}
 	}

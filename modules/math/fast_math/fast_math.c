@@ -39,7 +39,7 @@ inline float fast_fabsf(float v)
 }
 
 /*
-inline float fast_fabsf(float v)    // DOES NOT WORK ON NIOS II
+inline float fast_fabsf(float v)    // DOES NOT WORK ON NIOS II (x86 ok)
 {                                   //  endianness ? alignment ?
     unsigned int* p = (unsigned int*) &v;   // pointer, for aliasing
     *p &= 0x7FFFFFFFu;                      // bitmask, set MSB to 0
@@ -47,20 +47,13 @@ inline float fast_fabsf(float v)    // DOES NOT WORK ON NIOS II
 }
 */
 
-float fast_sinf(float v)    // ref: http://dotancohen.com/eng/taylor-sine.php
+float fast_sinf(float v)
 {
-    int q = 0;
-    if (v < 0.0f) q = -1;
+    int q = -(int)(v<0.0f);     // get number of shifts from quadrant I
+    q = q + (int)(v*F_2_PI);    // get number of shifts from quadrant I
+    v = v - (float)(q)*F_PI_2;  // our angle now fits in the range [0,PI_2]
 
-    int c = v * M_2_PI;     // turns
-
-    q = q + c;
-
-    float s = (float)q * F_PI_2;   // turns shift
-
-    v = v - s;  // our angle now fits in the range [0,PI_2]
-
-    q = q&3;    // quadrant number
+    q = q&3;    // quadrant number = number of quadrant shifts modulo 4
 
     if (q==1 || q==3) v = F_PI_2 - v;   // quad II or IV, complementary angle
     if (q==2 || q==3) v = -v;           // quad III or IV, flip sign of angle
@@ -70,9 +63,9 @@ float fast_sinf(float v)    // ref: http://dotancohen.com/eng/taylor-sine.php
     const float c2 =-0.16596019268035889000f;  // -0.166667f ~= 1/3! = 1/6
     const float c3 = 0.00760292448103427890f;  //  0.008333f ~= 1/5! = 1/120
 
-    return v*(c1+v2*(c2+v2*(c3)));  // compute Taylor series terms and return
+    v = v*(c1+v2*(c2+v2*(c3)));  // compute Taylor series terms and return
+    return v;
 }
-
 
 float fast_cosf(float v)
 {
@@ -154,7 +147,7 @@ float fast_atan2f(float y, float x)
 
 void fast_math_init()
 {
-    union { float f; unsigned int u; } i;
+    union {float f; unsigned int u;} i;
     unsigned int u;
     
     for (u=0; u<=0x7FFF; u++)
@@ -179,7 +172,7 @@ void fast_math_init()
 
 float fast_sqrtf(float v)   // Paul Hsieh, http://www.azillionmonkeys.com/qed/sqroot.html
 {
-    union { float f; unsigned int u; } i = {v};
+    union {float f; unsigned int u;} i = {v};
     
     if (i.u == 0)    return 0.0;     // check for square root of 0
     
@@ -193,7 +186,7 @@ float fast_sqrtf(float v)   // Paul Hsieh, http://www.azillionmonkeys.com/qed/sq
 }
 
 /*
-float fast_sqrtf(float v)   // DOES NOT WORK ON NIOS II
+float fast_sqrtf(float v)   // DOES NOT WORK ON NIOS II (works on x86)
 {
     unsigned int* p = (unsigned int*) &v;
     
@@ -211,12 +204,10 @@ float fast_sqrtf(float v)   // DOES NOT WORK ON NIOS II
 
 float fast_invsqrtf(float v)    // Jan Kaldec, http://rrrola.wz.cz/inv_sqrt.html
 {
-    union { float f; unsigned int u; } s = {v};
+    union {float f; unsigned int u;} s = {v};
     s.u = 0x5F1FFFF9ul - (s.u >> 1);
     return 0.703952253f * s.f * (2.38924456f - v * s.f * s.f);
 }
-
-
 
 int is_big_endian()
 {
@@ -226,7 +217,7 @@ int is_big_endian()
 	return i.s != 1;
 }
 
-void benchmark(void)
+void fast_benchmark(void)
 {
 	uint32_t t = UPTIME;
 
@@ -249,7 +240,7 @@ void benchmark(void)
   srand(time(0));
 	for(i = 0; i < CNT+1; i++)
 	{
-		double v = rand()/3.21;
+		double v = rand()/654321.0;
     if (fabs(v) < 1.0) { i--; continue; }
 		val_i[i] = (int)v;
 		val_f[i] = (float)v;
@@ -268,7 +259,7 @@ void benchmark(void)
 	double mre_cosff   = 0.0;
 	double mre_atan2f  = 0.0;
 	double mre_atan2ff = 0.0;
-    double tol = 1e-8;          // tolerance
+  double tol = 1e-8;          // tolerance
 	// sqrt
 	for(i=0; i<CNT; i++)
 	{
@@ -414,6 +405,8 @@ void benchmark(void)
 
 	printf("*** End Benchmark ***\r");
 }
+
+
 /* Test du 24 avril
 ***Start Benchmark***
 dot (double) 1000 times:13257 us
@@ -430,3 +423,32 @@ atan2 (double) 1000 times:259504 us
 atan2f (float) 1000 times:98125 us
 ***End Benchmark**
 ***End **/
+
+
+/* Test du 30 avril
+endianness: little endian
+***Start Benchmark***
+Each function called 1000 times
+     mul (double)     :   10356 us, 713008.740185
+     mul (float)      :     575 us, 713008.750000
+     mul (int)        :     477 us, 712632
+     div (double)     :   20467 us, 9.353919
+     div (float)      :    5290 us, 9.353919
+     div (int)        :     486 us, 9
+     fabs (double)    :     381 us, 2582.523193
+     fabsf (float)    :     311 us, 2582.523193
+fast_fabsf (float)    :     575 us, 2582.523193
+     sqrt (double)    :   16180 us, 50.818532
+     sqrtf (float)    :    5361 us, 50.818531 (0.000006 %)
+fast_sqrtf (float)    :    1422 us, 50.818302 (0.001476 %)
+fast_invsqrtf (float) :    1380 us, 0.019690
+     sin (double)     :  227710 us, 0.133631
+     sinf (float)     :  962491 us, 0.133631 (0.000008 %)
+fast_sinf (float)     :    6818 us, 0.133619 (0.075732 %)
+     cos (double)     :  229336 us, 0.991031
+     cosf (float)     :  961424 us, 0.991031 (0.000011 %)
+fast_cosf (float)     :    6822 us, 0.990193 (0.343873 %)
+     atan2 (double)   :  262330 us, 1.464294
+     atan2f (float)   :   97054 us, 1.464294 (0.000010 %)
+fast_atan2f (float)   :   17131 us, 1.464498 (0.535477 %)
+*** End Benchmark ***/
