@@ -12,6 +12,10 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <time.h>
+#include "../../strat.h"
 
 #define F_PI   3.14159265358979323846f
 #define F_PI_2 1.57079632679489661923f
@@ -52,13 +56,13 @@ float fast_sinf(float v)    // ref: http://dotancohen.com/eng/taylor-sine.php
 
     q = q + c;
 
-    float s = q * M_PI_2;   // turns shift
+    float s = (float)q * F_PI_2;   // turns shift
 
     v = v - s;  // our angle now fits in the range [0,PI_2]
 
     q = q&3;    // quadrant number
 
-    if (q==1 || q==3) v = M_PI_2 - v;   // quad II or IV, complementary angle
+    if (q==1 || q==3) v = F_PI_2 - v;   // quad II or IV, complementary angle
     if (q==2 || q==3) v = -v;           // quad III or IV, flip sign of angle
 
     const float v2 = v*v;
@@ -211,3 +215,218 @@ float fast_invsqrtf(float v)    // Jan Kaldec, http://rrrola.wz.cz/inv_sqrt.html
     s.u = 0x5F1FFFF9ul - (s.u >> 1);
     return 0.703952253f * s.f * (2.38924456f - v * s.f * s.f);
 }
+
+
+
+int is_big_endian()
+{
+	union {char c[2]; short s;} i;
+	i.c[0] = (char)1;
+	i.c[1] = (char)0;
+	return i.s != 1;
+}
+
+void benchmark(void)
+{
+	uint32_t t = UPTIME;
+
+	printf("endianness: %s endian\r", is_big_endian() ? "big" : "little");
+
+	printf("***Start Benchmark***\r");
+	int i;
+	double r_d = 0.0;
+	float  r_f = 0.0f;
+	int    r_i = 0;
+
+	#define CNT 1000
+
+	int    val_i[CNT+1];
+	float  val_f[CNT+1];
+	double val_d[CNT+1];
+	int    abs_i[CNT+1];
+	float  abs_f[CNT+1];
+	double abs_d[CNT+1];
+  srand(time(0));
+	for(i = 0; i < CNT+1; i++)
+	{
+		double v = rand()/3.21;
+    if (fabs(v) < 1.0) { i--; continue; }
+		val_i[i] = (int)v;
+		val_f[i] = (float)v;
+		val_d[i] = v;
+		abs_i[i] = fabs((int)v);
+		abs_f[i] = fabsf((float)v);
+		abs_d[i] = fabs(v);
+	}
+
+	// max relative error tests
+	double mre_sqrtf   = 0.0;
+	double mre_sqrtff  = 0.0;
+	double mre_sinf    = 0.0;
+	double mre_sinff   = 0.0;
+	double mre_cosf    = 0.0;
+	double mre_cosff   = 0.0;
+	double mre_atan2f  = 0.0;
+	double mre_atan2ff = 0.0;
+    double tol = 1e-8;          // tolerance
+	// sqrt
+	for(i=0; i<CNT; i++)
+	{
+		double d = sqrt(abs_d[i]);
+		float f = sqrtf(abs_f[i]);
+		float ff = fast_sqrtf(abs_f[i]);
+
+		if (fabs(f -d) < tol) continue;    // too small difference, skip
+		if (fabs(ff-d) < tol) continue;    // too small difference, skip
+		if (fabs(d) < tol) continue;       // too small divider, skip
+
+		double re_f  = fabs(1.0 - (double)f /(double)d);
+		double re_ff = fabs(1.0 - (double)ff/(double)d);
+
+		if (re_f  > mre_sqrtf ) mre_sqrtf  = re_f;
+		if (re_ff > mre_sqrtff) mre_sqrtff = re_ff;
+	}
+	// sin
+	for(i=0; i<CNT; i++)
+	{
+		double d = sin(val_d[i]);
+		float f = sinf(val_f[i]);
+		float ff = fast_sinf(val_f[i]);
+
+		if (fabs(f -d) < tol) continue;    // too small difference, skip
+		if (fabs(ff-d) < tol) continue;    // too small difference, skip
+		if (fabs(d) < tol) continue;       // too small divider, skip
+
+		double re_f  = fabs(1.0 - (double)f /(double)d);
+		double re_ff = fabs(1.0 - (double)ff/(double)d);
+
+		if (re_f  > mre_sinf ) mre_sinf  = re_f;
+		if (re_ff > mre_sinff) mre_sinff = re_ff;
+	}
+	// cos
+	for(i=0; i<CNT; i++)
+	{
+		double d = cos(val_d[i]);
+		float f = cosf(val_f[i]);
+		float ff = fast_cosf(val_f[i]);
+
+		if (fabs(f -d) < tol) continue;    // too small difference, skip
+		if (fabs(ff-d) < tol) continue;    // too small difference, skip
+		if (fabs(d) < tol) continue;       // too small divider, skip
+
+		double re_f  = fabs(1.0 - (double)f /(double)d);
+		double re_ff = fabs(1.0 - (double)ff/(double)d);
+
+		if (re_f  > mre_cosf ) mre_cosf  = re_f;
+		if (re_ff > mre_cosff) mre_cosff = re_ff;
+	}
+	// atan2
+	for(i=0; i<CNT; i++)
+	{
+		double d = atan2(val_d[i], val_d[i+1]);
+		float f = atan2f(val_f[i], val_f[i+1]);
+		float ff = fast_atan2f(val_f[i], val_f[i+1]);
+
+		if (fabs(f -d) < tol) continue;    // too small difference, skip
+		if (fabs(ff-d) < tol) continue;    // too small difference, skip
+		if (fabs(d) < tol) continue;       // too small divider, skip
+
+		double re_f  = fabs(1.0 - (double)f /(double)d);
+		double re_ff = fabs(1.0 - (double)ff/(double)d);
+
+		if (re_f  > mre_atan2f ) mre_atan2f  = re_f;
+		if (re_ff > mre_atan2ff) mre_atan2ff = re_ff;
+	}
+
+	printf("Each function called %d times\r", i);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_d = val_d[i] * val_d[i+1];
+	printf("     mul (double)     : %7lu us, %f\r", UPTIME-t, r_d);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = val_f[i] * val_f[i+1];
+	printf("     mul (float)      : %7lu us, %f\r", UPTIME-t, r_f);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_i = val_i[i] * val_i[i+1];
+	printf("     mul (int)        : %7lu us, %i\r", UPTIME-t, r_i);
+
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_d = val_d[i] / val_d[i+1];
+	printf("     div (double)     : %7lu us, %f\r", UPTIME-t, r_d);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = val_f[i] / val_f[i+1];
+	printf("     div (float)      : %7lu us, %f\r", UPTIME-t, r_f);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_i = val_i[i] / val_i[i+1];
+	printf("     div (int)        : %7lu us, %i\r", UPTIME-t, r_i);
+
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_d = fabs(val_d[i]);
+	printf("     fabs (double)    : %7lu us, %f\r", UPTIME-t, r_d);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = fabsf(val_f[i]);
+	printf("     fabsf (float)    : %7lu us, %f\r", UPTIME-t, r_f);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_fabsf(val_f[i]);
+	printf("fast_fabsf (float)    : %7lu us, %f\r", UPTIME-t, r_f);
+
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_d = sqrt(abs_d[i]);
+	printf("     sqrt (double)    : %7lu us, %f\r", UPTIME-t, r_d);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = sqrtf(abs_f[i]);
+	printf("     sqrtf (float)    : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_sqrtf);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_sqrtf(abs_f[i]);
+	printf("fast_sqrtf (float)    : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_sqrtff);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_invsqrtf(abs_f[i]);
+	printf("fast_invsqrtf (float) : %7lu us, %f\r", UPTIME-t, r_f);
+
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_d = sin(val_d[i]);
+	printf("     sin (double)     : %7lu us, %f\r", UPTIME-t, r_d);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = sinf(val_f[i]);
+	printf("     sinf (float)     : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_sinf);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_sinf(val_f[i]);
+	printf("fast_sinf (float)     : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_sinff);
+
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_d = cos(val_d[i]);
+	printf("     cos (double)     : %7lu us, %f\r", UPTIME-t, r_d);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = cosf(val_f[i]);
+	printf("     cosf (float)     : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_cosf);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_cosf(val_f[i]);
+	printf("fast_cosf (float)     : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_cosff);
+
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_d = atan2(val_d[i], val_d[i+1]);
+	printf("     atan2 (double)   : %7lu us, %f\r", UPTIME-t, r_d);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = atan2f(val_f[i], val_f[i+1]);
+	printf("     atan2f (float)   : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_atan2f);
+
+	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_atan2f(val_f[i], val_f[i+1]);
+	printf("fast_atan2f (float)   : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_atan2ff);
+
+	printf("*** End Benchmark ***\r");
+}
+/* Test du 24 avril
+***Start Benchmark***
+dot (double) 1000 times:13257 us
+dot (int) 1000 times:243 us
+dot (float) 1000 times:2697 us
+divide (double) 1000 times:22387 us
+divide (int) 1000 times:268 us
+divide (float) 1000 times:8113 us
+sqrt (double) 1000 times:18404 us
+sqrt (float) 1000 times:7820 us
+sin (double) 1000 times:149762 us
+sinf (float) 1000 times:66097 us
+atan2 (double) 1000 times:259504 us
+atan2f (float) 1000 times:98125 us
+***End Benchmark**
+***End **/

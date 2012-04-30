@@ -275,11 +275,12 @@ namespace grinlib.PortCom
 
               while (Data2Send.Count > 0)
               {
-                for (int i = 0; i < Data2Send[0].Length; i++)
+								this.ComSerial.Write(Data2Send[0], 0, Data2Send[0].Length);
+                /*for (int i = 0; i < Data2Send[0].Length; i++)
                 {
                   this.ComSerial.Write(Data2Send[0], i, 1);
                   System.Threading.Thread.Sleep(1);
-                }
+                }*/
                 Data2Send.RemoveAt(0);
                 CmtError = 0;
               }

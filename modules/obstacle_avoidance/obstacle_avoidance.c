@@ -141,7 +141,7 @@ poly_t *oa_new_poly(uint8_t size)
 void oa_poly_set_point(poly_t *pol, 
 			 int32_t x, int32_t y, uint8_t i)
 {
-	DEBUG_OA_PRINTF("%s() (%ld,%ld)\r", __FUNCTION__, x, y);
+	DEBUG_OA_PRINTF("%s() (%ld,%ld)\r", "oa_s_p", x, y);
 	
 	pol->pts[i].x = x;
 	pol->pts[i].y = y;

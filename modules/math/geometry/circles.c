@@ -25,6 +25,7 @@
 
 #include <vect_base.h>
 #include <circles.h>
+//#include "../fast_math/fast_math.h"
 
 static inline float sq(float x)
 {

@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+//#include "../fast_math/fast_math.h"
 
 /* Convert a polar vector to a cartesian one */
 void vect2_pol2cart(vect2_pol* vp, vect2_cart* vc)

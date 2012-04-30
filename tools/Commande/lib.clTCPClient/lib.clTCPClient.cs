@@ -303,12 +303,16 @@ namespace lib.TCPClient
 				}
 				//				client.Client.Send(msg);
 				
-				for (int i = 0; i < Data.Length; i++)
+				/*for (int i = 0; i < Data.Length; i++)
 				{
 					stream.Write(Data, i, 1);
 					stream.Flush();
 					System.Threading.Thread.Sleep(10);
-				}
+				}*/
+
+				stream.Write(Data,0, Data.Length);
+				stream.Flush();
+
 				
 				OnEventOccure(clTCPClient.EtatConn.DATA_SENT, "", Data);
 
