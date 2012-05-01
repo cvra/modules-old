@@ -503,6 +503,8 @@ namespace ComDebraFpga
 
     private void dataMove_CellContentClick(object sender, DataGridViewCellEventArgs e)
     {
+			if (e.RowIndex == -1)
+				return;
       if (dataMove.Rows[e.RowIndex].Cells[0].Value == null ||
         dataMove.Rows[e.RowIndex].Cells[1].Value == null ||
         dataMove.Rows[e.RowIndex].Cells[2].Value == null ||

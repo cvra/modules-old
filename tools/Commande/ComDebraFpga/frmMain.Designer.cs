@@ -287,7 +287,7 @@
 					// 
 					this.rtbLog.Location = new System.Drawing.Point(675, 28);
 					this.rtbLog.Name = "rtbLog";
-					this.rtbLog.Size = new System.Drawing.Size(302, 564);
+					this.rtbLog.Size = new System.Drawing.Size(302, 550);
 					this.rtbLog.TabIndex = 1;
 					this.rtbLog.Text = "";
 					// 
@@ -2241,12 +2241,14 @@
             "ARM_STATE_ECARTE",
             "ARM_STATE_RANGE",
             "ARM_STATE_PRISE_AUTO",
-            "ARM_STATE_VIDER",
+            "ARM_STATE_VIDER_CD",
             "ARM_STATE_PRISE_LATHERALE",
-            "ARM_STATE_INIT"});
-					this.lstArmMode.Location = new System.Drawing.Point(675, 598);
+            "ARM_STATE_INIT",
+            "ARM_STATE_INACTIVE",
+            "ARM_STATE_VIDER_LINGOT"});
+					this.lstArmMode.Location = new System.Drawing.Point(675, 585);
 					this.lstArmMode.Name = "lstArmMode";
-					this.lstArmMode.Size = new System.Drawing.Size(190, 121);
+					this.lstArmMode.Size = new System.Drawing.Size(190, 134);
 					this.lstArmMode.TabIndex = 51;
 					this.lstArmMode.SelectedIndexChanged += new System.EventHandler(this.lstArmMode_SelectedIndexChanged);
 					// 
