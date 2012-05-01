@@ -599,5 +599,10 @@ namespace ComDebraFpga
 			m.sendCmd(LstPos.set_PID, new int[] { 12, (int)numIZ.Value });
 		}
 
+		private void butStop_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.stop, new int[] { });
+		}
+
   }
 }

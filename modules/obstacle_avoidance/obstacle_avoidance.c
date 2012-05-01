@@ -314,7 +314,7 @@ oa_process(void)
 
 	/* First we compute the visibility graph */
 	ret = calc_rays(oa.polys, oa.cur_poly_idx, oa.u.rays);
-	printf("nbR%d\r", ret);
+	DEBUG_OA_PRINTF("nbR%d\r", ret);
 
 	DEBUG_OA_PRINTF("Ray list\r");
 	for (i=0;i<ret;i+=4) {
@@ -341,7 +341,7 @@ oa_process(void)
 	/* We aplly dijkstra on the visibility graph from the start
 	 * point (point 0 of the polygon 0) */
 	oa.ray_n = ret;
-	printf( "dijkstra ray_n = %d\r", ret);
+	DEBUG_OA_PRINTF( "dijkstra ray_n = %d\r", ret);
 	dijkstra(0, 0);
 
 	/* As dijkstra sets the parent points in the resulting graph,
