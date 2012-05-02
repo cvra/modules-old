@@ -161,6 +161,20 @@ enum trajectory_state trajectory_get_state(struct trajectory *traj)
 	return traj->state;
 }
 
+int trajectory_moving_backward(struct trajectory *traj) {
+	return traj->d_speed < 0;
+}
+
+int trajectory_moving_forward(struct trajectory *traj) {
+	return traj->d_speed > 0;
+}
+
+int trajectory_turning(struct trajectory *traj) {
+	return traj->d_speed == 0 && traj->a_speed != 0;
+}
+
+
+
 /* distance unit conversions */
 
 double pos_mm2imp(struct trajectory *traj, double pos)
