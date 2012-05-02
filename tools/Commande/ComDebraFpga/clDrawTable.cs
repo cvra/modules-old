@@ -15,8 +15,8 @@ namespace ComDebraFpga
 		//private double TableAspectRatio = 3000.0 / 2100.0;
 		public float TableWidth = 3000f;
 		public float TableHeight = 2000f;
-		public float RobotLargeur2 = 280 / 2;
-		public float RobotLongueure2 = 328 / 2;
+		public float RobotLargeur2 = 600 / 2;
+		public float RobotLongueure2 = 600 / 2;
 		public float DistCentreBras = 127;
 		public float bras = 190.0f;
 		public float RatioPixelInc = 1f;

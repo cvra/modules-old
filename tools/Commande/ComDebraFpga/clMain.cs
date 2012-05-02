@@ -60,7 +60,7 @@ namespace ComDebraFpga
 
 
 		// Taille complète du paquet ABC + \n compris
-		private int[] packetSize = new int[] { 0, 5 + 2 * 16, 6, 21, 5 + 2 + 2 * 3, 5 + 4 * 4, 5 + 6 * 2 };
+		private int[] packetSize = new int[] { 0, 5 + 2 * 18, 6, 21, 5 + 2 + 2 * 3, 5 + 4 * 4, 5 + 6 * 2 };
 		private bool isRunning = true;
 		public DispInfo info = new DispInfo();
 
@@ -320,6 +320,7 @@ namespace ComDebraFpga
 				// Position du robot
 				case 1:
 					info.PosRobot = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
+					info.PosRobotAdv = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
 					int statuts = getInt16(cmd[k++], cmd[k++], false);
 					info.status = statuts;
 					info.uptime = getInt16(cmd[k++], cmd[k++], false);
