@@ -82,5 +82,8 @@ double speed_rd2imp(struct trajectory *traj, double speed);
 double speed_imp2rd(struct trajectory *traj, double speed);
 double acc_rd2imp(struct trajectory *traj, double acc);
 double acc_imp2rd(struct trajectory *traj, double acc);
+int trajectory_moving_backward(struct trajectory *traj);
+int trajectory_moving_forward(struct trajectory *traj);
+int trajectory_turning(struct trajectory *traj);
 
 #endif
