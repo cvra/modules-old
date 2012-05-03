@@ -337,7 +337,7 @@ calc_rays_weight(poly_t *polys, __attribute__((unused)) uint8_t npolys,
  * @note Can be pretty slow
  * @todo Put the points in result
  * @return The perimeter of the convex hull.  */
-float find_convex_hull(point_t *points, int n, poly_t *result) {
+float find_convex_hull(point_t *points, int n) {
 	int i,j,k, l;
 	poly_t triangle;
 	triangle.pts = malloc(3 * sizeof(point_t));
@@ -380,97 +380,91 @@ float find_convex_hull(point_t *points, int n, poly_t *result) {
 #endif
 
 
-	int algoRunning = 1;
 	int currentPointIndex;
 	float perimeter = 0.;
 	int startPointIndex;
+	int previousPointIndex;
+
+	float minAngle = 1000;
 
 	for (i = 0; i < n; i++) {
-		if (on_convex_hull[i]) {
-			startPointIndex = i;
-			break;
+		if (!on_convex_hull[i])
+			continue;
+		if (atan2f(points[i].y, points[i].x) < minAngle) {
+			currentPointIndex = i;
+			minAngle = atan2f(points[i].y, points[i].x);
 		}
 	}
 
-	currentPointIndex = startPointIndex;
+	startPointIndex = currentPointIndex;
+	previousPointIndex = currentPointIndex;
+	on_convex_hull[startPointIndex] = 0;
 
-	while (algoRunning) {
-		int nearestNeighbourIndex;
-		float nearestNeighbourDistance = 1e6;
 
+	while (1) { // interupted by a break in the code
+		int minFound = 0;
+		minAngle = 1000;
 		for (i = 0; i < n; i++) {
-			if (on_convex_hull[i]) {
-				break;
+			if (!on_convex_hull[i])
+				continue;
+			if (atan2f(points[i].y, points[i].x) < minAngle) {
+				currentPointIndex = i;
+				minAngle = atan2f(points[i].y, points[i].x);
+				minFound = 1;
 			}
 		}
 
-		if (i == n) {
-				algoRunning = 0;
-				break;
-		}
+		if (!minFound)
+			break;
 
 #ifdef CONVEX_HULL_DEBUG
-		printf("i = %d\n", i);
+		printf("currentPoint = %d\n", currentPointIndex);
+		printf("previous = %d\n", previousPointIndex);
+		printf("Distance between previous (%.1f;%.1f) and (%.1f;%.1f) = %.f\n",
+				points[previousPointIndex].x, points[previousPointIndex].y,
+				points[currentPointIndex].x, points[currentPointIndex].y,
+				DISTANCE(points[currentPointIndex], points[previousPointIndex]));
 #endif
 
-		for (i = 0; i < n; i++) {
-			float distance = DISTANCE(points[i], points[currentPointIndex]);
-			if (!on_convex_hull[i])
-				continue;
-			if (i == currentPointIndex)
-				continue;
+		perimeter += DISTANCE(points[currentPointIndex], points[previousPointIndex]);
 
-			 if(distance < nearestNeighbourDistance) {
-				 nearestNeighbourIndex = i;
-				 nearestNeighbourDistance = distance;
-			 }
-		}
-
-#ifdef CONVEX_HULL_DEBUG
-		printf("Distance(%.2f;%.2f) to (%.2f;%.2f) = %f\n", points[currentPointIndex].x,points[currentPointIndex].y, points[nearestNeighbourIndex].x,points[nearestNeighbourIndex].y, nearestNeighbourDistance);
-#endif
+		// On retire le point de la liste
 		on_convex_hull[currentPointIndex] = 0;
+		previousPointIndex = currentPointIndex;
 
-		if(nearestNeighbourDistance < 1e6) {
-			perimeter += nearestNeighbourDistance;
-			currentPointIndex = nearestNeighbourIndex;
-		}
 	}
 
 
-
-
-	perimeter += DISTANCE(points[currentPointIndex], points[startPointIndex]);
+	perimeter += DISTANCE(points[previousPointIndex], points[startPointIndex]);
 
 #ifdef CONVEX_HULL_DEBUG
 	printf("perimeter = %.1f\n", perimeter);
 #endif
+	return perimeter;
 }
 
 
 void test_convex_hull(void) {
-	poly_t test_poly;
 
-	test_poly.l = 5;
-	point_t *pts = malloc(sizeof(point_t) * test_poly.l);
+	point_t pts[5];
 
-	pts[0].x = 0;
-	pts[0].y = 0;
+	pts[1].x = -10;
+	pts[1].y = -10;
 
-	pts[1].x = 10;
-	pts[1].y = 0;
+	pts[0].x = 10;
+	pts[0].y = -10;
 
-	pts[2].x = 20;
-	pts[2].y = 20;
+	pts[2].x = 10;
+	pts[2].y = 10;
 
-	pts[3].x = 10;
-	pts[3].y = 5;
+	pts[3].x = 0;
+	pts[3].y = 0;
 
-	pts[4].x = 0;
+	pts[4].x = -10;
 	pts[4].y = 10;
 
 
-	find_convex_hull(pts, 5, &test_poly);
+	find_convex_hull(pts, 5);
 
 }
 
