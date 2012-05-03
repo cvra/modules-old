@@ -328,7 +328,7 @@ calc_rays_weight(poly_t *polys, __attribute__((unused)) uint8_t npolys,
 }
 
 
-#define CONVEX_HULL_DEBUG
+//#define CONVEX_HULL_DEBUG
 
 #define DISTANCE(p1, p2) sqrtf(((p1).x - (p2).x)*((p1).x - (p2).x) + ((p1).y - (p2).y)*((p1).y - (p2).y))
 
@@ -440,6 +440,7 @@ float find_convex_hull(point_t *points, int n) {
 #ifdef CONVEX_HULL_DEBUG
 	printf("perimeter = %.1f\n", perimeter);
 #endif
+
 	return perimeter;
 }
 
