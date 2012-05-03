@@ -162,15 +162,17 @@ enum trajectory_state trajectory_get_state(struct trajectory *traj)
 }
 
 int trajectory_moving_backward(struct trajectory *traj) {
-	return traj->d_speed < 0;
+	return cs_get_consign(traj->csm_distance) < cs_get_filtered_consign(traj->csm_distance);
 }
 
 int trajectory_moving_forward(struct trajectory *traj) {
-	return traj->d_speed > 0;
+	return cs_get_consign(traj->csm_distance) > cs_get_filtered_consign(traj->csm_distance);
 }
 
 int trajectory_turning(struct trajectory *traj) {
-	return traj->d_speed == 0 && traj->a_speed != 0;
+	if(trajectory_moving_forward(traj)) return 0;
+	if(trajectory_moving_backward(traj)) return 0;
+	return cs_get_consign(traj->csm_angle) != cs_get_filtered_consign(traj->csm_angle);
 }
 
 

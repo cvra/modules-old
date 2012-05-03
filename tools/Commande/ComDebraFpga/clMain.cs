@@ -321,7 +321,7 @@ namespace ComDebraFpga
 				case 1:
 					info.PosRobot = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
 					info.PosRobotAdv = getInt16(cmd[k++], cmd[k++]) + "," + getInt16(cmd[k++], cmd[k++]);
-					info.perimetre = getInt16(cmd[k++], cmd[k++]);
+					info.tempMatch = getInt16(cmd[k++], cmd[k++]);
 					int statuts = getInt16(cmd[k++], cmd[k++], false);
 					info.status = statuts;
 					info.uptime = getInt16(cmd[k++], cmd[k++], false);

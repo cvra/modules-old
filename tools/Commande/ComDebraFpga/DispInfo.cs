@@ -11,7 +11,7 @@ namespace ComDebraFpga
     internal bool hasNewData;
     public string PosRobot { get; set; }
     public string PosRobotAdv { get; set; }
-		public int perimetre { get; set; }
+		public int tempMatch { get; set; }
 		public int status { get; set; }
     public int uptime { get; set; }
 		public int longestTask { get; set; }

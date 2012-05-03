@@ -27,6 +27,8 @@ namespace ComDebraFpga
 
 		private void traitLastLog()
 		{
+			if (lstLog[0] == null)
+				return;
 			switch (lstLog[0].typeVal)
 			{
 				case TypeVal.info:
@@ -63,6 +65,9 @@ namespace ComDebraFpga
 					rtbLog.AppendText(lstLog[0].val + "\r\n");
 					break;
 			}
+
+			if (rtbLog.Lines.Length > 1 && ( rtbLog.Lines.Length > 1000 || rtbLog.Lines[rtbLog.Lines.Length - 1] == "cls"))
+				rtbLog.Text = "";
 		}
 
 		string lineGraph = "";
