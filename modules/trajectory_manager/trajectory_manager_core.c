@@ -95,6 +95,7 @@ void __trajectory_goto_d_a_rel(struct trajectory *traj, double d_mm,
 		}
 		d_consign += rs_get_distance(traj->robot);
 		traj->target.pol.distance = d_consign;
+		printf("D set %f", (float)d_consign);
 		cs_set_consign(traj->csm_distance, d_consign);
 	}
 }
