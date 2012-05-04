@@ -606,5 +606,10 @@ namespace ComDebraFpga
 			m.sendCmd(LstPos.stop, new int[] { });
 		}
 
+		private void button1_Click(object sender, EventArgs e)
+		{
+			m.sendCmd(LstPos.prepare_start, new int[] { 80, 350, 200, 180 - 45, 145 });
+		}
+
   }
 }

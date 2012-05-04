@@ -179,6 +179,7 @@
 					this.butRightSize2 = new System.Windows.Forms.Button();
 					this.lstArmMode = new System.Windows.Forms.ListBox();
 					this.butStop = new System.Windows.Forms.Button();
+					this.button1 = new System.Windows.Forms.Button();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -382,6 +383,7 @@
 					// 
 					// groupBox3
 					// 
+					this.groupBox3.Controls.Add(this.button1);
 					this.groupBox3.Controls.Add(this.panel1);
 					this.groupBox3.Controls.Add(this.butCallageStart);
 					this.groupBox3.Controls.Add(this.butGoInit);
@@ -2263,6 +2265,16 @@
 					this.butStop.UseVisualStyleBackColor = false;
 					this.butStop.Click += new System.EventHandler(this.butStop_Click);
 					// 
+					// button1
+					// 
+					this.button1.Location = new System.Drawing.Point(7, 73);
+					this.button1.Name = "button1";
+					this.button1.Size = new System.Drawing.Size(79, 23);
+					this.button1.TabIndex = 16;
+					this.button1.Text = "Callage start";
+					this.button1.UseVisualStyleBackColor = true;
+					this.button1.Click += new System.EventHandler(this.button1_Click);
+					// 
 					// frmMain
 					// 
 					this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2522,6 +2534,7 @@
                 private System.Windows.Forms.ToolStripButton butTestArm;
 								private System.Windows.Forms.NumericUpDown numIZ;
 								private System.Windows.Forms.Button butStop;
+								private System.Windows.Forms.Button button1;
     }
 }
 
