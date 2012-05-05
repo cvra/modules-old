@@ -46,6 +46,7 @@
 					this.timLog = new System.Windows.Forms.Timer(this.components);
 					this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 					this.groupBox3 = new System.Windows.Forms.GroupBox();
+					this.button1 = new System.Windows.Forms.Button();
 					this.panel1 = new System.Windows.Forms.Panel();
 					this.butDir8 = new System.Windows.Forms.Button();
 					this.butDir5 = new System.Windows.Forms.Button();
@@ -179,7 +180,6 @@
 					this.butRightSize2 = new System.Windows.Forms.Button();
 					this.lstArmMode = new System.Windows.Forms.ListBox();
 					this.butStop = new System.Windows.Forms.Button();
-					this.button1 = new System.Windows.Forms.Button();
 					((System.ComponentModel.ISupportInitialize)(this.dataButs)).BeginInit();
 					this.toolStrip1.SuspendLayout();
 					this.groupBox3.SuspendLayout();
@@ -400,6 +400,16 @@
 					this.groupBox3.TabIndex = 6;
 					this.groupBox3.TabStop = false;
 					this.groupBox3.Text = "Moves";
+					// 
+					// button1
+					// 
+					this.button1.Location = new System.Drawing.Point(7, 73);
+					this.button1.Name = "button1";
+					this.button1.Size = new System.Drawing.Size(79, 23);
+					this.button1.TabIndex = 16;
+					this.button1.Text = "Callage start";
+					this.button1.UseVisualStyleBackColor = true;
+					this.button1.Click += new System.EventHandler(this.button1_Click);
 					// 
 					// panel1
 					// 
@@ -2247,7 +2257,10 @@
             "ARM_STATE_PRISE_LATHERALE",
             "ARM_STATE_INIT",
             "ARM_STATE_INACTIVE",
-            "ARM_STATE_VIDER_LINGOT"});
+            "ARM_STATE_VIDER_LINGOT",
+            "ARM_STATE_BOUTEILLE",
+            "ARM_DANSE_1",
+            "ARM_LANCER"});
 					this.lstArmMode.Location = new System.Drawing.Point(675, 585);
 					this.lstArmMode.Name = "lstArmMode";
 					this.lstArmMode.Size = new System.Drawing.Size(190, 134);
@@ -2264,16 +2277,6 @@
 					this.butStop.Text = "Stop";
 					this.butStop.UseVisualStyleBackColor = false;
 					this.butStop.Click += new System.EventHandler(this.butStop_Click);
-					// 
-					// button1
-					// 
-					this.button1.Location = new System.Drawing.Point(7, 73);
-					this.button1.Name = "button1";
-					this.button1.Size = new System.Drawing.Size(79, 23);
-					this.button1.TabIndex = 16;
-					this.button1.Text = "Callage start";
-					this.button1.UseVisualStyleBackColor = true;
-					this.button1.Click += new System.EventHandler(this.button1_Click);
 					// 
 					// frmMain
 					// 
