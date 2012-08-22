@@ -404,7 +404,7 @@ namespace ComDebraFpga
 				comTcp.Connect(splt[0], int.Parse(splt[1]));
 			}
 			else
-				com.Connect(comPort, 115200);
+				com.Connect(comPort, 57600);
 		}
 
 		internal void Disconnect()
