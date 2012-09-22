@@ -204,7 +204,13 @@ float fast_invsqrtf(float v)    // Jan Kaldec, http://rrrola.wz.cz/inv_sqrt.html
 
 int is_big_endian()
 {
+#ifdef COMPILE_ON_ROBOT
 	return ALT_CPU_BIG_ENDIAN;
+#endif
+
+#ifdef __i386__
+	return 0; // x86 is little endian
+#endif	
 }
 
 void fast_benchmark(void)
