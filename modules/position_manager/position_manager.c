@@ -120,7 +120,7 @@ void position_manage(struct robot_position *pos)
 {
 	double x, y, a, r, arc_angle;
 	double dx, dy;
-	s16 x_s16, y_s16, a_s16;
+	int16_t x_s16, y_s16, a_s16;
 	struct rs_polar encoders;
 	struct rs_polar delta;
 	struct robot_system * rs;

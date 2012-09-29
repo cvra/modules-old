@@ -26,7 +26,6 @@
 #error "Don't include <error.h>, include <aversive/error.h> instead"
 #endif
 
-#include <aversive/pgmspace.h>
 #include <aversive.h>
 #include <general_errors.h>
 
@@ -47,8 +46,8 @@
 struct error {
 	uint8_t err_num;
 	uint8_t severity;
-	PGM_P text;
-	PGM_P file;
+	const char * text;
+	const char * file;
 	uint16_t line;
 };
 
@@ -63,7 +62,7 @@ struct error_fct {
 extern struct error_fct g_error_fct;
 
 
-struct error error_generate(uint8_t num, uint8_t severity, PGM_P t, PGM_P f, uint16_t l);
+struct error error_generate(uint8_t num, uint8_t severity, const char * t, const char * f, uint16_t l);
 
 /** Register log function for EMERG level */
 void error_register_emerg(void (*f)(struct error *, ...));
@@ -87,8 +86,8 @@ void error_register_debug(void (*f)(struct error *, ...));
 #define EMERG(num, text, ...)  do {                                            \
 	if(g_error_fct.emerg) {                                                \
 		struct error e = error_generate(num, ERROR_SEVERITY_EMERG,     \
-								PSTR(text),    \
-								PSTR(__FILE__),\
+								(text),    \
+								(__FILE__),\
 								__LINE__);     \
 		g_error_fct.emerg(&e, ##__VA_ARGS__);                          \
 	}                                                                      \
@@ -98,8 +97,8 @@ void error_register_debug(void (*f)(struct error *, ...));
 #define ERROR(num, text, ...)  do {                                            \
 	if(g_error_fct.error) {                                                \
 		struct error e = error_generate(num, ERROR_SEVERITY_ERROR,     \
-								PSTR(text),    \
-								PSTR(__FILE__),\
+								(text),    \
+								(__FILE__),\
 								__LINE__);     \
 		g_error_fct.error(&e, ##__VA_ARGS__);                          \
 	}                                                                      \
@@ -109,8 +108,8 @@ void error_register_debug(void (*f)(struct error *, ...));
 #define WARNING(num, text, ...)  do {                                          \
 	if(g_error_fct.warning) {                                              \
 		struct error e = error_generate(num, ERROR_SEVERITY_WARNING,   \
-								PSTR(text),    \
-								PSTR(__FILE__),\
+								(text),    \
+								(__FILE__),\
 								__LINE__);     \
 		g_error_fct.warning(&e, ##__VA_ARGS__);                        \
 	}                                                                      \
@@ -120,8 +119,8 @@ void error_register_debug(void (*f)(struct error *, ...));
 #define NOTICE(num, text, ...)  do {                                           \
 	if(g_error_fct.notice) {                                               \
 		struct error e = error_generate(num, ERROR_SEVERITY_NOTICE,    \
-								PSTR(text),    \
-								PSTR(__FILE__),\
+								(text),    \
+								(__FILE__),\
 								__LINE__);     \
 		g_error_fct.notice(&e, ##__VA_ARGS__);                         \
 	}                                                                      \
@@ -131,8 +130,8 @@ void error_register_debug(void (*f)(struct error *, ...));
 #define DEBUG(num, text, ...)  do {                                            \
 	if(g_error_fct.debug) {                                                \
 		struct error e = error_generate(num, ERROR_SEVERITY_DEBUG,     \
-								PSTR(text),    \
-								PSTR(__FILE__),\
+								(text),    \
+								(__FILE__),\
 								__LINE__);     \
 		g_error_fct.debug(&e, ##__VA_ARGS__);                          \
 	}                                                                      \

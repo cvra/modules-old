@@ -37,8 +37,8 @@ void error_init(void)
 }
 
 
-struct error error_generate(uint8_t num, uint8_t severity, PGM_P t, 
-			    PGM_P f, uint16_t l) {
+struct error error_generate(uint8_t num, uint8_t severity, const char * t, 
+			    const char * f, uint16_t l) {
 	struct error e;      
 
 	e.err_num = num;

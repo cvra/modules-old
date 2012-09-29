@@ -29,7 +29,6 @@
 #define _AVERSIVE_H_
 
 #include <aversive/types.h>
-#include <aversive/errno.h>
 #include <aversive/irq_lock.h>
 
 #ifdef COMPILE_ON_ROBOT
@@ -38,22 +37,12 @@
 #include <io.h>
 #include <sys/alt_irq.h>
 
-#else
-
+#else /* Workaround to compile on X86. */
 /** Reimplementation de IORD du NIOS2 pour compiler sur le PC */
 #define IORD(adress, offset) (*((int32_t *)adress+offset))
-
 /** Reimplementation de IOWR du NIOS2 pour compiler sur le PC */
 #define IOWR(adress, offset, data) (*((int32_t *)adress+offset) = data)
-
 #endif
-
-#define F_CPU ((unsigned long)CONFIG_QUARTZ)
-
-#define Hz  1l
-#define KHz 1000l
-#define MHz 1000000l
-
 
 
 /*
@@ -101,9 +90,12 @@ do {                                     \
 } while(0)
 
 
-/** absolute
- *  while the abs() function in the libc works only with int type
+/** @brief Computes the absolute value of a number 
+ *
+ *  While the abs() function in the libc works only with int type
  *  this macro works with every numerical type including floats
+ *
+ *  @note On float this is a bad idea, fabs() is faster. 
  */
 #define ABS(val) ({					\
 			__typeof(val) __val = (val);	\
@@ -115,19 +107,12 @@ do {                                     \
 /* a few asm utilities */
 
 #ifndef COMPILE_ON_ROBOT
-
-#define nop() do {} while(0)
-#define nothing() do {} while(0)
-#define reset() do {} while(0)
-
+/* On X86 */
 #define UPTIME 0
+#define reset()
 
 #else
-
-
-#define nop() do {} while(0)
-#define nothing() do {} while(0)
-
+/* Si on est ici c'est qu'on compile pour le NIOS II. */
 /** Resets the robot by jumping to the reset address.
  * @bug L'adresse de retour est hardcodee (0x04000000). pas bien...
  * @note Found on http://www.altera.com/support/kdb/solutions/rd05062005_584.html */
