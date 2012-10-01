@@ -26,18 +26,14 @@
 
 void scheduler_del_event(int8_t i)
 {
-	uint8_t flags;
-	
 	/* if scheduled, it will be deleted after execution.
 	 * if active, free it. 
 	 * else do nothing. */
-	IRQ_LOCK(flags);
 	if (g_tab_event[i].state == SCHEDULER_EVENT_SCHEDULED) {
 		g_tab_event[i].state = SCHEDULER_EVENT_DELETING;
 	}
 	else if (g_tab_event[i].state == SCHEDULER_EVENT_ACTIVE) {
 		g_tab_event[i].state = SCHEDULER_EVENT_FREE;
 	}
-	IRQ_UNLOCK(flags);
 	SCHED_INC_STAT(del_event);
 }

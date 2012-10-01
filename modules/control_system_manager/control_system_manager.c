@@ -41,11 +41,8 @@ safe_filter(int32_t (*f)(void *, int32_t), void * param, int32_t value)
 {
 	int32_t (*f_tmp)(void *, int32_t);
 	void * param_tmp;
-	uint32_t flags;
-	IRQ_LOCK(flags);
 	f_tmp = f;
 	param_tmp = param;
-	IRQ_UNLOCK(flags);
 	if (f_tmp) {
 		return f_tmp(param_tmp, value);
 	}
@@ -64,11 +61,8 @@ safe_getprocessout(int32_t (*f)(void *), void * param)
 {
 	int32_t (*f_tmp)(void *);
 	void * param_tmp;
-	uint32_t flags;
-	IRQ_LOCK(flags);
-	f_tmp = f;
+    f_tmp = f;
 	param_tmp = param;
-	IRQ_UNLOCK(flags);
 	if (f_tmp) {
 		return f_tmp(param_tmp);
 	}
@@ -87,11 +81,8 @@ safe_setprocessin(void (*f)(void *, int32_t), void * param, int32_t value)
 {
 	void (*f_tmp)(void *, int32_t);
 	void * param_tmp;
-	uint32_t flags;
-	IRQ_LOCK(flags);
-	f_tmp = f;
+    f_tmp = f;
 	param_tmp = param;
-	IRQ_UNLOCK(flags);
 	if (f_tmp) {
 		f_tmp(param_tmp, value);
 	}
@@ -101,8 +92,6 @@ safe_setprocessin(void (*f)(void *, int32_t), void * param, int32_t value)
 
 void cs_init(struct cs* cs)
 {
-    uint32_t flags;
-    IRQ_LOCK(flags);
     cs->consign_filter = NULL;
     cs->consign_filter_params = NULL;
 
@@ -121,7 +110,6 @@ void cs_init(struct cs* cs)
     cs->consign_value = 0;
     cs->error_value = 0;
     cs->out_value = 0;
-    IRQ_UNLOCK(flags);
 
     return;
 }
@@ -129,62 +117,44 @@ void cs_init(struct cs* cs)
 
 void cs_set_consign_filter(struct cs* cs, int32_t (*consign_filter)(void*, int32_t), void* consign_filter_params)
 {
-    uint32_t flags;
-    IRQ_LOCK(flags);
     cs->consign_filter = consign_filter;
     cs->consign_filter_params = consign_filter_params;
-    IRQ_UNLOCK(flags);
 }
 
 
 
 void cs_set_correct_filter(struct cs* cs, int32_t (*correct_filter)(void*, int32_t), void* correct_filter_params)
 {
-    uint32_t flags;
-    IRQ_LOCK(flags);
     cs->correct_filter = correct_filter;
     cs->correct_filter_params = correct_filter_params;
-    IRQ_UNLOCK(flags);
 }
 
 
 void cs_set_feedback_filter(struct cs* cs, int32_t (*feedback_filter)(void*, int32_t), void* feedback_filter_params)
 {
-    uint32_t flags;
-    IRQ_LOCK(flags);
     cs->feedback_filter = feedback_filter;
     cs->feedback_filter_params = feedback_filter_params;
-    IRQ_UNLOCK(flags);
 }
 
 /** Set the cs output_filter fields in the cs structure */
 void  cs_set_output_filter(struct cs* cs, int32_t (*output_filter)(void*, int32_t), void* output_filter_params) {
-    uint32_t flags;
-    IRQ_LOCK(flags);
     cs->output_filter = output_filter;
     cs->output_filter_params = output_filter_params;
-    IRQ_UNLOCK(flags);
 }
 
 
 void cs_set_process_in(struct cs* cs, void (*process_in)(void*, int32_t), void* process_in_params)
 {        
-    uint32_t flags;
-    IRQ_LOCK(flags);
     cs->process_in = process_in;
     cs->process_in_params = process_in_params;
-    IRQ_UNLOCK(flags);
 }
 
 
 
 void cs_set_process_out(struct cs* cs, int32_t (*process_out)(void*), void* process_out_params)
 {
-    uint32_t flags;
-    IRQ_LOCK(flags);
     cs->process_out = process_out;
     cs->process_out_params = process_out_params;
-    IRQ_UNLOCK(flags);
 }
 
 
@@ -250,61 +220,31 @@ void cs_manage(void * data)
 
 int32_t cs_get_out(struct cs* cs)
 {
-    int32_t tmp;
-    uint32_t flags;
-    IRQ_LOCK(flags);
-    tmp = cs->out_value;
-    IRQ_UNLOCK(flags);
-
-    return tmp;
+   return cs->out_value;
 }
 
 
 
 int32_t cs_get_error(struct cs* cs)
 {
-    int32_t tmp;
-    uint32_t flags;
-    IRQ_LOCK(flags);
-    tmp = cs->error_value;
-    IRQ_UNLOCK(flags);
-
-    return tmp;
+    return cs->error_value;
 }
 
 
 
 int32_t cs_get_consign(struct cs* cs)
 {
-    int32_t tmp;
-    uint32_t flags;
-    IRQ_LOCK(flags);
-    tmp = cs->consign_value;
-    IRQ_UNLOCK(flags);
-
-    return tmp;
+    return cs->consign_value;
 }
 
 int32_t cs_get_filtered_consign(struct cs* cs)
 {
-    int32_t tmp;
-    uint32_t flags;
-    IRQ_LOCK(flags);
-    tmp = cs->filtered_consign_value;
-    IRQ_UNLOCK(flags);
-
-    return tmp;
+    return cs->filtered_consign_value;
 }
 
 int32_t cs_get_filtered_feedback(struct cs* cs)
 {
-    int32_t tmp;
-    uint32_t flags;
-    IRQ_LOCK(flags);
-    tmp = cs->filtered_feedback_value;
-    IRQ_UNLOCK(flags);
-
-    return tmp;
+    return cs->filtered_feedback_value;
 }
 
 int32_t cs_get_feedback(struct cs* cs) {
@@ -313,9 +253,7 @@ int32_t cs_get_feedback(struct cs* cs) {
 
 void cs_set_consign(struct cs* cs, int32_t v)
 {
-    uint32_t flags;
-    /* set the consign */
-    IRQ_LOCK(flags);
     cs->consign_value = v;
-    IRQ_UNLOCK(flags);
-}        
+} 
+
+

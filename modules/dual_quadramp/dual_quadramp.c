@@ -10,13 +10,10 @@
 #define abs(x) ((x)<0 ? -(x) : (x))
 
 void dual_quadramp_init(struct dual_quadramp_filter *q) {
-	int32_t flags;
-	IRQ_LOCK(flags);
 	quadramp_init(&q->x_quadramp);
 	quadramp_init(&q->y_quadramp);
 	q->x_pos = q->x_consign = 0;
 	q->y_pos = q->y_consign = 0;
-	IRQ_UNLOCK(flags);
 }
 
 

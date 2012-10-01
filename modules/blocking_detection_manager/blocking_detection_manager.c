@@ -35,33 +35,23 @@
 /** init module, give the robot system to use as a parameter */
 void bd_init(struct blocking_detection * bd, struct cs *cs)
 {
-    uint32_t flags;
-    IRQ_LOCK(flags);
     memset(bd, 0, sizeof(*bd));
     bd->cs = cs;
-    IRQ_UNLOCK(flags);
 }
 
 
 /** reset current blocking */
 void bd_reset(struct blocking_detection * bd)
 {
-    uint32_t flags;
-    IRQ_LOCK(flags);
     bd->cpt = 0;
-    IRQ_UNLOCK(flags);
 }
 
 /**
  *
  */
 void bd_set_thresholds(struct blocking_detection *bd, uint32_t err_thres, uint16_t cpt_thres) {
-    uint32_t flags;
-    IRQ_LOCK(flags);
     bd->cpt_thres = cpt_thres;
     bd->err_thres = err_thres;
-    IRQ_UNLOCK(flags);
-    
 }
 
 
@@ -89,21 +79,14 @@ void bd_manage(struct blocking_detection * bd)
 /** get value of blocking detection */
 uint8_t bd_get(struct blocking_detection * bd)
 {
-    uint8_t ret, flags;
-    IRQ_LOCK(flags);
-    ret = (bd->cpt_thres && (bd->cpt >= bd->cpt_thres));
-    IRQ_UNLOCK(flags);
-    return ret;
+    return (bd->cpt_thres && (bd->cpt >= bd->cpt_thres));
 }
 
 /** get value of blocking detection maximale value, reseted each time it's read*/
 int32_t bd_get_max(struct blocking_detection * bd)
 {
-    uint8_t flags;
     int32_t ret;
-    IRQ_LOCK(flags);
     ret = bd->err_max;
     bd->err_max = 0;
-    IRQ_UNLOCK(flags);
     return ret;
 }

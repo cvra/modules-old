@@ -29,7 +29,6 @@
 #define _AVERSIVE_H_
 
 #include <aversive/types.h>
-#include <aversive/irq_lock.h>
 
 #ifdef COMPILE_ON_ROBOT
 
