@@ -31,7 +31,6 @@
 
 
 
-
 /** init module, give the robot system to use as a parameter */
 void bd_init(struct blocking_detection * bd, struct cs *cs)
 {
@@ -59,12 +58,9 @@ void bd_set_thresholds(struct blocking_detection *bd, uint32_t err_thres, uint16
 /** function to be called periodically */
 void bd_manage(struct blocking_detection * bd)
 {
-	int32_t err = cs_get_error(bd->cs);
+	uint32_t err = ABS(cs_get_error(bd->cs));
 
 	if(bd->err_thres == 0) return;
-
-	if(err < 0)
-		err = -err;
 
 	if(bd->err_max < err)
 		bd->err_max = err;
