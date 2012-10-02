@@ -206,11 +206,13 @@ int is_big_endian()
 {
 #ifdef COMPILE_ON_ROBOT
 	return ALT_CPU_BIG_ENDIAN;
+#else
+    union {char c[2]; short s;} i;
+    i.c[0] = (char)1;
+    i.c[1] = (char)0;
+    return i.s != 1;
 #endif
 
-#ifdef __i386__
-	return 0; // x86 is little endian
-#endif	
 }
 
 void fast_benchmark(void)
@@ -230,7 +232,6 @@ void fast_benchmark(void)
 	int    val_i[CNT+1];
 	float  val_f[CNT+1];
 	double val_d[CNT+1];
-	int    abs_i[CNT+1];
 	float  abs_f[CNT+1];
 	double abs_d[CNT+1];
   srand(time(0));
@@ -241,7 +242,6 @@ void fast_benchmark(void)
 		val_i[i] = (int)v;
 		val_f[i] = (float)v;
 		val_d[i] = v;
-		abs_i[i] = fabs((int)v);
 		abs_f[i] = fabsf((float)v);
 		abs_d[i] = fabs(v);
 	}
@@ -328,76 +328,76 @@ void fast_benchmark(void)
 	printf("Each function called %d times\r", i);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_d = val_d[i] * val_d[i+1];
-	printf("     mul (double)     : %7lu us, %f\r", UPTIME-t, r_d);
+	printf("     mul (double)     : %7lu us, %f\r",(long unsigned int)(UPTIME-t), r_d);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = val_f[i] * val_f[i+1];
-	printf("     mul (float)      : %7lu us, %f\r", UPTIME-t, r_f);
+	printf("     mul (float)      : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_f);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_i = val_i[i] * val_i[i+1];
-	printf("     mul (int)        : %7lu us, %i\r", UPTIME-t, r_i);
+	printf("     mul (int)        : %7lu us, %i\r", (long unsigned int)(UPTIME-t), r_i);
 
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_d = val_d[i] / val_d[i+1];
-	printf("     div (double)     : %7lu us, %f\r", UPTIME-t, r_d);
+	printf("     div (double)     : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_d);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = val_f[i] / val_f[i+1];
-	printf("     div (float)      : %7lu us, %f\r", UPTIME-t, r_f);
+	printf("     div (float)      : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_f);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_i = val_i[i] / val_i[i+1];
-	printf("     div (int)        : %7lu us, %i\r", UPTIME-t, r_i);
+	printf("     div (int)        : %7lu us, %i\r", (long unsigned int)(UPTIME-t), r_i);
 
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_d = fabs(val_d[i]);
-	printf("     fabs (double)    : %7lu us, %f\r", UPTIME-t, r_d);
+	printf("     fabs (double)    : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_d);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = fabsf(val_f[i]);
-	printf("     fabsf (float)    : %7lu us, %f\r", UPTIME-t, r_f);
+	printf("     fabsf (float)    : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_f);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_fabsf(val_f[i]);
-	printf("fast_fabsf (float)    : %7lu us, %f\r", UPTIME-t, r_f);
+	printf("fast_fabsf (float)    : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_f);
 
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_d = sqrt(abs_d[i]);
-	printf("     sqrt (double)    : %7lu us, %f\r", UPTIME-t, r_d);
+	printf("     sqrt (double)    : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_d);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = sqrtf(abs_f[i]);
-	printf("     sqrtf (float)    : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_sqrtf);
+	printf("     sqrtf (float)    : %7lu us, %f (%lf %%)\r", (long unsigned int)(UPTIME-t), r_f, 100.0*mre_sqrtf);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_sqrtf(abs_f[i]);
-	printf("fast_sqrtf (float)    : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_sqrtff);
+	printf("fast_sqrtf (float)    : %7lu us, %f (%lf %%)\r", (long unsigned int)(UPTIME-t), r_f, 100.0*mre_sqrtff);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_invsqrtf(abs_f[i]);
-	printf("fast_invsqrtf (float) : %7lu us, %f\r", UPTIME-t, r_f);
+    printf("fast_invsqrtf (float) : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_f);
 
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_d = sin(val_d[i]);
-	printf("     sin (double)     : %7lu us, %f\r", UPTIME-t, r_d);
+	printf("     sin (double)     : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_d);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = sinf(val_f[i]);
-	printf("     sinf (float)     : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_sinf);
+	printf("     sinf (float)     : %7lu us, %f (%lf %%)\r", (long unsigned int)(UPTIME-t), r_f, 100.0*mre_sinf);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_sinf(val_f[i]);
-	printf("fast_sinf (float)     : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_sinff);
+	printf("fast_sinf (float)     : %7lu us, %f (%lf %%)\r", (long unsigned int)(UPTIME-t), r_f, 100.0*mre_sinff);
 
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_d = cos(val_d[i]);
-	printf("     cos (double)     : %7lu us, %f\r", UPTIME-t, r_d);
+	printf("     cos (double)     : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_d);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = cosf(val_f[i]);
-	printf("     cosf (float)     : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_cosf);
+	printf("     cosf (float)     : %7lu us, %f (%lf %%)\r", (long unsigned int)(UPTIME-t), r_f, 100.0*mre_cosf);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_cosf(val_f[i]);
-	printf("fast_cosf (float)     : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_cosff);
+	printf("fast_cosf (float)     : %7lu us, %f (%lf %%)\r", (long unsigned int)(UPTIME-t), r_f, 100.0*mre_cosff);
 
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_d = atan2(val_d[i], val_d[i+1]);
-	printf("     atan2 (double)   : %7lu us, %f\r", UPTIME-t, r_d);
+	printf("     atan2 (double)   : %7lu us, %f\r", (long unsigned int)(UPTIME-t), r_d);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = atan2f(val_f[i], val_f[i+1]);
-	printf("     atan2f (float)   : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_atan2f);
+	printf("     atan2f (float)   : %7lu us, %f (%lf %%)\r", (long unsigned int)(UPTIME-t), r_f, 100.0*mre_atan2f);
 
 	for(t=UPTIME, i=0; i<CNT; i++) r_f = fast_atan2f(val_f[i], val_f[i+1]);
-	printf("fast_atan2f (float)   : %7lu us, %f (%lf %%)\r", UPTIME-t, r_f, 100.0*mre_atan2ff);
+	printf("fast_atan2f (float)   : %7lu us, %f (%lf %%)\r", (long unsigned int)(UPTIME-t), r_f, 100.0*mre_atan2ff);
 
 	printf("*** End Benchmark ***\r");
 }
