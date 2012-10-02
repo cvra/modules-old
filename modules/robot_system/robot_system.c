@@ -247,7 +247,6 @@ int32_t rs_get_ext_left(void * data)
 int32_t rs_get_ext_right(void * data)
 {
 	struct robot_system * rs = data;
-	int32_t right;
     return rs->wext_prev.right ;
 }
 

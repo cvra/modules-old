@@ -724,44 +724,7 @@ void trajectory_circle_rel(struct trajectory *traj,
 	return a_rad * radius_mm;
 }
 
-/*
- * Start a circle of specified radius around the specified center
- * (relative with d,a). The distance is specified in mm.
- */
-void trajectory_circle(struct trajectory *traj,
-		       double center_d_mm, double center_a_rad,
-		       double radius_mm, double dist_mm)
-{
-/* 	double */
 
-/* 	DEBUG(E_TRAJECTORY, "CIRCLE to d=%f a_rad=%f", center_d_mm, */
-/* 	      center_a_rad); */
-/* 	delete_event(traj); */
-/* 	traj->state = RUNNING_CIRCLE; */
-
-
-}
-
-/*
- * Start a circle of specified radius around the specified center
- * (absolute). The distance is specified in mm.
- */
-void trajectory_circle_abs_dist_mm(struct trajectory *traj,
-				   double x_rel_mm, double y_rel_mm,
-				   double radius_mm, double dist_mm)
-{
-}
-
-/*
- * Start a circle of specified radius around the specified center
- * (absolute). The distance is specified in degrees.
- */
-void trajectory_circle_abs_dist_deg(struct trajectory *traj,
-				    double x_rel_mm, double y_rel_mm,
-				    double radius_mm, double dist_degrees)
-{
-
-}
 
 /*********** *LINE */
 
