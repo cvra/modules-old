@@ -1,0 +1,22 @@
+==Comment fonctionnent les branches?==
+
+Il y a 3 type de branches dans le projet :
+* La default. C'est la branche de reference sur laquelle tout les dev doivent
+  se synchroniser. L'idee est de ne jouer des match que sur du code venant de
+  master, mais je parie que on va faire 4 match sur 5 avec du code de
+  integration.
+* L'integration. 
+* Les branches de dev. Ces branches sont nommees feature-*, par exemple une
+  branche de dev du pathfinding sera nommee feature-pathfinding. Un autre
+  exemple de branche de dev sont les branches servant a corriger une issue.
+  Dans ce cas le plus simple est de la nommer issue-#, # etant le bug ID
+  depuis le tracker.
+
+
+Lorsque une fonctionnalite / un patch est termine selon son dev, il envoie une 
+pull request de sa branche feature (voir ci dessous) vers la branche d'integration.
+Le mainteneur (a priori moi) pull la branche, la merge, la teste, la verifie (style
+et fond), et si elle est ok, la publie dans la master.
+Les dev travaillant dans des branches features doivent regulierement pull et
+merge la master dans leur branche, afin que les merge se passent le mieux
+possible.
