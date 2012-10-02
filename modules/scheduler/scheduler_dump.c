@@ -22,7 +22,6 @@
 #include <stdio.h>
 
 #include <aversive.h>
-#include <aversive/pgmspace.h>
 
 #include <scheduler_config.h>
 #include <scheduler_private.h>
@@ -32,20 +31,20 @@ void scheduler_dump_events(void)
 {
 	int i;
 
-	printf_P(PSTR("== Dump events ==\r\n"));
+	printf("== Dump events ==\r\n");
 	for (i=0 ; i<SCHEDULER_NB_MAX_EVENT ; i++) {
-		printf_P(PSTR("  [%d]@%p : "), i, &g_tab_event[i]);
-		printf_P(PSTR("  state=%d"), g_tab_event[i].state);
+		printf("  [%d]@%p : ", i, &g_tab_event[i]);
+		printf("  state=%d", g_tab_event[i].state);
 		if (g_tab_event[i].state >= SCHEDULER_EVENT_ACTIVE ) {
-			printf_P(PSTR(", f=%p, "), g_tab_event[i].f);
-			printf_P(PSTR("data=%p, "), g_tab_event[i].data);
-			printf_P(PSTR("period=%d, "), g_tab_event[i].period);
-			printf_P(PSTR("current_time=%d, "), g_tab_event[i].current_time);
-			printf_P(PSTR("priority=%d, "), g_tab_event[i].priority);
-			printf_P(PSTR("list_next=%p\r\n"), SLIST_NEXT(&g_tab_event[i], next));
+			printf(", f=%p, ", g_tab_event[i].f);
+			printf("data=%p, ", g_tab_event[i].data);
+			printf("period=%d, ", g_tab_event[i].period);
+			printf("current_time=%d, ", g_tab_event[i].current_time);
+			printf("priority=%d, ", g_tab_event[i].priority);
+			printf("list_next=%p\r\n", SLIST_NEXT(&g_tab_event[i], next));
 		}
 		else {
-			printf_P(PSTR("\r\n"));
+			printf("\r\n");
 		}
 	}
 }

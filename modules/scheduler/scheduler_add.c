@@ -33,16 +33,12 @@ static inline int8_t
 scheduler_alloc_event(void)
 {
 	uint8_t i;
-	uint8_t flags;
 	
 	for (i=0 ; i<SCHEDULER_NB_MAX_EVENT ; i++) {
-		IRQ_LOCK(flags);
 		if( g_tab_event[i].state == SCHEDULER_EVENT_FREE ) {
 			g_tab_event[i].state = SCHEDULER_EVENT_ALLOCATED;
-			IRQ_UNLOCK(flags);
 			return i;
 		}
-		IRQ_UNLOCK(flags);
 	}
 	SCHED_INC_STAT(alloc_fails);
 	printf("%s failed, maybe we should increase SCHEDULER_NB_MAX_EVENT...\r\n", __FUNCTION__);
@@ -57,7 +53,6 @@ scheduler_add_event(uint8_t unicity, void (*f)(void *),
 			   void *data, uint16_t period, 
 			   uint8_t priority) {
 	int8_t i;
-	uint8_t flags;
 	
 	if (period == 0)
 		return -1;
@@ -77,9 +72,7 @@ scheduler_add_event(uint8_t unicity, void (*f)(void *),
 	g_tab_event[i].f = f;
 	g_tab_event[i].data = data;
 	
-	IRQ_LOCK(flags);
 	g_tab_event[i].state = SCHEDULER_EVENT_ACTIVE;
-	IRQ_UNLOCK(flags);
 
 	return i;
 }

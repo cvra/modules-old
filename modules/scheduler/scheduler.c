@@ -23,8 +23,6 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#include <aversive/parts.h>
-#include <aversive/pgmspace.h>
 #include <aversive.h>
 
 #include <scheduler.h>

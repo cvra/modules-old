@@ -22,6 +22,10 @@
 #include <aversive.h>
 #include <aversive/error.h>
 
+#ifndef COMPILE_ON_ROBOT
+#include <stdio.h>
+#endif
+
 /* Register map */
 #define RXDATA_REGISTER             0
 #define TXDATA_REGISTER             1
@@ -34,7 +38,6 @@ void cvra_adc_manage(void *a);
 
 void cvra_adc_init(cvra_adc_t *adc, void *adress , int irq_number) {
     int i=8;
-    int val;
     adc->spi_adress = adress;
     while(i--) {
         adc->values[i]=0;
@@ -48,8 +51,10 @@ void cvra_adc_init(cvra_adc_t *adc, void *adress , int irq_number) {
     IOWR(adc->spi_adress, SLAVE_SELECT_MASK_REGISTER, 0x01);
 
 #ifdef COMPILE_ON_ROBOT    
-    val = alt_ic_isr_register(0, irq_number, cvra_adc_manage, (void *)adc, 0);
-    val = alt_ic_irq_enable (0,irq_number);
+    alt_ic_isr_register(0, irq_number, cvra_adc_manage, (void *)adc, 0);
+    alt_ic_irq_enable (0,irq_number);
+#else
+    printf("registring adc on adress %p using irq %d\n", adress, irq_number);
 #endif
 
 }

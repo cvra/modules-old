@@ -23,6 +23,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 #include <aversive.h>
@@ -321,15 +322,8 @@ uint8_t trajectory_distance_finished(struct trajectory *traj)
  * distance. */
 uint8_t trajectory_finished(struct trajectory *traj)
 {
-	uint8_t flags, ret;
-	//	uint8_t ret2;
+	return trajectory_distance_finished(traj) && trajectory_angle_finished(traj);
 
-	IRQ_LOCK(flags);
-	ret = trajectory_distance_finished(traj) &&
-		trajectory_angle_finished(traj);
-	IRQ_UNLOCK(flags);
-
-	return ret;
 }
 
 /** return true if traj is nearly finished */
@@ -579,30 +573,6 @@ void trajectory_manager_circle_event(struct trajectory *traj)
 	d_consign = 400000 + rs_get_distance(traj->robot);
 	a_consign = 400000 + rs_get_angle(traj->robot);
 
-	/* angle consign */
-/* 	a_consign = (int32_t)(v2pol_target.theta * */
-/* 			      (traj->position->phys.distance_imp_per_mm) * */
-/* 			      (traj->position->phys.track_mm) / 2.0); */
-/* 	a_consign += rs_get_angle(traj->robot); */
-
-	/* step 2 : update state, or delete event if we reached the
-	 * destination */
-
-/* 	/\* output angle -> delete event *\/ */
-/* 	if (a_consign >= traj->target.circle.dest_angle) { */
-/* 		a_consign = traj->target.circle.dest_angle; */
-/* 		delete_event(traj); */
-/* 	} */
-
-	/* step 3 : send the processed commands to cs */
-
-/* 	EVT_DEBUG(E_TRAJECTORY,"EVENT CIRCLE d_cur=%" PRIi32 ", d_consign=%" PRIi32 */
-/* 		  ", d_speed=%" PRIi32 ", a_cur=%" PRIi32 ", a_consign=%" PRIi32 */
-/* 		  ", a_speed=%" PRIi32 ", radius = %f", */
-/* 		  rs_get_distance(traj->robot), d_consign, get_quadramp_distance_speed(traj), */
-/* 		  rs_get_angle(traj->robot), a_consign, get_quadramp_angle_speed(traj), */
-/* 		  radius); */
-
 	cs_set_consign(traj->csm_angle, a_consign);
 	cs_set_consign(traj->csm_distance, d_consign);
 }
@@ -754,44 +724,7 @@ void trajectory_circle_rel(struct trajectory *traj,
 	return a_rad * radius_mm;
 }
 
-/*
- * Start a circle of specified radius around the specified center
- * (relative with d,a). The distance is specified in mm.
- */
-void trajectory_circle(struct trajectory *traj,
-		       double center_d_mm, double center_a_rad,
-		       double radius_mm, double dist_mm)
-{
-/* 	double */
 
-/* 	DEBUG(E_TRAJECTORY, "CIRCLE to d=%f a_rad=%f", center_d_mm, */
-/* 	      center_a_rad); */
-/* 	delete_event(traj); */
-/* 	traj->state = RUNNING_CIRCLE; */
-
-
-}
-
-/*
- * Start a circle of specified radius around the specified center
- * (absolute). The distance is specified in mm.
- */
-void trajectory_circle_abs_dist_mm(struct trajectory *traj,
-				   double x_rel_mm, double y_rel_mm,
-				   double radius_mm, double dist_mm)
-{
-}
-
-/*
- * Start a circle of specified radius around the specified center
- * (absolute). The distance is specified in degrees.
- */
-void trajectory_circle_abs_dist_deg(struct trajectory *traj,
-				    double x_rel_mm, double y_rel_mm,
-				    double radius_mm, double dist_degrees)
-{
-
-}
 
 /*********** *LINE */
 

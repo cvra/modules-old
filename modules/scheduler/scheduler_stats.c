@@ -23,8 +23,6 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#include <aversive/parts.h>
-#include <aversive/pgmspace.h>
 #include <aversive.h>
 
 #include <scheduler.h>
@@ -35,13 +33,13 @@ void scheduler_stats_dump(void)
 #ifdef CONFIG_MODULE_SCHEDULER_STATS
 	uint8_t i;
 
-	printf_P(PSTR("alloc_fails: %"PRIu32"\r\n"), sched_stats.alloc_fails);
-	printf_P(PSTR("add_event: %"PRIu32"\r\n"), sched_stats.add_event);
-	printf_P(PSTR("del_event: %"PRIu32"\r\n"), sched_stats.del_event);
-	printf_P(PSTR("max_stacking: %"PRIu32"\r\n"), sched_stats.max_stacking);
+	printf("alloc_fails: %"PRIu32"\r\n", sched_stats.alloc_fails);
+	printf("add_event: %"PRIu32"\r\n", sched_stats.add_event);
+	printf("del_event: %"PRIu32"\r\n", sched_stats.del_event);
+	printf("max_stacking: %"PRIu32"\r\n", sched_stats.max_stacking);
 	for (i=0; i<SCHEDULER_NB_MAX_EVENT; i++) {
-		printf_P(PSTR("[%d] task_delayed: %"PRIu32", "
-			      "task_scheduled: %"PRIu32"\r\n"),
+		printf("[%d] task_delayed: %"PRIu32", "
+			      "task_scheduled: %"PRIu32"\r\n",
 			 i, sched_stats.task_delayed[i],sched_stats.task_scheduled[i]);
 	}
 #endif /* CONFIG_MODULE_SCHEDULER_STATS */

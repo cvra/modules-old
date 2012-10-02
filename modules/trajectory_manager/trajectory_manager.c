@@ -43,26 +43,18 @@
 /** structure initialization */
 void trajectory_init(struct trajectory *traj, double cs_hz)
 {
-	uint32_t flags;
-
-	IRQ_LOCK(flags);
 	memset(traj, 0, sizeof(struct trajectory));
 	traj->cs_hz = cs_hz;
 	traj->state = READY;
 	traj->scheduler_task = -1;
-	IRQ_UNLOCK(flags);
 }
 
 /** structure initialization */
 void trajectory_set_cs(struct trajectory *traj, struct cs *cs_d,
 		       struct cs *cs_a)
 {
-	uint32_t flags;
-
-	IRQ_LOCK(flags);
-	traj->csm_distance = cs_d;
-	traj->csm_angle = cs_a;
-	IRQ_UNLOCK(flags);
+    traj->csm_distance = cs_d;
+    traj->csm_angle = cs_a;
 }
 
 /** structure initialization */
@@ -70,50 +62,35 @@ void trajectory_set_robot_params(struct trajectory *traj,
 				 struct robot_system *rs,
 				 struct robot_position *pos)
 {
-	uint32_t flags;
-	IRQ_LOCK(flags);
 	traj->robot = rs;
 	traj->position = pos;
-	IRQ_UNLOCK(flags);
 }
 
 /** set speed consign */
 void trajectory_set_speed(struct trajectory *traj, double d_speed, double a_speed)
 {
-	uint32_t flags;
-	IRQ_LOCK(flags);
 	traj->d_speed = d_speed;
 	traj->a_speed = a_speed;
-	IRQ_UNLOCK(flags);
 }
 
 /** set acc consign */
 void trajectory_set_acc(struct trajectory *traj, double d_acc, double a_acc)
 {
-	uint32_t flags;
-	IRQ_LOCK(flags);
 	traj->d_acc = d_acc;
 	traj->a_acc = a_acc;
-	IRQ_UNLOCK(flags);
 }
 
 /** set windows for trajectory */
 void trajectory_set_windows(struct trajectory *traj, double d_win,
 			    double a_win_deg, double a_start_deg)
 {
-	uint32_t flags;
-	IRQ_LOCK(flags);
-	traj->d_win = d_win ;
-	traj->a_win_rad = RAD(a_win_deg);
+    traj->d_win = d_win ;
+    traj->a_win_rad = RAD(a_win_deg);
 	traj->a_start_rad = RAD(a_start_deg);
-	IRQ_UNLOCK(flags);
 }
 
 /** set corrective coef for circle */
 void trajectory_set_circle_coef(struct trajectory *traj, double coef)
 {
-	uint32_t flags;
-	IRQ_LOCK(flags);
 	traj->circle_coef = coef ;
-	IRQ_UNLOCK(flags);
 }

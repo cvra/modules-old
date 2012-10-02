@@ -166,6 +166,7 @@ point_t * oa_get_path(void)
 
 void oa_dump(void)
 {
+#if DEBUG_OA == 1 
 	uint8_t i,j;
 	poly_t *poly;
 	point_t *pt;
@@ -181,6 +182,7 @@ void oa_dump(void)
 			DEBUG_OA_PRINTF("  pt #%d (%2.0f,%2.0f)\r", j, pt->x, pt->y);
 		}
 	}
+#endif 
 }
 
 /* Iterative Dijkstra algorithm: The valid filed is used to determine if:
@@ -273,9 +275,7 @@ dijkstra(uint8_t start_p, uint8_t start)
 
 
 /* display the path */
-int8_t
-get_path(poly_t *polys, uint8_t *rays)
-{
+int8_t get_path(poly_t *polys) {
 	uint8_t p, pt, p1, pt1, i;
 
 	p=0;
@@ -346,5 +346,5 @@ oa_process(void)
 
 	/* As dijkstra sets the parent points in the resulting graph,
 	 * we can backtrack the solution path. */
-	return get_path(oa.polys, oa.u.rays);
+	return get_path(oa.polys);
 }

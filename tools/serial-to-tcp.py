@@ -19,7 +19,7 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 if len(argv) < 3:
 	print "Yo try to run me without port ? Better hide yo kids and yo woman !"
-	print "Usage : bridge.py [ip port] [serial port]"
+	print "Usage : "+argv[0]+" [ip port] [serial port]"
 	exit(0)
 
 s.bind(('', int(argv[1])))
