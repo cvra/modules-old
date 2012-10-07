@@ -111,6 +111,8 @@ void cs_init(struct cs* cs)
     cs->error_value = 0;
     cs->out_value = 0;
 
+    cs->enabled = 1;
+
     return;
 }
 
@@ -166,38 +168,43 @@ int32_t cs_do_process(struct cs* cs, int32_t consign)
 #endif
     int32_t process_out_value = 0;
 
-    /* save the consign value into the structure */
-    cs->consign_value = consign;
+    if(cs->enabled) {
+        /* save the consign value into the structure */
+        cs->consign_value = consign;
 
-    debug_printf("%d %ld ", i++, consign);
+        debug_printf("%d %ld ", i++, consign);
 
-    /* if the consign filter exist */
-    cs->filtered_consign_value = safe_filter(cs->consign_filter, cs->consign_filter_params, consign);
-	
-    debug_printf("%ld ", cs->filtered_consign_value);
+        /* if the consign filter exist */
+        cs->filtered_consign_value = safe_filter(cs->consign_filter, cs->consign_filter_params, consign);
+        
+        debug_printf("%ld ", cs->filtered_consign_value);
 
-    /* read the process out if defined */
-    process_out_value = safe_getprocessout(cs->process_out, cs->process_out_params);
+        /* read the process out if defined */
+        process_out_value = safe_getprocessout(cs->process_out, cs->process_out_params);
 
-    debug_printf("%ld ", process_out_value);
+        debug_printf("%ld ", process_out_value);
 
-    /* apply the feedback filter if defined */
-    process_out_value = safe_filter(cs->feedback_filter, cs->feedback_filter_params, process_out_value);
-    cs->filtered_feedback_value = process_out_value;
+        /* apply the feedback filter if defined */
+        process_out_value = safe_filter(cs->feedback_filter, cs->feedback_filter_params, process_out_value);
+        cs->filtered_feedback_value = process_out_value;
 
-    debug_printf("%ld ", process_out_value);
+        debug_printf("%ld ", process_out_value);
 
-    /* substract consign and process out and put it into error */
-    cs->error_value = cs->filtered_consign_value - process_out_value ;
-    
-    debug_printf("%ld ", cs->error_value);
+        /* substract consign and process out and put it into error */
+        cs->error_value = cs->filtered_consign_value - process_out_value ;
+        
+        debug_printf("%ld ", cs->error_value);
 
-    /* apply the correct filter to error_value and put it into out_value */
-    cs->out_value = safe_filter(cs->correct_filter, cs->correct_filter_params, cs->error_value);
- 
-    cs->out_value = safe_filter(cs->output_filter, cs->output_filter_params, cs->out_value);
+        /* apply the correct filter to error_value and put it into out_value */
+        cs->out_value = safe_filter(cs->correct_filter, cs->correct_filter_params, cs->error_value);
+     
+        cs->out_value = safe_filter(cs->output_filter, cs->output_filter_params, cs->out_value);
 
-    debug_printf("%ld\n", cs->out_value);
+        debug_printf("%ld\n", cs->out_value);
+    }
+    else {
+        cs->out_value = 0; /* disables the cs */
+    }
 
 
 
@@ -255,5 +262,13 @@ void cs_set_consign(struct cs* cs, int32_t v)
 {
     cs->consign_value = v;
 } 
+
+void cs_enable(struct cs * cs) {
+    cs->enabled = 1;
+}
+
+void cs_disable(struct cs * cs) {
+    cs->enabled = 0;
+}
 
 

@@ -67,6 +67,7 @@ struct cs {
         int32_t filtered_consign_value;
         int32_t error_value;
         int32_t out_value;
+        int enabled;
 };
 
 /******* - Prototyping - *******/
@@ -150,6 +151,12 @@ int32_t cs_get_feedback(struct cs* cs);
 void cs_set_consign(struct cs* cs, int32_t v);
 
 void cs_stop(struct cs * cs);
+
+/** Disables the control system (it will output zero). */
+void cs_disable(struct cs *cs);
+
+/** Enables the control system. */
+void cs_enable(struct cs * cs);
 
 
 
