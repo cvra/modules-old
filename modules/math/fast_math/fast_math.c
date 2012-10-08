@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
+#include <uptime.h> /* for benchmark */
 
 #include <aversive.h>
 
