@@ -64,21 +64,22 @@ void vt100_init(struct vt100 * vt) {
 }
 
 
-static int8_t match_command(char * buf, unsigned int size) {
+static int match_command(char * buf, unsigned int size) {
 	const char * cmd;
-	unsigned int i = 0;
+	int i = 0;
 	
-	for (i=0 ; i<sizeof(vt100_commands)/sizeof(const char *) ; i++) {
+	for (i=0 ; (unsigned int)i<sizeof(vt100_commands)/sizeof(const char *) ; i++) {
 		cmd = *(vt100_commands + i);
 		if (size == strlen(cmd) &&
 		    !strncmp(buf, cmd, strlen(cmd))) {
+            printf("i=%d\n", i);
 			return i;
 		}
 	}
 	return -1;
 }
 
-int8_t vt100_parser(struct vt100 *vt, unsigned char c) {
+int vt100_parser(struct vt100 *vt, unsigned char c) {
 	int size;
 
 	if (vt->bufpos > VT100_BUF_SIZE) {

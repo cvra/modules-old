@@ -99,6 +99,6 @@ void vt100_init(struct vt100 *vt);
  * Return -2 if c is not the last char of a control sequence
  * Else return the index in vt100_commands[]
  */
-int8_t vt100_parser(struct vt100 *vt, unsigned char c);
+int vt100_parser(struct vt100 *vt, unsigned char c);
 
 #endif
