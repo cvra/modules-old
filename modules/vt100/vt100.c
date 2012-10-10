@@ -72,7 +72,6 @@ static int match_command(char * buf, unsigned int size) {
 		cmd = *(vt100_commands + i);
 		if (size == strlen(cmd) &&
 		    !strncmp(buf, cmd, strlen(cmd))) {
-            printf("i=%d\n", i);
 			return i;
 		}
 	}
