@@ -32,7 +32,7 @@ F= \frac{M*V^2}{R} = M*\omega^2*R = M*\omega*V
 
 
 Pour le calcul, la 3eme forme $F=M*\omega*V$ est la plus intéressante car elle ne fait pas intervenir R .
-En 1 point n de la trajectoire on peut facilement calculer:
+En un point n de la trajectoire on peut facilement calculer:
 
 \begin{equation}
 V_n= D_n - D_{n-1}
@@ -44,54 +44,49 @@ V_n= D_n - D_{n-1}
 \section{Odométrie classique sans correction centrifuge}
 
 \begin{equation}
-\Delta x = V_n \cos\theta_n
+\Delta_x = V_n \cos\theta_n
 \end{equation}
 \begin{equation}
-\Delta y = V_n \sin\theta_n
+\Delta_y = V_n \sin\theta_n
 \end{equation}
 
+Et donc :
+
 \begin{equation}
-x_n = x_{n-1} + \Delta x 
+x_n = x_{n-1} + \Delta_x
 \end{equation}
 \begin{equation}
-y_n = y_{n-1} + \Delta y
+y_n = y_{n-1} + \Delta_y
 \end{equation}
 
 \section{Odométrie avec correction centrifuge}
 
 La force centrifuge $F=M*\omega(n)*V(n)$ étant perpendiculaire à la tangente à la trajectoire:
 \begin{equation}
-F_x= -M*\omega_n*V_n*\sin\theta_n = -M*\omega_n*\Delta y
+F_x= -M*\omega_n*V_n*\sin\theta_n = -M*\omega_n*\Delta_y
 \end{equation}
 \begin{equation}
-F_y= M* \omega_n*V_n*\cos\theta_n = M* \omega_n*\Delta x
+F_y= M* \omega_n*V_n*\cos\theta_n = M* \omega_n*\Delta_x
 \end{equation}
 
 On admet que la déviation latérale est proportionnelle à la force centrifuge F:
 \begin{equation}
-deviation_x = K_1*F_x = -K* \omega_n*\Delta y
+\delta_x = k*F_x = -K* \omega_n*\Delta_y
 \end{equation}
 \begin{equation}
-deviation_y= K_1*F_y = K*\ \omega_n*\Delta x
+\delta_y= k*F_y = K* \omega_n*\Delta_x
 \end{equation}
 
-En posant $K=K_1*M$ qui devient la constante de proportionnalité qui sera déterminée expérimentalement.
+En posant $K'=k*M$ qui devient la constante de proportionnalité qui sera déterminée expérimentalement.
 
 \textbf{Remarque:} On fera bien attention au croisement des réactions en X et en Y.
 
 Soit l'algorithme d'une odométrie avec correction centrifuge:
 \begin{equation}
-\Delta x = V_n\cos\theta_n
+x_n = x_{n-1} + \Delta_x + \delta_x
 \end{equation}
 \begin{equation}
-\Delta y = V_n\sin\theta_n
-\end{equation}
-
-\begin{equation}
-x_n = x_{n-1} + \Delta x + deviation_x
-\end{equation}
-\begin{equation}
-y_ = y_{n-1} + \Delta y + deviation_y
+y_ = y_{n-1} + \Delta_y + \delta_x
 \end{equation}
 
 \section{Conclusion}
@@ -133,7 +128,7 @@ A représentant la voie (la distance entre les 2 roues codeuses).
 
 On pose $A=30 cm$ et  $\frac{\Delta D}{D}=\frac{1}{1000}$ soit une différence de diamètre qui peut paraître microscopique. On va chiffrer son influence surprenante sur la précision de positionnement.
 \begin{equation}
-R=\frac{0.3}{\frac{1}{1000}}= 300
+R=\frac{0.3}{\frac{1}{1000}}= 300m
 \end{equation}
 Le robot décrit un cercle de rayon 300m ce qui parait un rayon énorme donc un déplacement pratiquement rectiligne. Il n’en est rien.
 Supposons une traversée du terrain soit un déplacement suivant l’axe y de $Y=3$.
