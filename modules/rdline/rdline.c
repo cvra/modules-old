@@ -283,7 +283,7 @@ int8_t rdline_char_in(struct rdline * rdl, char c) {
 			rdl->left_buf[CIRBUF_GET_LEN(&rdl->left)] = '\0'; 
 			if (rdl->complete) {
 				char tmp_buf[127]; /* XXX */
-				int16_t complete_state;
+				int complete_state;
 				int8_t ret;
 				int tmp_size;
 
@@ -292,8 +292,7 @@ int8_t rdline_char_in(struct rdline * rdl, char c) {
 				else
 					complete_state = -1;
 
-				ret = rdl->complete(rdl->left_buf, tmp_buf, sizeof(tmp_buf), 
-						    &complete_state);
+				ret = rdl->complete(rdl->left_buf, tmp_buf, sizeof(tmp_buf), &complete_state);
 				/* no completion or error */
 				if (ret <= 0) {
 					return 2;
@@ -321,8 +320,7 @@ int8_t rdline_char_in(struct rdline * rdl, char c) {
 					for (i=0 ; tmp_buf[i] ; i++)
 						rdl->write_char(tmp_buf[i]);
 					rdline_puts(rdl, "\r\n");
-					ret = rdl->complete(rdl->left_buf, tmp_buf, 
-							    sizeof(tmp_buf), &complete_state);
+					ret = rdl->complete(rdl->left_buf, tmp_buf, sizeof(tmp_buf), &complete_state);
 				}
 
 				rdline_redisplay(rdl);

@@ -107,7 +107,7 @@ do {                                     \
 
 #ifndef COMPILE_ON_ROBOT
 /* On X86 */
-#define reset()
+#define reset() 
 
 #else
 /* Si on est ici c'est qu'on compile pour le NIOS II. */

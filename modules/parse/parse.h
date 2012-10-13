@@ -121,8 +121,7 @@ int8_t parse(parse_ctx_t ctx[], const char * buf);
  * The returned dst buf ends with \0.
  * 
  */
-int8_t complete(parse_ctx_t ctx[], const char *buf, int16_t *state, 
-		char *dst, uint8_t size);
+int complete(parse_ctx_t ctx[], const char *buf, int *state, char *dst, int size);
 
 
 /* true if(!c || iscomment(c) || isblank(c) || isendofline(c)) */

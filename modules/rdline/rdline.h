@@ -72,9 +72,9 @@ enum rdline_status {
 struct rdline;
 
 typedef void (rdline_write_char_t)(char);
-typedef void (rdline_validate_t)(const char *buf, uint8_t size);
-typedef int8_t (rdline_complete_t)(const char *buf, char *dstbuf,
-				uint8_t dstsize, int16_t *state);
+typedef void (rdline_validate_t)(const char *buf, int size);
+typedef int (rdline_complete_t)(const char *buf, char *dstbuf,
+				int dstsize, int *state);
 
 struct rdline {
 	enum rdline_status status;

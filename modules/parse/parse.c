@@ -256,10 +256,7 @@ parse(parse_ctx_t ctx[], const char * buf)
 	return linelen;
 }
 
-int8_t 
-complete(parse_ctx_t ctx[], const char *buf, int16_t *state, 
-	 char *dst, uint8_t size)
-{
+int complete(parse_ctx_t ctx[], const char *buf, int *state,  char *dst, int size) {
 	const char * incomplete_token = buf;
 	uint8_t inst_num = 0;
 	parse_inst_t *inst;
