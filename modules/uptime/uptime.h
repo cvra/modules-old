@@ -1,22 +1,20 @@
 #ifndef _UPTIME_H_
 
-
 #include <aversive.h>
 
-/** Retourne l'uptime. 
+/** Returns robot uptime.
  *
- * Retourne le temps depuis le boot du systeme avec une resolution de 1us. Ce temps est compte par un timer
- * hardware, ce qui garantit la precision meme sous une forte charge CPU.
+ * Returns the uptime of the system with a 1us resolution. This time is computed
+ * by an external hardware counter which is not influenced by a heavy CPU load.
  *
- * @note La valeur est stockee sur 32 bits, soit 1h et 11 minutes avant overflow.
- * Ce module n'est donc pas adapte pour faire une RTC mais fonctionne bien comme
- * general purpose timer.
+ * @note This is a 32 bit timer, which means it can only count up to 1 hour and
+ * 11 minutes before overflow.
  *
- * @note Cette fonction declenche une transaction sur le bus (bypass du cache) ce qui
- * peut avoir des impacts sur les performances.
+ * @note Calling this function causes a bus transaction and a cache bypass which
+ * means calling it too often can hurt performances.
  *
- * @todo Cette fonction retourne toujours zero sur simulateur.
- */ 
+ * @todo This function always return 0 on simulator.
+ */
 int32_t uptime_get(void);
 
 #endif

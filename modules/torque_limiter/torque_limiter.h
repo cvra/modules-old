@@ -5,7 +5,6 @@
  * 
  * @date 8.2.2012
  * @author Antoine Albertelli
- * @todo Il faudra peut etre ajouter des coef de bricolage sur le calcul du torque.
  */
 
 #ifndef TORQUE_LIMITER_H_
