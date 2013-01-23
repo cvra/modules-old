@@ -22,6 +22,10 @@ void cvra_logger_reset() {
 	}
 
 	write_pointer = malloc(LOGSIZE);
+
+    if(write_pointer == NULL) 
+        panic();
+
 	read_pointer = write_pointer;
 	memset(write_pointer, 0, LOGSIZE);
 	buffer_size = LOGSIZE-1;

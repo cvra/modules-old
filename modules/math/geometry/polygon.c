@@ -341,9 +341,16 @@ float find_convex_hull(point_t *points, int n) {
 	int i,j,k, l;
 	poly_t triangle;
 	triangle.pts = malloc(3 * sizeof(point_t));
+
+    if(triange.pts == NULL)
+        panic();
+
 	triangle.l = 3;
 
 	int *on_convex_hull = malloc(sizeof(int) * n);
+
+    if(on_convex_hull == NULL)
+        panic();
 
 	for(i=0;i<n;i++) {
 		on_convex_hull[i] = 1;
