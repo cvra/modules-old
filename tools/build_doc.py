@@ -5,6 +5,7 @@ import subprocess
 YELLOW = '\033[1;33m'
 WHITE = '\033[1;m'
 BLUE = '\033[1;34m'
+RED = '\033[1;31m'
 
 def yellow(s):
     """Returns a version of s that would be printed in yellow in a shell."""
@@ -30,4 +31,4 @@ for line in proc.stderr:
         warnings.append(yellow(filename)+":"+blue(a[1])+":".join(a[2:]))
 
 print("".join(warnings))
-print("done")
+print(RED+"{0} warnings !!".format(len(warnings))+WHITE)
