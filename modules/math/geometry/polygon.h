@@ -39,6 +39,8 @@ uint8_t is_in_poly(const point_t *p, poly_t *pol);
 uint8_t is_point_in_poly(poly_t *pol, int16_t x, int16_t y);
 
  /** Checks if a segment is crossing a polygon 
+  * @param [in] p1, p2 The two points defining the segment.
+  * @param [in] pol The polygon to check.
   * @param [out] intersect_pt Contains the intersection point.
   * @returns 0 dont cross, 1 cross, 2 on a side,
   *  3 touch out (a segment boundary is on a polygon edge, 

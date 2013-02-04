@@ -28,8 +28,6 @@
 * This module provides functions to handle 2d vectors and basic geometry fucntions.
 */
 
-/** \dontinclude main.c */
-
 /** \addtogroup Vect2D
  * This module manages 2D vectors.
  * @{

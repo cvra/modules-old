@@ -40,11 +40,14 @@ void proj_pt_line(const point_t *p, const line_t *l, point_t *p_out);
 
 /** Checks if 2 lines are intersecting. 
   * @return 0 if l1 & l2 dont cross, 1 if they cross, 2 if they are the same lines. 
+  * @param [in] l1, l2 The two line to intersect.
   * @param [out] p The intersection point, only meaningful for result 1. */
 uint8_t intersect_line(const line_t *l1, const line_t *l2, point_t *p);
 
 /** Intersects 2 segments.
  * @return 0 dont cross, 1 cross, 2 cross on point, 3 parallel and one point in
+ * @param [in] s1, s2 The two points of the first segment.
+ * @param [in] t1, t2 The two points of the second segment.
  * @param [out] p The crossing point coordinates (dummy for 0 1 or 3
  * result).
  */

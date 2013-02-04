@@ -24,8 +24,6 @@
 
 #include <vect_base.h>
 
-
-
 /** \addtogroup Geometrie
  * Ce module fait quelques calculs de geometrie simple sur des cercles,
  * des droites et des polygones.
@@ -47,10 +45,10 @@ int pt_is_inside_circle(const point_t *p, circle_t *c);
 
 /** Checks if 2 circles are intersecting. 
   * @return The number of intersection points (0, 1 or 2)
-  * @param [in] c1 The first circle.
-  * @param [in] c2 The second circle. 
-  * @param [out] The first intersection point.
-  * @param [out] The second intersection point.
+  * @param [in] *c1 The first circle.
+  * @param [in] *c2 The second circle. 
+  * @param [out] *p1 The first intersection point.
+  * @param [out] *p2 The second intersection point.
   * 
   * @note If the 2 circles intersect on 1 point, then p1 == p2.
   */

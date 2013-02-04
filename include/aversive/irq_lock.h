@@ -19,7 +19,7 @@
  *
  */
 
-/** \file modules/base/utils/irq_lock_macros.h
+/** \file irq_lock.h
  *  \brief Interface of the utils module
  *   
  *   here are defined the three macros : 
