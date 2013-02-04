@@ -35,7 +35,7 @@ for line in proc.stderr:
 warning_count = 0
 for filename, messages in sorted(warnings.items()):
     print("{0}{1}{2}, {3} warnings".format(YELLOW, filename, WHITE, len(messages)))
-    for l, m in messages:
+    for l, m in sorted(messages, key=lambda tup:int(tup[0])):
         warning_count = warning_count + 1
         print("  {0}{1}{2} : {3}".format(BLUE, l, WHITE, m))
 
