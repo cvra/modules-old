@@ -89,8 +89,3 @@ void trajectory_set_windows(struct trajectory *traj, double d_win,
 	traj->a_start_rad = RAD(a_start_deg);
 }
 
-/** set corrective coef for circle */
-void trajectory_set_circle_coef(struct trajectory *traj, double coef)
-{
-	traj->circle_coef = coef ;
-}

@@ -6,7 +6,7 @@ YELLOW = '\033[1;33m'
 WHITE = '\033[1;m'
 BLUE = '\033[1;34m'
 RED = '\033[1;31m'
-GREEN = '\033[1;32'
+GREEN = '\033[1;32m'
 
 def yellow(s):
     """Returns a version of s that would be printed in yellow in a shell."""

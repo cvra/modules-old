@@ -81,7 +81,7 @@
  * \end{array} \f$
  *
  * K is found by experience, and given to the system using 
- * position_set_centrifugal_coef. 
+ * position_set_centrifugal_coef(). 
  *
  * \todo For now the code does not use the algorithm written above but another
  * equivalent, slower implementation.
