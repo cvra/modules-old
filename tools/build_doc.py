@@ -44,6 +44,6 @@ print("{0}{1} warnings{2}".format(warning_count==0 and GREEN or RED, warning_cou
     
 
 # Opens the result in a web browser
-subprocess.Popen("xdg-open ./auto_doc/html/index.html &", shell=True)
+subprocess.Popen("xdg-open ./auto_doc/html/index.html", shell=True)
 
 
