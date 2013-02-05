@@ -25,17 +25,26 @@
 /** \addtogroup Geometrie 
  * @{ */
 
+/** A line defined by the equation a*x + b*y + c = 0 */
 typedef struct _line {
-	float a;
-	float b;
-	float c;
+	float a;    /**< a*x + b*y + c = 0 */
+	float b;    /**< a*x + b*y + c = 0 */
+	float c;    /**< a*x + b*y + c = 0 */
 } line_t;
 
 
-/** Converts 2 points to a line. */
+/** Converts 2 points to a line. 
+ * @param [in] *p1 Point one
+ * @param [in] *p2 Point two
+ * @param [out] *l Resulting line
+ */
 void pts2line(const point_t *p1, const point_t *p2, line_t *l);
 
-/** Projects a point on a line. */
+/** Projects a point on a line. 
+ * @param [in] *p Point to project
+ * @param [in] *l Line to project on
+ * @param [out] *p_out Resulting point
+ */
 void proj_pt_line(const point_t *p, const line_t *l, point_t *p_out);
 
 /** Checks if 2 lines are intersecting. 

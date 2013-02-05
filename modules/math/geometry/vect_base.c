@@ -38,7 +38,7 @@ vect_pvect(vect_t *v, vect_t *w)
 	return v->x*w->y - v->y*w->x;
 }
 
-/* Return scalar product */
+/* Return sign of scalar product */
 int8_t
 vect_pscal_sign(vect_t *v, vect_t *w)
 {
@@ -49,7 +49,7 @@ vect_pscal_sign(vect_t *v, vect_t *w)
 	return z>0?1:-1;
 }
 
-/* Return Z of vectorial product */
+/* Return sign of vectorial product */
 int8_t
 vect_pvect_sign(vect_t *v, vect_t *w)
 {

@@ -25,20 +25,22 @@
 #include <vect_base.h>
 
 /** \addtogroup Geometrie
- * Ce module fait quelques calculs de geometrie simple sur des cercles,
- * des droites et des polygones.
+ * This module does some simple calculation on circles, lines, and polygons.
  * @{
  */
 
+/** Coordinates and radius of a circle */
 typedef struct _circle {
-	float x;
-	float y;
-	float r;
+	float x;    /**< x-coordinate */
+	float y;    /**< y-coordinate */
+	float r;    /**< radius */
 } circle_t;
 
 
 
 /** Checks if a point is inside a circle.
+ * @param [in] *p Point
+ * @param [in] *c Circle
  * @return 1 if p is inside c, 0 otherwise.
  */
 int pt_is_inside_circle(const point_t *p, circle_t *c);
