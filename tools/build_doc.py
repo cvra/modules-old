@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import subprocess
+import argparse
 
 YELLOW = '\033[1;33m'
 WHITE = '\033[1;m'
@@ -8,16 +9,12 @@ BLUE = '\033[1;34m'
 RED = '\033[1;31m'
 GREEN = '\033[1;32m'
 
-def yellow(s):
-    """Returns a version of s that would be printed in yellow in a shell."""
-    return (YELLOW+s+WHITE)
-
-def blue(s):
-    """Returns a version of s that would be printed in blue."""
-    return (BLUE+s+WHITE)
-
-
 warnings = {}
+
+# Argument parser
+parser = argparse.ArgumentParser(description="Builds the documentation for the project.")
+parser.add_argument("--view", "-v", action='store_true', help="Open the HTML documentation after building it.")
+args = parser.parse_args()
 
 print("Generating documentation, it could take a few minutes...")
 proc = subprocess.Popen("doxygen", shell=True, stderr=subprocess.PIPE)
@@ -44,6 +41,7 @@ print("{0}{1} warnings{2}".format(warning_count==0 and GREEN or RED, warning_cou
     
 
 # Opens the result in a web browser
-subprocess.Popen("xdg-open ./auto_doc/html/index.html &", shell=True)
+if args.view:
+    subprocess.Popen("xdg-open ./auto_doc/html/index.html &", shell=True, stdout=subprocess.PIPE)
 
 
