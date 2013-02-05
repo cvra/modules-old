@@ -34,7 +34,8 @@
  * Functions with a high priority value will be call before others
  * (default is 128).
  *
- * This module uses Timer 0
+ * @todo Study the implications of having ported it to FPGA regarding interuptions
+ * masking.
  */
 
 
@@ -43,91 +44,138 @@
 
 #include <aversive.h>
 
-/* Config */
-#define SCHEDULER_UNIT 1000 /* us */
-#define SCHEDULER_NB_MAX_EVENT 10   
-#define SCHEDULER_NB_STACKING_MAX SCHEDULER_NB_MAX_EVENT
-#define SCHEDULER_UNIT_MS /1 /* pour afficher le temps en ms */
-
-
-#define SCHEDULER_PERIODICAL 0
-#define SCHEDULER_SINGLE 1
-
-#define SCHEDULER_DEFAULT_PRIORITY 128
-
 /** \addtogroup Scheduler
  * This is the multi tasking subsystem.
  * @{
  */
+/* Config */
+#define SCHEDULER_UNIT 1000         /**< The scheduler tick in us. */
+#define SCHEDULER_NB_MAX_EVENT 10   /**< The size of the event table. */
 
-/** Initialisation of the module */
+/** The number of maximal stacking events. */
+#define SCHEDULER_NB_STACKING_MAX SCHEDULER_NB_MAX_EVENT
+
+
+#define SCHEDULER_PERIODICAL 0 /**< Flag for a periodical event. */
+#define SCHEDULER_SINGLE 1 /**< Flag for a single fire event. */
+
+/** Default priority of events. */
+#define SCHEDULER_DEFAULT_PRIORITY 128
+
+/** Initialisation of the module. */
 void scheduler_init(void);
 
-/** dump all loaded events */
+/** Dump all events. */
 void scheduler_dump_events(void);
 
-/** 
- * Add an event to the event table.
- * Return the id of the event on succes and -1 on error
- * You can use static inline funcs below for simpler use.
+/** @brief Alloc an event.
+ *
+ * This function allocs an event, fill its fields and then mark it as active.
+ *
+ * @param [in] unicity SCHEDULER_PERIODICAL or SCHEDULER_SINGLE.
+ * @param [in] *f The function to call. Its prototype must be void f(void *data).
+ * @param [in] data This will be passed as the first argument to f.
+ * @param [in] period The period, in number of scheduler ticks. 
+ * @param [in] priority The priority of the task, higher number means higher priority.
+ *
+ * @return The index of the event in the table or -1 if no event is available.
+ *
+ * @sa scheduler_add_single_event_priority
+ * @sa scheduler_add_periodical_event_priority
+ * @sa scheduler_add_single_event
+ * @sa scheduler_add_periodical_event
  */
 int8_t scheduler_add_event(uint8_t unicity, void (*f)(void *), void * data, uint16_t period, uint8_t priority);
 
 
-/** 
- * Add a single event to the event table, specifying the priority
+/** @brief Add a single event to the event table, specifying the priority.
+ *
+ * This function adds a single fire event with given priority to the table.
+ * @param [in] *f The function to call. Its prototype must be void f(void *data).
+ * @param [in] data This will be passed as the first argument to f.
+ * @param [in] period The time before firing up, in number of scheduler ticks. 
+ * @param [in] priority The priority of the task, higher number means higher priority.
+ * @return The index of the event in the table or -1 if no event is available.
  */
 static inline int8_t scheduler_add_single_event_priority(void (*f)(void *), void * data, uint16_t period, uint8_t priority)
 {
 	return scheduler_add_event(SCHEDULER_SINGLE, f, data, period, priority);
 }
 
-/** 
- * Add a periodical event to the event table, specifying the priority
+/** @brief Add a periodical event to the event table, specifying the priority.
+ *
+ * This function adds a single fire event with given priority to the table.
+ * @param [in] *f The function to call. Its prototype must be void f(void *data).
+ * @param [in] data This will be passed as the first argument to f.
+ * @param [in] period The period of the task, in number of scheduler ticks. 
+ * @param [in] priority The priority of the task, higher number means higher priority.
+ * @return The index of the event in the table or -1 if no event is available.
  */
 static inline int8_t scheduler_add_periodical_event_priority(void (*f)(void *), void * data, uint16_t period, uint8_t priority)
 {
 	return scheduler_add_event(SCHEDULER_PERIODICAL, f, data, period, priority);
 }
 
-/** 
- * Add a single event to the event table, with the default priority
+/** @brief Add a single fire event to the event table with default priority.
+ *
+ * This function adds a single fire event with given priority to the table.
+ * @param [in] *f The function to call. Its prototype must be void f(void *data).
+ * @param [in] data This will be passed as the first argument to f.
+ * @param [in] period The time before firing up, in number of scheduler ticks. 
+ * @return The index of the event in the table or -1 if no event is available.
  */
 static inline int8_t scheduler_add_single_event(void (*f)(void *), void * data, uint16_t period)
 {
 	return scheduler_add_event(SCHEDULER_SINGLE, f, data, period, SCHEDULER_DEFAULT_PRIORITY);
 }
 
-/** 
- * Add a periodical event to the event table, with the default priority
+/** @brief Add a periodical event to the event table with default priority.
+ *
+ * This function adds a single fire event with given priority to the table.
+ * @param [in] *f The function to call. Its prototype must be void f(void *data).
+ * @param [in] data This will be passed as the first argument to f.
+ * @param [in] period The period of the event, in number of scheduler ticks. 
+ * @return The index of the event in the table or -1 if no event is available.
  */
 static inline int8_t scheduler_add_periodical_event(void (*f)(void *), void * data, uint16_t period)
 {
 	return scheduler_add_event(SCHEDULER_PERIODICAL, f, data, period, SCHEDULER_DEFAULT_PRIORITY);
 }
 
-/**
- * Dels an event from the table by its ID. If there is no event,
- * nothing is done.
- */
-int8_t scheduler_del_event(int8_t num);
-
-/** Function called by the interruption.
+/** @brief Deletes an event.
  * 
- * @bug This function does not lock the interrupts although it should. */
+ * Deletes the given event. If it was scheduled for execution, it will be
+ * executed before deletion.
+ *
+ * @param [in] num The event ID to delete.
+ */
+void scheduler_del_event(int8_t num);
+
+/** @brief Scheduler tick
+ *
+ * This function is responsible for all the scheduler work and will be called
+ * periodically by a timer interrupt.
+ */
 void scheduler_interrupt(void);
 
-/** @} */
 
-/**
- * Temporarily disable scheduler events. You may loose precision in
- * events schedule. It returns the current priority of the scheduler.
+/** @brief Disables the scheduler events.
+ *
+ * This function temporarily disables the scheduler events. While the scheduler
+ * is disabled, all events are marked as "scheduled".
+ *
+ * @return Old priority of the scheduler, to be passed to scheduler_enable_restore().
  */
-uint8_t scheduler_disable_save(void);
+int8_t scheduler_disable_save(void);
 
-/**
+/** @brief Re-enables scheduler events.
+ *
  * Re-enable scheduler after a call to scheduler_disable_save().
+ *
+ * @param [in] old_prio The old priority returned by scheduler_disable_save(). 
  */
 void scheduler_enable_restore(uint8_t old_prio);
+
+/** @} */
 
 #endif
