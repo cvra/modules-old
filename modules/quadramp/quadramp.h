@@ -30,34 +30,51 @@
  * @{
  */
 
+/** @brief A quadram instance.
+ *
+ * The role of this filter is to limit the speed and acceleration of a value.
+ * It will typically be used as a consign filter in a control system to avoid
+ * sudden movements.
+ */
 struct quadramp_filter
 {
-	double var_2nd_ord_pos;
-	double var_2nd_ord_neg;
-	double var_1st_ord_pos;
-	double var_1st_ord_neg;
+	double var_2nd_ord_pos; /**< Acceleration */
+	double var_2nd_ord_neg; /**< Deceleration */
+	double var_1st_ord_pos; /**< Speed (> 0) */
+	double var_1st_ord_neg; /**< Speed (< 0) */
 
-	double previous_var;
-	double previous_out;
-	int32_t previous_in;
+	double previous_var; /**< Speed at the previous filter iteration. */
+	double previous_out; /**< Position at the previous filter iteration. */
+	int32_t previous_in; /**< Input at the previous filter iteration. */
 };
 
-/** Initialization of the filter */
+/** Initialization of the filter.
+ * @param [in] q The quadramp instance.
+ */
 void quadramp_init(struct quadramp_filter *q);
 
+/** Resets the filter output to zero and stops any ramp. 
+ * @param [in] q The quadramp instance.
+ */
 void quadramp_reset(struct quadramp_filter *q);
 
-/** Set acceleration. */
+/** Set acceleration. 
+ * @param [in] q The quadramp instance.
+ */
 void quadramp_set_2nd_order_vars(struct quadramp_filter *q,
 				 double var_2nd_ord_pos,
 				 double var_2nd_ord_neg);
 
-/** Set speed. */
+/** Set speed.
+ * @param [in] q The quadramp instance.
+ */
 void quadramp_set_1st_order_vars(struct quadramp_filter *q,
 				 double var_1st_ord_pos,
 				 double var_1st_ord_neg);
 
-/** Set position (bypass filter) */
+/** Set position (bypass filter)
+ * @param [in] q The quadramp instance.
+ */
 void quadramp_set_position(struct quadramp_filter *q, int32_t pos);
 
 
