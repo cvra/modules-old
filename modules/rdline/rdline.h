@@ -24,7 +24,8 @@
 #ifndef _RDLINE_H_
 #define _RDLINE_H_
 
-/**
+/** @file rdline.h
+ *
  * This library is a small equivalent to the GNU readline library, but
  * it is designed for small systems, like Atmel AVR microcontrollers
  * (8 bits). Indeed, we don't use any malloc that is sometimes not
@@ -35,38 +36,20 @@
 #include <vt100.h>
 #include <rdline_config.h>
 
-#define vt100_bell         "\007"
-#define vt100_bs           "\010"
-#define vt100_bs_clear     "\010 \010"
-#define vt100_tab          "\011"
-#define vt100_crnl         "\012\015"
-#define vt100_clear_right  "\033[0K"
-#define vt100_clear_left   "\033[1K"
-#define vt100_clear_down   "\033[0J"
-#define vt100_clear_up     "\033[1J"
-#define vt100_clear_line   "\033[2K"
-#define vt100_clear_screen "\033[2J"
-#define vt100_up_arr       "\033\133\101"
-#define vt100_down_arr     "\033\133\102"
-#define vt100_right_arr    "\033\133\103"
-#define vt100_left_arr     "\033\133\104"
-#define vt100_multi_right  "\033\133%uC"
-#define vt100_multi_left   "\033\133%uD"
-#define vt100_suppr        "\033\133\063\176"
-#define vt100_home         "\033M\033E"
-#define vt100_word_left    "\033\142"
-#define vt100_word_right   "\033\146"
-
 /* configuration */
+/** Defines the size of the buffer (maximal size of the line input by the user. */
 #define RDLINE_BUF_SIZE 64
-#define RDLINE_PROMPT_SIZE  16
-#define RDLINE_VT100_BUF_SIZE  8
-#define RDLINE_HISTORY_BUF_SIZE 128
-#define RDLINE_HISTORY_MAX_LINE 64
 
+/** Defines the maximal size of the prompt. */
+#define RDLINE_PROMPT_SIZE  16
+
+/** Defines the size of the history buffer. */
+#define RDLINE_HISTORY_BUF_SIZE 128
+
+/** Status of the rdline module. */
 enum rdline_status {
-	RDLINE_INIT,
-	RDLINE_RUNNING,
+	RDLINE_INIT,  /**< Module not ready to accept chars. */
+	RDLINE_RUNNING, /** < Module ready to accept chars. */
 };
 
 struct rdline;
