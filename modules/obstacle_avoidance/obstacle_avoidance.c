@@ -89,7 +89,7 @@ static void __oa_start_end_points(int32_t st_x, int32_t st_y,
 	oa.points[0].x = en_x;
 	oa.points[0].y = en_y;
 
-        /* Each point processed by Dijkstra is marked as valid. If we
+    /* Each point processed by Dijkstra is marked as valid. If we
 	 * have unreachable points (out of playground or points inside
 	 * polygons) Disjkstra won't mark them as valid. At the end of
 	 * the algorithm, if the destination point is not marked as
