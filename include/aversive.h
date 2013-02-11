@@ -107,11 +107,11 @@ do {                                     \
 
 #ifndef COMPILE_ON_ROBOT
 /* On X86 */
+
+#include <stdio.h>
 #define reset() 
 
-#define panic() do {\
-    printf("PANIC MOTHERFUCKER!!!\n");\
-    while(1)
+#define panic() do {printf("PANIC MOTHERFUCKER!!!\n"); }while(1)
 
 #else
 /* Si on est ici c'est qu'on compile pour le NIOS II. */

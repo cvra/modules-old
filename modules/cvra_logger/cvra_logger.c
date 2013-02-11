@@ -5,6 +5,8 @@
  *      Author: Antoine Albertelli
  */
 
+#include <aversive.h>
+
 #include <cvra_logger.h>
 #include <stdlib.h>
 #include <string.h>
