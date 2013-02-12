@@ -40,8 +40,8 @@
  * write the parsed result in the destination structure.
  */
 struct token_hdr {
-	struct token_ops *ops;
-	uint8_t offset;
+	struct token_ops *ops;      /**< Pointer to operations struct */
+	uint8_t offset;             /**< Result buffer offset */
 };
 typedef struct token_hdr parse_token_hdr_t;
 
@@ -81,11 +81,10 @@ struct token_ops {
  * string, and a list of token composing this instruction.
  */
 struct inst {
-	/* f(parsed_struct, data) */
-	void (*f)(void *, void *);
-	void * data;
-	char * help_str;
-	parse_token_hdr_t * tokens[];
+	void (*f)(void *, void *);      /**< f(parsed_struct, data) */
+	void * data;                    /**< Data */
+	char * help_str;                /**< Usage of the instruction */
+	parse_token_hdr_t * tokens[];   /**< List of tokens */
 };
 typedef struct inst parse_inst_t;
 
@@ -124,7 +123,9 @@ int8_t parse(parse_ctx_t ctx[], const char * buf);
 int complete(parse_ctx_t ctx[], const char *buf, int *state, char *dst, int size);
 
 
-/* true if(!c || iscomment(c) || isblank(c) || isendofline(c)) */
+/* true if(!c || iscomment(c) || isblank(c) || isendofline(c))
+ * @param [in] c Character to test
+ * @return True or false*/
 int isendoftoken(char c);
 
 #endif /* _PARSE_H_ */
