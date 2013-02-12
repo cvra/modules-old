@@ -1,0 +1,40 @@
+digraph strat {
+    rankdir = TD;
+
+    node [shape=triangle, label="Start"]; start;
+    node [shape=diamond, label="Opponent starting side"] opponent_start_side; 
+    node [shape=box, label="Take 1st glass on left side."] take_1st_left;
+    node [shape=box, label="Take 1st glass on right side."] take_1st_right;
+    node [shape=box, label="Take the 2nd glass on the other side."] take_2nd_glass;
+    node [shape=box, label="Turn 180°"] turn_180_deg;
+    node [shape=box, label="Take the 2 inner glasses."] take_inner_glasses;
+    node [shape=box, label="Take the 2 outer glasses."] take_outer_glasses;
+    node [shape=diamond, label="Is opponnent doing gifts ?"] is_opponent_doing_gifts;
+    node [shape=diamond, label="Is he in his side now ?"] is_opponent_doing_gifts_in_his_side;
+    node [shape=box, label="Do gift #1"] do_gift_1;
+    node [shape=box, label="Do gift #4"] do_gift_4;
+    node [shape=triangle, label="The end"]; end;
+
+    start->opponent_start_side;
+    opponent_start_side->take_1st_left [label="Left"];
+    opponent_start_side->take_1st_right[label="Right"];
+    take_1st_left->take_2nd_glass;
+    take_1st_right->take_2nd_glass;
+
+    take_2nd_glass->take_inner_glasses;
+    take_inner_glasses->turn_180_deg;
+    turn_180_deg->take_outer_glasses;
+
+    take_outer_glasses->is_opponent_doing_gifts;
+    is_opponent_doing_gifts->is_opponent_doing_gifts_in_his_side[label="Yes"];
+    is_opponent_doing_gifts->do_gift_1[label="No"];
+
+    is_opponent_doing_gifts_in_his_side->do_gift_1[label="Yes"];
+    is_opponent_doing_gifts_in_his_side->do_gift_4[label="No"];
+
+    do_gift_1->end;
+    do_gift_4->end;
+    
+
+    /// XXX TODO MORE STRATZ
+}
