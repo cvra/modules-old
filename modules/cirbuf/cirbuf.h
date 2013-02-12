@@ -52,7 +52,7 @@ struct cirbuf {
 	volatile cirbuf_uint start;     /**< indice of the first elt */
 	volatile cirbuf_uint end;       /**< indice of the last elt */
 	volatile cirbuf_uint len;       /**< current len of fifo */
-	char *buf;
+	char *buf;                      /**< physical start of the buffer in the memory */
 };
 
 /* #define CIRBUF_DEBUG */
