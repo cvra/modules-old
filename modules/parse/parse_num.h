@@ -15,13 +15,17 @@ enum numtype {
 #endif
 };
 
+/** Number Token data type
+ */
 struct token_num_data {
-	enum numtype type;
+	enum numtype type;                  /**< Number type (UINT8, UINT16, UINT32, INT8, INT16, INT32, (FLOAT)) */
 };
 
+/** Number Token structure
+ */
 struct token_num {
-	struct token_hdr hdr;
-	struct token_num_data num_data;
+	struct token_hdr hdr;               /**< Token header */
+	struct token_num_data num_data;     /**< type */
 };
 typedef struct token_num parse_token_num_t;
 
