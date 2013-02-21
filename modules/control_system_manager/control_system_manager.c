@@ -230,8 +230,6 @@ int32_t cs_get_out(struct cs* cs)
    return cs->out_value;
 }
 
-
-
 int32_t cs_get_error(struct cs* cs)
 {
     return cs->error_value;
