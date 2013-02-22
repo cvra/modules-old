@@ -39,17 +39,17 @@
 /** \brief Definition of reals used in vector 2d */
 typedef float Real;
 
-#define TO_RAD(x) (((Real)x)*(0.01745329251994329577f))
-#define TO_DEG(x) (((Real)x)*(57.2957795130823208768f))
-#define Dist2Vect(v1,v2) (fast_sqrtf((v1.x - v2.x)*(v1.x - v2.x)+(v1.y - v2.y)*(v1.y - v2.y)))
-#define Dist2VectXY(x1,y1,x2,y2) (fast_sqrtf((x1 - x2)*(x1 - x2)+(y1 - y2)*(y1 - y2)))
+#define TO_RAD(x) (((Real)x)*(0.01745329251994329577f)) /**< Convert degrees to radian (* pi / 180) */
+#define TO_DEG(x) (((Real)x)*(57.2957795130823208768f)) /**< Convert radian to degrees (* 180 / pi) */
+#define Dist2Vect(v1,v2) (fast_sqrtf((v1.x - v2.x)*(v1.x - v2.x)+(v1.y - v2.y)*(v1.y - v2.y)))  /**< Macro to calculate the distance between two vectors */
+#define Dist2VectXY(x1,y1,x2,y2) (fast_sqrtf((x1 - x2)*(x1 - x2)+(y1 - y2)*(y1 - y2)))  /**< Macro to calculate the distance between two coordinates */
 
 /** \brief Cartesian vector structure
 **/
 typedef struct _vect2_cart
 {
-   Real x;
-   Real y;
+   Real x;      /**< x-coordinate */
+   Real y;      /**< y-coordinate */
    
 }vect2_cart;
 
@@ -58,8 +58,8 @@ typedef struct _vect2_cart
 **/
 typedef struct _vect2_pol
 {
-   Real r;
-   Real theta;
+   Real r;      /**< Radius */
+   Real theta;  /**< Angle */
    
 }vect2_pol;
 

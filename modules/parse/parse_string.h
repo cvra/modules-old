@@ -8,13 +8,17 @@
 
 typedef char fixed_string_t[STR_TOKEN_SIZE];
 
+/** String Token data structure
+ */
 struct token_string_data {
-	const char * str;
+	const char * str;                       /**< contains the string data */
 };
 
+/** String Token
+ */
 struct token_string {
-	struct token_hdr hdr;
-	struct token_string_data string_data;
+	struct token_hdr hdr;                   /**< Token header */
+	struct token_string_data string_data;   /**< data */
 };
 typedef struct token_string parse_token_string_t;
 

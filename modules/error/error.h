@@ -44,19 +44,21 @@
 
 /** The error structure, which is given as a parameter in log funcs */ 
 struct error {
-	uint8_t err_num;
-	uint8_t severity;
-	const char * text;
-	const char * file;
-	uint16_t line;
+	uint8_t err_num;        /**< Error number */
+	uint8_t severity;       /**< Error severity */
+	const char * text;      /**< Error text */
+	const char * file;      /**< File in which the error occurred */
+	uint16_t line;          /**< Line number in which the error occurred */
 };
 
+/** Structure of pointers to functions which are called on errors
+ */
 struct error_fct {
-	void (*emerg)(struct error *, ...);
-	void (*error)(struct error *, ...);
-	void (*warning)(struct error *, ...);
-	void (*notice)(struct error *, ...);
-	void (*debug)(struct error *, ...);
+	void (*emerg)(struct error *, ...);     /**< Pointer to emergency func */
+	void (*error)(struct error *, ...);     /**< Pointer to error func */
+	void (*warning)(struct error *, ...);   /**< Pointer to warning func */
+	void (*notice)(struct error *, ...);    /**< Pointer to notice func */
+	void (*debug)(struct error *, ...);     /**< Pointer to debug func */
 } ;
 
 extern struct error_fct g_error_fct;

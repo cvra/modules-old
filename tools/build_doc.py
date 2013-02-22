@@ -22,11 +22,14 @@ proc = subprocess.Popen("doxygen", shell=True, stderr=subprocess.PIPE)
 for line in proc.stderr:
     line = str(line, "utf-8").strip()
     if "warning" in line:
-        (filename, line, message) = line.split("|")
-        if filename in warnings:
-            warnings[filename].append((line, message))
-        else:
-            warnings[filename] = [(line, message)]
+        try: # Try to automatically process the line
+            (filename, line, message) = line.split("|")
+            if filename in warnings:
+                warnings[filename].append((line, message))
+            else:
+                warnings[filename] = [(line, message)]
+        except:
+            print(RED+line+WHITE)
 
 
 warning_count = 0
