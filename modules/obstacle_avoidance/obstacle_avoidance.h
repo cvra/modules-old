@@ -21,7 +21,10 @@
  *  Integration in Aversive: Olivier MATZ <zer0@droids-corp.org>
  */
 
-/*
+/* @file obstacle_avoidance.h
+ *
+ * @brief Implements static obstacle avoidance.
+ *
  * The algorithm is based on the "visible point" algorithm.
  * There are 3 inputs:
  *   - the play ground (basically the table, here a rectangle)
@@ -51,97 +54,108 @@
 #ifndef _OBSTACLE_AVOIDANCE_H_
 #define _OBSTACLE_AVOIDANCE_H_
 
-#include <obstacle_avoidance_config.h>
 #include <polygon.h>
 #include <vect_base.h>
 #include <lines.h>
 #include <circles.h>
 
-struct obstacle_avoidance {
-	poly_t polys[MAX_POLY];  /* tab of polygons (obstacles) */
-	point_t points[MAX_PTS]; /* tab of points, referenced by polys */
-	uint8_t valid[MAX_PTS];
-	int32_t pweight[MAX_PTS];
-	uint8_t p[MAX_PTS];
-	uint8_t pt[MAX_PTS];
+#define MAX_POLY 100        /**< The maximal number of obstacles in the area. */
+#define MAX_PTS 500         /**< The maximal number of polygon vertices. */
+#define MAX_RAYS 2000       /**< The maximal number of rays. */
+#define MAX_CHKPOINTS 100   /**< Maximal length of the path. */
 
 
-	
-	uint8_t ray_n;
-	uint8_t cur_poly_idx;
-	uint8_t cur_pt_idx;
-
-	uint16_t weight[MAX_RAYS];
-	union {
-		uint8_t rays[MAX_RAYS*2];
-		point_t res[MAX_CHKPOINTS];
-	} u;
-};
-
-/* To save memory space here is the moemory representation of
+/** @struct obstacle_avoidance
+ * @brief Instance of the obstacle avoidance system.
+ * 
+ * This structure holds everything needed by the obstacle avoidance module,
+ * like obstacles position, etc...
+ *
+ * To save memory space here is the memory representation of
  *   polygons/points:
- *
- *   We have an array of points (oa_ext_point_t points):  
- *  _____ _____ _____ _____ _____ _____ _____ _____ _____
- * |     |     |     |     |     |     |     |     |     |
- * | p0  | p1  | p0  | p1  | p2  | p3  | p0  | p1  | p2  |
- * |_____|_____|_____|_____|_____|_____|_____|_____|_____|
- *
- *
- *  ^            ^                       ^
- *  |            |                       |
- *  -polygon 0   -polygon 1              -polygon 2
- *  -2 vertices  -4 vertices             -3 vertices
- *
+ *\verbatim
+    We have an array of points (oa_ext_point_t points):  
+   _____ _____ _____ _____ _____ _____ _____ _____ _____
+  |     |     |     |     |     |     |     |     |     |
+  | p0  | p1  | p0  | p1  | p2  | p3  | p0  | p1  | p2  |
+  |_____|_____|_____|_____|_____|_____|_____|_____|_____|
+ 
+ 
+   ^            ^                       ^
+   |            |                       |
+   -polygon 0   -polygon 1              -polygon 2
+   -2 vertices  -4 vertices             -3 vertices
+ \endverbatim
  *
  * And each polygon is represented by the sub array starting with the
  * point represented by oa_ext_point_t * pts and composed of uint8_t l; 
- * (in the oa_poly_t structure)
+ * (in the oa_poly_t structure) 
  */
+struct obstacle_avoidance {
+	poly_t polys[MAX_POLY];  /**< Array of polygons (obstacles). */
+	point_t points[MAX_PTS]; /**< Array of points, referenced by polys */
+	uint8_t valid[MAX_PTS]; /**< Used by the Dijkstra algorithm to say if a point was visited. */
+	int32_t pweight[MAX_PTS]; /**< Weight of a point in Dijkstra. */
+	uint8_t p[MAX_PTS]; /**< @todo Dafuq ? */
+	uint8_t pt[MAX_PTS]; /**< Stores all the points. */
 
-/* reset oa without cleaning points */
+
+	
+	uint8_t ray_n; /**< Number of computed rays. */
+	uint8_t cur_poly_idx; /**< Index of the current polygon (for adding polygons). */
+	uint8_t cur_pt_idx; /**< Index of the current point in the current polygon. */
+
+	uint16_t weight[MAX_RAYS]; /**< Length of each ray. */
+	union {
+		uint8_t rays[MAX_RAYS*2]; /**< All valid rays given by Dijkstra. */
+		point_t res[MAX_CHKPOINTS]; /**< Resulting path. */
+	} u; /**< Contains the intermediate results or the final result. */
+}; 
+
+/** Reset obstacle avoidance without cleaning points */
 void oa_reset(void);
 
-
-/** Init the oa structure */
+/** Init the obstacle avoidance structure. */
 void oa_init(void);
 
-/** 
- * Set the start and destination point.
- */
+/** Set the start and destination point. */
 void oa_start_end_points(int32_t st_x, int32_t st_y, int32_t en_x, int32_t en_y);
 
-/**
- * Create a new obstacle polygon. Return NULL on error.
- */
+/** Create a new obstacle polygon.
+ * @param [in] size Number of point in the polygon.
+ * @return NULL on error.
+ * @return Adress of the polygon if OK.
+ */ 
 poly_t *oa_new_poly(uint8_t size);
 
 
-/**
- * Dump status
- */
+/** Dump status of the obstacle avoidance. */
 void oa_dump(void);
 
-/**
- * set a point of the polygon.
+/** Set a point of the polygon. 
+ * @param [in] pol The polygon who is being set.
+ * @param [in] x,y The coordinates of the point, in mm.
+ * @param [in] i The index of the point.
  */
 void oa_poly_set_point(poly_t *pol, int32_t x, int32_t y, uint8_t i);
 
 
-/**
- * process the path from start to end. Return 0 on sucess.
+/** Processes the path.
+ * @returns The number of points in the path on sucess
+ * @returns An error code < 0 in case of failure.
  */
 int8_t oa_process(void);
 
-/**
- * get the result after a call to oa_process()
+/** Gets the computed path.
+ *
+ * @returns An array of points, giving the path from start to end.
  */
 point_t * oa_get_path(void);
 
 
-/** Checks if a segment is intersecting any obstacle.
- *
- * @author Antoine Albertelli
+/** Checks if a segment is intersecting any obstacle. 
+ * @param [in] p1, p2 THe two points defining the segment.
+ * @returns 1 if the segment intersects an obstacle, 0 otherwise.
  */
 int oa_segment_intersect_obstacle(point_t p1, point_t p2);
 

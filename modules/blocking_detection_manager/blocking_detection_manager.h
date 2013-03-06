@@ -29,8 +29,9 @@
 #include <control_system_manager.h>
 
 
-/* detect blocking based on motor current.
- * triggers the blocking if:
+/**@brief Detect blocking based on motor current.
+ *
+ * Triggers the blocking if:
  *   - the current in the motor is a above a threshold
  *     during n tests
  *   - the speed is below the threshold (if specified)
@@ -40,12 +41,15 @@
  * of the motor)
  */
 
+/**@brief Stores the Control System and other values for blocking detection.
+ * 
+ */
 struct blocking_detection {
-	struct cs *cs;
-	uint16_t cpt_thres;
-	uint16_t cpt;
-	uint32_t err_thres;
-	uint32_t err_max;
+	struct cs *cs;      /**< Control system */
+	uint16_t cpt_thres; /**< Number of err_thres surpasses to trigger blocking */
+	uint16_t cpt;       /**< Number of times that the current surpassed the threshold */
+	uint32_t err_thres; /**< Current threshold */
+	uint32_t err_max;   /**< Highest current measured */
 };
 
 /** init module, give the cs as parameter */

@@ -36,15 +36,14 @@
 #include "robot_system.h"
 
 
-/** Call a pwm() pointer :
- * - lock the interrupts
- * - read the pointer to the pwm function
- * - unlock the interrupts
- * - if pointer is null, don't do anything
- * - else call the pwm with the parameters
+/** @brief Call a pwm pointer :
+ *
+ * This function reads the pointer to the PWM function and if the pointer is not
+ * null call the set PWM function.
+ *
+ * @param [in] rs The robot_system instance.
  */
-static inline void
-safe_setpwm(void (*f)(void *, int32_t), void * param, int32_t value)
+static inline void safe_setpwm(void (*f)(void *, int32_t), void * param, int32_t value)
 {
 	void (*f_tmp)(void *, int32_t);
 	void * param_tmp;
@@ -55,15 +54,17 @@ safe_setpwm(void (*f)(void *, int32_t), void * param, int32_t value)
 	}
 }
 
-/** Call a encoder() pointer :
- * - lock the interrupts
- * - read the pointer to the encoder function
- * - unlock the interrupts
- * - if pointer is null, return 0
- * - else return the value processed by the function
+/** @brief Call an encoder pointer :
+ *
+ * This function reads the pointer to the encoder function and if the pointer 
+ * is not null call the encoder function and return its result. If it is null,
+ * then return 0.
+ *
+ * @param [in] rs The robot_system instance.
+ *
+ * @return The value of the encoder if defined, 0 otherwise.
  */
-static inline uint32_t
-safe_getencoder(int32_t (*f)(void *), void * param)
+static inline uint32_t safe_getencoder(int32_t (*f)(void *), void * param)
 {
 	int32_t (*f_tmp)(void *);
 	void * param_tmp;
@@ -75,7 +76,6 @@ safe_getencoder(int32_t (*f)(void *), void * param)
 	return 0;
 }
 
-/** Set the structure to 0 */
 void rs_init( struct robot_system * rs)
 {
     memset(rs, 0, sizeof(struct robot_system));
@@ -85,21 +85,18 @@ void rs_init( struct robot_system * rs)
 }
 
 #ifdef CONFIG_MODULE_ROBOT_SYSTEM_MOT_AND_EXT
-/** define ratio between mot and ext track. (track_mot / track_ext) */
 void rs_set_ratio(struct robot_system * rs, double ratio)
 {
 	rs->ratio_mot_ext = f64_from_double(ratio);
 }
 #endif
 
-/** define left PWM function and param */
 void rs_set_left_pwm(struct robot_system * rs, void (*left_pwm)(void *, int32_t), void *left_pwm_param)
 {
 	rs->left_pwm = left_pwm;
 	rs->left_pwm_param = left_pwm_param;
 }
 
-/** define right PWM function and param */
 void rs_set_right_pwm(struct robot_system * rs, void (*right_pwm)(void *, int32_t), void *right_pwm_param)
 {
 	rs->right_pwm = right_pwm;
@@ -107,7 +104,6 @@ void rs_set_right_pwm(struct robot_system * rs, void (*right_pwm)(void *, int32_
 }
 
 #ifdef CONFIG_MODULE_ROBOT_SYSTEM_MOT_AND_EXT
-/** define left motor encoder function and param */
 void rs_set_left_mot_encoder(struct robot_system * rs, int32_t (*left_mot_encoder)(void *),
 			     void *left_mot_encoder_param, double gain)
 {
@@ -116,7 +112,6 @@ void rs_set_left_mot_encoder(struct robot_system * rs, int32_t (*left_mot_encode
 	rs->left_mot_gain = f64_from_double(gain);
 }
 
-/** define right motor encoder function and param */
 void rs_set_right_mot_encoder(struct robot_system * rs, int32_t (*right_mot_encoder)(void *),
 			      void *right_mot_encoder_param, double gain)
 {
@@ -126,7 +121,6 @@ void rs_set_right_mot_encoder(struct robot_system * rs, int32_t (*right_mot_enco
 }
 #endif
 
-/** define left external encoder function and param */
 void rs_set_left_ext_encoder(struct robot_system * rs, int32_t (*left_ext_encoder)(void *),
 			     void *left_ext_encoder_param, double gain)
 {
@@ -139,7 +133,6 @@ void rs_set_left_ext_encoder(struct robot_system * rs, int32_t (*left_ext_encode
 #endif
 }
 
-/** define right external encoder function and param */
 void rs_set_right_ext_encoder(struct robot_system * rs, int32_t (*right_ext_encoder)(void *),
 			      void *right_ext_encoder_param, double gain)
 {
@@ -152,12 +145,6 @@ void rs_set_right_ext_encoder(struct robot_system * rs, int32_t (*right_ext_enco
 #endif
 }
 
-/**** Virtual encoders and PWM */
-
-/**
- * set the real pwms according to the specified angle (it also
- * depends on the last distance command sent)
- */
 void rs_set_angle(void * data, int32_t angle)
 {
 	struct rs_polar p;
@@ -173,10 +160,6 @@ void rs_set_angle(void * data, int32_t angle)
 	safe_setpwm(rs->right_pwm, rs->right_pwm_param, w.right);
 }
 
-/**
- * set the real pwms according to the specified distance (it also
- * depends on the last angle command sent)
- */
 void rs_set_distance(void * data, int32_t distance)
 {
 	struct robot_system * rs = data;
@@ -193,18 +176,12 @@ void rs_set_distance(void * data, int32_t distance)
 	safe_setpwm(rs->right_pwm, rs->right_pwm_param, w.right);
 }
 
-/**
- * get the virtual angle according to real encoders value.
- */
 int32_t rs_get_angle(void * data)
 {
 	struct robot_system * rs = data;
 	return rs->virtual_encoders.angle ;
 }
 
-/**
- * get the virtual distance according to real encoders value.
- */
 int32_t rs_get_distance(void * data)
 {
 	struct robot_system * rs = data;
@@ -269,12 +246,6 @@ void rs_set_flags(struct robot_system * rs, uint8_t flags)
 	rs->flags = flags;
 }
 
-/**
- * Read the encoders, and update internal virtual counters. Call this
- * function is needed before reading the virtual encoders.The program
- * will decide if it the external encoders or the motor encoders are
- * taken in account (depending on flags, but not yet)
- */
 void rs_update(void * data)
 {
 	struct robot_system * rs = data;

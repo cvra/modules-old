@@ -67,13 +67,6 @@ uint8_t quadramp_is_finished(struct quadramp_filter *q)
 		q->previous_var == 0);
 }
 
-/**
- * Process the ramp
- *
- * \param data should be a (struct quadramp_filter *) pointer
- * \param in is the input of the filter
- *
- */
 int32_t quadramp_do_filter(void * data, int32_t in)
 {
 	struct quadramp_filter * q = data;

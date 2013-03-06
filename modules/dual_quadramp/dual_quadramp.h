@@ -12,11 +12,17 @@
 #include <quadramp.h>
 
 
+/** Struct for quadramp filter in two dimensions.
+ */
 struct dual_quadramp_filter {
-	struct quadramp_filter x_quadramp, y_quadramp;
-	int32_t x_pos, y_pos;
-	int32_t x_consign, y_consign;
-	int32_t speed, acc;
+	struct quadramp_filter x_quadramp;  /**< Filter for the x-axis */
+    struct quadramp_filter y_quadramp;  /**< Filter for the y-axis */
+	int32_t x_pos;                      /**< Current position */
+    int32_t y_pos;                      /**< Current position */
+	int32_t x_consign;                  /**< <++> */
+    int32_t y_consign;                  /**< <++> */
+	int32_t speed;                      /**< Max. speed */
+    int32_t acc;                        /**< Max. acceleration */
 };
 
 /** @brief Initialise le filtre.

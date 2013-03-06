@@ -24,14 +24,14 @@
 #include <aversive.h>
 
 /** @struct cvra_adc_t
- *  @brief Une instance du driver Analog In. 
- * 
- * Ce driver se charge de lire les valeurs d'un ADC108S102 qui est un 
- * ADC 8 voies connecte en SPI. */
+ * @note: instance of the Analog In driver
+ *
+ * the driver reads values from an ADC108S102 which is a 8 channel ADC 
+ * connected in SPI */
 typedef struct {
-    uint32_t *spi_adress;	///< L'adresse du module SPI.
-    uint8_t next_read;		///< Le prochain channel a etre lu.
-    int16_t values[8];		///< Les valeurs des 8 canaux.
+    uint32_t *spi_adress;	///< adress of the SPI module
+    uint8_t next_read;		///< next channel to be read
+    int16_t values[8];		///< values of the 8 channels
 } cvra_adc_t;
 
 /** Inits the CVRA analog in module. */

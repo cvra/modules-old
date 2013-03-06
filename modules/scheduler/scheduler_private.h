@@ -49,7 +49,7 @@ struct event_t
 				   value of priority */
 	enum event_state_t state; /**< (scheduled, active, allocated, free, deleting) */
 
-        SLIST_ENTRY(event_t) next;
+    SLIST_ENTRY(event_t) next; /**< Pointer to the next event, as requested by queue.h */
 };
 
 extern struct event_t g_tab_event[SCHEDULER_NB_MAX_EVENT];

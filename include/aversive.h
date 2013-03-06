@@ -107,7 +107,11 @@ do {                                     \
 
 #ifndef COMPILE_ON_ROBOT
 /* On X86 */
+
+#include <stdio.h>
 #define reset() 
+
+#define panic() do {printf("PANIC MOTHERFUCKER!!!\n"); }while(1)
 
 #else
 /* Si on est ici c'est qu'on compile pour le NIOS II. */
@@ -119,6 +123,10 @@ do {                                     \
     NIOS2_WRITE_IENABLE(0);                  \
     ((void (*) (void)) 0x04000000) (); 		 \
     } while(0)
+
+/** This define is called whenever the code hits a fatal crash. */
+#define panic() do {\
+} while(1)
    
 #endif
 

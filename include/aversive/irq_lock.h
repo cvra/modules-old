@@ -19,7 +19,7 @@
  *
  */
 
-/** \file modules/base/utils/irq_lock_macros.h
+/** \file irq_lock.h
  *  \brief Interface of the utils module
  *   
  *   here are defined the three macros : 
@@ -34,54 +34,25 @@
  *      // code to be protected against interrupts ...
  *    IRQ_UNLOCK(flags); // needs to be associated with an unlock
  *  
+ *
+ *  @todo This file is not of any use anymore, so we should delete every
+ *  IRQ_LOCK instance.
  */
 
 
 #ifndef _AVERSIVE_IRQ_LOCK_H_
 #define _AVERSIVE_IRQ_LOCK_H_
 
-#ifdef COMPILE_ON_ROBOT
-	#include <nios2.h>
-	#define GLOBAL_IRQ_ARE_MASKED() (0)
+/** @deprecated Locks the interrupts. */
+#define IRQ_LOCK(flags) do { while(!flags); flags=1; } while(0)
 
+/** @deprecated Unlocks the interrupts. */
+#define IRQ_UNLOCK(flags) do {flags=0;} while(0)
 
-	/** Sauvegarde la valeur de STATUS.PIE dans flags, et desactive STATUS.PIE
-	 * ensuite. */
+/** @deprecated Enables interrupts. */ 
+#define cli() do { } while(0)
 
-	#if 0
-		#define IRQ_LOCK(flags) (flags) = alt_irq_disable_all()
-
-
-		#define IRQ_UNLOCK(flags)  alt_irq_enable_all((flags));
-
-		#define cli() do { \
-			uint32_t t; \
-			NIOS2_READ_STATUS(t); \
-				t = t & ~(NIOS2_STATUS_PIE_MSK);        \
-				NIOS2_WRITE_STATUS(t); \
-		} while(0); \
-
-
-		#define sei() do { 							    \
-				uint32_t t;                             \
-						NIOS2_READ_STATUS(t);                   \
-						t |= NIOS2_STATUS_PIE_MSK;  \
-						NIOS2_WRITE_STATUS(t);                 \
-		} while(0); \
-
-	#else
-		#define IRQ_LOCK(flags) do {flags++; } while(0)
-		#define IRQ_UNLOCK(flags) do {flags--; } while(0)
-		#define cli() do { } while(0)
-		#define sei() do { } while(0)
-	#endif
-#else 
-
-	#define IRQ_LOCK(flags) do { while(!flags); flags=1; } while(0)
-	#define IRQ_UNLOCK(flags) do {flags=0;} while(0)
-	#define cli() do { } while(0)
-	#define sei() do { } while(0)
-
-#endif /*COMPILE_ON_ROBOT*/
+/** @deprecated Disables interrupts. */ 
+#define sei() do { } while(0)
 
 #endif /* _AVERSIVE_IRQ_LOCK_H_ */

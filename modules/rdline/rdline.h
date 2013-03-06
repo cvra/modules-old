@@ -24,7 +24,8 @@
 #ifndef _RDLINE_H_
 #define _RDLINE_H_
 
-/**
+/** @file rdline.h
+ *
  * This library is a small equivalent to the GNU readline library, but
  * it is designed for small systems, like Atmel AVR microcontrollers
  * (8 bits). Indeed, we don't use any malloc that is sometimes not
@@ -35,77 +36,70 @@
 #include <vt100.h>
 #include <rdline_config.h>
 
-#define vt100_bell         "\007"
-#define vt100_bs           "\010"
-#define vt100_bs_clear     "\010 \010"
-#define vt100_tab          "\011"
-#define vt100_crnl         "\012\015"
-#define vt100_clear_right  "\033[0K"
-#define vt100_clear_left   "\033[1K"
-#define vt100_clear_down   "\033[0J"
-#define vt100_clear_up     "\033[1J"
-#define vt100_clear_line   "\033[2K"
-#define vt100_clear_screen "\033[2J"
-#define vt100_up_arr       "\033\133\101"
-#define vt100_down_arr     "\033\133\102"
-#define vt100_right_arr    "\033\133\103"
-#define vt100_left_arr     "\033\133\104"
-#define vt100_multi_right  "\033\133%uC"
-#define vt100_multi_left   "\033\133%uD"
-#define vt100_suppr        "\033\133\063\176"
-#define vt100_home         "\033M\033E"
-#define vt100_word_left    "\033\142"
-#define vt100_word_right   "\033\146"
-
 /* configuration */
+/** Defines the size of the buffer (maximal size of the line input by the user. */
 #define RDLINE_BUF_SIZE 64
-#define RDLINE_PROMPT_SIZE  16
-#define RDLINE_VT100_BUF_SIZE  8
-#define RDLINE_HISTORY_BUF_SIZE 128
-#define RDLINE_HISTORY_MAX_LINE 64
 
+/** Defines the maximal size of the prompt. */
+#define RDLINE_PROMPT_SIZE  16
+
+/** Defines the size of the history buffer. */
+#define RDLINE_HISTORY_BUF_SIZE 128
+
+/** Status of the rdline module. */
 enum rdline_status {
-	RDLINE_INIT,
-	RDLINE_RUNNING,
+	RDLINE_INIT,  /**< Module not ready to accept chars. */
+	RDLINE_RUNNING, /** < Module ready to accept chars. */
 };
 
-struct rdline;
 
+/** Prototype of the compatibles write functions. */
 typedef void (rdline_write_char_t)(char);
+
+/** Prototype of the compatibles validate buffer functions. */
 typedef void (rdline_validate_t)(const char *buf, int size);
+
+/** Prototype of the compatibles complete buffer functions. */
 typedef int (rdline_complete_t)(const char *buf, char *dstbuf,
 				int dstsize, int *state);
 
+/** @struct rdline
+ * @brief An instance of the rdline module.
+ *
+ * This modules holds everything that a single instance of the rdline module needs
+ * such as buffers, history, clipboards, callbacks and so on.
+ */ 
 struct rdline {
-	enum rdline_status status;
+	enum rdline_status status; /**< Flag to tell if the instance is ready to receive chars. */
 	/* rdline bufs */
-	struct cirbuf left;
-	struct cirbuf right;
-	char left_buf[RDLINE_BUF_SIZE+2]; /* reserve 2 chars for the \n\0 */
-	char right_buf[RDLINE_BUF_SIZE];
+	struct cirbuf left; /**< Content of the line to the left of the cursor. */
+	struct cirbuf right; /**< Content of the line to the right of the cursor. */
+    /** Memory buffer for left cirbuf. reserve 2 chars for the \n\0 */
+	char left_buf[RDLINE_BUF_SIZE+2]; 
+	char right_buf[RDLINE_BUF_SIZE]; /**< Memory buffer for the right cirbuf. */
 
-	char prompt[RDLINE_PROMPT_SIZE];
-	uint8_t prompt_size;
+	char prompt[RDLINE_PROMPT_SIZE]; /**< Prompt of the command line. */
+	uint8_t prompt_size; /**< Length of prompt. */
 
 #ifdef CONFIG_MODULE_RDLINE_KILL_BUF
-	char kill_buf[RDLINE_BUF_SIZE];
-	uint8_t kill_size;
+	char kill_buf[RDLINE_BUF_SIZE]; /**< Kill buffer (clipboard) */
+	uint8_t kill_size; /**< Length of the kill buffer. */
 #endif
 
 #ifdef CONFIG_MODULE_RDLINE_HISTORY
 	/* history */
-	struct cirbuf history;
+	struct cirbuf history; 
 	char history_buf[RDLINE_HISTORY_BUF_SIZE];
 	int8_t history_cur_line;
 #endif
 
 	/* callbacks and func pointers */
-	rdline_write_char_t *write_char;
-	rdline_validate_t *validate;
-	rdline_complete_t *complete;
+	rdline_write_char_t *write_char; /**< Write char callback. */
+	rdline_validate_t *validate; /**< Validate buffer callback. Called after a press on enter. */
+	rdline_complete_t *complete; /**< Complete buffer callback. Called after a press on tab. */
 
 	/* vt100 parser */
-	struct vt100 vt100;
+	struct vt100 vt100; /**< VT-100 associated with the buffer, for arrows, <C-A>, etc... */
 };
 
 /**
@@ -152,12 +146,12 @@ void rdline_redisplay(struct rdline *rdl);
 
 /**
  * append a char to the readline buffer. 
- * Return 1 when the line has been validated.
- * Return 2 when the user asked to complete the buffer.
- * Return -1 if it is not running.
- * Return -2 if EOF (ctrl-d on an empty line).
- * Else return 0.
- * XXX error case when the buffer is full ?
+ * @return 1 when the line has been validated.
+ * @return 2 when the user asked to complete the buffer.
+ * @return -1 if it is not running.
+ * @return -2 if EOF (ctrl-d on an empty line).
+ * @return 0 in every other case. 
+ * @todo error case when the buffer is full ?
  *
  * \param rdl A pointer to a struct rdline
  * \param c The character to append
@@ -167,13 +161,14 @@ int8_t rdline_char_in(struct rdline * rdl, char c);
 /**
  * Return the current buffer, terminated by '\0'.
  * \param rdl A pointer to a struct rdline
+ * @returns A pointer to the current buffer.
  */
 const char *rdline_get_buffer(struct rdline *rdl);
 
 
 /**
  * Add the buffer to history.
- * return < 0 on error.
+ * @return < 0 on error.
  * \param rdl A pointer to a struct rdline
  * \param buf A buffer that is terminated by '\0'
  */
@@ -187,6 +182,9 @@ void rdline_clear_history(struct rdline *rdl);
 
 /**
  * Get the i-th history item
+ * @returns a pointer to the i-th element in the history.
+ * @param rdl A pointer to a struct rdline
+ * @param i The index of the history element to get
  */
 char *rdline_get_history_item(struct rdline *rdl, uint8_t i);
 

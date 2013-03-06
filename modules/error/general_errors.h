@@ -77,4 +77,6 @@
 
 /* User specific, from > 192 */
 
+#define E_STRAT 193
+
 /* defined in user app */

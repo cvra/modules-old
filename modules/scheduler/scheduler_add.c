@@ -27,11 +27,14 @@
 
 #include <stdio.h>
 
-/** get a free event, mark it as allocated and return its index, or -1
- *  if not found. */
-static inline int8_t
-scheduler_alloc_event(void)
-{
+/** @brief Get a free event,
+ *
+ * This funtion searches for a free event, marks it as allocated and returns its
+ * index.
+ *
+ * @return Index of the allocated event or -1 if no free event was found.
+ */
+static inline int8_t scheduler_alloc_event(void) {
 	uint8_t i;
 	
 	for (i=0 ; i<SCHEDULER_NB_MAX_EVENT ; i++) {
@@ -45,20 +48,16 @@ scheduler_alloc_event(void)
 	return -1;
 }
 
-
-/** Alloc an event, and fill its field, then mark it as active.
- *  return its index in the table, or -1 if no evt is available */
-int8_t 
-scheduler_add_event(uint8_t unicity, void (*f)(void *), 
+int8_t scheduler_add_event(uint8_t unicity, void (*f)(void *), 
 			   void *data, uint16_t period, 
 			   uint8_t priority) {
 	int8_t i;
 	
-	if (period == 0)
+	if(period == 0)
 		return -1;
 
 	i = scheduler_alloc_event();
-	if ( i == -1 )
+	if(i == -1)
 		return -1;
 
 	SCHED_INC_STAT(add_event);

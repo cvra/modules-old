@@ -24,25 +24,34 @@
 
 #include <aversive.h>
 
+/** Stores the state of two encoders or pwm in the left / right format. */
 struct rs_wheels {
-	int32_t left;
-	int32_t right;
+	int32_t left; /**< The left encoder value. */
+	int32_t right; /**< The right encoder value. */
 };
 
-
+/** Stores the state of two encoders or pwm in the distance / angle format. */
 struct rs_polar {
-	int32_t distance;
-	int32_t angle;
+	int32_t distance; /**< The distance encoder value. */
+	int32_t angle; /**< The angle encoder value. */
 };
 
-/**
- * convert the values of wheels encoders (left, right) into (distance,
- * angle)
+/** @brief Converts the state of two encoders or pwm.
+ *
+ * This function converts the left / right representation to a angle distance
+ * representation.
+ *
+ * @param [in] w_src The source state, in left / right format.
+ * @param [out] p_dst The destination state, in distance / angle format.
  */
 void rs_get_polar_from_wheels(struct rs_polar * p_dst, struct rs_wheels * w_src);
 
-/**
- * convert (distance, angle) into (left, right)
+/** @brief Converts the state of two encoders or pwm.
+ *
+ * This function converts the angle / distance representation to an left-right representation.
+ *
+ * @param [in] p_src The source state in distance / angle format.
+ * @param [out] The destination state in left / right format.
  */
 void rs_get_wheels_from_polar(struct rs_wheels * w_dst, struct rs_polar * p_src);
 

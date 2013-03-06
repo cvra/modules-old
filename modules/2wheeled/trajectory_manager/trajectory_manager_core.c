@@ -59,13 +59,13 @@ static uint8_t evt_debug_cpt = 0;
 
 static void start_clitoid(struct trajectory *traj);
 
-/**
- * update angle and/or distance
+/** @brief Update angle and/or distance
+ *
  * this function is not called directly by the user
- *   traj  : pointer to the trajectory structure
- *   d_mm  : distance in mm
- *   a_rad : angle in radian
- *   flags : what to update (UPDATE_A, UPDATE_D)
+ * @param [in] traj Pointer to the trajectory structure.
+ * @param [in] d_mm Distance in mm.
+ * @param [in] a_rad Angle in radians.
+ * @param [in] flags What to update (UPDATE_A, UPDATE_D)
  */
 void __trajectory_goto_d_a_rel(struct trajectory *traj, double d_mm,
 			       double a_rad, uint8_t state, uint8_t flags)
@@ -101,20 +101,17 @@ void __trajectory_goto_d_a_rel(struct trajectory *traj, double d_mm,
 	}
 }
 
-/** go straight forward (d is in mm) */
 void trajectory_d_rel(struct trajectory *traj, double d_mm)
 {
 	__trajectory_goto_d_a_rel(traj, d_mm, 0, RUNNING_D,
 				  UPDATE_D | UPDATE_A | RESET_A);
 }
 
-/** update distance consign without changing angle consign */
 void trajectory_only_d_rel(struct trajectory *traj, double d_mm)
 {
 	__trajectory_goto_d_a_rel(traj, d_mm, 0, RUNNING_D, UPDATE_D);
 }
 
-/** turn by 'a' degrees */
 void trajectory_a_rel(struct trajectory *traj, double a_deg_rel)
 {
 	printf("%d\n", (int)a_deg_rel);
@@ -122,7 +119,6 @@ void trajectory_a_rel(struct trajectory *traj, double a_deg_rel)
 				  UPDATE_A | UPDATE_D | RESET_D);
 }
 
-/** turn by 'a' degrees */
 void trajectory_a_abs(struct trajectory *traj, double a_deg_abs)
 {
 	double posa = position_get_a_rad_double(traj->position);
@@ -134,7 +130,6 @@ void trajectory_a_abs(struct trajectory *traj, double a_deg_abs)
 				  UPDATE_A | UPDATE_D | RESET_D);
 }
 
-/** turn the robot until the point x,y is in front of us */
 void trajectory_turnto_xy(struct trajectory *traj, double x_abs_mm, double y_abs_mm)
 {
 	double posx = position_get_x_double(traj->position);
@@ -148,7 +143,6 @@ void trajectory_turnto_xy(struct trajectory *traj, double x_abs_mm, double y_abs
 				  UPDATE_A | UPDATE_D | RESET_D);
 }
 
-/** turn the robot until the point x,y is behind us */
 void trajectory_turnto_xy_behind(struct trajectory *traj, double x_abs_mm, double y_abs_mm)
 {
 	double posx = position_get_x_double(traj->position);
@@ -162,14 +156,12 @@ void trajectory_turnto_xy_behind(struct trajectory *traj, double x_abs_mm, doubl
 				  UPDATE_A | UPDATE_D | RESET_D);
 }
 
-/** update angle consign without changing distance consign */
 void trajectory_only_a_rel(struct trajectory *traj, double a_deg)
 {
 	__trajectory_goto_d_a_rel(traj, 0, RAD(a_deg), RUNNING_A,
 				  UPDATE_A);
 }
 
-/** update angle consign without changing distance consign */
 void trajectory_only_a_abs(struct trajectory *traj, double a_deg_abs)
 {
 	double posa = position_get_a_rad_double(traj->position);
@@ -180,14 +172,12 @@ void trajectory_only_a_abs(struct trajectory *traj, double a_deg_abs)
 	__trajectory_goto_d_a_rel(traj, 0, a, RUNNING_A, UPDATE_A);
 }
 
-/** turn by 'a' degrees */
 void trajectory_d_a_rel(struct trajectory *traj, double d_mm, double a_deg)
 {
 	__trajectory_goto_d_a_rel(traj, d_mm, RAD(a_deg),
 				  RUNNING_AD, UPDATE_A | UPDATE_D);
 }
 
-/** set relative angle and distance consign to 0 */
 void trajectory_stop(struct trajectory *traj)
 {
 	DEBUG(E_TRAJECTORY, "stop");
@@ -195,8 +185,6 @@ void trajectory_stop(struct trajectory *traj)
 				  UPDATE_A | UPDATE_D | RESET_D | RESET_A);
 }
 
-/** set relative angle and distance consign to 0, and break any
- * deceleration ramp in quadramp filter */
 void trajectory_hardstop(struct trajectory *traj)
 {
 	struct quadramp_filter *q_d, *q_a;
@@ -214,10 +202,6 @@ void trajectory_hardstop(struct trajectory *traj)
 	q_a->previous_out = rs_get_angle(traj->robot);
 }
 
-
-/************ GOTO XY, USE EVENTS */
-
-/** goto a x,y point, using a trajectory event */
 void trajectory_goto_xy_abs(struct trajectory *traj, double x, double y)
 {
 	DEBUG(E_TRAJECTORY, "Goto XY");
@@ -229,7 +213,6 @@ void trajectory_goto_xy_abs(struct trajectory *traj, double x, double y)
 	schedule_event(traj);
 }
 
-/** go forward to a x,y point, using a trajectory event */
 void trajectory_goto_forward_xy_abs(struct trajectory *traj, double x, double y)
 {
 	DEBUG(E_TRAJECTORY, "Goto XY_F");
@@ -241,7 +224,6 @@ void trajectory_goto_forward_xy_abs(struct trajectory *traj, double x, double y)
 	schedule_event(traj);
 }
 
-/** go backward to a x,y point, using a trajectory event */
 void trajectory_goto_backward_xy_abs(struct trajectory *traj, double x, double y)
 {
 	DEBUG(E_TRAJECTORY, "Goto XY_B");
@@ -253,7 +235,6 @@ void trajectory_goto_backward_xy_abs(struct trajectory *traj, double x, double y
 	schedule_event(traj);
 }
 
-/** go forward to a d,a point, using a trajectory event */
 void trajectory_goto_d_a_rel(struct trajectory *traj, double d, double a)
 {
 	vect2_pol p;
@@ -274,7 +255,6 @@ void trajectory_goto_d_a_rel(struct trajectory *traj, double d, double a)
 	schedule_event(traj);
 }
 
-/** go forward to a x,y relative point, using a trajectory event */
 void trajectory_goto_xy_rel(struct trajectory *traj, double x_rel_mm, double y_rel_mm)
 {
 	vect2_cart c;
@@ -300,7 +280,6 @@ void trajectory_goto_xy_rel(struct trajectory *traj, double x_rel_mm, double y_r
 	schedule_event(traj);
 }
 
-/************ FUNCS FOR GETTING TRAJ STATE */
 
 uint8_t trajectory_angle_finished(struct trajectory *traj)
 {

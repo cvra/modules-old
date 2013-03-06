@@ -25,20 +25,34 @@
 /** \addtogroup Geometrie
  * @{ */
 
+/**@brief A polygon.
+ * An array of points, defining the corners of a geometric figure.
+ */
 typedef struct _poly {
-	point_t * pts;
-	uint8_t l;
+	point_t * pts;  /**< Array of corner-points */
+	uint8_t l;      /**< Length of the array of points */
 } poly_t;
 
 /** Checks if a point belongs to a polygon
- * @return 0 if outside, 1 if inside, 2 if on edge. */
+ * @param [in] *p Point to check
+ * @param [in] *pol Polygon to check
+ * @return 0 if outside, 1 if inside, 2 if on edge.
+ * @sa is_point_in_poly
+ */
 uint8_t is_in_poly(const point_t *p, poly_t *pol);
 
 /** Checks if a point belongs to a polygon
- * @return 0 if outside, 1 if inside, 2 if on edge. */
+ * @param [in] *pol Polygon to check
+ * @param [in] *x x-coordinate of point to check
+ * @param [in] *y y-coordinate of point to check 
+ * @return 0 if outside, 1 if inside, 2 if on edge.
+ * @sa is_in_poly
+ */
 uint8_t is_point_in_poly(poly_t *pol, int16_t x, int16_t y);
 
  /** Checks if a segment is crossing a polygon 
+  * @param [in] p1, p2 The two points defining the segment.
+  * @param [in] pol The polygon to check.
   * @param [out] intersect_pt Contains the intersection point.
   * @returns 0 dont cross, 1 cross, 2 on a side,
   *  3 touch out (a segment boundary is on a polygon edge, 
@@ -47,10 +61,16 @@ uint8_t
 is_crossing_poly(point_t p1, point_t p2, point_t *intersect_pt,
 		 poly_t *pol);
 
-/** Set coordinates of bounding box. */
+/** Set coordinates of bounding box.
+ * @param [in] x1 x-coordinate bottom-left corner
+ * @param [in] y1 y-coordiante bottom-left corner
+ * @param [in] x2 x-coordinate top-right corner
+ * @param [in] y2 y-coordinate top-right corner
+ */
 void polygon_set_boundingbox(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
 
 /** Checks if a point is in the bounding box.
+ * @param [in] *p Point to check
  * @return 1 if p is in the bounding box. */
 uint8_t is_in_boundingbox(const point_t *p);
 
@@ -68,8 +88,13 @@ uint8_t is_in_boundingbox(const point_t *p);
  *  Here, vertex 1 can "see" vertex 2 in our visibility graph
  *
  *  As the first polygon is not a real polygon but the start/stop
- *  point, the polygon is NOT an ocluding polygon (but its vertices
+ *  point, the polygon is NOT an occluding polygon (but its vertices
  *  are used to compute visibility to start/stop points)
+ *
+ * @param [in] *polys List of polygons
+ * @param [in] npolys Number of polygons in the list
+ * @param [out] *rays Rays (WTFBBQ?)
+ * @return Number of rays
  */
 
 uint8_t 
@@ -80,12 +105,16 @@ calc_rays(poly_t *polys, uint8_t npolys, uint8_t *rays);
  *
  * @note The +1 is a little hack to introduce a preference between two
  * possiblity path: If we have 3 checkpoints aligned in a path (say A,
- * B, C) the algorithm will prefer (A, C) instead of (A, B, C) */
+ * B, C) the algorithm will prefer (A, C) instead of (A, B, C) 
+ * @param [in] *polys Array of polygons
+ * @param [in] npolys Number of polygons in the array
+ * @param [in] *rays Array of the rays
+ * @param [in] ray_n Number of rays in the array
+ * @param [out] *weight List of the weights of each ray
+ * */
 void 
 calc_rays_weight(poly_t *polys, uint8_t npolys, uint8_t *rays, 
 		 uint8_t ray_n, uint16_t *weight);
-
-float find_convex_hull(point_t *points, int n);
-         
+ 
 /** @} */
 #endif
