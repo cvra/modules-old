@@ -35,7 +35,7 @@
 
 #include <aversive.h>
 #include <vect2.h>
-#include <robot_system.h>
+#include <2wheels/robot_system.h>
 #include <vect_base.h>
 #include <lines.h>
 

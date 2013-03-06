@@ -24,7 +24,7 @@
 #define _ROBOT_POSITION_MANAGER_H_
 
 #include <math.h>
-#include <robot_system.h>
+#include <2wheels/robot_system.h>
 #include <vect2.h>
 
 /** \addtogroup Odometry

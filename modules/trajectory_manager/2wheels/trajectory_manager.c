@@ -30,12 +30,12 @@
 #include <scheduler.h>
 #include <vect2.h>
 
-#include <position_manager.h>
-#include <robot_system.h>
+#include <2wheels/position_manager.h>
+#include <2wheels/robot_system.h>
 #include <control_system_manager.h>
 #include <quadramp.h>
 
-#include <trajectory_manager.h>
+#include <2wheels/trajectory_manager.h>
 #include "trajectory_manager_utils.h"
 
 /************ INIT FUNCS */
