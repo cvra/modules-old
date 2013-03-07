@@ -1,0 +1,69 @@
+digraph strat {
+    rankdir = TD;
+
+    node [shape=triangle, label="Start"]; start;
+    node [shape=diamond, label="Opponent starting side"] opponent_start_side; 
+    node [shape=box, label="Take 1st glass on left side."] take_1st_left;
+    node [shape=box, label="Take 1st glass on right side."] take_1st_right;
+    node [shape=box, label="Take the 2nd glass on the other side."] take_2nd_glass;
+    node [shape=box, label="Turn 180°"] glasses_turn_180_deg;
+    node [shape=box, label="Take the 2 inner glasses."] take_inner_glasses;
+    node [shape=box, label="Take the 2 outer glasses."] take_outer_glasses;
+    node [shape=diamond, label="Can we go to gift 0 ?"] is_gift_0_ok;
+    node [shape=diamond, label="Can we go to gift 1 ?"] is_gift_1_ok;
+    node [shape=diamond, label="Can we go to gift 2 ?"] is_gift_2_ok;
+    node [shape=diamond, label="Can we go to gift 3 ?"] is_gift_3_ok;
+    node [shape=diamond, label="Do we have enough time to do a gift?"] enough_time_for_gift;  
+    node [shape=diamond, label="Did we wait enough time to retry ?"] enough_time_retry_0;
+    node [shape=diamond, label="Did we wait enough time to retry ?"] enough_time_retry_1;
+    node [shape=diamond, label="Did we wait enough time to retry ?"] enough_time_retry_2;
+    node [shape=diamond, label="Did we wait enough time to retry ?"] enough_time_retry_3;
+    node [shape=box, label="Drop glasses"] drop_glasses;
+    node [shape=box, label="Try gift #0"] try_gift_0;
+    node [shape=box, label="Try gift #1"] try_gift_1;
+    node [shape=box, label="Try gift #2"] try_gift_2;
+    node [shape=box, label="Try gift #3"] try_gift_3;
+    node [shape=triangle, label="The end"]; end;
+
+    start->opponent_start_side;
+    opponent_start_side->take_1st_left [label="Left"];
+    opponent_start_side->take_1st_right[label="Right"];
+    take_1st_left->take_2nd_glass;
+    take_1st_right->take_2nd_glass;
+
+    take_2nd_glass->take_inner_glasses;
+    take_inner_glasses->glasses_turn_180_deg;
+    glasses_turn_180_deg->take_outer_glasses;
+
+    take_outer_glasses->enough_time_for_gift;
+
+    enough_time_for_gift->is_gift_0_ok[label="Yes"];
+    enough_time_for_gift->drop_glasses[label="No"]
+    drop_glasses->end;
+
+    is_gift_0_ok->enough_time_retry_0[label="Yes"];
+    enough_time_retry_0->try_gift_0[label="Yes"];
+    enough_time_retry_0->is_gift_3_ok[label="No"];
+    is_gift_0_ok->is_gift_3_ok[label="No"];
+
+    is_gift_3_ok->enough_time_retry_3[label="Yes"];
+    enough_time_retry_3->try_gift_3[label="Yes"];
+    enough_time_retry_3->is_gift_1_ok[label="No"];
+    is_gift_5_ok->is_gift_1_ok[label="No"];
+
+    is_gift_1_ok->enough_time_retry_1[label="Yes"];
+    enough_time_retry_1->try_gift_1[label="Yes"];
+    enough_time_retry_1->is_gift_2_ok[label="No"];
+    is_gift_1_ok->is_gift_2_ok[label="No"];
+
+    is_gift_2_ok->enough_time_retry_2[label="Yes"];
+    enough_time_retry_2->try_gift_2[label="Yes"];
+    enough_time_retry_2->enough_time_for_gift[label="No"];
+    is_gift_2_ok->enough_time_for_gift[label="No"];
+    
+    try_gift_0->enough_time_for_gift;
+    try_gift_1->enough_time_for_gift;
+    try_gift_2->enough_time_for_gift;
+    try_gift_3->enough_time_for_gift;
+    /// XXX TODO MORE STRATZ
+}
