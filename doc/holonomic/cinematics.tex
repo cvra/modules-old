@@ -123,6 +123,15 @@ heading = heading-(steps1*r1+steps2*r2+steps3*r3) ...
 
     \label{eqn:reverse-translation}
 \end{subequations}
+\begin{description}
+    \item[$\Delta_x$] Déplacement du robot selon l'axe X, dans son prore référentiel.
+    \item[$\Delta_y$] Déplacement du robot selon l'axe Y, dans son prore référentiel.
+    \item[$steps$] Nombre de pas pour un tour de roue.
+    \item[$steps_i$] Avancement de la roue $i$ en steps codeur.
+    \item[$\beta_i$] Angle relatif au robot de l'orientation de la roue $i$.
+    \item[$r_i$] Rayon de la roue $i$.
+\end{description}
+
 
 \subsubsection{Exemple en MATLAB}
 \begin{lstlisting}
@@ -136,15 +145,6 @@ mov_y = sin(beta1)*steps1*r1/steps_turn
 mov_x = mov_x * 2/3;
 mov_y = mov_y * 2/3;
 \end{lstlisting}
-
-\begin{description}
-    \item[$\Delta_x$] Déplacement du robot selon l'axe X, dans son prore référentiel.
-    \item[$\Delta_y$] Déplacement du robot selon l'axe Y, dans son prore référentiel.
-    \item[$steps$] Nombre de pas pour un tour de roue.
-    \item[$steps_i$] Avancement de la roue $i$ en steps codeur.
-    \item[$\beta_i$] Angle relatif au robot de l'orientation de la roue $i$.
-    \item[$r_i$] Rayon de la roue $i$.
-\end{description}
 
 \subsection{Conversion en coordonées table}
 Pour appliquer l'équation \eqref{eqn:reverse-translation}, il faut d'abord appliquer
