@@ -24,9 +24,8 @@
 #ifndef _ROBOT_SYSTEM_HOLONOMIC_H_
 #define _ROBOT_SYSTEM_HOLONOMIC_H_
 
-/** Instance of a robot system for holonomic robots.
- * The units of speed and rotation speed must be in coders unit. */
-struct robot_system_holonomic {
+/** Defines the geometry of a single holonomic base. */
+struct holonomic_base_geometry {
     /** Angle of the wheels relative to the robot (\f$\beta_i\f$) */
     float betas[3];
 
@@ -36,6 +35,10 @@ struct robot_system_holonomic {
     /** Distance of the wheel to the center of the robot (\f$D_i\f$). */
     float wheel_distance[3];
 
+};
+
+/** Instance of a robot system for holonomic robots. */
+struct robot_system_holonomic { 
     /** Speed consign of the robot (\f$V\f$), in coder units. */
     float speed;
 
@@ -50,6 +53,10 @@ struct robot_system_holonomic {
 
     /** The 3 speed regulators which are connected on the motors. */
     struct cs* motors[3];
+
+    /** The geometry of the base. */
+    struct holonomic_base_geometry *geometry;
+
 };
 
 /** Inits a robot_system struct.
@@ -88,5 +95,11 @@ void rsh_set_speed(struct robot_system_holonomic *rs, int speed);
  * @param [in] omega_r The change in robot orientation, in rad / s.
  */
 void rsh_set_rotation_speed(struct robot_system_holonomic *rs, int omega_r);
+
+/** Sets the geometry base.
+ * @param [in, out] rs The robot_system instance.
+ * @param [in] geometry The geometry of the base.
+ */
+void rsh_set_base_geometry(struct robot_system_holonomic *rs, struct holonomic_base_geometry *geometry);
 
 #endif
