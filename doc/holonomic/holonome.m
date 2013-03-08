@@ -3,7 +3,7 @@
 clc;
 clear all;
 
-cd 'D:\MATTUX\CVRA\Eurobot 2013\holonome';
+% cd 'D:\MATTUX\CVRA\Eurobot 2013\holonome';
 
 tic;
 time = 0;
