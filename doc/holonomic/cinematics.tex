@@ -59,11 +59,11 @@ beta1 = 60*pi/180;
 beta2 = 180*pi/180;
 beta3 = 300*pi/180;
 omega1_t = linear_speed_value / r1 * ...
-cos(heading-speed_angle+beta1-pi/2);
+           cos(heading-speed_angle+beta1-pi/2);
 omega2_t = linear_speed_value / r2 * ...
-cos(heading-speed_angle+beta2-pi/2);
+           cos(heading-speed_angle+beta2-pi/2);
 omega3_t = linear_speed_value / r3 * ...
-cos(heading-speed_angle+beta3-pi/2);
+           cos(heading-speed_angle+beta3-pi/2);
 \end{lstlisting}
 
 \subsection{Rotation}
@@ -109,7 +109,7 @@ pour un mouvement composé d'une translation et d'une rotation.
 \subsubsection{Exemple en MATLAB}
 \begin{lstlisting}
 heading = heading-(steps1*r1+steps2*r2+steps3*r3) ...
-/(D1+D2+D3)/steps_turn;
+          /(D1+D2+D3)/steps_turn;
 \end{lstlisting}
 
 \subsection{Translation}
@@ -133,8 +133,8 @@ mov_y = sin(beta1)*steps1*r1/steps_turn
       + sin(beta2)*steps2*r2/steps_turn
       + sin(beta3)*steps3*r3/steps_turn;
 
-mov_x = mov_x *2/3;
-mov_y = mov_y *2/3;
+mov_x = mov_x * 2/3;
+mov_y = mov_y * 2/3;
 \end{lstlisting}
 
 \begin{description}
@@ -163,9 +163,9 @@ la matrice de rotation du robot à $\Delta_x$ et $\Delta_y$:
 \subsubsection{Exemple en MATLAB}
 \begin{lstlisting}
 pos_x = pos_x + cos(heading-pi/2)*mov_x - ...
-sin(heading-pi/2)*mov_y;
+        sin(heading-pi/2)*mov_y;
 pos_y = pos_y + sin(heading-pi/2)*mov_x + ...
-cos(heading-pi/2)*mov_y;
+        cos(heading-pi/2)*mov_y;
 \end{lstlisting}
 
 
