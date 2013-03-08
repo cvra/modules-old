@@ -76,6 +76,7 @@
 /* ... etc TBD */
 
 /* User specific, from > 192 */
+#define E_ARM 193
 
 #define E_STRAT 193
 
