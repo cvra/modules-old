@@ -20,6 +20,12 @@ void cvra_dc_set_pwm(void *device, int channel, int32_t value) {
     if(channel < 0 || channel > 5)
         return;
 
+    if(value < -DC_PWM_MAX_VALUE)
+        value = -DC_PWM_MAX_VALUE;
+
+    if(value > DC_PWM_MAX_VALUE)
+        value = DC_PWM_MAX_VALUE;
+
     /* XXX value clamping. */
     IOWR(device, pwm_registers[channel], value);
 }
