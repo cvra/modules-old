@@ -107,8 +107,8 @@ void position_set_base_geometry(struct robot_position *pos, float* beta,
  * @param [in] motor_encoder_param Array of the 3 parameters for the callback functions. 
  */
 void holonomic_position_set_mot_encoder(struct robot_position *pos,
-                                        int32_t (*motor_encoder[])(void *),
-                                        void *motor_encoder_param[]);
+                                        int32_t (*motor_encoder[static 3])(void *),
+                                        void *motor_encoder_param[static 3]);
 
 /** @brief Updates the position.
  *
