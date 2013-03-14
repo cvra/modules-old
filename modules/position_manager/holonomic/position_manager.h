@@ -11,8 +11,8 @@
 struct holonomic_base_geometry {
     /** Angle of the wheels relative to the robot (\f$\beta_i\f$) */
     float beta[3];
-    float cos_beta[3];
-    float sin_beta[3];
+    float cos_beta[3];  /**< Cosine of the betas */
+    float sin_beta[3];  /**< Sine of the betas */
 
     /** Radius of the robot wheels (\f$r_i\f$). */
     float wheel_radius[3];
@@ -87,9 +87,10 @@ void position_set(struct robot_position *pos, int16_t x, int16_t y, double a_deg
  * @param [in] beta Array[3] of the angles of the wheels' orientations to the robot.
  * @param [in] wheel_radius Array[3] of the wheels' radii.
  * @param [in] wheel_distance Array[3] of the wheels' distances to the robot's center.
+ * @param [in] encoder_resolution Encoder step per revolution of a wheel.
  */
 void position_set_physical_params(struct robot_position *pos, float beta[static 3],
-				  float wheel_radius[static 3], float wheel_distance[static 3]);
+				  float wheel_radius[static 3], float wheel_distance[static 3], int32_t encoder_resolution);
 
 
 /** @brief Define callback function for motor encoders.
