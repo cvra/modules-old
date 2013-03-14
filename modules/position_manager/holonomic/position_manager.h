@@ -88,8 +88,8 @@ void position_set(struct robot_position *pos, int16_t x, int16_t y, double a_deg
  * @param [in] wheel_radius Array[3] of the wheels' radii.
  * @param [in] wheel_distance Array[3] of the wheels' distances to the robot's center.
  */
-void position_set_physical_params(struct robot_position *pos, float* beta,
-				  float* wheel_radius, float* wheel_distance);
+void position_set_physical_params(struct robot_position *pos, float beta[static 3],
+				  float wheel_radius[static 3], float wheel_distance[static 3]);
 
 
 /** @brief Define callback function for motor encoders.
