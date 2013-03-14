@@ -6,18 +6,22 @@
 #include <math.h>
 #include <vect2.h>
 
-#define CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
 
 /**@brief Defines the geometry of a single holonomic base. */
 struct holonomic_base_geometry {
     /** Angle of the wheels relative to the robot (\f$\beta_i\f$) */
     float beta[3];
+    float cos_beta[3];
+    float sin_beta[3];
 
     /** Radius of the robot wheels (\f$r_i\f$). */
     float wheel_radius[3];
 
     /** Distance of the wheel to the center of the robot (\f$D_i\f$). */
     float wheel_distance[3];
+
+    /** Steps per full rotation */
+    int32_t encoder_resolution;
 };
 
 
@@ -50,17 +54,15 @@ struct xya_position_s16 {
  * position of the robot.
  */
 struct robot_position {
-	struct holonomic_base_geometry;	        /**< The physical parameters of the robot. */
-	struct xya_position pos_d;			    /**< Position of the robot in double. */
-	struct xya_position_s16 pos_s16;	    /**< Position of the robot in integers. */
-	struct rs_polar prev_encoders;		    /**< Previous state of the encoders. */
+	struct holonomic_base_geometry geometry;    /**< The physical parameters of the robot. */
+	struct xya_position pos_d;                  /**< Position of the robot in double. */
+	struct xya_position_s16 pos_s16;            /**< Position of the robot in integers. */
+	struct rs_polar prev_encoders;              /**< Previous state of the encoders. */
 
-	int32_t (*motor_encoder[3])(void *);    /**< Callback functions for motor encoders */
-    void* motor_encoder_param[3];           /**< Callback function parameters */
-	
-#ifdef CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE	
-	double centrifugal_coef;			    /**< Coefficient for the centrifugal computation */
-#endif
+	int32_t (*motor_encoder[3])(void *);        /**< Callback functions for motor encoders */
+    void* motor_encoder_param[3];               /**< Callback function parameters */
+
+    int32_t encoder_val[3];                     /**< Array of the values from the encoders */
 };
 
 
@@ -71,16 +73,6 @@ struct robot_position {
  */
 void position_init(struct robot_position *pos);
 
-#ifdef CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE	
-/** @brief Set centrifugal coef.
- * 
- * This functions sets the centrifugal coef for the odometry compensation.
- * @param [in] pos The odometry instance.
- * @param [in] coef The centrifugal force coefficient.
- * @sa CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
- */
-void position_set_centrifugal_coef(struct robot_position *pos, double coef);
-#endif
 
 /** @brief Set a new robot position.
  * @param [in] pos The odometry instance.
@@ -96,7 +88,7 @@ void position_set(struct robot_position *pos, int16_t x, int16_t y, double a_deg
  * @param [in] wheel_radius Array[3] of the wheels' radii.
  * @param [in] wheel_distance Array[3] of the wheels' distances to the robot's center.
  */
-void position_set_base_geometry(struct robot_position *pos, float* beta,
+void position_set_physical_params(struct robot_position *pos, float* beta,
 				  float* wheel_radius, float* wheel_distance);
 
 
