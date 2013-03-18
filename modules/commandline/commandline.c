@@ -5,7 +5,7 @@
 #include <rdline.h>
 #include <string.h>
 
-/* Behind this point it is not for user code. */
+/** This functions is used to write a char by the module. */
 static void write_char(char c) {
     putchar(c);
 }
@@ -19,6 +19,7 @@ static char prompt[] = "board>";
 /* All the possibles delimiter for a token. */
 #define DELIMITER " \n" 
 
+/** List of all registered commands. */
 static command_t *commands;
 
 /** This function is called when user press enter. */
@@ -27,8 +28,9 @@ static void validate_buffer(const char *buf, int size) {
     unsigned int i;
     char **argv;
 
-    char *buffer; /* we need our own non const copy of the buffer. */
+    char *buffer; 
 
+    /* strtok() changes the buffer, so we copy it first. */ 
     buffer = malloc(size);
     strncpy(buffer, buf, size);
 
@@ -36,23 +38,25 @@ static void validate_buffer(const char *buf, int size) {
     argc = 1;
     if(strtok(buffer, DELIMITER) == NULL)  /* empty line. */
         return;
+
     while(strtok(NULL, DELIMITER) != NULL)
         argc++;
 
     /* Needed because buffer was  modified by strtok. */
     strncpy(buffer, buf, size);
 
-    /* Allocates memory for all the tokens objects. */
+    /* Allocates memory for all the tokens. */
     argv = malloc(sizeof(char *) * argc);
     argv[0] = strtok(buffer, DELIMITER);
 
-    /* Fills all the tokens. */
+    /* Gets all the tokens. */
     for(i=1; i < (unsigned int)argc;i++) {
         argv[i] = strtok(NULL, DELIMITER);
     }
 
     /* Iterate over all commands. */
     for(i=0;commands[i].f != NULL;i++) {
+        /* If the command name matches. */
         if(!strcmp(commands[i].name, argv[0])) {
             /* Run the command then exit. */
             commands[i].f(argc, argv);
@@ -60,7 +64,7 @@ static void validate_buffer(const char *buf, int size) {
         }
     }
 
-    /* Checks if no matching command was found */
+    /* Checks if no matching command was found. */
     if(commands[i].f == NULL) {
         printf("%s: command not found\n", argv[0]);
     }
