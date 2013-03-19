@@ -3,18 +3,20 @@
 clc;
 clear all;
 
-cd 'D:\MATTUX\CVRA\Eurobot 2013\holonome';
+% cd 'D:\MATTUX\CVRA\Eurobot 2013\holonome';
 
 tic;
 time = 0;
 
 % SYSTEM CONSTANTS (GEOMETRY) VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-alpha1 = ( 70-0) * pi/180;
+% Angle de la roue i par rapport au robot MODIFED
+alpha1 = ( 60-0) * pi/180;
 alpha2 = (180-0) * pi/180;
-alpha3 = (290-0) * pi/180;
+alpha3 = (300-0) * pi/180;
 
+% Rayon des roues MODIFIED
 rad1 = 0.050;
-rad2 = 0.068;
+rad2 = 0.050;
 rad3 = 0.050;
 
 % centers of wheels
@@ -31,6 +33,7 @@ c3_y = -0.1;
 c3_z = rad3;
 
 % VARIABLES VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+% Position du centre du robot
 pos_x = -1;
 pos_y = 0;
 pos_z = 1/3 * (c1_z + c2_z + c3_z);
