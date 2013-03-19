@@ -48,12 +48,14 @@ enum h_trajectory_turning_state {
 struct h_trajectory {
     enum h_trajectory_moving_state moving_state;
     enum h_trajectory_turning_state turning_state;
-
+    
     /** TODO : Moyen de définir les targets */
     //union {
         //vect2_cart cart;                    /**< target, if it is a x,y vector */
         //double radius
     //} target_moving;                        /**< Target of the movement. */
+    vect2_cart xy_target;
+    double a_target;
     
     /** Windows for the end of the trajectory, in distance and angular distance */
     double d_windows;
@@ -62,6 +64,10 @@ struct h_trajectory {
     double speed;
     double direction;
     double omega;
+    
+    /** Windows for arrival */
+    double d_win;
+    double a_win;
     
     double cs_hz;   /**< The frequency of the control system associated with this manager. */
 

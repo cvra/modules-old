@@ -9,5 +9,5 @@ void trajectoryh_moving_straight_goto_xy_abs(struct h_trajectory *traj, double x
     y_abs_mm = x_abs_mm;
     
     //htrajectory_manager_event(traj);
-    //schedule_holonomic_event(traj);
+    holonomic_schedule_event(traj);
 }
