@@ -72,7 +72,7 @@ void position_set(struct robot_position *pos, int16_t x, int16_t y, double a_deg
  *  - number of impulsions for 1 degree (angle)
  */
 void position_set_physical_params(struct robot_position *pos, float beta[static 3],
-				  float wheel_radius[static 3], float wheel_distance[static 3]
+				  float wheel_radius[static 3], float wheel_distance[static 3],
                   int32_t encoder_resolution){
 
     int i;
@@ -107,17 +107,17 @@ void position_manage(struct robot_position *pos)
 
     for(i = 0; i < 3; i++){
         new_encoder_val[i] = safe_getencoder(pos->motor_encoder[i], 
-                                             motor_encoder_param[i]);
+                                             pos->motor_encoder_param[i]);
 
         encoder_steps[i] = new_encoder_val[i] - pos->encoder_val[i];
         pos->encoder_val[i] = new_encoder_val[i];
 
         sum_wheel_diameter += pos->geometry.wheel_radius[i] * 2;
         sum_wheel_steps_distance += encoder_steps[i] * pos->geometry.wheel_distance[i];
-        sum_cos_steps_distance += cos_beta[i] * encoder_steps[i] * 
+        sum_cos_steps_distance += pos->geometry.cos_beta[i] * encoder_steps[i] * 
                                   pos->geometry.wheel_radius[i];
 
-        sum_sin_steps_distance += sin_beta[i] * encoder_steps[i] 
+        sum_sin_steps_distance += pos->geometry.sin_beta[i] * encoder_steps[i] 
                                   * pos->geometry.wheel_radius[i];
     }
 
@@ -138,9 +138,9 @@ void position_manage(struct robot_position *pos)
     pos->pos_d.y = new_y;
     pos->pos_d.a = new_a;
 
-	pos->pos_s16.x = (int16_t)x;
-	pos->pos_s16.y = (int16_t)y;
-	pos->pos_s16.a = (int16_t)(a * (360.0/(M_PI*2)));
+	pos->pos_s16.x = (int16_t)new_x;
+	pos->pos_s16.y = (int16_t)new_y;
+	pos->pos_s16.a = (int16_t)(new_a * (360.0/(M_PI*2)));
 }
 
 

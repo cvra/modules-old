@@ -5,6 +5,7 @@
 
 #include <math.h>
 #include <vect2.h>
+#include <aversive.h>
 
 
 /**@brief Defines the geometry of a single holonomic base. */
@@ -57,7 +58,6 @@ struct robot_position {
 	struct holonomic_base_geometry geometry;    /**< The physical parameters of the robot. */
 	struct xya_position pos_d;                  /**< Position of the robot in double. */
 	struct xya_position_s16 pos_s16;            /**< Position of the robot in integers. */
-	struct rs_polar prev_encoders;              /**< Previous state of the encoders. */
 
 	int32_t (*motor_encoder[3])(void *);        /**< Callback functions for motor encoders */
     void* motor_encoder_param[3];               /**< Callback function parameters */
