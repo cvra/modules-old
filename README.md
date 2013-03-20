@@ -24,16 +24,16 @@ only, without using any other Altera tools.
 Organisation of the source code
 ===============================
 The source code is organised like this :
-`
- nios2
-|-- debra
-|-- doc
-|-- include
-|-- modules
-|-- nastya
-|-- nios_files
-|-- tools
-`
+
+    nios2
+    |-- debra
+    |-- doc
+    |-- include
+    |-- modules
+    |-- nastya
+    |-- nios_files
+    |-- tools
+
 
 * The `debra` folder contains all the source specific to our first robot (the one with the arms).
 * The `nastya` folder contains all the source for our holonomic robot.
