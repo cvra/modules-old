@@ -76,10 +76,35 @@ static void validate_buffer(const char *buf, int size) {
 
 /** This function is called each time the user press tab. */
 static int complete_buffer(const char *buf, char *dst_buf, int dst_size, int *state) {
-    printf("%s(%s;%p;%d;%d)\n", __FUNCTION__, buf, dst_buf, dst_size, *state);  
+    if(*state == 0){
+        int size = strlen(buf);
 
-    return -2;
-    /* TODO */ 
+        int i = size;
+        while(buf[i-1] != ' ' && i > 0)
+            i--;
+
+        int j;
+        int k;
+        char* completed_cmd_name;
+
+        for(j = 0; commands[j].f != NULL; j++) {
+            for(k = i; k < size; k++) {
+                if(buf[k] == commands[j].name[k-i])
+                    completed_cmd_name = commands[j].name;
+                else {
+                    completed_cmd_name = NULL;
+                    break;
+                }
+            }
+
+            if(completed_cmd_name && (int)strlen(completed_cmd_name) - size + i < dst_size){
+                strncpy(dst_buf, completed_cmd_name + (size - i), strlen(completed_cmd_name) - (size - i) + 1);    
+                return 2;
+            }
+        }
+    }
+
+    return 0;
 }
 
 void commandline_input_char(char c) {
