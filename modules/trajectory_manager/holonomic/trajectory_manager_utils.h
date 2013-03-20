@@ -18,7 +18,7 @@ void holonomic_trajectory_manager_event(void * param);
 /* True if the robot is within the distance d_win of the trajectory's target */
 uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win);
 
-/* Same thing for the angle */
+/* True if the robot faces a certain angular area */
 uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_rad);
 
 /* Delete a trajectory event */

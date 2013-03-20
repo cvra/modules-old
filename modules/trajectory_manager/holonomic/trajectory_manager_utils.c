@@ -1,7 +1,16 @@
 #include <holonomic/trajectory_manager_utils.h>
 #include <scheduler.h>
+#include <quadramp.h>
 
-
+/** set speed consign in quadramp filter */
+void set_quadramp_speed(struct trajectory *traj, double d_speed, double a_speed)
+{
+    struct quadramp_filter * q_d, * q_a;
+    q_d = traj->csm_distance->consign_filter_params;
+    q_a = traj->csm_angle->consign_filter_params;
+    quadramp_set_1st_order_vars(q_d, ABS(d_speed), ABS(d_speed));
+    quadramp_set_1st_order_vars(q_a, ABS(a_speed), ABS(a_speed));
+}
 
 void holonomic_trajectory_manager_event(void * param)
 {
@@ -75,20 +84,13 @@ uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win)
     
 }
 
-/** near the angle target in radian ? Only valid if
- *  traj->target.pol.angle is set (i.e. an angle command, not an xy
- *  command)
- * @todo  */
+/** returns true if the robot is in an area enclosed by a certain angle 
+  * @todo */
 uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_rad)
 {
-    double a;
+    double a = traj->a_target;
 
-    /////* convert relative angle from imp to rad */
-    ////a = traj->target.pol.angle - rs_get_angle(traj->robot);
-    ////a /= traj->position->phys.distance_imp_per_mm;
-    ////a /= traj->position->phys.track_mm;
-    ////a *= 2.;
-    //return ABS(a) < a_win_rad;
+    return (a < a + a_win_rad/2 && a > a - a_win_rad/2);
 }
 
 /** remove event if any @todo */
