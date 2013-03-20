@@ -28,6 +28,7 @@
 #include <aversive.h>
 #include <aversive/error.h>
 #include <holonomic/robot_system.h>
+#include <holonomic/position_manager.h>
 #include <vect2.h>
 
 
@@ -56,6 +57,7 @@ struct h_trajectory {
     /** Windows for the end of the trajectory, in distance and angular distance */
     double d_windows;
     double a_windows;
+    
     /** Output to robot_system @todo : leur init à 0*/
     double speed;
     double direction;
@@ -64,6 +66,9 @@ struct h_trajectory {
     /** Windows for arrival */
     double d_win;
     double a_win;
+    
+    /** Position of the robot */
+    struct xya_position *position;
     
     double cs_hz;   /**< The frequency of the control system associated with this manager. */
 

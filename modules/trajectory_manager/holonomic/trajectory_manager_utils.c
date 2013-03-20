@@ -69,9 +69,9 @@ uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win)
 {
     double x1 = traj->xy_target.x;
     double y1 = traj->xy_target.y;
-    //double x2 = position_get_x_double(traj->position);
-    //double y2 = position_get_y_double(traj->position);
-    //return (sqrt ((x2-x1) * (x2-x1) + (y2-y1) * (y2-y1)) < d_win);
+    double x2 = position_get_x_double(traj->position);
+    double y2 = position_get_y_double(traj->position);
+    return (sqrt ((x2-x1) * (x2-x1) + (y2-y1) * (y2-y1)) < d_win);
     
 }
 
