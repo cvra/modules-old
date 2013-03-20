@@ -37,7 +37,7 @@ int32_t cvra_dc_get_encoder(void *device, int channel);
  * @param [in] channel The encoder channel to read. 
  * @param [in] value The value to write to the register.
  */
-void cvra_dc_set_encoder(void *device, int channel, int value);
+void cvra_dc_set_encoder(void *device, int channel, int32_t value);
 
 /** @brief Get index value.
  *
