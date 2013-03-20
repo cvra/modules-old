@@ -99,6 +99,9 @@ static int complete_buffer(const char *buf, char *dst_buf, int dst_size, int *st
 
             if(completed_cmd_name && (int)strlen(completed_cmd_name) - size + i < dst_size){
                 strncpy(dst_buf, completed_cmd_name + (size - i), strlen(completed_cmd_name) - (size - i) + 1);    
+                int dst_string_size = strlen(dst_buf);
+                dst_buf[dst_string_size] = ' ';
+                dst_buf[dst_string_size + 1] = '\0';
                 return 2;
             }
         }
