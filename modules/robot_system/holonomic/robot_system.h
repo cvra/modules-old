@@ -20,6 +20,7 @@
  */
 #include <aversive.h>
 #include <control_system_manager.h>
+#include <holonomic/position_manager.h>
 
 #ifndef _ROBOT_SYSTEM_HOLONOMIC_H_
 #define _ROBOT_SYSTEM_HOLONOMIC_H_
