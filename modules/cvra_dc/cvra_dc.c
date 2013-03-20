@@ -13,7 +13,7 @@ static const int index_registers[] = {0x01, 0x05, 0x09};
 /** Current sensing registers definition. */
 static const int current_registers[] = {0x02, 0x06, 0x0A, 0x0D, 0x10, 0x13};  
 
-#define DC_PWM_MAX_VALUE 500
+#define DC_PWM_MAX_VALUE 475
 
 
 void cvra_dc_set_pwm(void *device, int channel, int32_t value) {
