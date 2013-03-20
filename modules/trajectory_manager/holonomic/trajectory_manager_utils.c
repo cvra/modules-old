@@ -49,7 +49,7 @@ void holonomic_trajectory_manager_event(void * param)
 }
     /* step 2 : update state, or delete event if we reached the
      * destination */
-    if (holonomic_is_robot_in_xy_window(traj, traj->d_win)) {
+    if (holonomic_robot_in_xy_window(traj, traj->d_win)) {
             holonomic_delete_event(traj);
         }
 

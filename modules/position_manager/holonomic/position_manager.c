@@ -25,9 +25,10 @@
 #include <holonomic/position_manager.h>
 
 /** initialization of the robot_position pos, everthing is set to 0 */
-void position_init(struct robot_position *pos)
+void holonomic_position_init(struct holonomic_robot_position *pos)
+    
 {
-	memset(pos, 0, sizeof(struct robot_position));
+	memset(pos, 0, sizeof(struct holonomic_robot_position));
 }
 
 
@@ -55,7 +56,7 @@ static inline uint32_t safe_getencoder(int32_t (*f)(void *), void * param)
 
 
 /** Set a new robot position */
-void position_set(struct robot_position *pos, int16_t x, int16_t y, double a_deg)
+void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int16_t y, double a_deg)
 {
 	pos->pos_d.a = (a_deg * M_PI)/ 180.0;
 	pos->pos_d.x = x;
@@ -71,7 +72,7 @@ void position_set(struct robot_position *pos, int16_t x, int16_t y, double a_deg
  *  - number of impulsions for 1 mm (distance)
  *  - number of impulsions for 1 degree (angle)
  */
-void position_set_physical_params(struct robot_position *pos, float beta[static 3],
+void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, float beta[static 3],
 				  float wheel_radius[static 3], float wheel_distance[static 3],
                   int32_t encoder_resolution){
 
@@ -95,7 +96,7 @@ void position_set_physical_params(struct robot_position *pos, float beta[static 
  * virtual encoders since last read, and depending on physical
  * parameters. The processed position is in mm.
  */
-void position_manage(struct robot_position *pos)
+void holonomic_position_manage(struct holonomic_robot_position *pos)
 {
     int32_t new_encoder_val[3];
     int32_t encoder_steps[3];
@@ -147,7 +148,7 @@ void position_manage(struct robot_position *pos)
 /**
  * returns current x
  */
-int16_t position_get_x_s16(struct robot_position *pos)
+int16_t holonomic_position_get_x_s16(struct holonomic_robot_position *pos)
 {
 	return pos->pos_s16.x;
 }
@@ -155,7 +156,7 @@ int16_t position_get_x_s16(struct robot_position *pos)
 /**
  * returns current y
  */
-int16_t position_get_y_s16(struct robot_position *pos)
+int16_t holonomic_position_get_y_s16(struct holonomic_robot_position *pos)
 {
 	return pos->pos_s16.y;
 }
@@ -163,7 +164,7 @@ int16_t position_get_y_s16(struct robot_position *pos)
 /**
  * returns current alpha
  */
-int16_t position_get_a_deg_s16(struct robot_position *pos)
+int16_t holonomic_position_get_a_deg_s16(struct holonomic_robot_position *pos)
 {
 	return pos->pos_s16.a;
 }
@@ -173,11 +174,11 @@ int16_t position_get_a_deg_s16(struct robot_position *pos)
 /**
  * returns current x
  */
-double position_get_x_double(struct robot_position *pos)
+double holonomic_position_get_x_double(struct holonomic_robot_position *pos)
 {
 	return pos->pos_d.x;
 }
-float position_get_x_float(struct robot_position *pos)
+float holonomic_position_get_x_float(struct holonomic_robot_position *pos)
 {
 	return (float)pos->pos_d.x;
 }
@@ -185,16 +186,16 @@ float position_get_x_float(struct robot_position *pos)
 /**
  * returns current y
  */
-double position_get_y_double(struct robot_position *pos)
+double holonomic_position_get_y_double(struct holonomic_robot_position *pos)
 {
 	return pos->pos_d.y;
 }
-float position_get_y_float(struct robot_position *pos)
+float holonomic_position_get_y_float(struct holonomic_robot_position *pos)
 {
 	return (float)pos->pos_d.y;
 }
 
-vect2_cart position_get_xy_vect(struct robot_position *pos)
+vect2_cart holonomic_position_get_xy_vect(struct holonomic_robot_position *pos)
 {
 	vect2_cart r;
 	r.x = (float)pos->pos_d.x;
@@ -204,7 +205,7 @@ vect2_cart position_get_xy_vect(struct robot_position *pos)
 /**
  * returns current alpha
  */
-double position_get_a_rad_double(struct robot_position *pos)
+double holonomic_position_get_a_rad_double(struct holonomic_robot_position *pos)
 {
 	return pos->pos_d.a;
 }
@@ -212,7 +213,7 @@ double position_get_a_rad_double(struct robot_position *pos)
 /**
  * returns current alpha
  */
-float position_get_a_rad_float(struct robot_position *pos)
+float holonomic_position_get_a_rad_float(struct holonomic_robot_position *pos)
 {
 	return (float)(pos->pos_d.a);
 }
