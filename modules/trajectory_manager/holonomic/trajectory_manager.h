@@ -68,7 +68,7 @@ struct h_trajectory {
     double a_win;
     
     /** Position of the robot */
-    struct xya_position *position;
+    struct holonomic_robot_position *position;
     
     double cs_hz;   /**< The frequency of the control system associated with this manager. */
 

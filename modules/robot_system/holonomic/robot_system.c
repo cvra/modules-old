@@ -44,7 +44,7 @@ void rsh_update(struct robot_system_holonomic *rs) {
     float omega_r;
     float omega_t;
     int i;
-    /** @todo : Antoine peut-tu vérifier ça ? j'ai changer a cause de la struture*/
+
     for(i=0; i<3; i++) {
         omega_r = rs->speed / rs->geometry->wheel_radius[i] * 
                      cos(theta_r - rs->direction + rs->geometry->beta[i] - M_PI / 2);

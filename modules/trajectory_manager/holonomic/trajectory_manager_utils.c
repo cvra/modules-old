@@ -2,21 +2,11 @@
 #include <scheduler.h>
 #include <quadramp.h>
 
-/** set speed consign in quadramp filter */
-void set_quadramp_speed(struct trajectory *traj, double d_speed, double a_speed)
-{
-    struct quadramp_filter * q_d, * q_a;
-    q_d = traj->csm_distance->consign_filter_params;
-    q_a = traj->csm_angle->consign_filter_params;
-    quadramp_set_1st_order_vars(q_d, ABS(d_speed), ABS(d_speed));
-    quadramp_set_1st_order_vars(q_a, ABS(a_speed), ABS(a_speed));
-}
-
 void holonomic_trajectory_manager_event(void * param)
 {
     struct h_trajectory *traj = (struct h_trajectory *)param;
-    //x = position_get_x_double(traj->position);
-    //y = position_get_y_double(traj->position);
+    double x = holonomic_position_get_x_double(traj->position);
+    double y = holonomic_position_get_y_double(traj->position);
     //double speed = position_get_x_double(traj->position);
     //double direction = position_get_y_double(traj->position);
     //double omega = position_get_a_rad_double(traj->position);
@@ -78,8 +68,8 @@ uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win)
 {
     double x1 = traj->xy_target.x;
     double y1 = traj->xy_target.y;
-    double x2 = position_get_x_double(traj->position);
-    double y2 = position_get_y_double(traj->position);
+    double x2 = holonomic_position_get_x_double(traj->position);
+    double y2 = holonomic_position_get_y_double(traj->position);
     return (sqrt ((x2-x1) * (x2-x1) + (y2-y1) * (y2-y1)) < d_win);
     
 }
