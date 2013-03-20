@@ -17,7 +17,6 @@
  
 
 /** For me :
- * Comment la strat specifie les mouvement (target)
  * CIRCLE : la cible et le centre, a partir de la position initial
  * STRAIGHT : la cible final
  * 
@@ -25,6 +24,7 @@
 
 #ifndef _TRAJECTORY_MANAGER_HOLONOMIC_H_
 #define _TRAJECTORY_MANAGER_HOLONOMIC_H_
+
 #include <aversive.h>
 #include <aversive/error.h>
 #include <holonomic/robot_system.h>
@@ -49,13 +49,9 @@ struct h_trajectory {
     enum h_trajectory_moving_state moving_state;
     enum h_trajectory_turning_state turning_state;
     
-    /** TODO : Moyen de définir les targets */
-    //union {
-        //vect2_cart cart;                    /**< target, if it is a x,y vector */
-        //double radius
-    //} target_moving;                        /**< Target of the movement. */
-    vect2_cart xy_target;
-    double a_target;
+                  
+    vect2_cart xy_target; /**< Target for the moving part */
+    double a_target; /**< Target for the turning part */
     
     /** Windows for the end of the trajectory, in distance and angular distance */
     double d_windows;
@@ -85,7 +81,7 @@ struct h_trajectory {
  *
  * @note This moving command is mixed with the current turning command 
  */
-void trajectoryh_moving_straight_goto_xy_abs(struct h_trajectory *traj, double x_abs_mm, double y_abs_mm);
+void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj, double x_abs_mm, double y_abs_mm);
 
 #endif
 

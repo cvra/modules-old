@@ -1,12 +1,8 @@
 #include <holonomic/trajectory_manager_utils.h>
 #include <scheduler.h>
 
-void trajectory_manager_event(void * param)
-{
-    struct h_trajectory *traj = (struct h_trajectory *)param;
-    /** Process des differrents event */
-    traj->a_win = 2;
-}
+
+
 void holonomic_trajectory_manager_event(void * param)
 {
     struct h_trajectory *traj = (struct h_trajectory *)param;
@@ -19,8 +15,8 @@ void holonomic_trajectory_manager_event(void * param)
 
     /* These vectors contain target position of the robot in
      * its own coordinates */ 
-    vect2_cart v2cart_pos; // ?
-    vect2_pol v2pol_target;
+    //vect2_cart v2cart_pos; // ?
+    //vect2_pol v2pol_target;
 
     /* step 1 : process new commands to quadramps */
 
@@ -53,8 +49,8 @@ void holonomic_trajectory_manager_event(void * param)
 }
     /* step 2 : update state, or delete event if we reached the
      * destination */
-    if (is_robot_in_xy_window(traj, traj->d_win)) {
-            delete_event(traj);
+    if (holonomic_is_robot_in_xy_window(traj, traj->d_win)) {
+            holonomic_delete_event(traj);
         }
 
     /* step 3 : send the processed commands to cs */
@@ -68,21 +64,22 @@ void holonomic_trajectory_manager_event(void * param)
     //cs_set_consign(traj->csm_distance, d_consign);
 }
 
-/** near the target (dist in x,y) ? @todo */
-uint8_t is_holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win)
+/** near the target (dist in x,y) ? */
+uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win)
 {
-    //double x1 = traj->target.cart.x;
-    //double y1 = traj->target.cart.y;
+    double x1 = traj->xy_target.x;
+    double y1 = traj->xy_target.y;
     //double x2 = position_get_x_double(traj->position);
     //double y2 = position_get_y_double(traj->position);
-    //return ( sqrt ((x2-x1) * (x2-x1) + (y2-y1) * (y2-y1)) < d_win );
+    //return (sqrt ((x2-x1) * (x2-x1) + (y2-y1) * (y2-y1)) < d_win);
+    
 }
 
 /** near the angle target in radian ? Only valid if
  *  traj->target.pol.angle is set (i.e. an angle command, not an xy
  *  command)
  * @todo  */
-uint8_t is_holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_rad)
+uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_rad)
 {
     double a;
 
@@ -95,7 +92,7 @@ uint8_t is_holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_w
 }
 
 /** remove event if any @todo */
-void delete_holonomic_event(struct h_trajectory *traj)
+void holonomic_delete_event(struct h_trajectory *traj)
 {
     //set_quadramp_speed(traj, traj->d_speed, traj->a_speed);
     //set_quadramp_acc(traj, traj->d_acc, traj->a_acc);
@@ -114,7 +111,7 @@ void holonomic_schedule_event(struct h_trajectory *traj)
     }
     else {
         traj->scheduler_task =
-            scheduler_add_periodical_event_priority(&trajectory_manager_event,
+            scheduler_add_periodical_event_priority(&holonomic_trajectory_manager_event,
                                 (void*)traj,
                                 TRAJ_EVT_PERIOD, 30);
     }
