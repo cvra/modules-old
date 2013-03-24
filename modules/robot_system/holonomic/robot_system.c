@@ -1,6 +1,7 @@
 #include <holonomic/robot_system.h>
 #include <math.h>
 #include <aversive/error.h>
+#include <stdlib.h>
 
 #define DEG(x) ((x) * (180.0 / M_PI))
 #define RAD(x) ((x) * (M_PI / 180.0))

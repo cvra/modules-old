@@ -28,7 +28,7 @@
 void holonomic_position_init(struct holonomic_robot_position *pos)
     
 {
-	memset(pos, 0, sizeof(struct holonomic_robot_position));
+    memset(pos, 0, sizeof(struct holonomic_robot_position));
 }
 
 
@@ -44,26 +44,26 @@ void holonomic_position_init(struct holonomic_robot_position *pos)
  */
 static inline uint32_t safe_getencoder(int32_t (*f)(void *), void * param)
 {
-	int32_t (*f_tmp)(void *);
-	void * param_tmp;
+    int32_t (*f_tmp)(void *);
+    void * param_tmp;
     f_tmp = f;
-	param_tmp = param;
-	if (f_tmp) {
-		return f_tmp(param_tmp);
-	}
-	return 0;
+    param_tmp = param;
+    if (f_tmp) {
+        return f_tmp(param_tmp);
+    }
+    return 0;
 }
 
 
 /** Set a new robot position */
 void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int16_t y, double a_deg)
 {
-	pos->pos_d.a = (a_deg * M_PI)/ 180.0;
-	pos->pos_d.x = x;
-	pos->pos_d.y = y;
-	pos->pos_s16.x = x;
-	pos->pos_s16.y = y;
-	pos->pos_s16.a = a_deg;
+    pos->pos_d.a = (a_deg * M_PI)/ 180.0;
+    pos->pos_d.x = x;
+    pos->pos_d.y = y;
+    pos->pos_s16.x = x;
+    pos->pos_s16.y = y;
+    pos->pos_s16.a = a_deg;
 }
 
 
@@ -73,7 +73,7 @@ void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int
  *  - number of impulsions for 1 degree (angle)
  */
 void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, float beta[static 3],
-				  float wheel_radius[static 3], float wheel_distance[static 3],
+                  float wheel_radius[static 3], float wheel_distance[static 3],
                   int32_t encoder_resolution){
 
     int i;
@@ -95,6 +95,7 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
  * Process the absolute position (x,y,a) depending on the delta on
  * virtual encoders since last read, and depending on physical
  * parameters. The processed position is in mm.
+ * @todo : Angle entre -M_PI et M_PI + le mettre qqpart dans les commentaire
  */
 void holonomic_position_manage(struct holonomic_robot_position *pos)
 {
@@ -135,13 +136,15 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     new_x = pos->pos_d.x + cos_a * delta_x - sin_a * delta_y;
     new_y = pos->pos_d.y + sin_a * delta_x + cos_a * delta_y;
 
+    /** Setting the new position in double */
     pos->pos_d.x = new_x;
     pos->pos_d.y = new_y;
     pos->pos_d.a = new_a;
-
-	pos->pos_s16.x = (int16_t)new_x;
-	pos->pos_s16.y = (int16_t)new_y;
-	pos->pos_s16.a = (int16_t)(new_a * (360.0/(M_PI*2)));
+    
+    /** Setting the new position in integer */
+    pos->pos_s16.x = (int16_t)new_x;
+    pos->pos_s16.y = (int16_t)new_y;
+    pos->pos_s16.a = (int16_t)(new_a * (360.0/(M_PI*2)));
 }
 
 
@@ -150,7 +153,7 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
  */
 int16_t holonomic_position_get_x_s16(struct holonomic_robot_position *pos)
 {
-	return pos->pos_s16.x;
+    return pos->pos_s16.x;
 }
 
 /**
@@ -158,7 +161,7 @@ int16_t holonomic_position_get_x_s16(struct holonomic_robot_position *pos)
  */
 int16_t holonomic_position_get_y_s16(struct holonomic_robot_position *pos)
 {
-	return pos->pos_s16.y;
+    return pos->pos_s16.y;
 }
 
 /**
@@ -166,7 +169,7 @@ int16_t holonomic_position_get_y_s16(struct holonomic_robot_position *pos)
  */
 int16_t holonomic_position_get_a_deg_s16(struct holonomic_robot_position *pos)
 {
-	return pos->pos_s16.a;
+    return pos->pos_s16.a;
 }
 
 /********* double */
@@ -176,11 +179,11 @@ int16_t holonomic_position_get_a_deg_s16(struct holonomic_robot_position *pos)
  */
 double holonomic_position_get_x_double(struct holonomic_robot_position *pos)
 {
-	return pos->pos_d.x;
+    return pos->pos_d.x;
 }
 float holonomic_position_get_x_float(struct holonomic_robot_position *pos)
 {
-	return (float)pos->pos_d.x;
+    return (float)pos->pos_d.x;
 }
 
 /**
@@ -188,26 +191,26 @@ float holonomic_position_get_x_float(struct holonomic_robot_position *pos)
  */
 double holonomic_position_get_y_double(struct holonomic_robot_position *pos)
 {
-	return pos->pos_d.y;
+    return pos->pos_d.y;
 }
 float holonomic_position_get_y_float(struct holonomic_robot_position *pos)
 {
-	return (float)pos->pos_d.y;
+    return (float)pos->pos_d.y;
 }
 
 vect2_cart holonomic_position_get_xy_vect(struct holonomic_robot_position *pos)
 {
-	vect2_cart r;
-	r.x = (float)pos->pos_d.x;
-	r.y = (float)pos->pos_d.y;
-	return r;
+    vect2_cart r;
+    r.x = (float)pos->pos_d.x;
+    r.y = (float)pos->pos_d.y;
+    return r;
 }
 /**
  * returns current alpha
  */
 double holonomic_position_get_a_rad_double(struct holonomic_robot_position *pos)
 {
-	return pos->pos_d.a;
+    return pos->pos_d.a;
 }
 
 /**
@@ -215,6 +218,6 @@ double holonomic_position_get_a_rad_double(struct holonomic_robot_position *pos)
  */
 float holonomic_position_get_a_rad_float(struct holonomic_robot_position *pos)
 {
-	return (float)(pos->pos_d.a);
+    return (float)(pos->pos_d.a);
 }
 

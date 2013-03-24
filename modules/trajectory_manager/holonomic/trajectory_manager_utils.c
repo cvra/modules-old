@@ -1,35 +1,49 @@
 #include <holonomic/trajectory_manager_utils.h>
 #include <scheduler.h>
 #include <quadramp.h>
+#include <ramp.h>s
+
+/** set (quad)ramps speeds @todo : accesseurs individuels*/
+void holonomic_init_ramps(struct h_trajectory *traj, double s_speed, double o_speed, 
+                            double a_speed, double a_acc)
+{
+    /** @todo :les vrais inits ? */
+    struct quadramp_filter * q_a;
+    struct ramp_filter *r_s,*r_o;
+    q_a = traj->csm_angle->consign_filter_params;
+    r_s = traj->csm_speed->consign_filter_params;
+    r_o = traj->csm_omega->consign_filter_params;
+    
+    /** Initialisation du quadramp pour l'angle */
+    quadramp_set_1st_order_vars(q_a, ABS(a_speed), ABS(a_speed));
+    quadramp_set_2nd_order_vars(q_a, ABS(a_acc), ABS(a_acc));
+    
+    /** Initialisation du ramp de vitesse et de vitesse angulaire */
+    ramp_set_vars(r_s, ABS(s_speed), ABS(s_speed));
+    ramp_set_vars(r_o, ABS(o_speed), ABS(o_speed));
+    /** @todo : ajouter le do_quadramp */
+}
 
 void holonomic_trajectory_manager_event(void * param)
 {
-    struct h_trajectory *traj = (struct h_trajectory *)param;
+    struct h_trajectory *traj = (struct h_trajectory *) param;
     double x = holonomic_position_get_x_double(traj->position);
     double y = holonomic_position_get_y_double(traj->position);
-    //double speed = position_get_x_double(traj->position);
-    //double direction = position_get_y_double(traj->position);
-    //double omega = position_get_a_rad_double(traj->position);
-    int32_t s_consign = 0, d_consign = 0, o_consign = 0;
-
-    /* These vectors contain target position of the robot in
-     * its own coordinates */ 
-    //vect2_cart v2cart_pos; // ?
-    //vect2_pol v2pol_target;
+    /** The speed consign, the angle consign and the angular speed (omega) consign */ 
+    int32_t s_consign = 0, a_consign = 0, o_consign = 0;
 
     /* step 1 : process new commands to quadramps */
-
     switch (traj->moving_state) {
-         MOVING_STRAIGHT:
+         case MOVING_STRAIGHT:
             o_consign = 0;
-            // Pour v : demander un quadramp (on donne comme position la distance par rapport a la destination
-            // pour la drection : trigo entre position initial et position final
+            a_consign = 0;
+            // Pour v : demander un ramp (on donne comme position la distance par rapport a la destination
             break;
-         MOVING_CIRCLE:
-            o_consign = 0;
-            // Pour v : Attention à la rotation. Quadramp (calculer la longueur de l'arc) 
-            //Pour la direction : faire les maths
-            break;
+         //case MOVING_CIRCLE:
+            //o_consign = 0;
+            //// Pour v : Attention à la rotation. Quadramp (calculer la longueur de l'arc) 
+            ////Pour la direction : faire les maths
+            //break;
         default:
                 s_consign = 0;
                 o_consign = 0;
@@ -108,4 +122,24 @@ void holonomic_schedule_event(struct h_trajectory *traj)
                                 TRAJ_EVT_PERIOD, 30);
     }
 }
+
+/** do a modulo 2.pi -> [-Pi,+Pi], knowing that 'a' is in [-3Pi,+3Pi] */
+double holonomic_simple_modulo_2pi(double a)
+{
+    if (a < -M_PI) {
+        a += M_2PI;
+    }
+    else if (a > M_PI) {
+        a -= M_2PI;
+    }
+    return a;
+}
+
+/** do a modulo 2.pi -> [-Pi,+Pi] */
+double holonomic_modulo_2pi(double a)
+{
+    double res = a - (((int32_t) (a/M_2PI)) * M_2PI);
+    return holonomic_simple_modulo_2pi(res);
+}
+
 

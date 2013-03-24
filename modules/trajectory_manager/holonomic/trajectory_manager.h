@@ -16,12 +16,6 @@
  */
  
 
-/** For me :
- * CIRCLE : la cible et le centre, a partir de la position initial
- * STRAIGHT : la cible final
- * 
- */
-
 #ifndef _TRAJECTORY_MANAGER_HOLONOMIC_H_
 #define _TRAJECTORY_MANAGER_HOLONOMIC_H_
 
@@ -52,7 +46,7 @@ struct h_trajectory {
     
                   
     vect2_cart xy_target; /**< Target for the moving part */
-    double a_target; /**< Target for the turning part */
+    double a_target;      /**< Target for the turning part */
     
     /** Windows for the end of the trajectory, in distance and angular distance */
     double d_windows;
@@ -69,6 +63,14 @@ struct h_trajectory {
     
     /** Position of the robot */
     struct holonomic_robot_position *position;
+    
+    /** Binded robot system */
+    struct robot_system_holonomic *robot;
+    
+    /** Associated controls systems */
+    struct cs *csm_angle;
+    struct cs *csm_speed;
+    struct cs *csm_omega;
     
     double cs_hz;   /**< The frequency of the control system associated with this manager. */
 
