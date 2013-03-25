@@ -90,6 +90,16 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
     }
 }
 
+void holonomic_position_set_mot_encoder(struct holonomic_robot_position *pos,
+                                        int32_t (*motor_encoder[static 3])(void *),
+                                        void *motor_encoder_param[static 3]){
+    int i;
+    for(i = 0; i < 3; i++){
+        pos->motor_encoder[i] = motor_encoder[i];
+        pos->motor_encoder_param[i] = motor_encoder_param[i];
+    }
+}
+
 void holonomic_position_set_update_frequency(struct holonomic_robot_position *pos, float frequency){
     pos->update_frequency = frequency;
 }
