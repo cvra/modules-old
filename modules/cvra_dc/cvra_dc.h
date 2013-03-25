@@ -132,6 +132,4 @@ int32_t cvra_dc_get_encoder4(void *device);
  */
 int32_t cvra_dc_get_encoder5(void *device);
 
-
-
 #endif
