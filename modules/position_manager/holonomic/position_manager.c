@@ -112,6 +112,14 @@ double holonomic_position_get_instant_rotation_speed(struct holonomic_robot_posi
     return d_a * pos->update_frequency; 
 }
 
+int32_t holonomic_position_get_translation_speed_int(struct holonomic_robot_position *pos){
+    return (int32_t)holonomic_position_get_instant_translation_speed(pos);
+}
+
+int32_t holonomic_position_get_rotation_speed_int(struct holonomic_robot_position *pos){
+    return (int32_t)holonomic_position_get_instant_rotation_speed(pos);
+}
+
 /** 
  * Process the absolute position (x,y,a) depending on the delta on
  * virtual encoders since last read, and depending on physical
