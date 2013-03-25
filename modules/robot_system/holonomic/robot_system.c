@@ -1,6 +1,7 @@
 #include <holonomic/robot_system.h>
 #include <math.h>
 #include <aversive/error.h>
+#include <stdlib.h>
 
 #define DEG(x) ((x) * (180.0 / M_PI))
 #define RAD(x) ((x) * (M_PI / 180.0))
@@ -47,7 +48,7 @@ void rsh_update(struct robot_system_holonomic *rs) {
 
     for(i=0; i<3; i++) {
         omega_r = rs->speed / rs->geometry->wheel_radius[i] * 
-                     cos(theta_r - rs->direction + rs->geometry->betas[i] - M_PI / 2);
+                     cos(theta_r - rs->direction + rs->geometry->beta[i] - M_PI / 2);
         omega_t = - rs->rotation_speed * rs->geometry->wheel_distance[i] / rs->geometry->wheel_radius[i];
 
         /* TODO cs_set_consign((omega_r+omega_t)*steps_per_imp_per_rad_per_second) */

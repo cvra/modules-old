@@ -25,6 +25,4 @@
 
 /** Returns the selected ADC channel's value. */
 int32_t cvra_adc_get_value(void *base, int input);
-
-
 #endif

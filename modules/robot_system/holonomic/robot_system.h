@@ -20,22 +20,10 @@
  */
 #include <aversive.h>
 #include <control_system_manager.h>
+#include <holonomic/position_manager.h>
 
 #ifndef _ROBOT_SYSTEM_HOLONOMIC_H_
 #define _ROBOT_SYSTEM_HOLONOMIC_H_
-
-/** Defines the geometry of a single holonomic base. */
-struct holonomic_base_geometry {
-    /** Angle of the wheels relative to the robot (\f$\beta_i\f$) */
-    float betas[3];
-
-    /** Radius of the robot wheels (\f$r_i\f$). */
-    float wheel_radius[3];
-
-    /** Distance of the wheel to the center of the robot (\f$D_i\f$). */
-    float wheel_distance[3];
-
-};
 
 /** Instance of a robot system for holonomic robots. */
 struct robot_system_holonomic { 
@@ -47,8 +35,7 @@ struct robot_system_holonomic {
      */
     float direction;
 
-    /** Rotation speed of the robot (\f$\Omega\f$). 
-     */
+    /** Rotation speed of the robot (\f$\Omega\f$). */
     float rotation_speed; 
 
     /** The 3 speed regulators which are connected on the motors. */
