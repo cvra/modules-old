@@ -31,7 +31,7 @@ int32_t cvra_dc_get_encoder(void *device, int channel);
 
 /** @brief Set encoder position.
  *
- * This function wites the given value to the count register of the given
+ * This function writes the given value to the count register of the given
  * channel.
  * @param [in] device A pointer to the base adress of the device.
  * @param [in] channel The encoder channel to read. 
