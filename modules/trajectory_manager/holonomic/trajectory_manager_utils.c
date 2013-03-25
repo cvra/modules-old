@@ -1,7 +1,7 @@
 #include <holonomic/trajectory_manager_utils.h>
 #include <scheduler.h>
 #include <quadramp.h>
-#include <ramp.h>s
+#include <ramp.h>
 
 /** set (quad)ramps max speeds et max acc @todo : accesseurs individuels*/
 void holonomic_init_ramps(struct h_trajectory *traj, double s_acc, double o_acc, 
