@@ -35,8 +35,7 @@ struct robot_system_holonomic {
      */
     float direction;
 
-    /** Rotation speed of the robot (\f$\Omega\f$). 
-     */
+    /** Rotation speed of the robot (\f$\Omega\f$). */
     float rotation_speed; 
 
     /** The 3 speed regulators which are connected on the motors. */
