@@ -1,5 +1,3 @@
-
-
 #ifndef _ROBOT_POSITION_MANAGER_H_
 #define _ROBOT_POSITION_MANAGER_H_
 
@@ -32,9 +30,9 @@ struct holonomic_base_geometry {
  * @sa xya_position_s16
  */
 struct holonomic_xya_position {
-	double x; /**< The X coordinate, in mm. */
-	double y; /**< The Y coordinate, in mm. */
-	double a; /**< The angle relative to the X axis, in radians. */
+    double x; /**< The X coordinate, in mm. */
+    double y; /**< The Y coordinate, in mm. */
+    double a; /**< The angle relative to the X axis, in radians. */
 };
 
 /**@brief Stores a cartesian position in int.
@@ -44,9 +42,9 @@ struct holonomic_xya_position {
  * @sa xya_position
  */
 struct holonomic_xya_position_s16 {
-	int16_t x; /**< The X coordinate, in mm. */
-	int16_t y; /**< The Y coordinate, in mm. */
-	int16_t a; /**< The angle relative to the X axis in degrees. */
+    int16_t x; /**< The X coordinate, in mm. */
+    int16_t y; /**< The Y coordinate, in mm. */
+    int16_t a; /**< The angle relative to the X axis in degrees. */
 };
 
 /** \brief Instance of the odometry subsystem.
@@ -55,11 +53,11 @@ struct holonomic_xya_position_s16 {
  * position of the robot.
  */
 struct holonomic_robot_position {
-	struct holonomic_base_geometry geometry;    /**< The physical parameters of the robot. */
-	struct holonomic_xya_position pos_d;                  /**< Position of the robot in double. */
-	struct holonomic_xya_position_s16 pos_s16;            /**< Position of the robot in integers. */
+    struct holonomic_base_geometry geometry;    /**< The physical parameters of the robot. */
+    struct holonomic_xya_position pos_d;                  /**< Position of the robot in double. */
+    struct holonomic_xya_position_s16 pos_s16;            /**< Position of the robot in integers. */
 
-	int32_t (*motor_encoder[3])(void *);        /**< Callback functions for motor encoders */
+    int32_t (*motor_encoder[3])(void *);        /**< Callback functions for motor encoders */
     void* motor_encoder_param[3];               /**< Callback function parameters */
 
     int32_t encoder_val[3];                     /**< Array of the values from the encoders */
@@ -90,7 +88,7 @@ void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int
  * @param [in] encoder_resolution Encoder step per revolution of a wheel.
  */
 void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, float beta[static 3],
-				  float wheel_radius[static 3], float wheel_distance[static 3], int32_t encoder_resolution);
+                  float wheel_radius[static 3], float wheel_distance[static 3], int32_t encoder_resolution);
 
 
 /** @brief Define callback function for motor encoders.
