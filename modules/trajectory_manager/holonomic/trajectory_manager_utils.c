@@ -3,8 +3,8 @@
 #include <quadramp.h>
 #include <ramp.h>s
 
-/** set (quad)ramps speeds @todo : accesseurs individuels*/
-void holonomic_init_ramps(struct h_trajectory *traj, double s_speed, double o_speed, 
+/** set (quad)ramps max speeds et max acc @todo : accesseurs individuels*/
+void holonomic_init_ramps(struct h_trajectory *traj, double s_acc, double o_acc, 
                             double a_speed, double a_acc)
 {
     /** @todo :les vrais inits ? */
@@ -19,8 +19,8 @@ void holonomic_init_ramps(struct h_trajectory *traj, double s_speed, double o_sp
     quadramp_set_2nd_order_vars(q_a, ABS(a_acc), ABS(a_acc));
     
     /** Initialisation du ramp de vitesse et de vitesse angulaire */
-    ramp_set_vars(r_s, ABS(s_speed), ABS(s_speed));
-    ramp_set_vars(r_o, ABS(o_speed), ABS(o_speed));
+    ramp_set_vars(r_s, ABS(s_acc), ABS(s_acc));
+    ramp_set_vars(r_o, ABS(o_acc), ABS(o_acc));
     /** @todo : ajouter le do_quadramp */
 }
 
@@ -73,7 +73,7 @@ void holonomic_trajectory_manager_event(void * param)
           //rs_get_distance(traj->robot), d_consign, get_quadramp_distance_speed(traj),
           //rs_get_angle(traj->robot), a_consign, get_quadramp_angle_speed(traj));
 
-    //cs_set_consign(traj->csm_angle, a_consign);
+    cs_set_consign(traj->csm_angle, a_consign);
     //cs_set_consign(traj->csm_distance, d_consign);
 }
 

@@ -29,9 +29,9 @@
  * the driver reads values from an ADC108S102 which is a 8 channel ADC 
  * connected in SPI */
 typedef struct {
-    uint32_t *spi_adress;	///< adress of the SPI module
-    uint8_t next_read;		///< next channel to be read
-    int16_t values[8];		///< values of the 8 channels
+    uint32_t *spi_adress;   ///< adress of the SPI module
+    uint8_t next_read;      ///< next channel to be read
+    int16_t values[8];      ///< values of the 8 channels
 } cvra_adc_t;
 
 /** Inits the CVRA analog in module. */
@@ -42,17 +42,5 @@ int16_t cvra_adc_get_value(cvra_adc_t *adc, int input);
 
 /** Starts the scan of the 8 input lines. */
 void cvra_adc_start_scan(cvra_adc_t *adc);
-
-#define ADC_DISTANCE_LEFT 0
-#define ADC_DISTANCE_RIGHT 1
-#define ADC_PUMP_CURRENT_RIGHT 3
-#define ADC_PUMP_CURRENT_LEFT 2
-#define ADC_STARTER 4
-#define ADC_OBSTACLE_LEFT 5
-#define ADC_OBSTACLE_RIGHT 6
-#define ADC_NOT_CONNECTED 7
-
-
-
 
 #endif
