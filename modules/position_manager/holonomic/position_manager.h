@@ -55,7 +55,7 @@ struct holonomic_xya_position_s16 {
 struct holonomic_robot_position {
     struct holonomic_base_geometry geometry;    /**< The physical parameters of the robot. */
     struct holonomic_xya_position pos_d;                  /**< Position of the robot in double. */
-    struct holonomic_xya_position previous_pos_d;
+    struct holonomic_xya_position previous_pos_d;         /**< The previous position of the robot */
 
     struct holonomic_xya_position_s16 pos_s16;            /**< Position of the robot in integers. */
 
