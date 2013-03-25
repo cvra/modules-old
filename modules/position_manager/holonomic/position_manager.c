@@ -90,6 +90,27 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
     }
 }
 
+void holonomic_position_set_update_frequency(struct holonomic_robot_position *pos, float frequency){
+    pos->update_frequency = frequency;
+}
+
+
+double holonomic_position_get_instant_translation_speed(struct holonomic_robot_position *pos){
+    double d_x, d_y;
+
+    d_x = pos->pos_d.x - pos->previous_pos_d.x;
+    d_y = pos->pos_d.y - pos->previous_pos_d.y;
+
+    return sqrt(d_x * d_x + d_y * d_y) * pos->update_frequency;
+}
+
+double holonomic_position_get_instant_rotation_speed(struct holonomic_robot_position *pos){
+    double d_a;
+
+    d_a = pos->pos_d.a - pos->previous_pos_d.a;
+
+    return d_a * pos->update_frequency; 
+}
 
 /** 
  * Process the absolute position (x,y,a) depending on the delta on
@@ -137,6 +158,9 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     new_y = pos->pos_d.y + sin_a * delta_x + cos_a * delta_y;
 
     /** Setting the new position in double */
+    pos->previous_pos_d.x = pos->pos_d.x;
+    pos->previous_pos_d.y = pos->pos_d.y;
+    pos->previous_pos_d.a = pos->pos_d.a;
     pos->pos_d.x = new_x;
     pos->pos_d.y = new_y;
     pos->pos_d.a = new_a;

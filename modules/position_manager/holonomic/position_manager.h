@@ -55,12 +55,15 @@ struct holonomic_xya_position_s16 {
 struct holonomic_robot_position {
     struct holonomic_base_geometry geometry;    /**< The physical parameters of the robot. */
     struct holonomic_xya_position pos_d;                  /**< Position of the robot in double. */
+    struct holonomic_xya_position previous_pos_d;
+
     struct holonomic_xya_position_s16 pos_s16;            /**< Position of the robot in integers. */
 
     int32_t (*motor_encoder[3])(void *);        /**< Callback functions for motor encoders */
     void* motor_encoder_param[3];               /**< Callback function parameters */
 
     int32_t encoder_val[3];                     /**< Array of the values from the encoders */
+    float update_frequency;                     /**< Frequency at which position_manage is called */
 };
 
 
@@ -90,6 +93,23 @@ void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int
 void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, float beta[static 3],
                   float wheel_radius[static 3], float wheel_distance[static 3], int32_t encoder_resolution);
 
+/** @brief Sets the frequency at which the function position_manage is called
+ * @param [in] pos The robot_position instance to configure.
+ * @param [in] frequency New frequency.
+ */
+void holonomic_position_set_update_frequency(struct holonomic_robot_position *pos, float frequency);
+
+/** @brief Returns the instant translation speed of the robot.
+ * @param [in] pos The robot_position instance.
+ * @return Translation speed in mm/s
+ */
+double holonomic_position_get_instant_translation_speed(struct holonomic_robot_position *pos);
+
+/** @brief Returns the instant rotation speed of the robot.
+ * @param [in] pos The robot_position instance.
+ * @return Rotation speed in rad/s
+ */
+double holonomic_position_get_instant_rotation_speed(struct holonomic_robot_position *pos);
 
 /** @brief Define callback function for motor encoders.
  *
