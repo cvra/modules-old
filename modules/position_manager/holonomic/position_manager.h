@@ -115,13 +115,13 @@ double holonomic_position_get_instant_rotation_speed(struct holonomic_robot_posi
  * @param [in] pos The robot_position instance.
  * @return Translation speed in mm/s
  */
-int32_t holonomic_position_get_translation_speed_int(struct holonomic_robot_position *pos);
+int32_t holonomic_position_get_translation_speed_int(void *data);
 
 /** @brief Returns the instant rotation speed of the robot in int32_t.
  * @param [in] pos The robot_position instance.
  * @return Rotation speed in rad/s
  */
-int32_t holonomic_position_get_rotation_speed_int(struct holonomic_robot_position *pos);
+int32_t holonomic_position_get_rotation_speed_int(void * data);
 
 /** @brief Define callback function for motor encoders.
  *

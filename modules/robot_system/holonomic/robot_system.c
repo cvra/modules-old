@@ -32,7 +32,8 @@ void rsh_set_direction_int(void * data, int32_t theta_v_deg){
     rs->direction = RAD(theta_v_deg);
 }
 
-void rsh_set_speed(struct robot_system_holonomic *rs, int speed) {
+void rsh_set_speed(void *data, int32_t speed) {
+    struct robot_system_holonomic *rs = data;
     rs->speed = speed;
 }
 
