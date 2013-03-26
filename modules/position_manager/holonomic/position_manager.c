@@ -214,6 +214,12 @@ int16_t holonomic_position_get_a_deg_s16(struct holonomic_robot_position *pos)
     return pos->pos_s16.a;
 }
 
+int32_t holonomic_position_get_a_deg_s32(void *data)
+{
+    struct holonomic_robot_position *pos = data;
+    return (int32_t) pos->pos_s16.a;
+}
+
 /********* double */
 
 /**

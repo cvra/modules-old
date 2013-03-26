@@ -164,6 +164,14 @@ int16_t holonomic_position_get_y_s16(struct holonomic_robot_position *pos);
  */
 int16_t holonomic_position_get_a_deg_s16(struct holonomic_robot_position *pos);
 
+
+/** @brief Get current angle. Can be used with the cs_manager
+ *
+ * @param [in] pos The odometry system instance.
+ * @return Current angle in degrees in integer.
+ */
+int32_t holonomic_position_get_a_deg_s32(void *data);
+
 /** @brief Get current X. 
  *
  * @param [in] pos The odometry system instance.

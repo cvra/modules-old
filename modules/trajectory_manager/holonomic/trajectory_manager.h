@@ -31,12 +31,14 @@
 enum h_trajectory_moving_state {
     MOVING_STRAIGHT,
     MOVING_CIRCLE,
+    MOVING_IDLE,
 };
 /* Turning trajectories */
 enum h_trajectory_turning_state {
     TURNING_CAP,
     TURNING_SPEEDOFFSET,
     TURNING_FACEPOINT,
+    TURNING_IDLE,
 };
 
 /** A complete instance of the trajectory manager. */
@@ -77,6 +79,23 @@ struct h_trajectory {
     int8_t scheduler_task;    /**<< id of current task (-1 if no running task) */
 };
 
+/** @brief Structure initialization.
+ *
+ * @param [in] traj The trajectory manager to initialize.
+ * @param [in] cs_hz The frequency of the control systems, in Hz. */
+void holonomic_trajectory_init(struct h_trajectory *traj, double cs_hz);
+
+/** @brief Sets the control systems.
+ *
+ * This function tells the trajectory manager which control system to use for
+ * angle/speed/omega(andgular speed) control.
+ *
+ * @param [in] traj The trajectory manager instance.
+ * @param [in] cs_s, cs_a, cs_o The control systems to use.
+ */
+void holonomic_trajectory_set_cs(struct h_trajectory *traj, struct cs *cs_a,
+               struct cs *cs_s, struct cs *cs_o);
+
 /** @brief Go to a point.
  *
  * This function makes the holonomic robot go to a point. Once the function is called, the
@@ -89,6 +108,7 @@ struct h_trajectory {
  * @note This moving command is mixed with the current turning command 
  */
 void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj, double x_abs_mm, double y_abs_mm);
+
 
 #endif
 

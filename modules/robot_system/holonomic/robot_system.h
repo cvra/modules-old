@@ -71,17 +71,24 @@ void rsh_set_cs(struct robot_system_holonomic *rs, int index, struct cs *cs);
  */
 void rsh_set_direction(struct robot_system_holonomic *rs, float theta_v);
 
+/** Sets the movement angle consign, in int (necessary for control_system).
+ * @param [in] rs The robot_system instance.
+ * @param [in] theta_v The angle between the movement direction of the robot and 
+ * the X-axis, in degree.
+ */
+void rsh_set_direction_int(void * data, int32_t theta_v_deg);
+
 /** Sets the speed of the robot.
  * @param [in] rs The robot_system instance.
  * @param [in] speed The speed of the robot, in m/s.
  */
 void rsh_set_speed(struct robot_system_holonomic *rs, int speed);
 
-/** Sets the angular speed of the robot.
+/** Sets the angular speed of the robot, compliant with the cs_manager require
  * @param [in] rs The robot_system instance.
- * @param [in] omega_r The change in robot orientation, in rad / s.
+ * @param [in] omega_r The change in robot orientation, in deg / s.
  */
-void rsh_set_rotation_speed(struct robot_system_holonomic *rs, int omega_r);
+void rsh_set_rotation_speed(void *data, int32_t omega_d);
 
 /** Sets the geometry base.
  * @param [in, out] rs The robot_system instance.

@@ -11,3 +11,22 @@ void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj,
     holonomic_trajectory_manager_event(traj);
     holonomic_schedule_event(traj);
 }
+
+void holonomic_trajectory_init(struct h_trajectory *traj, double cs_hz)
+{
+    memset(traj, 0, sizeof(struct h_trajectory));
+    traj->cs_hz = cs_hz;
+    traj->moving_state = MOVING_IDLE;
+    traj->turning_state = TURNING_IDLE;
+    traj->scheduler_task = -1;
+}
+
+void holonomic_trajectory_set_cs(struct h_trajectory *traj, struct cs *cs_a,
+               struct cs *cs_s, struct cs *cs_o)
+{
+    traj->csm_omega = cs_o;
+    traj->csm_angle = cs_a;
+    traj->csm_speed = cs_s;
+}
+
+

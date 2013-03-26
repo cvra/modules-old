@@ -27,12 +27,18 @@ void rsh_set_direction(struct robot_system_holonomic *rs, float theta_v) {
     rs->direction = theta_v;
 }
 
+void rsh_set_direction_int(void * data, int32_t theta_v_deg){
+    struct robot_system_holonomic * rs = data;
+    rs->direction = RAD(theta_v_deg);
+}
+
 void rsh_set_speed(struct robot_system_holonomic *rs, int speed) {
     rs->speed = speed;
 }
 
-void rsh_set_rotation_speed(struct robot_system_holonomic *rs, int omega_r) {
-    rs->rotation_speed = omega_r;
+void rsh_set_rotation_speed(void *data, int32_t omega_d) {
+    struct robot_system_holonomic *rs = data;
+    rs->rotation_speed = RAD(omega_d);
 }
 
 void rsh_update(struct robot_system_holonomic *rs) {
