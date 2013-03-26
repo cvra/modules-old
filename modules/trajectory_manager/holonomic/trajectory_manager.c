@@ -1,3 +1,4 @@
+#include <string.h>
 #include <holonomic/trajectory_manager.h>
 #include <holonomic/trajectory_manager_utils.h>
 
