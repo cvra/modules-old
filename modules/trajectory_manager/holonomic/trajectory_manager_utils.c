@@ -29,8 +29,16 @@ void holonomic_trajectory_manager_event(void * param)
     struct h_trajectory *traj = (struct h_trajectory *) param;
     double x = holonomic_position_get_x_double(traj->position);
     double y = holonomic_position_get_y_double(traj->position);
-    /** The speed consign, the angle consign and the angular speed (omega) consign */ 
-    int32_t s_consign = 0, a_consign = 0, o_consign = 0;
+    int32_t s_consign = 0;  /**< The speed consign */
+    int32_t a_consign = 0;  /**< The angle consign */
+    int32_t o_consign = 0;  /**< The angular speed (omega) consign */ 
+
+    //TODO : delete very soon. this is only to eleiminate warnings!
+    (void)x;
+    (void)y;
+    (void)s_consign;
+    (void)a_consign;
+    (void)o_consign;
 
     /* step 1 : process new commands to quadramps */
     switch (traj->moving_state) {
@@ -100,6 +108,9 @@ uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_
 /** remove event if any @todo */
 void holonomic_delete_event(struct h_trajectory *traj)
 {
+    //TODO : delete very soon! this is only to eliminate warnings!
+    (void)traj;
+
     //set_quadramp_speed(traj, traj->d_speed, traj->a_speed);
     //set_quadramp_acc(traj, traj->d_acc, traj->a_acc);
     //if ( traj->scheduler_task != -1) {
