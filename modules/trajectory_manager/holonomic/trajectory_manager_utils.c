@@ -1,3 +1,4 @@
+#include <math.h>
 #include <holonomic/trajectory_manager_utils.h>
 #include <scheduler.h>
 #include <quadramp.h>
@@ -97,12 +98,16 @@ uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win)
 }
 
 /** returns true if the robot is in an area enclosed by a certain angle 
-  * @todo */
+  * @todo ABS? */
 uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_rad)
 {
-    double a = traj->a_target;
+    double d_a =  traj->a_target - holonomic_position_get_a_rad_double(traj->position);
 
-    return (a < a + a_win_rad/2 && a > a - a_win_rad/2);
+    if (ABS(d_a) < M_PI) {
+        return (ABS(d_a) < (a_win_rad/2));
+    } else {
+        return ((2*M_PI-ABS(d_a)) < (a_win_rad/2));
+    }
 }
 
 /** remove event if any @todo */
