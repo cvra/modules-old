@@ -8,7 +8,7 @@
 
 void rsh_init(struct robot_system_holonomic *rs) {
 
-    rs->geometry = NULL;
+    rs->pos = NULL;
     rs->motors[0] = NULL;
     rs->motors[1] = NULL;
     rs->motors[2] = NULL;
@@ -43,20 +43,19 @@ void rsh_set_rotation_speed(void *data, int32_t omega_d) {
 }
 
 void rsh_update(struct robot_system_holonomic *rs) {
-    if(rs->geometry == NULL)
+    if(rs->pos == NULL)
         return;
 
-    /** @todo grab the robot angle from position manager. */
     /** @todo add real physical parameters. */
-    float theta_r = 0.;
+    float theta_r = holonomic_position_get_a_rad_float(rs->pos);
     float omega_r;
     float omega_t;
     int i;
 
     for(i=0; i<3; i++) {
-        omega_r = rs->speed / rs->geometry->wheel_radius[i] * 
-                     cos(theta_r - rs->direction + rs->geometry->beta[i] - M_PI / 2);
-        omega_t = - rs->rotation_speed * rs->geometry->wheel_distance[i] / rs->geometry->wheel_radius[i];
+        omega_r = rs->speed / rs->pos->geometry.wheel_radius[i] * 
+                     cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_PI / 2);
+        omega_t = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
 
         cs_set_consign(rs->motors[i],(omega_r+omega_t)); //@todo CONVERSION UNIT
         
@@ -65,6 +64,7 @@ void rsh_update(struct robot_system_holonomic *rs) {
 }
 
 
-void rsh_set_base_geometry(struct robot_system_holonomic *rs, struct holonomic_base_geometry *geometry) {
-    rs->geometry = geometry;
+void rsh_set_position_manager(struct robot_system_holonomic *rs,
+                              struct holonomic_robot_position *pos){
+    rs->pos = pos;
 }

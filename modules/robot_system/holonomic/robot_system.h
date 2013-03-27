@@ -41,9 +41,8 @@ struct robot_system_holonomic {
     /** The 3 speed regulators which are connected on the motors. */
     struct cs* motors[3];
 
-    /** The geometry of the base. */
-    struct holonomic_base_geometry *geometry;
-
+    /** Position Manager */
+    struct holonomic_robot_position *pos;
 };
 
 /** Inits a robot_system struct.
@@ -90,10 +89,12 @@ void rsh_set_speed(void *data, int32_t speed);
  */
 void rsh_set_rotation_speed(void *data, int32_t omega_d);
 
-/** Sets the geometry base.
- * @param [in, out] rs The robot_system instance.
- * @param [in] geometry The geometry of the base.
+
+/** Sets the position manager.
+ * @param [in] rs The robot_system instance.
+ * @param [in] pos The robots position manager.
  */
-void rsh_set_base_geometry(struct robot_system_holonomic *rs, struct holonomic_base_geometry *geometry);
+void rsh_set_position_manager(struct robot_system_holonomic *rs, struct holonomic_robot_position *pos);
+
 
 #endif
