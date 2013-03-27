@@ -53,13 +53,13 @@ void rsh_update(struct robot_system_holonomic *rs) {
     int i;
 
     for(i=0; i<3; i++) {
-        omega_r = rs->speed / rs->pos->geometry.wheel_radius[i] * 
-                     cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_PI / 2);
-        omega_t = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
+        //omega_r = rs->speed / rs->pos->geometry.wheel_radius[i] * 
+                     //cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_PI / 2);
+        //omega_t = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
 
-        cs_set_consign(rs->motors[i],(omega_r+omega_t)); //@todo CONVERSION UNIT
+        cs_set_consign(rs->motors[i],0); //@todo CONVERSION UNIT
         
-        DEBUG(E_ROBOT_SYSTEM, "wheel %d : omega_t=%.1f omega_r=%.1f", i, omega_t, omega_r);
+        //DEBUG(E_ROBOT_SYSTEM, "wheel %d : omega_t=%.1f omega_r=%.1f", i, omega_t, omega_r);
     }
 }
 
