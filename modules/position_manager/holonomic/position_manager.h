@@ -143,6 +143,10 @@ void holonomic_position_set_mot_encoder(struct holonomic_robot_position *pos,
 void holonomic_position_manage(struct holonomic_robot_position *pos);
 
 
+void holonomic_position_set_x_s16(struct holonomic_robot_position *pos, int16_t x);
+void holonomic_position_set_y_s16(struct holonomic_robot_position *pos, int16_t y);
+void holonomic_position_set_a_s16(struct holonomic_robot_position *pos, int16_t a);
+
 /** @brief Get current X. 
  *
  * @param [in] pos The odometry system instance.

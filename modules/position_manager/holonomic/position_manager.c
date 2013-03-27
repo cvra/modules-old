@@ -192,6 +192,21 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
 }
 
 
+void holonomic_position_set_x_s16(struct holonomic_robot_position *pos, int16_t x){
+    pos->pos_s16.x = x;
+    pos->pos_d.x = (double)x;
+}
+
+void holonomic_position_set_y_s16(struct holonomic_robot_position *pos, int16_t y){
+    pos->pos_s16.y = y;
+    pos->pos_d.y = (double)y;
+}
+
+void holonomic_position_set_a_s16(struct holonomic_robot_position *pos, int16_t a){
+    pos->pos_s16.a = a;
+    pos->pos_d.a = (double)a;
+}
+
 /**
  * returns current x
  */
