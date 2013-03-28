@@ -164,11 +164,11 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
                                   * pos->geometry.wheel_radius[i];
     }
 
-    new_a = pos->pos_d.a - 1 / pos->geometry.encoder_resolution 
+    new_a = pos->pos_d.a - 1 / (float)pos->geometry.encoder_resolution 
             * sum_wheel_steps_distance / sum_wheel_diameter;
 
-    delta_x = 2 / 3 / pos->geometry.encoder_resolution * sum_cos_steps_distance;
-    delta_y = 2 / 3 / pos->geometry.encoder_resolution * sum_sin_steps_distance;
+    delta_x = 2 / 3 / (float)pos->geometry.encoder_resolution * sum_cos_steps_distance;
+    delta_y = 2 / 3 / (float)pos->geometry.encoder_resolution * sum_sin_steps_distance;
 
     /** Conversion to table-coordinates: */
     double cos_a = cos(new_a - M_PI_2);
