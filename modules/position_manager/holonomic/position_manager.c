@@ -87,6 +87,9 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
         pos->geometry.wheel_distance[i] = wheel_distance[i];
 
         pos->geometry.encoder_resolution = encoder_resolution;
+ //       printf("Physical Params %d: beta %f, cos %f, sin %f, R %f, dist %f, res %d\n", i, pos->geometry.beta[i],
+ //                                       pos->geometry.cos_beta[i], pos->geometry.sin_beta[i], pos->geometry.wheel_radius[i],
+ //                                       pos->geometry.wheel_distance[i], pos->geometry.encoder_resolution);
     }
 }
 
@@ -151,6 +154,7 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     for(i = 0; i < 3; i++){
         new_encoder_val[i] = safe_getencoder(pos->motor_encoder[i], 
                                              pos->motor_encoder_param[i]);
+        
 
         encoder_steps[i] = new_encoder_val[i] - pos->encoder_val[i];
         pos->encoder_val[i] = new_encoder_val[i];
@@ -163,9 +167,12 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
         sum_sin_steps_distance += pos->geometry.sin_beta[i] * encoder_steps[i] 
                                   * pos->geometry.wheel_radius[i];
     }
-
-    new_a = pos->pos_d.a - 1 / pos->geometry.encoder_resolution 
+    
+    printf("res: %d, dist: %f, diam: %f\n", pos->geometry.encoder_resolution, sum_wheel_steps_distance, sum_wheel_diameter);
+    new_a = pos->pos_d.a - 1 / (float)pos->geometry.encoder_resolution 
             * sum_wheel_steps_distance / sum_wheel_diameter;
+            
+    printf("%lf", new_a);
 
     delta_x = 2 / 3 / pos->geometry.encoder_resolution * sum_cos_steps_distance;
     delta_y = 2 / 3 / pos->geometry.encoder_resolution * sum_sin_steps_distance;
