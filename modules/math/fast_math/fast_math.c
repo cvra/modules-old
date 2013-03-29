@@ -1,9 +1,9 @@
 /* File        : modules/math/fast_math/fast_math.c
  * Author      : Mathieu Rouvinez
  * Project     : CVRA, Swiss Eurobot 2013
- * State       : appears to work
+ * State       : still appears to work
  * Creation    : 2012.04.24
- * Last modif. : 2013.03.17
+ * Last modif. : 2013.03.29
  * Description : quite fast math function, accurate enough, nothing more
  * Notes       : some code borrowed from other programmers, didn't ask them
  * Disclaimer  : works on my machine
@@ -12,9 +12,10 @@
 #include "fast_math.h"
  
 #include <math.h>
+#include <float.h>  // FLT_MAX
+#include <stdint.h> // int types
 #include <stdio.h>  // printf()
 #include <stdlib.h> // srand() & rand()
-#include <stdint.h> // int types
 #include <time.h>   // clock()
 
 #ifdef COMPILE_ON_ROBOT
@@ -69,7 +70,7 @@ inline float _fast_fabsf          (float v);
        void  _fast_acosf_LUT_init ();
        float _fast_acosf_LUT      (float v);
        void  _fast_atanf_LUT_init ();
-       float _fast_atanf_LUT      (float v);
+inline float _fast_atanf_LUT      (float v);
        float _fast_atan2f         (float y, float x);
        void  _fast_sqrtf_LUT_init ();
        float _fast_sqrtf_LUT      (float v);
@@ -81,6 +82,8 @@ inline float _fast_fabsf          (float v);
        float _fast_sqrtf_6        (float v);
 inline float _fast_invsqrtf       (float v);
 inline float _fast_invf           (float v);
+       void  _fast_invf_LUT_init  ();
+inline float _fast_invf_LUT       (float v);
 
 
 // DEFINITIONS OF PUBLIC WRAPPERS
@@ -90,6 +93,7 @@ void fast_math_init()
     _fast_asinf_LUT_init(); // also used for acosf
     _fast_atanf_LUT_init();
     _fast_sqrtf_LUT_init();
+    _fast_invf_LUT_init();
 }
 
 inline float fast_fabsf    (float v)          { return _fast_fabsf         (v);   }
@@ -102,7 +106,7 @@ inline float fast_atanf    (float v)          { return _fast_atanf_LUT     (v); 
 inline float fast_atan2f   (float y, float x) { return _fast_atan2f        (y,x); }
 inline float fast_sqrtf    (float v)          { return _fast_sqrtf_LUT     (v);   }
 inline float fast_invsqrtf (float v)          { return _fast_invsqrtf      (v);   }
-inline float fast_invf     (float v)          { return _fast_invf          (v);   }
+inline float fast_invf     (float v)          { return _fast_invf_LUT      (v);   }
 
 
 // DEFINITION OF INTERNAL FUNCTIONS
@@ -114,6 +118,7 @@ float _fast_fabsf(float v)
     i.u &= 0x7FFFFFFFu;                         // bitmask, set MSB to 0
     return i.f;                                 // done, neat !
 }
+
 
 float _fast_sinf(float v)
 {
@@ -135,6 +140,7 @@ float _fast_sinf(float v)
     return v;
 }
 
+
 float _fast_sinf_pmPI2_o5(float v) // angle should be in the range -pi/2 to pi/2
 {                                  // rel_err < 0.01083%
     const float v2 = v*v;
@@ -144,6 +150,7 @@ float _fast_sinf_pmPI2_o5(float v) // angle should be in the range -pi/2 to pi/2
 
     return v*(c1+v2*(c2+v2*(c3)));
 }
+
 
 float _fast_sinf_pmPI2_o7(float v) // angle should be in the range -pi/2 to pi/2
 {                                  // rel_err < 0.000385%
@@ -156,6 +163,7 @@ float _fast_sinf_pmPI2_o7(float v) // angle should be in the range -pi/2 to pi/2
     return v*(c1+v2*(c2+v2*(c3+v2*(c4))));
 }
 
+
 float _fast_sinf_pmPI_o9(float v)  // angle should be in the range -pi to pi
 {                                  // rel_err < 0.1535 % on [-3.141592;3.141592]
     const float v2 = v*v;
@@ -167,6 +175,7 @@ float _fast_sinf_pmPI_o9(float v)  // angle should be in the range -pi to pi
 
     return v*(c1+v2*(c2+v2*(c3+v2*(c4+v2*(c5)))));
 }
+
 
 float _fast_sinf_pmPI_o11(float v) // angle should be in the range -pi to pi
 {                                  // rel_err < 0.0178 % on [-3.141592;3.141592]
@@ -181,10 +190,9 @@ float _fast_sinf_pmPI_o11(float v) // angle should be in the range -pi to pi
     return v*(c1+v2*(c2+v2*(c3+v2*(c4+v2*(c5+v2*(c6))))));
 }
 
+
 #define SIN_LUT_SIZE (2048)
-
 unsigned int _fast_sinf_LUT_array[SIN_LUT_SIZE];
-
 float* _fast_sinf_LUT_ptr = (float*)(&_fast_sinf_LUT_array);
 
 void _fast_sinf_LUT_init()
@@ -209,6 +217,7 @@ float _fast_sinf_LUT(float v)   // rel. err. on [0,2*PI] is... good enough
     return y1 + (y2-y1)*(m-i);                  // linear approximation
 }
 
+
 float _fast_cosf(float v)
 {
     int q = -(int)(v<0.0f);     // get number of shifts from quadrant I
@@ -230,6 +239,7 @@ float _fast_cosf(float v)
     return s*(c1+v2*(c2+v2*(c3)));  // compute Taylor series terms and return
 }
 
+
 float _fast_cosf_pmPI2_o4(float v) // angle should be in the range -pi/2 to pi/2
 {                                  // rel_err < 0.27 % on [-1.570796;1.570796]
     const float v2 = v*v;
@@ -239,6 +249,7 @@ float _fast_cosf_pmPI2_o4(float v) // angle should be in the range -pi/2 to pi/2
 
     return (c1+v2*(c2+v2*(c3)));
 }
+
 
 float _fast_cosf_pmPI2_o6(float v) // angle should be in the range -pi/2 to pi/2
 {                                  // rel_err < 0.0042 % on [-1.570796;1.570796]
@@ -250,6 +261,7 @@ float _fast_cosf_pmPI2_o6(float v) // angle should be in the range -pi/2 to pi/2
 
     return (c1+v2*(c2+v2*(c3+v2*(c4))));
 }
+
 
 float _fast_cosf_pmPI_o8(float v)  // angle should be in the range -pi to pi
 {                                  // rel_err < 0.057 % on [-3.141592;3.141592]
@@ -264,6 +276,7 @@ float _fast_cosf_pmPI_o8(float v)  // angle should be in the range -pi to pi
     return (c1+v2*(c2+v2*(c3+v2*(c4+v2*(c5)))));
 }
 
+
 float _fast_cosf_pmPI_o10(float v) // angle should be in the range -pi to pi
 {                                  // rel_err < 0.0042 % on [-3.141592;3.141592]
     const float v2 = v*v;
@@ -277,10 +290,9 @@ float _fast_cosf_pmPI_o10(float v) // angle should be in the range -pi to pi
     return (c1+v2*(c2+v2*(c3+v2*(c4+v2*(c5+v2*(c6))))));
 }
 
+
 #define COS_LUT_SIZE (2048)
-
 unsigned int _fast_cosf_LUT_array[COS_LUT_SIZE];
-
 float* _fast_cosf_LUT_ptr = (float*)(&_fast_cosf_LUT_array);
 
 void _fast_cosf_LUT_init()
@@ -304,6 +316,7 @@ float _fast_cosf_LUT(float v)   // rel. error on [0,2*PI] is... good enough
     const float y2 = _fast_cosf_LUT_ptr[i+1];    // lookup the larger value
     return y1 + (y2-y1)*(m-i);                  // linear approximation
 }
+
 
 float _fast_tanf(float v)       // 4 coefs : rel. err. on [0,PI/4] < 0.0195%
 {                               // 3 coefs : rel. err. on [0,PI/4] < 0.062%
@@ -352,6 +365,7 @@ float _fast_tanf(float v)       // 4 coefs : rel. err. on [0,PI/4] < 0.0195%
     return v;
 }
 
+
 float _fast_tanf_alt(float v)   // 4 coefs : rel. err. on [-1.57,1.57] < 0.0061%
 {                               // 3 coefs : rel. err. on [-1.57,1.57] < 0.162%
     #define EBS4C
@@ -388,10 +402,9 @@ float _fast_tanf_alt(float v)   // 4 coefs : rel. err. on [-1.57,1.57] < 0.0061%
     #endif
 }
 
+
 #define TAN_LUT_SIZE (65536)
-
 unsigned int _fast_tanf_LUT_array[TAN_LUT_SIZE];
-
 float* _fast_tanf_LUT_ptr = (float*)(&_fast_tanf_LUT_array);
 
 void _fast_tanf_LUT_init()
@@ -415,6 +428,7 @@ float _fast_tanf_LUT(float v)
     const float y2 = _fast_tanf_LUT_ptr[i+1];   // lookup the larger value
     return y1 + (y2-y1)*(m-i);                  // linear approximation
 }
+
 
 float _fast_acosf(float v)  // TODO : characterize max rel. err.
 {
@@ -499,10 +513,9 @@ float _fast_acosf(float v)  // TODO : characterize max rel. err.
     }
 }
 
+
 #define ASIN_LUT_SIZE (512-1)
-
 unsigned int _fast_asinf_LUT_array[6][ASIN_LUT_SIZE+1];
-
 float* _fast_asinf_LUT_ptr[6] = {
   (float*)(&_fast_asinf_LUT_array[0]), (float*)(&_fast_asinf_LUT_array[1]),
   (float*)(&_fast_asinf_LUT_array[2]), (float*)(&_fast_asinf_LUT_array[3]),
@@ -587,6 +600,7 @@ float _fast_asinf_LUT(float v)      // rel. err. on [-1,1] < 0.004%
     return (0*v)/(0*v);     // -1.#IND00 if fabsf(v)>1.0f
 }
 
+
 #define ACOS_LUT_SIZE ASIN_LUT_SIZE
 
 void _fast_acosf_LUT_init() // acos() shares the same lookup table as asin()
@@ -657,6 +671,7 @@ float _fast_acosf_LUT(float v)      // rel. err. on [-1,1] < 0.1%
     return (0*v)/(0*v);     // -1.#IND00 if fabsf(v)>1.0f
 }
 
+
 #define ATAN_LUT_BITS 17            // max rel. err. < 0.1% with a 17-bit LUT
 #define ATAN_LUT_SIZE (1<<ATAN_LUT_BITS)
 #define ATAN_LUT_BS   (32-ATAN_LUT_BITS-1)  // number or bit shifts to get index
@@ -666,7 +681,7 @@ unsigned int _fast_atanf_LUT_array[ATAN_LUT_SIZE+1];
 void _fast_atanf_LUT_init()
 {
     union { float f; unsigned int u; } a, b, r;
-    unsigned int i=0;
+    unsigned int i = 0;
     
     a.u = 0;                                    // compute first element
     r.f = atanf(a.f);
@@ -685,10 +700,11 @@ void _fast_atanf_LUT_init()
     _fast_atanf_LUT_array[i] = r.u;
 }
 
+inline
 float _fast_atanf_LUT(float v)
 {
     union { float f; unsigned int u; } t, r;
-    unsigned int idx=0;
+    unsigned int idx = 0;
     
     t.f = v;                                // copy input float value in union
     idx = (t.u & 0x7FFFFFFF)>>ATAN_LUT_BS;  // strip sign & gen. index for LUT
@@ -697,6 +713,7 @@ float _fast_atanf_LUT(float v)
     
     return r.f;
 }
+
 
 float _fast_atan2f(float y, float x)
 {
@@ -755,6 +772,7 @@ float _fast_atan2f(float y, float x)
     return v;
 }
 
+
 static unsigned int _fast_sqrtf_LUT_array[0x10000u];    // 0x10000 = 65536 = 8192*8
 
 void _fast_sqrtf_LUT_init()
@@ -762,7 +780,7 @@ void _fast_sqrtf_LUT_init()
     union {float f; unsigned int u;} i;
     unsigned int u;
     
-    for (u=0; u<=0x7FFF; u++)
+    for (u=0; u<=0x7FFFu; u++)
     {
         // Build a float with the bit pattern u as mantissa
         //  and an exponent of 0, stored as 127
@@ -771,14 +789,14 @@ void _fast_sqrtf_LUT_init()
         
         // Take the square root then strip the first 7 bits of
         //  the mantissa into the table
-        _fast_sqrtf_LUT_array[u + 0x8000] = (i.u & 0x7FFFFF);
+        _fast_sqrtf_LUT_array[u + 0x8000u] = (i.u & 0x7FFFFFu);
         
         // Repeat the process, this time with an exponent of 1, 
         //  stored as 128
-        i.u = (u << 8) | (0x80 << 23);
+        i.u = (u << 8) | (0x80u << 23);
         i.f = (float)sqrt(i.f);
         
-        _fast_sqrtf_LUT_array[u] = (i.u & 0x7FFFFF);
+        _fast_sqrtf_LUT_array[u] = (i.u & 0x7FFFFFu);
     }
 }
 
@@ -788,14 +806,15 @@ float _fast_sqrtf_LUT(float v)  // Paul Hsieh, http://www.azillionmonkeys.com/qe
     
     if (i.u == 0)    return 0.0;     // check for square root of 0
     
-    unsigned int dlo =     0xFFFF;
-    unsigned int bm0 = 0x3F800000;  // 00111111100000000000000000000000
-    unsigned int bm1 = 0x7F800000;  // 01111111100000000000000000000000
+    unsigned int dlo =     0xFFFFu;
+    unsigned int bm0 = 0x3F800000u; // 00111111100000000000000000000000
+    unsigned int bm1 = 0x7F800000u; // 01111111100000000000000000000000
     
     i.u = _fast_sqrtf_LUT_array[(i.u >> 8) & dlo] | ((((i.u - bm0) >> 1) + bm0) & bm1);
     
     return i.f;
 }
+
 
 inline
 float _fast_sqrtf_1(float x)    // rel. err. < 0.5%
@@ -817,6 +836,7 @@ float _fast_sqrtf_1(float x)    // rel. err. < 0.5%
     return w.f;
 }
 
+
 inline
 float _fast_sqrtf_2(float x)
 {
@@ -834,6 +854,7 @@ float _fast_sqrtf_2(float x)
     
     return v.f;
 }
+
 
 inline
 float _fast_sqrtf_3(float x)    // rel. err. < 0.5%
@@ -854,6 +875,7 @@ float _fast_sqrtf_3(float x)    // rel. err. < 0.5%
     return w.f;
 }
 
+
 inline
 float _fast_sqrtf_4(float v)    // rel. err. < 3.5%
 {
@@ -870,6 +892,7 @@ float _fast_sqrtf_4(float v)    // rel. err. < 3.5%
     
     return x.f;
 }
+
 
 inline
 float _fast_sqrtf_5(float v)
@@ -892,6 +915,7 @@ float _fast_sqrtf_5(float v)
     return x.f;                     // (MAX ERROR = 0.109105 %)
 }
 
+
 inline
 float _fast_sqrtf_6(float v)
 {
@@ -900,13 +924,15 @@ float _fast_sqrtf_6(float v)
   //return 1.0f/fast_invsqrtf(v);       // am I dumb, or what ?
 }
 
+
 inline
-float _fast_invsqrtf(float v)   // Jan Kaldec, http://rrrola.wz.cz/inv_sqrt.html
-{
-    union { float f; unsigned int u; } i = {v};
+float _fast_invsqrtf(float v)   // rel. err. < 0.07%
+{                               // Jan Kaldec, http://rrrola.wz.cz/inv_sqrt.html
+    union {float f; unsigned int u;} i = {v};
     i.u = 0x5F1FFFF9u - (i.u >> 1);
     return 0.703952253f * i.f * (2.38924456f - v * i.f * i.f);
 }
+
 
 inline
 float _fast_invf(float v)       // http://bits.stephan-brumme.com/inverse.html
@@ -914,9 +940,71 @@ float _fast_invf(float v)       // http://bits.stephan-brumme.com/inverse.html
     union {float f; unsigned int i;} u;
     
     u.f = v;
-    u.i = 0x7EF311C2 - u.i; // 0x7F000000 : 12.5% max rel err, inv(1) == 1
-                            // 0x7EEEEEEE : 6.67% max rel err, inv(1) != 1
-    return u.f;             // 0x7EF311C2 : 5.06% max rel err, inv(1) != 1
+    u.i = 0x7EF311C2u - u.i;    // 0x7F000000 : 12.5% max rel err, inv(1) == 1
+                                // 0x7EEEEEEE : 6.67% max rel err, inv(1) != 1
+    return u.f;                 // 0x7EF311C2 : 5.06% max rel err, inv(1) != 1
+}
+
+
+#define INV_LUT_BS      8                   // 8-bit LUT ==> 256-element LUT
+#define INV_LUT_SIZE    (1<<INV_LUT_BS)
+unsigned int fast_invf_LUT[INV_LUT_SIZE];
+
+void _fast_invf_LUT_init()
+{
+    const unsigned int strt = 0x40000000u;              // 0x40000000u = 2.0f
+    const unsigned int step =   0x800000u/INV_LUT_SIZE; // 0x40800000u = 4.0f
+    
+    unsigned int i;
+    for (i=0; i<INV_LUT_SIZE; i++)  // optimize every coefficient in the LUT
+    {
+        fast_invf_LUT[i] = 0x7F000000u; // initialize magic number
+        
+        unsigned int d = 0x80000u;      // delta around magic number
+        unsigned int s = 1;             // sign of progression
+        
+        float remin = FLT_MAX;          // init min relative error
+        
+        while (d > 1)   // magic number optimization loop
+        {
+            union {float f; unsigned int u;} t1, t2;
+            
+            t1.u = strt + (i+0)*step;   // lower bound (LB)
+            t2.u = strt + (i+1)*step;   // upper bound (UB)
+            
+            const float r1 = 1.0f/t1.f; // inverse of LB, reference
+            const float r2 = 1.0f/t2.f; // inverse of UB, reference
+            
+            const unsigned int magic = fast_invf_LUT[i] + ( (s&1) ? -d : d );
+            
+            t1.u = magic-t1.u;          // inverse of LB, approximation
+            t2.u = magic-t2.u;          // inverse of UB, approximation
+            
+            const float re1 = fabsf(t1.f/r1-1.0f);      // rel. err. made on LB
+            const float re2 = fabsf(t2.f/r2-1.0f);      // rel. err. made on UB
+            const float re  = (re1>re2) ? re1 : re2;    // select largest error
+            
+            if (re < remin)     // found a better magic number ? then...
+            {
+                remin = re;                 // update min relative error
+                fast_invf_LUT[i] = magic;   // update magic number in LUT
+            }
+            else                // otherwise...
+            {
+                d >>= 2;                    // divide delta by 4
+                s ^= 1;                     // alternate s between 0 and 1
+            }
+        }
+    }
+}
+
+inline
+float _fast_invf_LUT(float x)    // rel. err. < 0.1% for 8-bit LUT
+{
+    union {float f; unsigned int u;} v = {x};
+    const unsigned int idx = (v.u&0x7FFFFFu)>>(23-INV_LUT_BS);
+    v.u = fast_invf_LUT[idx] - v.u;
+    return v.f;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -934,6 +1022,7 @@ int _is_big_endian()
     return i.s != 1;
 #endif
 }
+
 
 void fast_benchmark(void)
 {
