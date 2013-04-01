@@ -94,7 +94,7 @@ typedef struct inst parse_inst_t;
  *
  */
 typedef parse_inst_t * parse_ctx_t;
-typedef parse_ctx_t parse_ctx_t;
+//typedef parse_ctx_t parse_ctx_t;
 
 /**
  * Try to parse a buffer according to the specified context. The
