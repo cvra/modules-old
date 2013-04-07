@@ -56,7 +56,7 @@ static inline uint32_t safe_getencoder(int32_t (*f)(void *), void * param)
 
 
 /** Set a new robot position */
-void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int16_t y, double a_deg)
+void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int16_t y, int16_t a_deg)
 {
     pos->pos_d.a = (a_deg * M_PI)/ 180.0;
     pos->pos_d.x = x;
@@ -80,8 +80,8 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
     for(i = 0; i < 3; i++){
         pos->geometry.beta[i] = beta[i];
 
-        pos->geometry.cos_beta[i] = (float)cos(beta[i]);
-        pos->geometry.sin_beta[i] = (float)sin(beta[i]);
+        pos->geometry.cos_beta[i] = cosf(beta[i]);
+        pos->geometry.sin_beta[i] = sinf(beta[i]);
 
         pos->geometry.wheel_radius[i] = wheel_radius[i];
         pos->geometry.wheel_distance[i] = wheel_distance[i];
@@ -105,13 +105,8 @@ void holonomic_position_set_update_frequency(struct holonomic_robot_position *po
 }
 
 
-double holonomic_position_get_instant_translation_speed(struct holonomic_robot_position *pos){
-    double d_x, d_y;
-
-    d_x = pos->pos_d.x - pos->previous_pos_d.x;
-    d_y = pos->pos_d.y - pos->previous_pos_d.y;
-
-    return sqrt(d_x * d_x + d_y * d_y) * pos->update_frequency;
+float holonomic_position_get_instant_translation_speed(struct holonomic_robot_position *pos){
+    return pos->speed;
 }
 
 double holonomic_position_get_instant_rotation_speed(struct holonomic_robot_position *pos){
@@ -130,6 +125,15 @@ int32_t holonomic_position_get_translation_speed_int(void *data){
 int32_t holonomic_position_get_rotation_speed_int(void *data){
     struct holonomic_robot_position *pos = data;
     return (int32_t)holonomic_position_get_instant_rotation_speed(pos);
+}
+
+float holonomic_position_get_theta_v(struct holonomic_robot_position *pos){
+    return pos->theta_v;
+}
+
+int32_t holonomic_position_get_theta_v_int(void *data){
+    struct holonomic_robot_position *pos = data;
+    return (int32_t)(holonomic_position_get_theta_v(pos) * 180.0 / M_PI);
 }
 
 /** 
@@ -153,6 +157,7 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
                                              pos->motor_encoder_param[i]);
 
         encoder_steps[i] = new_encoder_val[i] - pos->encoder_val[i];
+        pos->delta_enc[i] = encoder_steps[i];
         pos->encoder_val[i] = new_encoder_val[i];
 
         sum_wheel_diameter += pos->geometry.wheel_radius[i] * 2;
@@ -164,20 +169,23 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
                                   * pos->geometry.wheel_radius[i];
     }
 
-    new_a = pos->pos_d.a - 1 / (float)pos->geometry.encoder_resolution 
+    new_a = pos->pos_d.a - 2.0 * M_PI / (double)pos->geometry.encoder_resolution 
             * sum_wheel_steps_distance / sum_wheel_diameter;
 
-    delta_x = 2. / 3. / (float)pos->geometry.encoder_resolution * sum_cos_steps_distance;
-    delta_y = 2. / 3. / (float)pos->geometry.encoder_resolution * sum_sin_steps_distance;
+    delta_x = 2.0 * M_PI * 2. / 3. / (float)pos->geometry.encoder_resolution * sum_cos_steps_distance;
+    delta_y = 2.0 * M_PI * 2. / 3. / (float)pos->geometry.encoder_resolution * sum_sin_steps_distance;
 
-    /** Conversion to table-coordinates: */
+    pos->speed = sqrt(delta_x * delta_x + delta_y * delta_y) * pos->update_frequency;
+    pos->theta_v = atan2f(delta_y, delta_x);
+
+    /* Conversion to table-coordinates: */
     double cos_a = cos(new_a - M_PI_2);
     double sin_a = sin(new_a - M_PI_2);
 
     new_x = pos->pos_d.x + cos_a * delta_x - sin_a * delta_y;
     new_y = pos->pos_d.y + sin_a * delta_x + cos_a * delta_y;
 
-    /** Setting the new position in double */
+    /* Setting the new position in double */
     pos->previous_pos_d.x = pos->pos_d.x;
     pos->previous_pos_d.y = pos->pos_d.y;
     pos->previous_pos_d.a = pos->pos_d.a;
@@ -185,10 +193,10 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     pos->pos_d.y = new_y;
     pos->pos_d.a = new_a;
     
-    /** Setting the new position in integer */
+    /* Setting the new position in integer */
     pos->pos_s16.x = (int16_t)new_x;
     pos->pos_s16.y = (int16_t)new_y;
-    pos->pos_s16.a = (int16_t)(new_a * (360.0/(M_PI*2)));
+    pos->pos_s16.a = (int16_t)(new_a * (180.0/(M_PI)));
 }
 
 

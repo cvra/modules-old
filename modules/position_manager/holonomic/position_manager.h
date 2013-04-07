@@ -64,6 +64,9 @@ struct holonomic_robot_position {
 
     int32_t encoder_val[3];                     /**< Array of the values from the encoders */
     float update_frequency;                     /**< Frequency at which position_manage is called */
+    float speed;
+    float theta_v;                              /**< translation direction in robot coord-sys */
+    int32_t delta_enc[3];                       /**< for debug */
 };
 
 
@@ -80,7 +83,7 @@ void holonomic_position_init(struct holonomic_robot_position *pos);
  * @param [in] x, y The new coordinate of the robot, in mm.
  * @param [in] a_deg The new angle of the robot, in degree.
  */
-void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int16_t y, double a_deg);
+void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int16_t y, int16_t a_deg);
 
 
 /** @brief Sets the physical parameters of the robot's base. 
@@ -103,7 +106,7 @@ void holonomic_position_set_update_frequency(struct holonomic_robot_position *po
  * @param [in] pos The robot_position instance.
  * @return Translation speed in mm/s
  */
-double holonomic_position_get_instant_translation_speed(struct holonomic_robot_position *pos);
+float holonomic_position_get_instant_translation_speed(struct holonomic_robot_position *pos);
 
 /** @brief Returns the instant rotation speed of the robot.
  * @param [in] pos The robot_position instance.
@@ -122,6 +125,10 @@ int32_t holonomic_position_get_translation_speed_int(void *data);
  * @return Rotation speed in rad/s
  */
 int32_t holonomic_position_get_rotation_speed_int(void * data);
+
+float holonomic_position_get_theta_v(struct holonomic_robot_position *pos);
+int32_t holonomic_position_get_theta_v_int(void *data);
+
 
 /** @brief Define callback function for motor encoders.
  *

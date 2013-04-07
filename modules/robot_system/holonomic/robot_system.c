@@ -54,9 +54,10 @@ void rsh_update(struct robot_system_holonomic *rs) {
 
     for(i = 0; i < 3; i++) {
         omega_t = rs->speed / rs->pos->geometry.wheel_radius[i] * 
-                     cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_2_PI);
+                     cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_PI_2);
         omega_r = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
 
+        //TODO Not sure if conversion is WTF...
         cs_set_consign(rs->motors[i], (omega_t + omega_r) / M_PI_2 * rs->pos->geometry.encoder_resolution / rs->pos->update_frequency); //@todo CONVERSION UNIT
         
         //DEBUG(E_ROBOT_SYSTEM, "wheel %d : omega_t=%.1f omega_r=%.1f", i, omega_t, omega_r);
