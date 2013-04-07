@@ -72,16 +72,16 @@ void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int
  *  - number of impulsions for 1 mm (distance)
  *  - number of impulsions for 1 degree (angle)
  */
-void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, float beta[static 3],
-                  float wheel_radius[static 3], float wheel_distance[static 3],
+void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, double beta[static 3],
+                  double wheel_radius[static 3], double wheel_distance[static 3],
                   int32_t encoder_resolution){
 
     int i;
     for(i = 0; i < 3; i++){
         pos->geometry.beta[i] = beta[i];
 
-        pos->geometry.cos_beta[i] = cosf(beta[i]);
-        pos->geometry.sin_beta[i] = sinf(beta[i]);
+        pos->geometry.cos_beta[i] = cos(beta[i]);
+        pos->geometry.sin_beta[i] = sin(beta[i]);
 
         pos->geometry.wheel_radius[i] = wheel_radius[i];
         pos->geometry.wheel_distance[i] = wheel_distance[i];
@@ -147,9 +147,9 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     int32_t new_encoder_val[3];
     int32_t encoder_steps[3];
     double new_x, new_y, new_a;
-    float delta_x, delta_y;
-    float sum_wheel_diameter = 0.0, sum_wheel_steps_distance = 0.0;
-    float sum_cos_steps_distance = 0.0, sum_sin_steps_distance = 0.0;
+    double delta_x, delta_y;
+    double sum_wheel_diameter = 0.0, sum_wheel_steps_distance = 0.0;
+    double sum_cos_steps_distance = 0.0, sum_sin_steps_distance = 0.0;
     int i;
 
     for(i = 0; i < 3; i++){
@@ -172,8 +172,9 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     new_a = pos->pos_d.a - 2.0 * M_PI / (double)pos->geometry.encoder_resolution 
             * sum_wheel_steps_distance / sum_wheel_diameter;
 
-    delta_x = 2.0 * M_PI * 2. / 3. / (float)pos->geometry.encoder_resolution * sum_cos_steps_distance;
-    delta_y = 2.0 * M_PI * 2. / 3. / (float)pos->geometry.encoder_resolution * sum_sin_steps_distance;
+
+    delta_x = 2.0 * M_PI * 2. / 3. / (double)pos->geometry.encoder_resolution * sum_cos_steps_distance;
+    delta_y = 2.0 * M_PI * 2. / 3. / (double)pos->geometry.encoder_resolution * sum_sin_steps_distance;
 
     pos->speed = sqrt(delta_x * delta_x + delta_y * delta_y) * pos->update_frequency;
     pos->theta_v = atan2f(delta_y, delta_x);

@@ -9,15 +9,15 @@
 /**@brief Defines the geometry of a single holonomic base. */
 struct holonomic_base_geometry {
     /** Angle of the wheels relative to the robot (\f$\beta_i\f$) */
-    float beta[3];
-    float cos_beta[3];  /**< Cosine of the betas */
-    float sin_beta[3];  /**< Sine of the betas */
+    double beta[3];
+    double cos_beta[3];  /**< Cosine of the betas */
+    double sin_beta[3];  /**< Sine of the betas */
 
     /** Radius of the robot wheels (\f$r_i\f$). */
-    float wheel_radius[3];
+    double wheel_radius[3];
 
     /** Distance of the wheel to the center of the robot (\f$D_i\f$). */
-    float wheel_distance[3];
+    double wheel_distance[3];
 
     /** Steps per full rotation */
     int32_t encoder_resolution;
@@ -93,8 +93,8 @@ void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int
  * @param [in] wheel_distance Array[3] of the wheels' distances to the robot's center.
  * @param [in] encoder_resolution Encoder step per revolution of a wheel.
  */
-void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, float beta[static 3],
-                  float wheel_radius[static 3], float wheel_distance[static 3], int32_t encoder_resolution);
+void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, double beta[static 3],
+                  double wheel_radius[static 3], double wheel_distance[static 3], int32_t encoder_resolution);
 
 /** @brief Sets the frequency at which the function position_manage is called
  * @param [in] pos The robot_position instance to configure.
