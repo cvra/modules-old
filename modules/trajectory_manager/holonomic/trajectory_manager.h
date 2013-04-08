@@ -58,7 +58,8 @@ struct h_trajectory {
     double d_windows;
     double a_windows;
     
-    /** Output to robot_system @todo : leur init à 0*/
+    /** Output to robot_system @todo : leur init à 0 
+     * NOT USED YET*/
     double speed;
     double direction;
     double omega;

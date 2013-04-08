@@ -40,7 +40,7 @@ void holonomic_trajectory_set_robot_params(struct h_trajectory *traj,
 
 void holonomic_trajectory_set_var(struct h_trajectory *traj, double speed, double direction, double omega)
 {
-    traj->speed = speed;
-    traj->omega = omega;
-    traj->direction = direction;
+    cs_set_consign(traj->csm_angle,direction);
+    cs_set_consign(traj->csm_speed,speed);
+    cs_set_consign(traj->csm_omega,omega);
 }
