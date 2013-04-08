@@ -4,6 +4,8 @@
 #include <quadramp.h>
 #include <ramp.h>
 
+#define RAD 10
+
 ///** set (quad)ramps max speeds et max acc @todo : accesseurs individuels*/
 //void holonomic_init_ramps(struct h_trajectory *traj, double s_acc, double o_acc, 
                             //double a_speed, double a_acc)
@@ -53,20 +55,21 @@ void holonomic_trajectory_manager_event(void * param)
             break;
          case MOVING_CIRCLE:
             a_consign = M_PI_2 ;//- 
+            /** @todo: please check if used correctly. Need to pass a radius. */
+            s_consign = cs_do_process(traj->csm_speed, length_arc_of_circle_p(traj, RAD));
             break;
         case MOVING_IDLE:
             break;
-
     }
     /* step 2 : check the end of the move */
-    //if (holonomic_robot_in_xy_window(traj, traj->d_win))
+    //if (holonomic_robot_in_xy_window(traj, traj->d_win) ||
+        //holonomic_robot_in_angle_window(traj, traj->a_win))
             //holonomic_delete_event(traj);
 
     /* step 3 : send the processed commands to cs */
     cs_set_consign(traj->csm_angle, a_consign);
     cs_set_consign(traj->csm_speed, s_consign);
     cs_set_consign(traj->csm_omega, o_consign);
-    
 }
 
 /** near the target (dist in x,y) ? */
@@ -80,8 +83,7 @@ uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win)
     
 }
 
-/** returns true if the robot is in an area enclosed by a certain angle 
-  * @todo ABS? */
+/** returns true if the robot is in an area enclosed by a certain angle */
 uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_rad)
 {
     double d_a =  traj->a_target - holonomic_position_get_a_rad_double(traj->position);
@@ -89,7 +91,7 @@ uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_
     if (ABS(d_a) < M_PI) {
         return (ABS(d_a) < (a_win_rad/2));
     } else {
-        return ((2*M_PI-ABS(d_a)) < (a_win_rad/2));
+        return ((M_PI_2-ABS(d_a)) < (a_win_rad/2));
     }
 }
 
@@ -126,10 +128,10 @@ void holonomic_schedule_event(struct h_trajectory *traj)
 double holonomic_simple_modulo_2pi(double a)
 {
     if (a < -M_PI) {
-        a += M_2PI;
+        a += M_PI_2;
     }
     else if (a > M_PI) {
-        a -= M_2PI;
+        a -= M_PI_2;
     }
     return a;
 }
@@ -137,8 +139,17 @@ double holonomic_simple_modulo_2pi(double a)
 /** do a modulo 2.pi -> [-Pi,+Pi] */
 double holonomic_modulo_2pi(double a)
 {
-    double res = a - (((int32_t) (a/M_2PI)) * M_2PI);
+    double res = a - (((int32_t) (a/M_PI_2)) * M_PI_2);
     return holonomic_simple_modulo_2pi(res);
 }
 
+/** calculates the lenght of an arc of a circle given an end point and a radius */
+double length_arc_of_circle_p(struct h_trajectory *traj, double rad)
+{
+    /* distance between target and robot */
+    double dist = sqrt(pow((holonomic_position_get_x_double(traj->position)-traj->xy_target.x), 2)
+                    +pow((holonomic_position_get_y_double(traj->position)-traj->xy_target.y), 2));
 
+    /* law of cosines */
+    return (rad * acos(1 - 0.5 * pow((dist/rad), 2)));
+}

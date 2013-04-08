@@ -12,8 +12,6 @@
 /** Event's period */
 #define TRAJ_EVT_PERIOD (25000UL/SCHEDULER_UNIT) /** < 25 ms */
 
-#define M_2PI (2*M_PI)
-
 /** Event that set a consign for robot_system depending on the trajectory */
 void holonomic_trajectory_manager_event(void * param);
 
@@ -34,6 +32,9 @@ double holonomic_simple_modulo_2pi(double a);
 
 /** do a modulo 2.pi -> [-Pi,+Pi] */
 double holonomic_modulo_2pi(double a);
+
+/** calculates the lenght of an arc of a circle given an end point and a radius */
+double length_arc_of_circle_p(struct h_trajectory *traj, double rad);
 
 #endif
 

@@ -54,10 +54,6 @@ struct h_trajectory {
     double arc_angle;         /**< For MOVING_CIRCLE : PI/2 -> a quarter of a cirlce  */
     vect2_cart point2face;    /**< Point to face for TURNING_FACEPOINT */
     
-    /** Windows for the end of the trajectory, in distance and angular distance */
-    double d_windows;
-    double a_windows;
-    
     /** Output to robot_system @todo : leur init à 0 
      * NOT USED YET*/
     double speed;

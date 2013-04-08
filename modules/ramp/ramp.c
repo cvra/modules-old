@@ -32,7 +32,7 @@ void ramp_init(struct ramp_filter * r) {
 
 void ramp_set_vars(struct ramp_filter * r, uint32_t neg, uint32_t pos) {
   r->var_neg = neg;
-  r->var_pos=pos;
+  r->var_pos = pos;
 }
 
 /*Filter the in value using the ramp_filter r*/
