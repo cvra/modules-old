@@ -169,10 +169,16 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
                                   * pos->geometry.wheel_radius[i];
     }
 
-    new_a = pos->pos_d.a - 2.0 * M_PI / (double)pos->geometry.encoder_resolution 
+    //new_a = pos->pos_d.a*8.37 - 2.0 * M_PI / (double)pos->geometry.encoder_resolution 
+            //* sum_wheel_steps_distance / sum_wheel_diameter;
+    
+    /** FIXME : quick work around to test other modules 
+     * [DELETE THE TWO FOLLOWING INSTRUCTIONS AND UNCOMENT THE PREVIOUS ONE]*/
+    new_a = pos->pos_d.a*8.37 - 2.0 * M_PI / (double)pos->geometry.encoder_resolution 
             * sum_wheel_steps_distance / sum_wheel_diameter;
+    new_a = (double)new_a / (double)8.37;
 
-
+    
     delta_x = 2.0 * M_PI * 2. / 3. / (double)pos->geometry.encoder_resolution * sum_cos_steps_distance;
     delta_y = 2.0 * M_PI * 2. / 3. / (double)pos->geometry.encoder_resolution * sum_sin_steps_distance;
 

@@ -30,4 +30,17 @@ void holonomic_trajectory_set_cs(struct h_trajectory *traj, struct cs *cs_a,
     traj->csm_speed = cs_s;
 }
 
+void holonomic_trajectory_set_robot_params(struct h_trajectory *traj,
+                 struct robot_system_holonomic *rs,
+                 struct holonomic_robot_position *pos)
+{
+    traj->robot = rs;
+    traj->position = pos;
+}
 
+void holonomic_trajectory_set_var(struct h_trajectory *traj, double speed, double direction, double omega)
+{
+    traj->speed = speed;
+    traj->omega = omega;
+    traj->direction = direction;
+}

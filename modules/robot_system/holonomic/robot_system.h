@@ -79,7 +79,7 @@ void rsh_set_direction_int(void * data, int32_t theta_v_deg);
 
 /** Sets the speed of the robot.
  * @param [in] rs The robot_system instance.
- * @param [in] speed The speed of the robot, in m/s.
+ * @param [in] speed The speed of the robot, in mm/s.
  */
 void rsh_set_speed(void *data, int32_t speed);
 

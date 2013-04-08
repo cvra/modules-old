@@ -4,86 +4,69 @@
 #include <quadramp.h>
 #include <ramp.h>
 
-/** set (quad)ramps max speeds et max acc @todo : accesseurs individuels*/
-void holonomic_init_ramps(struct h_trajectory *traj, double s_acc, double o_acc, 
-                            double a_speed, double a_acc)
-{
-    /** @todo :les vrais inits ? */
-    struct quadramp_filter * q_a;
-    struct ramp_filter *r_s,*r_o;
-    q_a = traj->csm_angle->consign_filter_params;
-    r_s = traj->csm_speed->consign_filter_params;
-    r_o = traj->csm_omega->consign_filter_params;
+///** set (quad)ramps max speeds et max acc @todo : accesseurs individuels*/
+//void holonomic_init_ramps(struct h_trajectory *traj, double s_acc, double o_acc, 
+                            //double a_speed, double a_acc)
+//{
+    ///** @todo :les vrais inits ? */
+    //struct quadramp_filter * q_a;
+    //struct ramp_filter *r_s,*r_o;
+    //q_a = traj->csm_angle->consign_filter_params;
+    //r_s = traj->csm_speed->consign_filter_params;
+    //r_o = traj->csm_omega->consign_filter_params;
     
-    /** Initialisation du quadramp pour l'angle */
-    quadramp_set_1st_order_vars(q_a, ABS(a_speed), ABS(a_speed));
-    quadramp_set_2nd_order_vars(q_a, ABS(a_acc), ABS(a_acc));
+    ///** Initialisation du quadramp pour l'angle */
+    //quadramp_set_1st_order_vars(q_a, ABS(a_speed), ABS(a_speed));
+    //quadramp_set_2nd_order_vars(q_a, ABS(a_acc), ABS(a_acc));
     
-    /** Initialisation du ramp de vitesse et de vitesse angulaire */
-    ramp_set_vars(r_s, ABS(s_acc), ABS(s_acc));
-    ramp_set_vars(r_o, ABS(o_acc), ABS(o_acc));
-    /** @todo : ajouter le do_quadramp */
-}
+    ///** Initialisation du ramp de vitesse et de vitesse angulaire */
+    //ramp_set_vars(r_s, ABS(s_acc), ABS(s_acc));
+    //ramp_set_vars(r_o, ABS(o_acc), ABS(o_acc));
+    ///** @todo : ajouter le do_quadramp */
+//}
 
 void holonomic_trajectory_manager_event(void * param)
 {
+    ///@todo : probablement des fonctions de la lib math qui font ça
     struct h_trajectory *traj = (struct h_trajectory *) param;
     double x = holonomic_position_get_x_double(traj->position);
     double y = holonomic_position_get_y_double(traj->position);
     int32_t s_consign = 0;  /**< The speed consign */
     int32_t a_consign = 0;  /**< The angle consign */
-    int32_t o_consign = 0;  /**< The angular speed (omega) consign */ 
-
-    //TODO : delete very soon. this is only to eleiminate warnings!
-    (void)x;
-    (void)y;
-    (void)s_consign;
-    (void)a_consign;
-    (void)o_consign;
+    int32_t o_consign = 0;  /**< The angular speed (omega) consign */
+    
+    float target_norm =  sqrtf(pow(traj->xy_target.x,2)+pow(traj->xy_target.y,2));
+    float position_norm = sqrtf(pow(x,2)+pow(y,2));
+    int32_t distance2target = sqrtf(pow(x - traj->xy_target.x,2) + pow(y - traj->xy_target.y,2));
 
     /* step 1 : process new commands to quadramps */
-    switch (traj->moving_state) {
+    switch (traj->moving_state) 
+    {
          case MOVING_STRAIGHT:
-            o_consign = 0;
-            a_consign = 0;
-            // Pour v : demander un ramp (on donne comme position la distance par rapport a la destination
+            /* Calcul de la consigne d'angle */
+            a_consign = acosf((traj->xy_target.x*x + traj->xy_target.y*y)/
+            (target_norm * position_norm));
+            a_consign = cs_do_process(traj->csm_angle, a_consign);
+            /** @todo : Need un PID avec P à 1 ? */
+            /* Calcul de la consigne de vitesse */
+            s_consign = cs_do_process(traj->csm_speed, distance2target);
             break;
-         //case MOVING_CIRCLE:
-            //o_consign = 0;
-            //// Pour v : Attention à la rotation. Quadramp (calculer la longueur de l'arc) 
-            ////Pour la direction : faire les maths
-            //break;
-        default:
-                s_consign = 0;
-                o_consign = 0;
-                //d_consign = get current position;
+         case MOVING_CIRCLE:
+            a_consign = M_PI_2 ;//- 
+            break;
+        case MOVING_IDLE:
             break;
 
-        //d_consign = (int32_t)(v2pol_target.r * (traj->position->phys.distance_imp_per_mm));
-        //d_consign += rs_get_distance(traj->robot);
-
-        ///* angle consign */
-        ///* Here we specify 2.2 instead of 2.0 to avoid oscillations */
-        //a_consign = (int32_t)(v2pol_target.theta *
-                      //(traj->position->phys.distance_imp_per_mm) *
-                      //(traj->position->phys.track_mm) / 2.2);
-        //a_consign += rs_get_angle(traj->robot);
-}
-    /* step 2 : update state, or delete event if we reached the
-     * destination */
-    if (holonomic_robot_in_xy_window(traj, traj->d_win)) {
-            holonomic_delete_event(traj);
-        }
+    }
+    /* step 2 : check the end of the move */
+    //if (holonomic_robot_in_xy_window(traj, traj->d_win))
+            //holonomic_delete_event(traj);
 
     /* step 3 : send the processed commands to cs */
-
-    //EVT_DEBUG(E_TRAJECTORY,"EVENT XY d_cur=%" PRIi32 ", d_consign=%" PRIi32 ", d_speed=%" PRIi32 ", "
-          //"a_cur=%" PRIi32 ", a_consign=%" PRIi32 ", a_speed=%" PRIi32,
-          //rs_get_distance(traj->robot), d_consign, get_quadramp_distance_speed(traj),
-          //rs_get_angle(traj->robot), a_consign, get_quadramp_angle_speed(traj));
-
     cs_set_consign(traj->csm_angle, a_consign);
-    //cs_set_consign(traj->csm_distance, d_consign);
+    cs_set_consign(traj->csm_speed, s_consign);
+    cs_set_consign(traj->csm_omega, o_consign);
+    
 }
 
 /** near the target (dist in x,y) ? */
