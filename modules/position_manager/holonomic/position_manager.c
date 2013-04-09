@@ -150,6 +150,10 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     double delta_x, delta_y;
     double sum_wheel_diameter = 0.0, sum_wheel_steps_distance = 0.0;
     double sum_cos_steps_distance = 0.0, sum_sin_steps_distance = 0.0;
+    
+    double sum_stepi_ri = 0.0;
+    double sum_wheel_distance = 0.0;
+    
     int i;
 
     for(i = 0; i < 3; i++){
@@ -162,6 +166,10 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
 
         sum_wheel_diameter += pos->geometry.wheel_radius[i] * 2;
         sum_wheel_steps_distance += encoder_steps[i] * pos->geometry.wheel_distance[i];
+        
+        sum_stepi_ri += encoder_steps[i] * pos->geometry.wheel_radius[i];
+        sum_wheel_distance += pos->geometry.wheel_distance[i];
+        
         sum_cos_steps_distance += pos->geometry.cos_beta[i] * encoder_steps[i] * 
                                   pos->geometry.wheel_radius[i];
 
@@ -169,15 +177,17 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
                                   * pos->geometry.wheel_radius[i];
     }
 
-    new_a = pos->pos_d.a - 2.0 * M_PI / (double)pos->geometry.encoder_resolution 
-            * sum_wheel_steps_distance / sum_wheel_diameter;
-    
+    //new_a = pos->pos_d.a - 2.0 * M_PI / (double)pos->geometry.encoder_resolution 
+            //* sum_wheel_steps_distance / sum_wheel_diameter;
+    new_a = pos->pos_d.a - 2.0 * M_PI * sum_stepi_ri / (double)sum_wheel_distance / (double)pos->geometry.encoder_resolution ;
+        
     ///** FIXME : quick work around to test other modules 
-     //* [DELETE THE TWO FOLLOWING INSTRUCTIONS AND UNCOMENT THE PREVIOUS ONE]*/
+    //* [DELETE THE TWO FOLLOWING INSTRUCTIONS AND UNCOMENT THE PREVIOUS ONE]*/
     //new_a = pos->pos_d.a*8.37 - 2.0 * M_PI / (double)pos->geometry.encoder_resolution 
             //* sum_wheel_steps_distance / sum_wheel_diameter;
-    //new_a = (double)new_a / (double)8.37;
-
+    //new_a = (double)new_a / (double)8.5307;
+    //new_a = (double)new_a / (double)1.5;
+    //new_a = (double)new_a * (double)1.5;
     
     delta_x = 2.0 * M_PI * 2. / 3. / (double)pos->geometry.encoder_resolution * sum_cos_steps_distance;
     delta_y = 2.0 * M_PI * 2. / 3. / (double)pos->geometry.encoder_resolution * sum_sin_steps_distance;
