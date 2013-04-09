@@ -19,6 +19,9 @@ struct holonomic_base_geometry {
     /** Distance of the wheel to the center of the robot (\f$D_i\f$). */
     double wheel_distance[3];
 
+    /** Sum of above mentionned distances */
+    double wheel_sum_distance;
+
     /** Steps per full rotation */
     int32_t encoder_resolution;
 };
