@@ -34,13 +34,7 @@ double holonomic_simple_modulo_2pi(double a);
 double holonomic_modulo_2pi(double a);
 
 /** calculates the lenght of an arc of a circle given an end point and a radius */
-float holonomic_length_arc_of_circle_pnt(struct h_trajectory *traj, float rad);
-
-/** \brief Calculates the angle between the robot and a facing point.
-* \param *traj Reference to the values of the trajectory.
-* \param *fpc Cartesien vector to the point that needs to be faced.
-**/
-float holonomic_angle_facepoint_rad(struct h_trajectory *traj, vect2_cart *fpc);
+double length_arc_of_circle_p(struct h_trajectory *traj, double rad);
 
 #endif
 

@@ -1,13 +1,10 @@
 #include <math.h>
-#include <fast_math.h>
 #include <holonomic/trajectory_manager_utils.h>
 #include <scheduler.h>
 #include <quadramp.h>
 #include <ramp.h>
 
 #define RAD 10
-static vect2_cart FP = {.x = 150., .y = 0.};
-
 
 void holonomic_trajectory_manager_event(void * param)
 {
@@ -28,48 +25,40 @@ void holonomic_trajectory_manager_event(void * param)
     {
          case MOVING_STRAIGHT:
             /* Calcul de la consigne d'angle */
-            //a_consign = acosf((traj->xy_target.x*x + traj->xy_target.y*y)/
-            //(target_norm * position_norm));
-            //a_consign = cs_do_process(traj->csm_angle, a_consign);
-            ///* Calcul de la consigne de vitesse */
-            //s_consign = cs_do_process(traj->csm_speed, distance2target);
-            cs_do_process(traj->csm_speed,10);
-            cs_do_process(traj->csm_angle,0);
+            a_consign = acosf((traj->xy_target.x*x + traj->xy_target.y*y)/
+            (target_norm * position_norm));
+            a_consign = cs_do_process(traj->csm_angle, a_consign);
+            /** @todo : Need un PID avec P à 1 ? */
+            /* Calcul de la consigne de vitesse */
+            s_consign = cs_do_process(traj->csm_speed, distance2target);
             break;
          case MOVING_CIRCLE:
             a_consign = M_PI_2 ;//- 
             /** @todo: please check if used correctly. Need to pass a radius. */
-            s_consign = cs_do_process(traj->csm_speed, holonomic_length_arc_of_circle_pnt(traj, RAD));
+            s_consign = cs_do_process(traj->csm_speed, length_arc_of_circle_p(traj, RAD));
             break;
         case MOVING_IDLE:
             break;
     }
-
-    switch (traj->turning_state)
-    {
-        case TURNING_CAP:
-            break;
-        case TURNING_SPEEDOFFSET:
-            break;
-        case TURNING_FACEPOINT:
-            o_consign = cs_do_process(traj->csm_omega,  holonomic_angle_facepoint_rad(traj, &FP));
-            break;
-        case TURNING_IDLE:
-            break;
-    }
-
     /* step 2 : check the end of the move */
     //if (holonomic_robot_in_xy_window(traj, traj->d_win) ||
         //holonomic_robot_in_angle_window(traj, traj->a_win))
             //holonomic_delete_event(traj);
+
+    /* step 3 : send the processed commands to cs */
+    cs_set_consign(traj->csm_angle, a_consign);
+    cs_set_consign(traj->csm_speed, s_consign);
+    cs_set_consign(traj->csm_omega, o_consign);
 }
 
 /** near the target (dist in x,y) ? */
 uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win)
 {
-    vect2_cart vcp = {.x = holonomic_position_get_x_double(traj->position),
-                      .y = holonomic_position_get_y_double(traj->position)};
-    return (vect2_dist_cart(&vcp, &traj->xy_target) < d_win);
+    double x1 = traj->xy_target.x;
+    double y1 = traj->xy_target.y;
+    double x2 = holonomic_position_get_x_double(traj->position);
+    double y2 = holonomic_position_get_y_double(traj->position);
+    return (sqrt ((x2-x1) * (x2-x1) + (y2-y1) * (y2-y1)) < d_win);
     
 }
 
@@ -134,25 +123,12 @@ double holonomic_modulo_2pi(double a)
 }
 
 /** calculates the lenght of an arc of a circle given an end point and a radius */
-float holonomic_length_arc_of_circle_pnt(struct h_trajectory *traj, float rad)
+double length_arc_of_circle_p(struct h_trajectory *traj, double rad)
 {
-    vect2_cart vcp = {.x = holonomic_position_get_x_double(traj->position),
-                      .y = holonomic_position_get_y_double(traj->position)};
-    float d_r = vect2_dist_cart(&vcp, &traj->xy_target) / rad;
+    /* distance between target and robot */
+    double dist = sqrt(pow((holonomic_position_get_x_double(traj->position)-traj->xy_target.x), 2)
+                    +pow((holonomic_position_get_y_double(traj->position)-traj->xy_target.y), 2));
 
     /* law of cosines */
-    return (rad * fast_acosf(1 - 0.5 * d_r * d_r));
-}
-
-/** Calculates the angle between the robot and a facing point. */
-float holonomic_angle_facepoint_rad(struct h_trajectory *traj, vect2_cart *fpc)
-{
-    float a_fp = vect2_angle_vec_x_rad_cart(fpc);
-    float d_a = a_fp - holonomic_position_get_a_rad_float(traj->position);
-
-    if (d_a > M_PI) {
-        return (M_PI_2 - d_a);
-    } else {
-        return d_a;
-    }
+    return (rad * acos(1 - 0.5 * pow((dist/rad), 2)));
 }

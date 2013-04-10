@@ -22,7 +22,7 @@ void rsh_set_cs(struct robot_system_holonomic *rs, int index, struct cs *cs) {
 } 
 
 
-void rsh_set_direction(struct robot_system_holonomic *rs, double theta_v) {
+void rsh_set_direction(struct robot_system_holonomic *rs, float theta_v) {
     /** @todo should we do a modulo pi here ? */
     rs->direction = theta_v;
 }
@@ -47,18 +47,19 @@ void rsh_update(struct robot_system_holonomic *rs) {
         return;
 
     /** @todo add real physical parameters. */
-    double theta_r = holonomic_position_get_a_rad_double(rs->pos);
-    /** omega = omega_r + omega_t = sppeed of the wheel i */
-    double omega_r; /** < the part for ritation */
-    double omega_t; /** < the part for translation */
+    float theta_r = holonomic_position_get_a_rad_float(rs->pos);
+    float omega_r;
+    float omega_t;
     int i;
 
     for(i = 0; i < 3; i++) {
-        omega_t = rs->speed / rs->pos->geometry.wheel_radius[i] * 
+        omega_t = - rs->speed / rs->pos->geometry.wheel_radius[i] * 
                      cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_PI_2);
         omega_r = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
-        /** @todo @bug : factor 10 : when you give a command of 10 mm/s, get to 100 mm/s*/
-        cs_set_consign(rs->motors[i], ((omega_t + omega_r) / M_2_PI * rs->pos->geometry.encoder_resolution / rs->pos->update_frequency)/10.0);
+
+        //TODO Not sure if conversion is WTF...
+        cs_set_consign(rs->motors[i], (omega_t + omega_r) / M_PI_2 * rs->pos->geometry.encoder_resolution / rs->pos->update_frequency); //@todo CONVERSION UNIT
+        
         //DEBUG(E_ROBOT_SYSTEM, "wheel %d : omega_t=%.1f omega_r=%.1f", i, omega_t, omega_r);
     }
 }

@@ -38,9 +38,16 @@ void holonomic_trajectory_set_robot_params(struct h_trajectory *traj,
     traj->position = pos;
 }
 
+void holonomic_trajectory_set_windows(struct h_trajectory *traj,
+                 double d_win, double a_win)
+{
+    traj->d_win = d_win;
+    traj->a_win = a_win;
+}
+
 void holonomic_trajectory_set_var(struct h_trajectory *traj, double speed, double direction, double omega)
 {
-    cs_do_process(traj->csm_angle,direction);
-    cs_do_process(traj->csm_speed,speed);
-    cs_do_process(traj->csm_omega,omega);
+    cs_set_consign(traj->csm_angle,direction);
+    cs_set_consign(traj->csm_speed,speed);
+    cs_set_consign(traj->csm_omega,omega);
 }
