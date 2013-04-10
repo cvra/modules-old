@@ -8,7 +8,7 @@
 #define RAD 10
 static vect2_cart FP = {.x = 150., .y = 0.};
 
-/** @todo : use manage */
+
 void holonomic_trajectory_manager_event(void * param)
 {
     ///@todo : probablement des fonctions de la lib math qui font ça
@@ -28,12 +28,13 @@ void holonomic_trajectory_manager_event(void * param)
     {
          case MOVING_STRAIGHT:
             /* Calcul de la consigne d'angle */
-            a_consign = acosf((traj->xy_target.x*x + traj->xy_target.y*y)/
-            (target_norm * position_norm));
-            a_consign = cs_do_process(traj->csm_angle, a_consign);
-            /** @todo : Need un PID avec P à 1 ? */
-            /* Calcul de la consigne de vitesse */
-            s_consign = cs_do_process(traj->csm_speed, distance2target);
+            //a_consign = acosf((traj->xy_target.x*x + traj->xy_target.y*y)/
+            //(target_norm * position_norm));
+            //a_consign = cs_do_process(traj->csm_angle, a_consign);
+            ///* Calcul de la consigne de vitesse */
+            //s_consign = cs_do_process(traj->csm_speed, distance2target);
+            cs_do_process(traj->csm_speed,10);
+            cs_do_process(traj->csm_angle,0);
             break;
          case MOVING_CIRCLE:
             a_consign = M_PI_2 ;//- 
@@ -61,11 +62,6 @@ void holonomic_trajectory_manager_event(void * param)
     //if (holonomic_robot_in_xy_window(traj, traj->d_win) ||
         //holonomic_robot_in_angle_window(traj, traj->a_win))
             //holonomic_delete_event(traj);
-
-    /* step 3 : send the processed commands to cs */
-    cs_set_consign(traj->csm_angle, a_consign);
-    cs_set_consign(traj->csm_speed, s_consign);
-    cs_set_consign(traj->csm_omega, o_consign);
 }
 
 /** near the target (dist in x,y) ? */

@@ -76,7 +76,7 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
                   double wheel_radius[static 3], double wheel_distance[static 3],
                   int32_t encoder_resolution){
 
-    pos->geometry.wheel_sum_distance = 0.0;
+	pos->geometry.wheel_sum_distance = 0.0;
 
     int i;
     for(i = 0; i < 3; i++){
@@ -179,12 +179,13 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     delta_y = 2.0 * M_PI * 2. / 3. / (double)pos->geometry.encoder_resolution * sum_sin_steps_distance;
 
     pos->speed = sqrt(delta_x * delta_x + delta_y * delta_y) * pos->update_frequency;
-    pos->theta_v = atan2(delta_y, delta_x);
+    /** @todo @bug IT DOES NOT WORK */
+    pos->theta_v = -(atan2(delta_y, delta_x)+M_PI_2);
 
     /* Conversion to table-coordinates: */
     double cos_a = cos(new_a - M_PI_2);
     double sin_a = sin(new_a - M_PI_2);
-
+    
     new_x = pos->pos_d.x + cos_a * delta_x - sin_a * delta_y;
     new_y = pos->pos_d.y + sin_a * delta_x + cos_a * delta_y;
 

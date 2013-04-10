@@ -117,17 +117,17 @@ float holonomic_position_get_instant_translation_speed(struct holonomic_robot_po
  */
 double holonomic_position_get_instant_rotation_speed(struct holonomic_robot_position *pos);
 
-/** @brief Returns the instant translation speed of the robot in int32_t.
- * @param [in] pos The robot_position instance.
- * @return Translation speed in mm/s
- */
-int32_t holonomic_position_get_translation_speed_int(void *data);
+///** @brief Returns the instant translation speed of the robot in int32_t.
+ //* @param [in] pos The robot_position instance.
+ //* @return Translation speed in mm/s
+ //*/
+//int32_t holonomic_position_get_translation_speed_int(void *data);
 
-/** @brief Returns the instant rotation speed of the robot in int32_t.
- * @param [in] pos The robot_position instance.
- * @return Rotation speed in rad/s
- */
-int32_t holonomic_position_get_rotation_speed_int(void * data);
+///** @brief Returns the instant rotation speed of the robot in int32_t.
+ //* @param [in] pos The robot_position instance.
+ //* @return Rotation speed in rad/s
+ //*/
+//int32_t holonomic_position_get_rotation_speed_int(void * data);
 
 /** @brief Return the angle of the robot speed.
  * @param [in] pos The robot_position instance.
@@ -138,6 +138,7 @@ float holonomic_position_get_theta_v(struct holonomic_robot_position *pos);
  * @param [in] pos The robot_position instance.
  */
 int32_t holonomic_position_get_theta_v_int(void *data);
+
 
 /** @brief Define callback function for motor encoders.
  *
