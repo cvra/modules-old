@@ -137,8 +137,6 @@ float holonomic_position_get_theta_v(struct holonomic_robot_position *pos){
 
 int32_t holonomic_position_get_theta_v_int(void *data){
     struct holonomic_robot_position *pos = data;
-    /** @todo @bug : this return 90 when it should return 0 
-     * and 142 instead of 90 */
     return TO_DEG(holonomic_position_get_theta_v(pos));
 }
 
