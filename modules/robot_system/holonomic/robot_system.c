@@ -22,7 +22,7 @@ void rsh_set_cs(struct robot_system_holonomic *rs, int index, struct cs *cs) {
 } 
 
 
-void rsh_set_direction(struct robot_system_holonomic *rs, float theta_v) {
+void rsh_set_direction(struct robot_system_holonomic *rs, double theta_v) {
     /** @todo should we do a modulo pi here ? */
     rs->direction = theta_v;
 }
@@ -47,9 +47,9 @@ void rsh_update(struct robot_system_holonomic *rs) {
         return;
 
     /** @todo add real physical parameters. */
-    float theta_r = holonomic_position_get_a_rad_float(rs->pos);
-    float omega_r;
-    float omega_t;
+    double theta_r = holonomic_position_get_a_rad_double(rs->pos);
+    double omega_r;
+    double omega_t;
     int i;
 
     for(i = 0; i < 3; i++) {
