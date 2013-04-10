@@ -129,9 +129,15 @@ int32_t holonomic_position_get_translation_speed_int(void *data);
  */
 int32_t holonomic_position_get_rotation_speed_int(void * data);
 
+/** @brief Return the angle of the robot speed.
+ * @param [in] pos The robot_position instance.
+ */
 float holonomic_position_get_theta_v(struct holonomic_robot_position *pos);
-int32_t holonomic_position_get_theta_v_int(void *data);
 
+/** @brief Return the angle of the robot speed, in int for the control system thing.
+ * @param [in] pos The robot_position instance.
+ */
+int32_t holonomic_position_get_theta_v_int(void *data);
 
 /** @brief Define callback function for motor encoders.
  *

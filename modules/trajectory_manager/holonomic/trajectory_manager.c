@@ -47,7 +47,7 @@ void holonomic_trajectory_set_windows(struct h_trajectory *traj,
 
 void holonomic_trajectory_set_var(struct h_trajectory *traj, double speed, double direction, double omega)
 {
-    cs_set_consign(traj->csm_angle,direction);
-    cs_set_consign(traj->csm_speed,speed);
-    cs_set_consign(traj->csm_omega,omega);
+    cs_do_process(traj->csm_angle,direction);
+    cs_do_process(traj->csm_speed,speed);
+    cs_do_process(traj->csm_omega,omega);
 }
