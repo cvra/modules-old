@@ -101,3 +101,33 @@ void vect2_scale_pol(vect2_pol* vp1, Real alpha, vect2_pol* vresult)
 
 	return;
 }
+
+/* Norm of a cartesian vector. */
+float vect2_norm_cart(vect2_cart *vc)
+{
+	return (fast_sqrtf((vc->x * vc->x) + (vc->y * vc->y)));
+}
+
+/* Distance between two cartesian vectors. */
+float vect2_dist_cart(vect2_cart *vc1, vect2_cart *vc2)
+{
+	vect2_cart vcd;
+	vect2_sub_cart(vc1, vc2, &vcd); 
+
+	return (vect2_norm_cart(&vcd));
+}
+
+/* Inner product of two cartesian vectors. */
+float vect2_dot_product_cart(vect2_cart *vc1, vect2_cart *vc2)
+{
+	return (vc1->x * vc2->x + vc1->y * vc2->y);
+}
+
+/* Angle between two cartesian vectors in radian. */
+float vect2_angle_rad_cart(vect2_cart *vc1, vect2_cart *vc2)
+{
+	float nvc1 = vect2_norm_cart(vc1);
+	float nvc2 = vect2_norm_cart(vc2);
+
+	return (fast_acosf(vect2_dot_product_cart(vc1, vc2) / (nvc1 * nvc2)));
+}

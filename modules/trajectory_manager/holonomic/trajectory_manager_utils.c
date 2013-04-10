@@ -1,4 +1,5 @@
 #include <math.h>
+#include <fast_math.h>
 #include <holonomic/trajectory_manager_utils.h>
 #include <scheduler.h>
 #include <quadramp.h>
@@ -55,11 +56,9 @@ void holonomic_trajectory_manager_event(void * param)
 /** near the target (dist in x,y) ? */
 uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win)
 {
-    double x1 = traj->xy_target.x;
-    double y1 = traj->xy_target.y;
-    double x2 = holonomic_position_get_x_double(traj->position);
-    double y2 = holonomic_position_get_y_double(traj->position);
-    return (sqrt ((x2-x1) * (x2-x1) + (y2-y1) * (y2-y1)) < d_win);
+    vect2_cart vcp = {.x = holonomic_position_get_x_double(traj->position),
+                      .y = holonomic_position_get_y_double(traj->position)};
+    return (vect2_dist_cart(&vcp, &traj->xy_target) < d_win);
     
 }
 
@@ -124,12 +123,12 @@ double holonomic_modulo_2pi(double a)
 }
 
 /** calculates the lenght of an arc of a circle given an end point and a radius */
-double length_arc_of_circle_p(struct h_trajectory *traj, double rad)
+float length_arc_of_circle_p(struct h_trajectory *traj, float rad)
 {
-    /* distance between target and robot */
-    double dist = sqrt(pow((holonomic_position_get_x_double(traj->position)-traj->xy_target.x), 2)
-                    +pow((holonomic_position_get_y_double(traj->position)-traj->xy_target.y), 2));
+    vect2_cart vcp = {.x = holonomic_position_get_x_double(traj->position),
+                      .y = holonomic_position_get_y_double(traj->position)};
+    float d_r = vect2_dist_cart(&vcp, &traj->xy_target) / rad;
 
     /* law of cosines */
-    return (rad * acos(1 - 0.5 * pow((dist/rad), 2)));
+    return (rad * fast_acosf(1 - 0.5 * d_r * d_r));
 }

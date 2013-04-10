@@ -34,7 +34,7 @@ double holonomic_simple_modulo_2pi(double a);
 double holonomic_modulo_2pi(double a);
 
 /** calculates the lenght of an arc of a circle given an end point and a radius */
-double length_arc_of_circle_p(struct h_trajectory *traj, double rad);
+float length_arc_of_circle_p(struct h_trajectory *traj, float rad);
 
 #endif
 
