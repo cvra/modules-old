@@ -45,10 +45,6 @@ void holonomic_trajectory_manager_event(void * param)
         //holonomic_robot_in_angle_window(traj, traj->a_win))
             //holonomic_delete_event(traj);
 
-    /* step 3 : send the processed commands to cs */
-    cs_set_consign(traj->csm_angle, a_consign);
-    cs_set_consign(traj->csm_speed, s_consign);
-    cs_set_consign(traj->csm_omega, o_consign);
 }
 
 /** near the target (dist in x,y) ? */

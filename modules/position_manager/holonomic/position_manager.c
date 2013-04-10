@@ -137,7 +137,7 @@ float holonomic_position_get_theta_v(struct holonomic_robot_position *pos){
 
 int32_t holonomic_position_get_theta_v_int(void *data){
     struct holonomic_robot_position *pos = data;
-    return (int32_t)(holonomic_position_get_theta_v(pos) * 180.0 / M_PI);
+    return TO_DEG(holonomic_position_get_theta_v(pos));
 }
 
 /** 
@@ -179,6 +179,7 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     delta_y = 2.0 * M_PI * 2. / 3. / (double)pos->geometry.encoder_resolution * sum_sin_steps_distance;
 
     pos->speed = sqrt(delta_x * delta_x + delta_y * delta_y) * pos->update_frequency;
+    /** @todo @bug IT DOES NOT WORK */
     pos->theta_v = atan2(delta_y, delta_x);
 
     /* Conversion to table-coordinates: */

@@ -28,15 +28,15 @@
 /** Instance of a robot system for holonomic robots. */
 struct robot_system_holonomic { 
     /** Speed consign of the robot (\f$V\f$), in coder units. */
-    float speed;
+    double speed;
 
     /** Direction to which the robot moves (\f$\theta_V\f$). 
      * @todo Is it between \f$-\pi\f$ and \f$\pi\f$ or between 0 and \f$2\pi\f$? Does it even change sth ?
      */
-    float direction;
+    double direction;
 
     /** Rotation speed of the robot (\f$\Omega\f$). */
-    float rotation_speed; 
+    double rotation_speed; 
 
     /** The 3 speed regulators which are connected on the motors. */
     struct cs* motors[3];
@@ -68,7 +68,7 @@ void rsh_set_cs(struct robot_system_holonomic *rs, int index, struct cs *cs);
  * @param [in] theta_v The angle between the movement direction of the robot and 
  * the X-axis, in radians.
  */
-void rsh_set_direction(struct robot_system_holonomic *rs, float theta_v);
+void rsh_set_direction(struct robot_system_holonomic *rs, double theta_v);
 
 /** Sets the movement angle consign, in int (necessary for control_system).
  * @param [in] rs The robot_system instance.
