@@ -76,7 +76,7 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
                   double wheel_radius[static 3], double wheel_distance[static 3],
                   int32_t encoder_resolution){
 
-	pos->geometry.wheel_sum_distance = 0.0;
+    pos->geometry.wheel_sum_distance = 0.0;
 
     int i;
     for(i = 0; i < 3; i++){

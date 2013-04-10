@@ -6,27 +6,6 @@
 
 #define RAD 10
 
-///** set (quad)ramps max speeds et max acc @todo : accesseurs individuels*/
-//void holonomic_init_ramps(struct h_trajectory *traj, double s_acc, double o_acc, 
-                            //double a_speed, double a_acc)
-//{
-    ///** @todo :les vrais inits ? */
-    //struct quadramp_filter * q_a;
-    //struct ramp_filter *r_s,*r_o;
-    //q_a = traj->csm_angle->consign_filter_params;
-    //r_s = traj->csm_speed->consign_filter_params;
-    //r_o = traj->csm_omega->consign_filter_params;
-    
-    ///** Initialisation du quadramp pour l'angle */
-    //quadramp_set_1st_order_vars(q_a, ABS(a_speed), ABS(a_speed));
-    //quadramp_set_2nd_order_vars(q_a, ABS(a_acc), ABS(a_acc));
-    
-    ///** Initialisation du ramp de vitesse et de vitesse angulaire */
-    //ramp_set_vars(r_s, ABS(s_acc), ABS(s_acc));
-    //ramp_set_vars(r_o, ABS(o_acc), ABS(o_acc));
-    ///** @todo : ajouter le do_quadramp */
-//}
-
 void holonomic_trajectory_manager_event(void * param)
 {
     ///@todo : probablement des fonctions de la lib math qui font ça
