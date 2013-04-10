@@ -54,7 +54,7 @@ void rsh_update(struct robot_system_holonomic *rs) {
     int i;
 
     for(i = 0; i < 3; i++) {
-        omega_t = - rs->speed / rs->pos->geometry.wheel_radius[i] * 
+        omega_t = rs->speed / rs->pos->geometry.wheel_radius[i] * 
                      cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_PI_2);
         omega_r = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
         /** @todo @bug : factor 10 : when you give a command of 10 mm/s, get to 100 mm/s*/

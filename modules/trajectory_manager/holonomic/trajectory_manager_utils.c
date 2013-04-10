@@ -7,7 +7,7 @@
 
 #define RAD 10
 
-/** @todo : use manage */
+
 void holonomic_trajectory_manager_event(void * param)
 {
     ///@todo : probablement des fonctions de la lib math qui font ça

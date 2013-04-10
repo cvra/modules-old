@@ -107,17 +107,7 @@ void holonomic_trajectory_set_cs(struct h_trajectory *traj, struct cs *cs_a,
 void holonomic_trajectory_set_robot_params(struct h_trajectory *traj,
                  struct robot_system_holonomic *rs,
                  struct holonomic_robot_position *pos);
-
-/** @brief Sets the windows for arrival
- *
- * If the robot is in this windows, the the trajectory is finished
- * @param [in] traj The trajectory manager instance.
- * @param [in] d_win The max distance to be in the windows
- * @param [in] a_win  The max angle difference to be in the windows
- */
-void holonomic_trajectory_set_windows(struct h_trajectory *traj,
-                 double d_win, double a_win);
-                      
+                 
 /** @brief Manually set the consign.
  *
  * @param [in] traj The trajectory manager instance.
