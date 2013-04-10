@@ -173,7 +173,12 @@ float vect2_dot_product_cart(vect2_cart *vc1, vect2_cart *vc2);
 * \param vc1 Reference to a cartesian vector.
 * \param vc2 Reference to a cartesian vector.
 **/
-float vect2_angle_rad_cart(vect2_cart *vc1, vect2_cart *vc2);
+float vect2_angle_2vec_rad_cart(vect2_cart *vc1, vect2_cart *vc2);
+
+/** \brief Angle between vector and x-axis. 
+* \param vc Reference to a cartesian vector.
+**/
+float vect2_angle_vec_x_rad_cart(vect2_cart *vc);
 
 /** @} */
 

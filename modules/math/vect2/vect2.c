@@ -124,10 +124,16 @@ float vect2_dot_product_cart(vect2_cart *vc1, vect2_cart *vc2)
 }
 
 /* Angle between two cartesian vectors in radian. */
-float vect2_angle_rad_cart(vect2_cart *vc1, vect2_cart *vc2)
+float vect2_angle_2vec_rad_cart(vect2_cart *vc1, vect2_cart *vc2)
 {
 	float nvc1 = vect2_norm_cart(vc1);
 	float nvc2 = vect2_norm_cart(vc2);
 
 	return (fast_acosf(vect2_dot_product_cart(vc1, vc2) / (nvc1 * nvc2)));
+}
+
+/* Angle between vector and x-axis. */
+float vect2_angle_vec_x_rad_cart(vect2_cart *vc)
+{
+	return (fast_atan2f(vc->y,vc->x));
 }
