@@ -57,12 +57,8 @@ void rsh_update(struct robot_system_holonomic *rs) {
         omega_t = - rs->speed / rs->pos->geometry.wheel_radius[i] * 
                      cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_PI_2);
         omega_r = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
-
-        ///@bug @todo : you set speed at 10 -> go à 40. You set it à 50 -> goes at 200, ... Seem to be a factor 4
-        cs_set_consign(rs->motors[i], (omega_t + omega_r) / M_2_PI * rs->pos->geometry.encoder_resolution / rs->pos->update_frequency);
-         //cs_set_consign(rs->motors[i], (omega_t + omega_r ) * rs->pos->geometry.encoder_resolution
-            /** @todo @bug : this return 90 when it should return 0 
-                * and 142 instead of 90 */
+        /** @todo @bug : factor 10 : when you give a command of 10 mm/s, get to 100 mm/s*/
+        cs_set_consign(rs->motors[i], ((omega_t + omega_r) / M_2_PI * rs->pos->geometry.encoder_resolution / rs->pos->update_frequency)/10.0);
         //DEBUG(E_ROBOT_SYSTEM, "wheel %d : omega_t=%.1f omega_r=%.1f", i, omega_t, omega_r);
     }
 }
