@@ -35,6 +35,7 @@
 #include <system.h>
 #include <io.h>
 #include <sys/alt_irq.h>
+#include <aversive/error.h>
 
 #else /* Workaround to compile on X86. */
 
@@ -126,7 +127,8 @@ do {                                     \
     } while(0)
 
 /** This define is called whenever the code hits a fatal crash. */
-#define panic() do {\
+#define panic() do { \
+    EMERG(0, "kernel panic"); \
 } while(1)
    
 #endif
