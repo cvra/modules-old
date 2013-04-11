@@ -22,12 +22,12 @@ void holonomic_trajectory_init(struct h_trajectory *traj, double cs_hz)
     traj->scheduler_task = -1;
 }
 
-void holonomic_trajectory_set_cs(struct h_trajectory *traj, struct cs *cs_a,
-               struct cs *cs_s, struct cs *cs_o)
+void holonomic_trajectory_set_ramps(struct h_trajectory *traj, struct ramp_filter *speed_r,
+               struct quadramp_filter *angle_qr, struct ramp_filter *omega_r)
 {
-    traj->csm_omega = cs_o;
-    traj->csm_angle = cs_a;
-    traj->csm_speed = cs_s;
+    traj->speed_r = speed_r;
+    traj->angle_qr = angle_qr;
+    traj->omega_r = omega_r;
 }
 
 void holonomic_trajectory_set_robot_params(struct h_trajectory *traj,
@@ -45,9 +45,7 @@ void holonomic_trajectory_set_windows(struct h_trajectory *traj,
     traj->a_win = a_win;
 }
 
-void holonomic_trajectory_set_var(struct h_trajectory *traj, double speed, double direction, double omega)
+void holonomic_trajectory_set_var(struct h_trajectory *traj, int32_t speed, int32_t direction, int32_t omega)
 {
-    cs_do_process(traj->csm_angle,direction);
-    cs_do_process(traj->csm_speed,speed);
-    cs_do_process(traj->csm_omega,omega);
+    set_consigns_to_rsh(traj, speed, direction, omega);
 }
