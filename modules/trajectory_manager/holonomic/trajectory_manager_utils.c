@@ -8,42 +8,42 @@
 
 void holonomic_trajectory_manager_event(void * param)
 {
-    ///@todo : probablement des fonctions de la lib math qui font ça
-    struct h_trajectory *traj = (struct h_trajectory *) param;
-    double x = holonomic_position_get_x_double(traj->position);
-    double y = holonomic_position_get_y_double(traj->position);
-    int32_t s_consign = 0;  /**< The speed consign */
-    int32_t a_consign = 0;  /**< The angle consign */
-    int32_t o_consign = 0;  /**< The angular speed (omega) consign */
+    /////@todo : probablement des fonctions de la lib math qui font ça
+    //struct h_trajectory *traj = (struct h_trajectory *) param;
+    //double x = holonomic_position_get_x_double(traj->position);
+    //double y = holonomic_position_get_y_double(traj->position);
+    //int32_t s_consign = 0;  /**< The speed consign */
+    //int32_t a_consign = 0;  /**< The angle consign */
+    //int32_t o_consign = 0;  /**< The angular speed (omega) consign */
     
-    float target_norm =  sqrtf(pow(traj->xy_target.x,2)+pow(traj->xy_target.y,2));
-    float position_norm = sqrtf(pow(x,2)+pow(y,2));
-    int32_t distance2target = sqrtf(pow(x - traj->xy_target.x,2) + pow(y - traj->xy_target.y,2));
+    //float target_norm =  sqrtf(pow(traj->xy_target.x,2)+pow(traj->xy_target.y,2));
+    //float position_norm = sqrtf(pow(x,2)+pow(y,2));
+    //int32_t distance2target = sqrtf(pow(x - traj->xy_target.x,2) + pow(y - traj->xy_target.y,2));
 
-    /* step 1 : process new commands to quadramps */
-    switch (traj->moving_state) 
-    {
-         case MOVING_STRAIGHT:
-            /* Calcul de la consigne d'angle */
-            a_consign = acosf((traj->xy_target.x*x + traj->xy_target.y*y)/
-            (target_norm * position_norm));
-            a_consign = cs_do_process(traj->csm_angle, a_consign);
-            /** @todo : Need un PID avec P à 1 ? */
-            /* Calcul de la consigne de vitesse */
-            s_consign = cs_do_process(traj->csm_speed, distance2target);
-            break;
-         case MOVING_CIRCLE:
-            a_consign = M_PI_2 ;//- 
-            /** @todo: please check if used correctly. Need to pass a radius. */
-            s_consign = cs_do_process(traj->csm_speed, length_arc_of_circle_p(traj, RAD));
-            break;
-        case MOVING_IDLE:
-            break;
-    }
-    /* step 2 : check the end of the move */
-    //if (holonomic_robot_in_xy_window(traj, traj->d_win) ||
-        //holonomic_robot_in_angle_window(traj, traj->a_win))
-            //holonomic_delete_event(traj);
+    ///* step 1 : process new commands to quadramps */
+    //switch (traj->moving_state) 
+    //{
+         //case MOVING_STRAIGHT:
+            ///* Calcul de la consigne d'angle */
+            //a_consign = acosf((traj->xy_target.x*x + traj->xy_target.y*y)/
+            //(target_norm * position_norm));
+            //a_consign = cs_do_process(traj->csm_angle, a_consign);
+            ///** @todo : Need un PID avec P à 1 ? */
+            ///* Calcul de la consigne de vitesse */
+            //s_consign = cs_do_process(traj->csm_speed, distance2target);
+            //break;
+         //case MOVING_CIRCLE:
+            //a_consign = M_PI_2 ;//- 
+            ///** @todo: please check if used correctly. Need to pass a radius. */
+            //s_consign = cs_do_process(traj->csm_speed, length_arc_of_circle_p(traj, RAD));
+            //break;
+        //case MOVING_IDLE:
+            //break;
+    //}
+    ///* step 2 : check the end of the move */
+    ////if (holonomic_robot_in_xy_window(traj, traj->d_win) ||
+        ////holonomic_robot_in_angle_window(traj, traj->a_win))
+            ////holonomic_delete_event(traj);
 
 }
 
@@ -127,4 +127,17 @@ double length_arc_of_circle_p(struct h_trajectory *traj, double rad)
 
     /* law of cosines */
     return (rad * acos(1 - 0.5 * pow((dist/rad), 2)));
+}
+
+void set_consigns_to_rsh(struct h_trajectory *traj, int32_t speed, int32_t direction, int32_t omega)
+{
+    /** @todo ramp don't work */
+    /** A ramp, on donne l'objectif de vitesse (ex : 100 mm/s) et il fait avec la pente max défine dans cvra_cs.h */
+    //rsh_set_speed(traj->robot, ramp_do_filter(traj->speed_r, speed));
+    //rsh_set_rotation_speed(traj->robot, ramp_do_filter(traj->omega_r, omega));
+    ///** A quadramp on donne l'angle désiré (ex : 90 deg) et il fait avec la vitesse et l'acc max défine dans cvra_cs.h */
+    //rsh_set_direction_int(traj->robot, quadramp_do_filter(traj->angle_qr, direction));
+    rsh_set_speed(traj->robot, speed);
+    rsh_set_direction_int(traj->robot, direction);
+    rsh_set_rotation_speed(traj->robot,omega);
 }

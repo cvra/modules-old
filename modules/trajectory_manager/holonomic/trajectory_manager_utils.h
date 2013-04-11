@@ -36,5 +36,8 @@ double holonomic_modulo_2pi(double a);
 /** calculates the lenght of an arc of a circle given an end point and a radius */
 double length_arc_of_circle_p(struct h_trajectory *traj, double rad);
 
+/** set the consign to robot_system_hlonomic */
+void set_consigns_to_rsh(struct h_trajectory *traj, int32_t speed, int32_t direction, int32_t omega);
+
 #endif
 
