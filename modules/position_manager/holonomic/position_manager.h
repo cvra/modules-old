@@ -24,6 +24,7 @@ struct holonomic_base_geometry {
 
     /** Steps per full rotation */
     int32_t encoder_resolution;
+    double inv_encoder_resolution;
 };
 
 

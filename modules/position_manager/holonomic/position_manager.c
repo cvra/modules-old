@@ -86,11 +86,11 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
 
         pos->geometry.wheel_radius[i] = wheel_radius[i];
         pos->geometry.wheel_distance[i] = wheel_distance[i];
-
         pos->geometry.wheel_sum_distance += wheel_distance[i];
-
-        pos->geometry.encoder_resolution = encoder_resolution;
     }
+
+    pos->geometry.encoder_resolution = encoder_resolution;
+    pos->geometry.inv_encoder_resolution = M_TWOPI / (double)encoder_resolution;
 }
 
 void holonomic_position_set_mot_encoder(struct holonomic_robot_position *pos,
@@ -113,10 +113,7 @@ float holonomic_position_get_instant_translation_speed(struct holonomic_robot_po
 }
 
 double holonomic_position_get_instant_rotation_speed(struct holonomic_robot_position *pos){
-    double d_a;
-
-    d_a = pos->pos_d.a - pos->previous_pos_d.a;
-
+    double d_a = pos->pos_d.a - pos->previous_pos_d.a;
     return d_a * pos->update_frequency; 
 }
 
@@ -153,47 +150,43 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
 
     int i;
     for(i = 0; i < 3; i++){
-        const int32_t new_enc_val = safe_getencoder(pos->motor_encoder[i], pos->motor_encoder_param[i]);
+        const int32_t new_enc_val = - safe_getencoder(pos->motor_encoder[i], pos->motor_encoder_param[i]);
         const int32_t enc_steps = new_enc_val - pos->encoder_val[i];
 
-        pos->encoder_val[i] = new_enc_val;
         pos->delta_enc[i] = enc_steps;
+        pos->encoder_val[i] = new_enc_val;
 
-        const int32_t neg_steps = - enc_steps;
+        const double dist_steps = enc_steps * pos->geometry.wheel_radius[i];
 
-        sum_wheel_steps_dist += neg_steps * pos->geometry.wheel_radius[i];
-        sum_cos_steps_dist += pos->geometry.cos_beta[i] * neg_steps * pos->geometry.wheel_radius[i];
-        sum_sin_steps_dist += pos->geometry.sin_beta[i] * neg_steps * pos->geometry.wheel_radius[i];
+        sum_wheel_steps_dist += dist_steps;
+        sum_cos_steps_dist += pos->geometry.cos_beta[i] * dist_steps;
+        sum_sin_steps_dist += pos->geometry.sin_beta[i] * dist_steps;
     }
 
-    const double new_a = pos->pos_d.a
-    				   - M_TWOPI / (double)pos->geometry.encoder_resolution *
-						 sum_wheel_steps_dist / pos->geometry.wheel_sum_distance
-					   - M_PI_2;
+    const double new_a = pos->pos_d.a - sum_wheel_steps_dist * pos->geometry.inv_encoder_resolution /
+    					 pos->geometry.wheel_sum_distance;
 
-    const double delta_x = (M_TWOPI * 2./3. * sum_cos_steps_dist) / (double)pos->geometry.encoder_resolution;
-    const double delta_y = (M_TWOPI * 2./3. * sum_sin_steps_dist) / (double)pos->geometry.encoder_resolution;
+    const double delta_x = 2./3. * sum_cos_steps_dist * pos->geometry.inv_encoder_resolution;
+    const double delta_y = 2./3. * sum_sin_steps_dist * pos->geometry.inv_encoder_resolution;
 
     pos->speed = sqrt(delta_x*delta_x + delta_y*delta_y) * pos->update_frequency;
     /** @todo @bug IT DOES NOT WORK */
     pos->theta_v = atan2(delta_y, delta_x);
 
     /* Conversion to table-coordinates: */
-    const double cos_a = cos(new_a);
-    const double sin_a = sin(new_a);
+    const double cos_a = cos(new_a - M_PI_2);
+    const double sin_a = sin(new_a - M_PI_2);
+
     const double new_x = pos->pos_d.x + cos_a*delta_x - sin_a*delta_y;
     const double new_y = pos->pos_d.y + sin_a*delta_x + cos_a*delta_y;
 
     /* Setting the new position in double */
-  //pos->previous_pos_d.x = pos->pos_d.x;
-  //pos->previous_pos_d.y = pos->pos_d.y;
-  //pos->previous_pos_d.a = pos->pos_d.a;
     pos->previous_pos_d = pos->pos_d;
 
     pos->pos_d.x = new_x;
     pos->pos_d.y = new_y;
     pos->pos_d.a = new_a;
-    
+
     /* Setting the new position in integer */
     pos->pos_s16.x = (int16_t)new_x;
     pos->pos_s16.y = (int16_t)new_y;
