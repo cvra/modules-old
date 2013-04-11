@@ -7,8 +7,12 @@
 
 /* These are just placeholders to pass to some functions, they need to be replaced. */
 #define RAD 10
-static vect2_cart FP = {.x = 150., .y = 0.};
+//static vect2_cart FP = {.x = 150., .y = 0.};
 #define ANG 1.5
+
+#define SPEED_ROBOT 300
+
+int32_t holonomic_do_ramp(struct h_trajectory *traj, int32_t consign);
 
 void holonomic_trajectory_manager_event(void * param)
 {
@@ -23,16 +27,18 @@ void holonomic_trajectory_manager_event(void * param)
     float target_norm =  sqrtf(pow(traj->xy_target.x,2)+pow(traj->xy_target.y,2));
     float position_norm = sqrtf(pow(x,2)+pow(y,2));
     int32_t distance2target = sqrtf(pow(x - traj->xy_target.x,2) + pow(y - traj->xy_target.y,2));
+    
+    vect2_cart vec_target = {.x = traj->xy_target.x - x,
+                             .y = traj->xy_target.y - y};
 
     /* step 1 : process new commands to quadramps */
     switch (traj->moving_state) 
     {
          case MOVING_STRAIGHT:
             /* Calcul de la consigne d'angle */
-            a_consign = acosf((traj->xy_target.x*x + traj->xy_target.y*y)/
-            (target_norm * position_norm));
+            a_consign = TO_DEG(vect2_angle_vec_x_rad_cart(&vec_target));
             /* Calcul de la consigne de vitesse */
-            s_consign = 100;
+            s_consign = SPEED_ROBOT;
             break;
          case MOVING_CIRCLE:
             a_consign = M_PI_2 ;//- 
@@ -42,27 +48,27 @@ void holonomic_trajectory_manager_event(void * param)
             break;
     }
 
-    switch (traj->turning_state)
-    {
-        case TURNING_CAP:
-            o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
-            break;
-        case TURNING_SPEEDOFFSET:
-            o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_speed_rad(traj, ANG));
-            break;
-        case TURNING_FACEPOINT:
-            o_consign = 1;//cs_do_process(traj->csm_omega,  holonomic_angle_facepoint_rad(traj, &FP));
-            break;
-        case TURNING_IDLE:
-            break;
-    }
-    /* step 2 : check the end of the move */
-    //if (holonomic_robot_in_xy_window(traj, traj->d_win) ||
-        //holonomic_robot_in_angle_window(traj, traj->a_win))
-            //holonomic_delete_event(traj);
+    //switch (traj->turning_state)
+    //{
+        //case TURNING_CAP:
+            //o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
+            //break;
+        //case TURNING_SPEEDOFFSET:
+            //o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_speed_rad(traj, ANG));
+            //break;
+        //case TURNING_FACEPOINT:
+            //o_consign = 1;//cs_do_process(traj->csm_omega,  holonomic_angle_facepoint_rad(traj, &FP));
+            //break;
+        //case TURNING_IDLE:
+            //break;
+    //}
             
-    /* step 3 : pass the consign to rsh */
+    /* step 2 : pass the consign to rsh */
     set_consigns_to_rsh(traj, s_consign, a_consign, o_consign);
+    
+    /* step 3 : check the end of the move */
+    if (holonomic_robot_in_xy_window(traj, traj->d_win)) //@todo : not only distance, angle
+            holonomic_delete_event(traj);
 }
 
 /** near the target (dist in x,y) ? */
@@ -89,16 +95,12 @@ uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_
 /** remove event if any @todo */
 void holonomic_delete_event(struct h_trajectory *traj)
 {
-    //TODO : delete very soon! this is only to eliminate warnings!
-    (void)traj;
-
-    //set_quadramp_speed(traj, traj->d_speed, traj->a_speed);
-    //set_quadramp_acc(traj, traj->d_acc, traj->a_acc);
-    //if ( traj->scheduler_task != -1) {
-        //DEBUG(E_TRAJECTORY, "Delete event");
-        //scheduler_del_event(traj->scheduler_task);
-        //traj->scheduler_task = -1;
-    //}
+    set_consigns_to_rsh(traj, 0, holonomic_position_get_theta_v_int(traj->position), 0);
+    if ( traj->scheduler_task != -1) {
+        DEBUG(E_TRAJECTORY, "Delete event");
+        scheduler_del_event(traj->scheduler_task);
+        traj->scheduler_task = -1;
+    }
 }
 
 /** schedule the trajectory event */
@@ -145,15 +147,28 @@ float holonomic_length_arc_of_circle_pnt(struct h_trajectory *traj, float rad)
     return (rad * fast_acosf(1 - 0.5 * d_r * d_r));
 }
 
+int32_t holonomic_do_ramp(struct h_trajectory *traj, int32_t consign)
+{
+    //static int prev_speed = 0;
+    //if (prev_speed < SPEED_ROBOT)
+        //{
+            //return (prev_speed + (consign>=prev_speed) ? 10 : -10);
+        //}
+        return consign;
+}
+
 void set_consigns_to_rsh(struct h_trajectory *traj, int32_t speed, int32_t direction, int32_t omega)
 {
+
     /** @todo ramp don't work */
     /** A ramp, on donne l'objectif de vitesse (ex : 100 mm/s) et il fait avec la pente max défine dans cvra_cs.h */
-    //rsh_set_speed(traj->robot, ramp_do_filter(traj->speed_r, speed));
+    rsh_set_speed(traj->robot, holonomic_do_ramp(traj, speed));
     //rsh_set_rotation_speed(traj->robot, ramp_do_filter(traj->omega_r, omega));
     ///** A quadramp on donne l'angle désiré (ex : 90 deg) et il fait avec la vitesse et l'acc max défine dans cvra_cs.h */
     //rsh_set_direction_int(traj->robot, quadramp_do_filter(traj->angle_qr, direction));
-    rsh_set_speed(traj->robot, speed);
+    /** @todo @bug : ramp don't work, doing my own ramps*/
+
+   // rsh_set_speed(traj->robot, speed);
     rsh_set_direction_int(traj->robot, direction);
     rsh_set_rotation_speed(traj->robot,omega);
 }
