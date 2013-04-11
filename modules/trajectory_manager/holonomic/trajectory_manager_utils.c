@@ -5,8 +5,10 @@
 #include <ramp.h>
 #include <fast_math.h>
 
+/* These are just placeholders to pass to some functions, they need to be replaced. */
 #define RAD 10
 static vect2_cart FP = {.x = 150., .y = 0.};
+#define ANG 1.5
 
 void holonomic_trajectory_manager_event(void * param)
 {
@@ -36,7 +38,6 @@ void holonomic_trajectory_manager_event(void * param)
             break;
          case MOVING_CIRCLE:
             a_consign = M_PI_2 ;//- 
-            /** @todo: please check if used correctly. Need to pass a radius. */
             s_consign = cs_do_process(traj->csm_speed, holonomic_length_arc_of_circle_pnt(traj, RAD));
             break;
         case MOVING_IDLE:
@@ -46,8 +47,10 @@ void holonomic_trajectory_manager_event(void * param)
     switch (traj->turning_state)
     {
         case TURNING_CAP:
+            o_consign = cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
             break;
         case TURNING_SPEEDOFFSET:
+            o_consign = cs_do_process(traj->csm_omega, holonomic_angle_2_speed_rad(traj, ANG));
             break;
         case TURNING_FACEPOINT:
             o_consign = cs_do_process(traj->csm_omega,  holonomic_angle_facepoint_rad(traj, &FP));
@@ -147,9 +150,34 @@ float holonomic_angle_facepoint_rad(struct h_trajectory *traj, vect2_cart *fpc)
     float a_fp = vect2_angle_vec_x_rad_cart(fpc);
     float d_a = a_fp - holonomic_position_get_a_rad_float(traj->position);
 
-    if (d_a > M_PI) {
-        return (M_PI_2 - d_a);
+    return (holonomic_best_delta_angle_rad(d_a));
+}
+
+/** Calculates the difference of the robots angle to angle of the speedvector plus offset. */
+float holonomic_angle_2_speed_rad(struct h_trajectory *traj, float ao)
+{
+    float d_a = ((holonomic_position_get_theta_v(traj->position) + ao)
+                - holonomic_position_get_a_rad_float(traj->position));
+
+    return (holonomic_best_delta_angle_rad(d_a));
+}
+
+/** Calculates the difference between the angle of the robot and a wished angle. */
+float holonomic_angle_2_x_rad(struct h_trajectory *traj, float a)
+{
+    float d_a = (a - holonomic_position_get_a_rad_float(traj->position));
+
+    return (holonomic_best_delta_angle_rad(d_a));
+}
+
+/** Calculates if the positiv or the negativ rotation is better. */
+float holonomic_best_delta_angle_rad(float a)
+{
+    if (a > M_PI) {
+        return (a - M_PI_2);
+    } else if (a < (-M_PI)){
+        return (M_PI_2 - a);
     } else {
-        return d_a;
+        return a;
     }
 }

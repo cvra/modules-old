@@ -37,11 +37,28 @@ double holonomic_modulo_2pi(double a);
  /** calculates the lenght of an arc of a circle given an end point and a radius */
 float holonomic_length_arc_of_circle_pnt(struct h_trajectory *traj, float rad);
 
-/** \brief Calculates the angle between the robot and a facing point.
-* \param *traj Reference to the values of the trajectory.
-* \param *fpc Cartesien vector to the point that needs to be faced.
+/** @brief Calculates the angle between the robot and a facing point.
+* @param *traj Reference to the values of the trajectory.
+* @param *fpc Cartesien vector to the point that needs to be faced.
 **/
 float holonomic_angle_facepoint_rad(struct h_trajectory *traj, vect2_cart *fpc);
+
+/** @brief Calculates an angle that is offset by a certain angle to the speedvector. 
+* @param *traj Reference to the values of the trajectory.
+* @param ao The offset angle.
+**/
+float holonomic_angle_2_speed_rad(struct h_trajectory *traj, float ao);
+
+/** @brief Calculates the difference between the angle of the robot and a wished angle. 
+* @param *traj Reference to the values of the trajectory.
+* @param ao The wished angle to the x-axis.
+**/
+float holonomic_angle_2_x_rad(struct h_trajectory *traj, float a);
+
+/** @brief Calculates if the positiv or the negativ rotation is better. 
+* @param d_a An angle.
+**/
+float holonomic_best_delta_angle_rad(float a);
 
 #endif
 
