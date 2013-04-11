@@ -41,8 +41,6 @@ typedef float Real;
 
 #define TO_RAD(x) (((Real)x)*(0.01745329251994329577f)) /**< Convert degrees to radian (* pi / 180) */
 #define TO_DEG(x) (((Real)x)*(57.2957795130823208768f)) /**< Convert radian to degrees (* 180 / pi) */
-#define Dist2Vect(v1,v2) (fast_sqrtf((v1.x - v2.x)*(v1.x - v2.x)+(v1.y - v2.y)*(v1.y - v2.y)))  /**< Macro to calculate the distance between two vectors */
-#define Dist2VectXY(x1,y1,x2,y2) (fast_sqrtf((x1 - x2)*(x1 - x2)+(y1 - y2)*(y1 - y2)))  /**< Macro to calculate the distance between two coordinates */
 
 /** \brief Cartesian vector structure
 **/
@@ -153,6 +151,34 @@ void vect2_scale_cart(vect2_cart* v1, Real alpha, vect2_cart* vresult);
 * \f[ \vec V_{result} = \alpha\vec V_1 \f]
 **/
 void vect2_scale_pol(vect2_pol* v1, Real alpha, vect2_pol* vresult);
+
+/** @brief Norm of a cartesian vector. 
+* @param vc Reference to a cartesian vector.
+**/
+float vect2_norm_cart(vect2_cart *vc);
+
+/** @brief Distance between two cartesian vectors. 
+* @param vc1 Reference to a cartesian vector.
+* @param vc2 Reference to a cartesian vector.
+**/
+float vect2_dist_cart(vect2_cart *vc1, vect2_cart *vc2);
+
+/** @brief Inner product of two cartesian vectors. 
+* @param vc1 Reference to a cartesian vector.
+* @param vc2 Reference to a cartesian vector.
+**/
+float vect2_dot_product_cart(vect2_cart *vc1, vect2_cart *vc2);
+
+/** @brief Angle between two cartesian vectors in radian. 
+* @param vc1 Reference to a cartesian vector.
+* @param vc2 Reference to a cartesian vector.
+**/
+float vect2_angle_2vec_rad_cart(vect2_cart *vc1, vect2_cart *vc2);
+
+/** @brief Angle between vector and x-axis. 
+* @param vc Reference to a cartesian vector.
+**/
+float vect2_angle_vec_x_rad_cart(vect2_cart *vc);
 
 /** @} */
 
