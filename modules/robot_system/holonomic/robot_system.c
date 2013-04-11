@@ -58,7 +58,8 @@ void rsh_update(struct robot_system_holonomic *rs) {
                      cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_PI_2);
         omega_r = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
         
-        cs_set_consign(rs->motors[i],(omega_t + omega_r) / M_2_PI * (double)rs->pos->geometry.encoder_resolution / (double)rs->pos->update_frequency);
+        /** @bug @todo le facteur 10 : on ne le met pas et on a des vitesse 10 x trop haute */
+        cs_set_consign(rs->motors[i],((omega_t + omega_r) / M_2_PI * (double)rs->pos->geometry.encoder_resolution / (double)rs->pos->update_frequency)/10);
         //DEBUG(E_ROBOT_SYSTEM, "wheel %d : omega_t=%.1f omega_r=%.1f", i, omega_t, omega_r);
     }
 }

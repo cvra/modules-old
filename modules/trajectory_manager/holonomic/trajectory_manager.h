@@ -70,10 +70,10 @@ struct h_trajectory {
     /** Binded robot system */
     struct robot_system_holonomic *robot;
     
-    /** Associated controls systems */
-    struct cs *csm_angle;
-    struct cs *csm_speed;
-    struct cs *csm_omega;
+    /** Associated ramps */
+    struct ramp_filter *speed_r;
+    struct quadramp_filter *angle_qr;
+    struct ramp_filter *omega_r;
     
     double cs_hz;   /**< The frequency of the control system associated with this manager. */
 
@@ -86,16 +86,16 @@ struct h_trajectory {
  * @param [in] cs_hz The frequency of the control systems, in Hz. */
 void holonomic_trajectory_init(struct h_trajectory *traj, double cs_hz);
 
-/** @brief Sets the control systems.
+/** @brief Sets the ramps.
  *
- * This function tells the trajectory manager which control system to use for
+ * This function tells the trajectory manager which ramps to use for
  * angle/speed/omega(andgular speed) control.
  *
  * @param [in] traj The trajectory manager instance.
- * @param [in] cs_s, cs_a, cs_o The control systems to use.
+ * @param [in] speed_r, angle_qr, omega_r   The ramp to use.
  */
-void holonomic_trajectory_set_cs(struct h_trajectory *traj, struct cs *cs_a,
-               struct cs *cs_s, struct cs *cs_o);
+void holonomic_trajectory_set_ramps(struct h_trajectory *traj, struct ramp_filter *speed_r,
+               struct quadramp_filter *angle_qr, struct ramp_filter *omega_r);
                
 /** @brief Sets related robot params.
  *
@@ -125,7 +125,7 @@ void holonomic_trajectory_set_windows(struct h_trajectory *traj,
  * @param [in] direction The direction consign @todo : units
  * @param [in] omega The angular speed consign @todo : units
  */
-void holonomic_trajectory_set_var(struct h_trajectory *traj, double speed, double direction, double omega);
+void holonomic_trajectory_set_var(struct h_trajectory *traj, int32_t speed, int32_t direction, int32_t omega);
                  
 /** @brief Go to a point.
  *

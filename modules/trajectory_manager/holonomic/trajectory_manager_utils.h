@@ -60,5 +60,8 @@ float holonomic_angle_2_x_rad(struct h_trajectory *traj, float a);
 **/
 float holonomic_best_delta_angle_rad(float a);
 
+/** set the consign to robot_system_hlonomic */
+void set_consigns_to_rsh(struct h_trajectory *traj, int32_t speed, int32_t direction, int32_t omega);
+
 #endif
 

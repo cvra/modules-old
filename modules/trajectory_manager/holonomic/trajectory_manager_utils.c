@@ -31,14 +31,12 @@ void holonomic_trajectory_manager_event(void * param)
             /* Calcul de la consigne d'angle */
             a_consign = acosf((traj->xy_target.x*x + traj->xy_target.y*y)/
             (target_norm * position_norm));
-            a_consign = cs_do_process(traj->csm_angle, a_consign);
-            /** @todo : Need un PID avec P à 1 ? */
             /* Calcul de la consigne de vitesse */
-            s_consign = cs_do_process(traj->csm_speed, distance2target);
+            s_consign = 100;
             break;
          case MOVING_CIRCLE:
             a_consign = M_PI_2 ;//- 
-            s_consign = cs_do_process(traj->csm_speed, holonomic_length_arc_of_circle_pnt(traj, RAD));
+            s_consign = 100;//cs_do_process(traj->csm_speed, holonomic_length_arc_of_circle_pnt(traj, RAD));
             break;
         case MOVING_IDLE:
             break;
@@ -47,13 +45,13 @@ void holonomic_trajectory_manager_event(void * param)
     switch (traj->turning_state)
     {
         case TURNING_CAP:
-            o_consign = cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
+            o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
             break;
         case TURNING_SPEEDOFFSET:
-            o_consign = cs_do_process(traj->csm_omega, holonomic_angle_2_speed_rad(traj, ANG));
+            o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_speed_rad(traj, ANG));
             break;
         case TURNING_FACEPOINT:
-            o_consign = cs_do_process(traj->csm_omega,  holonomic_angle_facepoint_rad(traj, &FP));
+            o_consign = 1;//cs_do_process(traj->csm_omega,  holonomic_angle_facepoint_rad(traj, &FP));
             break;
         case TURNING_IDLE:
             break;
@@ -62,6 +60,9 @@ void holonomic_trajectory_manager_event(void * param)
     //if (holonomic_robot_in_xy_window(traj, traj->d_win) ||
         //holonomic_robot_in_angle_window(traj, traj->a_win))
             //holonomic_delete_event(traj);
+            
+    /* step 3 : pass the consign to rsh */
+    set_consigns_to_rsh(traj, s_consign, a_consign, o_consign);
 }
 
 /** near the target (dist in x,y) ? */
@@ -144,6 +145,19 @@ float holonomic_length_arc_of_circle_pnt(struct h_trajectory *traj, float rad)
     return (rad * fast_acosf(1 - 0.5 * d_r * d_r));
 }
 
+void set_consigns_to_rsh(struct h_trajectory *traj, int32_t speed, int32_t direction, int32_t omega)
+{
+    /** @todo ramp don't work */
+    /** A ramp, on donne l'objectif de vitesse (ex : 100 mm/s) et il fait avec la pente max défine dans cvra_cs.h */
+    //rsh_set_speed(traj->robot, ramp_do_filter(traj->speed_r, speed));
+    //rsh_set_rotation_speed(traj->robot, ramp_do_filter(traj->omega_r, omega));
+    ///** A quadramp on donne l'angle désiré (ex : 90 deg) et il fait avec la vitesse et l'acc max défine dans cvra_cs.h */
+    //rsh_set_direction_int(traj->robot, quadramp_do_filter(traj->angle_qr, direction));
+    rsh_set_speed(traj->robot, speed);
+    rsh_set_direction_int(traj->robot, direction);
+    rsh_set_rotation_speed(traj->robot,omega);
+}
+
 /** Calculates the angle between the robot and a facing point. */
 float holonomic_angle_facepoint_rad(struct h_trajectory *traj, vect2_cart *fpc)
 {
@@ -181,3 +195,4 @@ float holonomic_best_delta_angle_rad(float a)
         return a;
     }
 }
+
