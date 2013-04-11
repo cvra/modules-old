@@ -58,6 +58,7 @@ int32_t ramp_do_filter(void * data, int32_t in) {
     }
 
     r->prev_out += r->prev_speed;
+    /** We need a speed */
     return r->prev_out;
 }
 

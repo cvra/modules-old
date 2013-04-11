@@ -24,6 +24,7 @@
 
 #include <holonomic/position_manager.h>
 
+
 /** initialization of the robot_position pos, everthing is set to 0 */
 void holonomic_position_init(struct holonomic_robot_position *pos)
 {
@@ -90,7 +91,7 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
     }
 
     pos->geometry.encoder_resolution = encoder_resolution;
-    pos->geometry.inv_encoder_resolution = M_TWOPI / (double)encoder_resolution;
+    pos->geometry.inv_encoder_resolution = 2.0 * M_PI / (double)encoder_resolution;
 }
 
 void holonomic_position_set_mot_encoder(struct holonomic_robot_position *pos,
@@ -164,7 +165,7 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     }
 
     const double new_a = pos->pos_d.a - sum_wheel_steps_dist * pos->geometry.inv_encoder_resolution /
-    					 pos->geometry.wheel_sum_distance;
+                                         pos->geometry.wheel_sum_distance;
 
     const double delta_x = 2./3. * sum_cos_steps_dist * pos->geometry.inv_encoder_resolution;
     const double delta_y = 2./3. * sum_sin_steps_dist * pos->geometry.inv_encoder_resolution;
@@ -287,4 +288,3 @@ float holonomic_position_get_a_rad_float(struct holonomic_robot_position *pos)
 {
     return (float)(pos->pos_d.a);
 }
-
