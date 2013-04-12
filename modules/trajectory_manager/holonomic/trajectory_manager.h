@@ -155,6 +155,17 @@ void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj,
  */
 void holonomic_trajectory_moving_circle(struct h_trajectory *traj, double x_center_abs, double y_center_abs, double arc_angle);
 
+/** @brief Make the heading of the robot a constant cap.
+ *
+ * @param [in] traj The trajectory manager instance.
+ * @param [in] cap The cap to follow, in radian
+ *
+ * @note This moving command is mixed with the current moving command 
+ */
+ void holonomic_trajectory_turning_cap(struct h_trajectory *traj, double cap);
+
+
+
 
 /** True if the robot is within the distance d_win of the trajectory's target */
 uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win);

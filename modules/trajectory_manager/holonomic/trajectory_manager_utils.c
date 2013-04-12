@@ -78,22 +78,22 @@ void holonomic_trajectory_manager_event(void * param)
             break;
     }
 
-    //switch (traj->turning_state)
-    //{
-        //case TURNING_CAP:
-            //o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
-            //break;
-        //case TURNING_SPEEDOFFSET:
-            //o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_speed_rad(traj, ANG));
-            //break;
-        //case TURNING_FACEPOINT:
-            //o_consign = 1;//cs_do_process(traj->csm_omega,  holonomic_angle_facepoint_rad(traj, &FP));
-            //break;
-        //case TURNING_IDLE:
-            //break;
-    //}
+    switch (traj->turning_state)
+    {
+        case TURNING_CAP:
+            o_consign = 50;//holonomic_angle_2_x_rad(traj, traj->a_target);//cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
+            break;
+        case TURNING_SPEEDOFFSET:
+            o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_speed_rad(traj, ANG));
+            break;
+        case TURNING_FACEPOINT:
+            o_consign = 1;//cs_do_process(traj->csm_omega,  holonomic_angle_facepoint_rad(traj, &FP));
+            break;
+        case TURNING_IDLE:
+            break;
+    }
     /* step 3 : check the end of the move */
-    if (holonomic_robot_in_xy_window(traj, traj->d_win)) //@todo : not only distance, angle
+    if (traj->turning_state == TURNING_IDLE && holonomic_robot_in_xy_window(traj, traj->d_win)) //@todo : not only distance, angle
      {
         if (traj->moving_state == MOVING_CIRCLE)
         {
@@ -121,11 +121,21 @@ void holonomic_trajectory_manager_event(void * param)
          
         if (prev_speed < 20)
         {
-            holonomic_delete_event(traj);
-            return;
-        }
-        else{
-            s_consign = 0;}
+           traj->moving_state = MOVING_IDLE;
+           holonomic_delete_event(traj);
+           return;
+       }
+        else
+            s_consign = 0;
+        
+    }
+    if (traj->moving_state == MOVING_IDLE && holonomic_robot_in_angle_window(traj, traj->a_win))
+    {
+
+        traj->turning_state = TURNING_IDLE;
+        holonomic_delete_event(traj);
+        return;
+        
     }
             
     /* step 2 : pass the consign to rsh */

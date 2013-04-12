@@ -3,9 +3,12 @@
 #include <holonomic/trajectory_manager_utils.h>
 #include <holonomic/position_manager.h>
 
+/** @todo : deux movement em même temps */
+
 void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj, double x_abs_mm, double y_abs_mm) {
     DEBUG(E_TRAJECTORY, "Go straight to XY");
     traj->moving_state = MOVING_STRAIGHT;
+    traj->turning_state = TURNING_IDLE;
 
     traj->xy_target.x = x_abs_mm;
     traj->xy_target.y = y_abs_mm;
@@ -35,6 +38,18 @@ void holonomic_trajectory_moving_circle(struct h_trajectory *traj, double x_cent
     holonomic_trajectory_manager_event(traj);
     holonomic_schedule_event(traj);
 }
+
+ void holonomic_trajectory_turning_cap(struct h_trajectory *traj, double cap)
+ {
+    DEBUG(E_TRAJECTORY, "Going to a cap");
+    traj->moving_state = MOVING_IDLE;
+    traj->turning_state = TURNING_CAP;
+    
+    traj->a_target = cap;
+    
+    holonomic_trajectory_manager_event(traj);
+    holonomic_schedule_event(traj);
+ }
 
 void holonomic_trajectory_init(struct h_trajectory *traj, double cs_hz)
 {
