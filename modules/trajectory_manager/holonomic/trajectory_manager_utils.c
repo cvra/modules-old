@@ -81,8 +81,8 @@ void holonomic_trajectory_manager_event(void * param)
     switch (traj->turning_state)
     {
         case TURNING_CAP:
-            printf("TURNING_CAP\n");
-            if(traj->a_target - holonomic_position_get_a_rad_double(traj->position) < 0)
+            if(traj->a_target - holonomic_position_get_a_rad_double(traj->position) < 0
+                    || traj->a_target - holonomic_position_get_a_rad_double(traj->position) > M_PI)
                 o_consign = 50;
             else
                 o_consign = -50;//holonomic_angle_2_x_rad(traj, traj->a_target);//cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
