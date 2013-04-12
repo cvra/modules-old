@@ -161,13 +161,10 @@ uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_
 {
     double d_a =  traj->a_target - holonomic_position_get_a_rad_double(traj->position);
 
-    d_a = ABS(d_a);
-    while(d_a > M_PI) d_a -= M_PI;
-
-    if (d_a < M_PI) {
-        return (d_a < (a_win_rad/2));
+    if (ABS(d_a) < M_PI) {
+        return (ABS(d_a) < (a_win_rad/2));
     } else {
-        return ((M_PI_2-ABS(d_a)) < (a_win_rad/2));
+        return ((2 * M_PI-ABS(d_a)) < (a_win_rad/2));
     }
 }
 
