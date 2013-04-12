@@ -1,6 +1,7 @@
 #include <string.h>
 #include <holonomic/trajectory_manager.h>
 #include <holonomic/trajectory_manager_utils.h>
+#include <holonomic/position_manager.h>
 
 void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj, double x_abs_mm, double y_abs_mm) {
     DEBUG(E_TRAJECTORY, "Go straight to XY");
@@ -8,6 +9,28 @@ void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj,
 
     traj->xy_target.x = x_abs_mm;
     traj->xy_target.y = y_abs_mm;
+    
+    holonomic_trajectory_manager_event(traj);
+    holonomic_schedule_event(traj);
+}
+
+void holonomic_trajectory_moving_circle(struct h_trajectory *traj, double x_center_abs, double y_center_abs, double arc_angle) {
+    DEBUG(E_TRAJECTORY, "Make a nice circle");
+    traj->moving_state = MOVING_CIRCLE;
+
+    traj->circle_center.x = x_center_abs;
+    traj->circle_center.y = y_center_abs;
+    
+    /** end of the circle */
+    vect2_cart vec_to_center = {.x = traj->circle_center.x - holonomic_position_get_x_double(traj->position),
+                                .y = traj->circle_center.y - holonomic_position_get_y_double(traj->position)};
+    double radius = vect2_norm_cart(&vec_to_center);
+    traj->radius = radius;
+    
+    traj->xy_target.x = x_center_abs + cos(atan2f(holonomic_position_get_y_double(traj->position) - y_center_abs, 
+    holonomic_position_get_x_double(traj->position) - x_center_abs)-arc_angle)*radius;
+    traj->xy_target.y = y_center_abs + sin(atan2f(holonomic_position_get_y_double(traj->position) - y_center_abs, 
+    holonomic_position_get_x_double(traj->position) - x_center_abs)-arc_angle)*radius;
     
     holonomic_trajectory_manager_event(traj);
     holonomic_schedule_event(traj);

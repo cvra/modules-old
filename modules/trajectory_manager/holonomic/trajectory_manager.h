@@ -50,8 +50,9 @@ struct h_trajectory {
     vect2_cart xy_target; /**< Target for the moving part */
     double a_target;      /**< Target for the turning part */
     
-    vect2_cart circle_centre; /**< Center of the circle for MOVING_CIRCLE */
+    vect2_cart circle_center; /**< Center of the circle for MOVING_CIRCLE */
     double arc_angle;         /**< For MOVING_CIRCLE : PI/2 -> a quarter of a cirlce  */
+    double radius;          /**< For MOVING_CIRCLE : radius of the circle  */
     vect2_cart point2face;    /**< Point to face for TURNING_FACEPOINT */
     
     /** Output to robot_system @todo : leur init à 0 
@@ -140,8 +141,24 @@ void holonomic_trajectory_set_var(struct h_trajectory *traj, int32_t speed, int3
  */
 void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj, double x_abs_mm, double y_abs_mm);
 
+/** @brief Go make a circle arpund the specified center. The robot start from his position.
+ *
+ * This function makes the holonomic robot do a circle. Once the function is called, the
+ * trajectory manager schedules its own event in the scheduler to regulate on
+ * the point. This event is automatically deleted once the point is reached.
+ *
+ * @param [in] traj The trajectory manager instance.
+ * @param [in] x_center_abs,  y_center_abs The coordinates of the center in mm.
+ * @param [in] arc_angle the portion of circle in rad (2*pi = full circle; pi = 1/2 of a circle)
+ *
+ * @note This moving command is mixed with the current turning command 
+ */
+void holonomic_trajectory_moving_circle(struct h_trajectory *traj, double x_center_abs, double y_center_abs, double arc_angle);
+
+
 /** True if the robot is within the distance d_win of the trajectory's target */
 uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win);
+
 
 #endif
 

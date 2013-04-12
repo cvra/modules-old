@@ -12,6 +12,9 @@
 
 #define SPEED_ROBOT 500
 
+/** the angle between two keyframe */
+#define ANGLE_INC 0.05
+
 static int prev_speed = 0;
 int32_t holonomic_do_ramp(struct h_trajectory *traj, int32_t consign);
 
@@ -21,17 +24,36 @@ void holonomic_trajectory_manager_event(void * param)
     struct h_trajectory *traj = (struct h_trajectory *) param;
     double x = holonomic_position_get_x_double(traj->position);
     double y = holonomic_position_get_y_double(traj->position);
+    vect2_cart vector_pos;
     int32_t s_consign = 0;  /**< The speed consign */
     int32_t a_consign = 0;  /**< The angle consign */
     int32_t o_consign = 0;  /**< The angular speed (omega) consign */
     
-    float target_norm =  sqrtf(pow(traj->xy_target.x,2)+pow(traj->xy_target.y,2));
-    float position_norm = sqrtf(pow(x,2)+pow(y,2));
-    int32_t distance2target = sqrtf(pow(x - traj->xy_target.x,2) + pow(y - traj->xy_target.y,2));
+    float target_norm =  sqrtf(pow(traj->xy_target.x, 2) + pow(traj->xy_target.y, 2));
+    float position_norm = sqrtf(pow(x, 2) + pow(y, 2));
+    int32_t distance2target = sqrtf(pow(x - traj->xy_target.x, 2) + pow(y - traj->xy_target.y, 2));
     
+    vector_pos.x = x;
+    vector_pos.y = y;
+    
+    /** @todo : move the following in the right siwtch-case */
     vect2_cart vec_target = {.x = traj->xy_target.x - x,
                              .y = traj->xy_target.y - y};
-
+                             
+     vect2_cart vec_to_center = {.x = traj->circle_center.x - x,
+                                 .y = traj->circle_center.y - y};
+    
+    static vect2_cart keyframe = {.x = -1,
+                                   .y = -1};
+    if (keyframe.x < 0) {
+        keyframe.x = traj->circle_center.x + cos(atan2f(y - traj->circle_center.y, 
+                   x - traj->circle_center.x) - ANGLE_INC)*traj->radius;
+        keyframe.y = traj->circle_center.y + sin(atan2f(y - traj->circle_center.y, 
+                    x - traj->circle_center.x)-ANGLE_INC)*traj->radius;}
+    traj->xy_target.x = keyframe.x;
+    traj->xy_target.y = keyframe.y;
+    
+                             
     /* step 1 : process new commands to quadramps */
     switch (traj->moving_state) 
     {
@@ -44,8 +66,12 @@ void holonomic_trajectory_manager_event(void * param)
                 s_consign = 2*distance2target;
             break;
          case MOVING_CIRCLE:
-            a_consign = M_PI_2 ;//- 
-            s_consign = 100;//cs_do_process(traj->csm_speed, holonomic_length_arc_of_circle_pnt(traj, RAD));
+            /* Calcul de la consigne d'angle */
+            a_consign = TO_DEG(vect2_angle_vec_x_rad_cart(&vec_target));
+            printf("%d\n", a_consign);
+            s_consign = SPEED_ROBOT/5;
+            //if (distance2target < 250) ///@todo : faire un truc avec holonomic_length_arc_of_circle_pnt(traj, RAD)) plutôt.
+                //s_consign = 2*distance2target;
             break;
         case MOVING_IDLE:
             break;
@@ -67,17 +93,43 @@ void holonomic_trajectory_manager_event(void * param)
     //}
     /* step 3 : check the end of the move */
     if (holonomic_robot_in_xy_window(traj, traj->d_win)) //@todo : not only distance, angle
+     {
+        if (traj->moving_state == MOVING_CIRCLE)
+        {
+            keyframe.x = traj->circle_center.x + cos(atan2f(y - traj->circle_center.y, 
+                   x - traj->circle_center.x) - ANGLE_INC) * traj->radius;
+            keyframe.y = traj->circle_center.y + sin(atan2f(y - traj->circle_center.y, 
+                    x - traj->circle_center.x) - ANGLE_INC) * traj->radius;
+                    
+            printf("x: %f      y: %f\n", keyframe.x, keyframe.y);
+            
+            // If we have finished the circular trajectory 
+            /**@todo do not work beaucause the pos has changed -> take the depaeture of the pos of restart for scratch */ 
+            vect2_cart arrival = {  .x = traj->circle_center.x + cos(atan2f(y - traj->circle_center.y, 
+                   x - traj->circle_center.x) - traj->arc_angle) * traj->radius,
+                                    .y = traj->circle_center.y + sin(atan2f(y - traj->circle_center.y, 
+                   x - traj->circle_center.x) - traj->arc_angle) * traj->radius};
+
+            printf("Arrival : x: %f      y: %f\n", arrival.x, arrival.y);
+            if (vect2_dist_cart(&arrival, &vector_pos) < traj->d_win)
+            {
+                holonomic_delete_event(traj);
+            }
+            return;
+        }
+         
         if (prev_speed < 20)
         {
             holonomic_delete_event(traj);
             return;
         }
-        else
-            s_consign = 0;
+        else{
+            s_consign = 0;}
+    }
             
     /* step 2 : pass the consign to rsh */
     set_consigns_to_rsh(traj, s_consign, a_consign, o_consign);
-
+    /** @todo : re-init le keyframe !!! */
 }
 
 /** near the target (dist in x,y) ? */
