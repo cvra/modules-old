@@ -207,7 +207,7 @@ void holonomic_position_set_y_s16(struct holonomic_robot_position *pos, int16_t 
 
 void holonomic_position_set_a_s16(struct holonomic_robot_position *pos, int16_t a){
     pos->pos_s16.a = a;
-    pos->pos_d.a = (double)a;
+    pos->pos_d.a = (double)a*M_PI/180;
 }
 
 /**
