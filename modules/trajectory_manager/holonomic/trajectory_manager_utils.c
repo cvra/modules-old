@@ -172,6 +172,7 @@ uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_
 void holonomic_delete_event(struct h_trajectory *traj)
 {
     prev_speed = 0;
+    traj->end_of_traj = 1;
     
     set_consigns_to_rsh(traj, 0, holonomic_position_get_theta_v_int(traj->position), 0);
     rsh_set_speed(traj->robot,0);
@@ -181,6 +182,12 @@ void holonomic_delete_event(struct h_trajectory *traj)
         scheduler_del_event(traj->scheduler_task);
         traj->scheduler_task = -1;
     }
+}
+
+/** True when at the end of a trajectory. */
+int8_t holonomic_end_of_traj(struct h_trajectory *traj)
+{
+    return traj->end_of_traj;
 }
 
 /** schedule the trajectory event */
@@ -226,7 +233,6 @@ float holonomic_length_arc_of_circle_pnt(struct h_trajectory *traj, float rad)
     /* law of cosines */
     return (rad * fast_acosf(1 - 0.5 * d_r * d_r));
 }
-
 
 int32_t holonomic_do_ramp(struct h_trajectory *traj, int32_t consign)
 {
@@ -293,4 +299,3 @@ float holonomic_best_delta_angle_rad(float a)
         return a;
     }
 }
-

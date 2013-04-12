@@ -24,6 +24,9 @@ uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_
 /** Delete a trajectory event */
 void holonomic_delete_event(struct h_trajectory *traj);
 
+/** True when trajectory is finished */
+int8_t holonomic_end_of_traj(struct h_trajectory *traj);
+
 /** Schedules a trajectory event */
 void holonomic_schedule_event(struct h_trajectory *traj);
 

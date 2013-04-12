@@ -64,6 +64,9 @@ struct h_trajectory {
     /** Windows for arrival */
     double d_win;
     double a_win;
+
+    /** Flag end of trajectory */
+    int8_t end_of_traj;
     
     /** Position of the robot */
     struct holonomic_robot_position *position;

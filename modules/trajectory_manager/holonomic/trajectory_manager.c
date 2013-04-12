@@ -12,6 +12,8 @@ void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj,
 
     traj->xy_target.x = x_abs_mm;
     traj->xy_target.y = y_abs_mm;
+
+    traj->end_of_traj = 0;
     
     holonomic_trajectory_manager_event(traj);
     holonomic_schedule_event(traj);
@@ -23,6 +25,8 @@ void holonomic_trajectory_moving_circle(struct h_trajectory *traj, double x_cent
 
     traj->circle_center.x = x_center_abs;
     traj->circle_center.y = y_center_abs;
+
+    traj->end_of_traj = 0;
     
     /** end of the circle */
     vect2_cart vec_to_center = {.x = traj->circle_center.x - holonomic_position_get_x_double(traj->position),
@@ -44,6 +48,8 @@ void holonomic_trajectory_moving_circle(struct h_trajectory *traj, double x_cent
     DEBUG(E_TRAJECTORY, "Going to a cap");
     traj->moving_state = MOVING_IDLE;
     traj->turning_state = TURNING_CAP;
+
+    traj->end_of_traj = 0;
     
     traj->a_target = cap;
     
