@@ -30,12 +30,12 @@
  * the driver reads values from an ADC108S102 which is a 8 channel ADC 
  * connected in SPI */
 typedef struct {
-    alt_u32 *beacon_adress;	///< adress of the beacon module
-    alt_u32 period;	        ///< periode time in
-    alt_u32 lastindex;      ///< index of last scan
-    alt_u32 firstedge;
-    alt_u8  nb_beacon;
-    alt_u8  nb_edges;
+ volatile    alt_u32 *beacon_adress;	///< adress of the beacon module
+   volatile alt_u32 period;	        ///< periode time in
+    volatile alt_u32 lastindex;      ///< index of last scan
+  volatile   alt_u32 firstedge;
+ volatile    alt_u8  nb_beacon;
+volatile     alt_u8  nb_edges;
 } cvra_beacon_t;
 
 /** Inits the CVRA beacon module. */

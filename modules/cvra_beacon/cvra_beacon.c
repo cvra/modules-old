@@ -74,10 +74,10 @@ void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number)
 }
 
 /* Devrait etre appellee depuis un contexte d'interrupt sur TXRDY. */
-void cvra_beacon_manage(void *a) {
-    alt_u32 actual_index;
+void __attribute__((optimize("O0"))) cvra_beacon_manage(void *a) {
+    volatile alt_u32 actual_index;
     alt_u8 i = 0;
-    cvra_beacon_t *beacon = (cvra_beacon_t *)a;
+    volatile cvra_beacon_t *beacon = (cvra_beacon_t *)a;
     actual_index = IORD(beacon->beacon_adress, INDEX_REGISTER);
     beacon->period = actual_index - beacon->lastindex;
     beacon->lastindex = actual_index;
