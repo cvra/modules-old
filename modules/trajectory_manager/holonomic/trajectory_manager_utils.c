@@ -45,13 +45,6 @@ void holonomic_trajectory_manager_event(void * param)
     
     static vect2_cart keyframe = {.x = -1,
                                    .y = -1};
-    if (keyframe.x < 0) {
-        keyframe.x = traj->circle_center.x + cos(atan2f(y - traj->circle_center.y, 
-                   x - traj->circle_center.x) - ANGLE_INC)*traj->radius;
-        keyframe.y = traj->circle_center.y + sin(atan2f(y - traj->circle_center.y, 
-                    x - traj->circle_center.x)-ANGLE_INC)*traj->radius;}
-    traj->xy_target.x = keyframe.x;
-    traj->xy_target.y = keyframe.y;
     
                              
     /* step 1 : process new commands to quadramps */
@@ -66,6 +59,14 @@ void holonomic_trajectory_manager_event(void * param)
                 s_consign = 2*distance2target;
             break;
          case MOVING_CIRCLE:
+            if (keyframe.x < 0) {
+                keyframe.x = traj->circle_center.x + cos(atan2f(y - traj->circle_center.y, 
+                   x - traj->circle_center.x) - ANGLE_INC)*traj->radius;
+                keyframe.y = traj->circle_center.y + sin(atan2f(y - traj->circle_center.y, 
+                    x - traj->circle_center.x)-ANGLE_INC)*traj->radius;
+                    }
+                traj->xy_target.x = keyframe.x;
+            traj->xy_target.y = keyframe.y;
             /* Calcul de la consigne d'angle */
             a_consign = TO_DEG(vect2_angle_vec_x_rad_cart(&vec_target));
             printf("%d\n", a_consign);
