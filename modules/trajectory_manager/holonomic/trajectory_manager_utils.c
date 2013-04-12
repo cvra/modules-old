@@ -81,7 +81,11 @@ void holonomic_trajectory_manager_event(void * param)
     switch (traj->turning_state)
     {
         case TURNING_CAP:
-            o_consign = 50;//holonomic_angle_2_x_rad(traj, traj->a_target);//cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
+            printf("TURNING_CAP\n");
+            if(traj->a_target - holonomic_position_get_a_rad_double(traj->position) < 0)
+                o_consign = 50;
+            else
+                o_consign = -50;//holonomic_angle_2_x_rad(traj, traj->a_target);//cs_do_process(traj->csm_omega, holonomic_angle_2_x_rad(traj, ANG));
             break;
         case TURNING_SPEEDOFFSET:
             o_consign = 1;//cs_do_process(traj->csm_omega, holonomic_angle_2_speed_rad(traj, ANG));
@@ -157,8 +161,11 @@ uint8_t holonomic_robot_in_angle_window(struct h_trajectory *traj, double a_win_
 {
     double d_a =  traj->a_target - holonomic_position_get_a_rad_double(traj->position);
 
-    if (ABS(d_a) < M_PI) {
-        return (ABS(d_a) < (a_win_rad/2));
+    d_a = ABS(d_a);
+    while(d_a > M_PI) d_a -= M_PI;
+
+    if (d_a < M_PI) {
+        return (d_a < (a_win_rad/2));
     } else {
         return ((M_PI_2-ABS(d_a)) < (a_win_rad/2));
     }

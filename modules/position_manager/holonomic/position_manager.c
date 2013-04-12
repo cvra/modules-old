@@ -186,12 +186,18 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
 
     pos->pos_d.x = new_x;
     pos->pos_d.y = new_y;
+
+
     pos->pos_d.a = new_a;
+
+    while(pos->pos_d.a > M_PI) pos->pos_d.a -= 2 * M_PI;
+    while(pos->pos_d.a < -M_PI) pos->pos_d.a += 2 * M_PI;
+
 
     /* Setting the new position in integer */
     pos->pos_s16.x = (int16_t)new_x;
     pos->pos_s16.y = (int16_t)new_y;
-    pos->pos_s16.a = (int16_t)(new_a * 180.0/M_PI);
+    pos->pos_s16.a = (int16_t)(pos->pos_d.a * 180.0/M_PI);
 }
 
 
