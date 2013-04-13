@@ -2,6 +2,12 @@
 #include <cvra_pio.h>
 
 
+/** Base adress of the PIO module.
+ * @todo Change this value to reflect the real module. */
+#ifdef PIO_BASE
+ #undef PIO_BASE
+#endif
+#define PIO_BASE 0x00
 
 /** The current value of the outputs. */
 static int32_t output_value;

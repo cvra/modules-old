@@ -1,12 +1,6 @@
 #ifndef _CVRA_PIO_H_
 #define _CVRA_PIO_H_
 
-/** Base adress of the PIO module.
- * @todo Change this value to reflect the real module. */
-#ifdef PIO_BASE
- #undef PIO_BASE
-#endif
-#define PIO_BASE 0x00
 
 /** Writes a value to a digital output.
  * @param [in] channel The IO channel to change.
