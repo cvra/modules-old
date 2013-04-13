@@ -184,12 +184,6 @@ void holonomic_delete_event(struct h_trajectory *traj)
     }
 }
 
-/** True when at the end of a trajectory. */
-int8_t holonomic_end_of_traj(struct h_trajectory *traj)
-{
-    return traj->end_of_traj;
-}
-
 /** schedule the trajectory event */
 void holonomic_schedule_event(struct h_trajectory *traj)
 {

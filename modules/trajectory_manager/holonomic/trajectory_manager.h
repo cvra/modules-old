@@ -167,7 +167,8 @@ void holonomic_trajectory_moving_circle(struct h_trajectory *traj, double x_cent
  */
  void holonomic_trajectory_turning_cap(struct h_trajectory *traj, double cap);
 
-
+/** True when trajectory is finished */
+int8_t holonomic_end_of_traj(struct h_trajectory *traj);
 
 
 /** True if the robot is within the distance d_win of the trajectory's target */

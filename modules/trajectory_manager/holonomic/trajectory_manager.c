@@ -93,3 +93,9 @@ void holonomic_trajectory_set_var(struct h_trajectory *traj, int32_t speed, int3
 {
     set_consigns_to_rsh(traj, speed, direction, omega);
 }
+
+/** True when at the end of a trajectory. */
+int8_t holonomic_end_of_traj(struct h_trajectory *traj)
+{
+    return traj->end_of_traj;
+}
