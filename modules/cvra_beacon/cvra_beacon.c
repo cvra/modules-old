@@ -57,7 +57,7 @@ void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number)
     }
     
     /* Start motor with 50% PWM */
-    IOWR(beacon->beacon_adress, PWM_REGISTER, 127);
+    IOWR(beacon->beacon_adress, PWM_REGISTER, 90);
     
     /* Store actuel index */
     beacon->lastindex = IORD(beacon->beacon_adress, INDEX_REGISTER);
