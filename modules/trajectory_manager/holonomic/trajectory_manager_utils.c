@@ -175,6 +175,7 @@ void holonomic_delete_event(struct h_trajectory *traj)
     traj->end_of_traj = 1;
     
     set_consigns_to_rsh(traj, 0, holonomic_position_get_theta_v_int(traj->position), 0);
+    /** do not work without this : */
     rsh_set_speed(traj->robot,0);
     
     if ( traj->scheduler_task != -1) {

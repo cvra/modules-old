@@ -175,5 +175,9 @@ int8_t holonomic_end_of_traj(struct h_trajectory *traj);
 uint8_t holonomic_robot_in_xy_window(struct h_trajectory *traj, double d_win);
 
 
+void holonomic_delete_event(struct h_trajectory *traj);
+
+
+
 #endif
 
