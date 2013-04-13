@@ -19,8 +19,10 @@
 
 #include "cvra_beacon.h"
 #include <stdlib.h>
+#ifdef COMPILE_ON_ROBOT
 #include <io.h>
 #include <sys/alt_irq.h>
+
 //#include <aversive.h>
 //#include <aversive/error.h>
 
@@ -74,19 +76,33 @@ void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number)
 }
 
 /* Devrait etre appellee depuis un contexte d'interrupt sur TXRDY. */
-void __attribute__((optimize("O0"))) cvra_beacon_manage(void *a) {
-    volatile alt_u32 actual_index;
+void  cvra_beacon_manage(void *a) {
+    alt_u32 actual_index;
+    static alt_u32 last_call = 0;
     alt_u8 i = 0;
-    volatile cvra_beacon_t *beacon = (cvra_beacon_t *)a;
+
+//    printf("%d\n", (int)(uptime_get() - last_call));
+    last_call = uptime_get();
+    cvra_beacon_t *beacon = (cvra_beacon_t *)a;
     actual_index = IORD(beacon->beacon_adress, INDEX_REGISTER);
     beacon->period = actual_index - beacon->lastindex;
+/*    if(beacon->period != 0)
+        printf("period: %d\n", (int)beacon->period);  */
+
     beacon->lastindex = actual_index;
     beacon->firstedge = IORD(beacon->beacon_adress, FIRST_EDGE_REGISTER);
+//    printf("fe : \t%ud\n", (unsigned int)beacon->firstedge);
     while (IORD(beacon->beacon_adress, STATUS_REGISTER) ^ FIFO_EMPTY){
-      IORD(beacon->beacon_adress, DATA_REGISTER);
-      i++;
+#if 1
+        IORD(beacon->beacon_adress, DATA_REGISTER);
+#else
+        printf("%d : \t%ud\n", i, (unsigned int)IORD(beacon->beacon_adress, DATA_REGISTER));
+#endif
+        i++;
     }
+    printf("%d", i);
     beacon->nb_edges = i;
     /*Clear IRQ flag*/
     IOWR(beacon->beacon_adress, STATUS_REGISTER, 0);
 }
+#endif

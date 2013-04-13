@@ -22,7 +22,9 @@
 #define _CVRA_BEACON_H_
 
 //#include <aversive.h>
+#ifdef COMPILE_ON_ROBOT
 #include <alt_types.h>
+
 
 /** @struct cvra_adc_t
  * @note: instance of the Analog In driver
@@ -30,8 +32,8 @@
  * the driver reads values from an ADC108S102 which is a 8 channel ADC 
  * connected in SPI */
 typedef struct {
- volatile    alt_u32 *beacon_adress;	///< adress of the beacon module
-   volatile alt_u32 period;	        ///< periode time in
+ volatile    alt_u32 *beacon_adress;    ///< adress of the beacon module
+   volatile alt_u32 period;         ///< periode time in
     volatile alt_u32 lastindex;      ///< index of last scan
   volatile   alt_u32 firstedge;
  volatile    alt_u8  nb_beacon;
@@ -40,5 +42,5 @@ volatile     alt_u8  nb_edges;
 
 /** Inits the CVRA beacon module. */
 void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number);
-
+#endif
 #endif
