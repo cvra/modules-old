@@ -98,6 +98,7 @@ void  cvra_beacon_manage(void *a) {
 #endif
         i++;
     }
+    printf("%d", i);
     beacon->nb_edges = i;
     /*Clear IRQ flag*/
     IOWR(beacon->beacon_adress, STATUS_REGISTER, 0);
