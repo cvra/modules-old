@@ -10,8 +10,8 @@ void vect2_pol2cart(vect2_pol* vp, vect2_cart* vc)
    if(vp == NULL) return;
    if(vc == NULL) return;
    
-   vc->x = (Real)( (vp->r)*fast_cosf(vp->theta) );
-   vc->y = (Real)( (vp->r)*fast_sinf(vp->theta) );
+   vc->x = (Real)( (vp->r)*cos(vp->theta) );
+   vc->y = (Real)( (vp->r)*sin(vp->theta) );
    
    return;
 }
@@ -22,8 +22,8 @@ void vect2_cart2pol(vect2_cart* vc, vect2_pol* vp)
    if(vc == NULL) return;
    if(vp == NULL) return;
    
-   vp->r = (Real)( fast_sqrtf((vc->x)*(vc->x)+(vc->y)*(vc->y)) );
-   vp->theta = (Real)fast_atan2f(vc->y,vc->x);
+   vp->r = (Real)( sqrt((vc->x)*(vc->x)+(vc->y)*(vc->y)) );
+   vp->theta = (Real)atan2(vc->y,vc->x);
    
    return;
 }
