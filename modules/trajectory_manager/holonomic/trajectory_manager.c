@@ -99,3 +99,4 @@ int8_t holonomic_end_of_traj(struct h_trajectory *traj)
 {
     return traj->end_of_traj;
 }
+
