@@ -52,6 +52,13 @@ int32_t cvra_dc_get_index(void *device, int channel) {
     return IORD(device, index_registers[channel]);
 }
 
+void cvra_dc_set_index(void *device, int channel, int32_t value) {
+    if(channel < 0 || channel > 2)
+        return;
+
+    IOWR(device, index_registers[channel], value);
+}
+
 int32_t cvra_dc_get_current(void *device, int channel) {
     if(channel < 0 || channel > 5)
         return 0;
