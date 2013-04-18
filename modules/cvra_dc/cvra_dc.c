@@ -125,15 +125,3 @@ int32_t cvra_dc_get_index1(void *device){
 int32_t cvra_dc_get_index2(void *device){
     return cvra_dc_get_index(device, 2);
 }
-
-int32_t cvra_dc_get_index3(void *device){
-    return cvra_dc_get_index(device, 3);
-}
-
-int32_t cvra_dc_get_index4(void *device){
-    return cvra_dc_get_index(device, 4);
-}
-
-int32_t cvra_dc_get_index5(void *device){
-    return cvra_dc_get_index(device, 5);
-}
