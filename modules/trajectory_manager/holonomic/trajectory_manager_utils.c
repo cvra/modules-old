@@ -287,9 +287,9 @@ float holonomic_angle_2_x_rad(struct h_trajectory *traj, float a)
 float holonomic_best_delta_angle_rad(float a)
 {
     if (a > M_PI) {
-        return (a - M_PI_2);
+        return (a - 2*M_PI);
     } else if (a < (-M_PI)){
-        return (M_PI_2 - a);
+        return (2*M_PI - a);
     } else {
         return a;
     }
