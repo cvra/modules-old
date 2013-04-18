@@ -113,3 +113,27 @@ int32_t cvra_dc_get_encoder4(void *device) {
 int32_t cvra_dc_get_encoder5(void *device) {
     return cvra_dc_get_encoder(device, 5);
 }
+
+int32_t cvra_dc_get_index0(void *device){
+    return cvra_dc_get_index(device, 0);
+}
+
+int32_t cvra_dc_get_index1(void *device){
+    return cvra_dc_get_index(device, 1);
+}
+
+int32_t cvra_dc_get_index2(void *device){
+    return cvra_dc_get_index(device, 2);
+}
+
+int32_t cvra_dc_get_index3(void *device){
+    return cvra_dc_get_index(device, 3);
+}
+
+int32_t cvra_dc_get_index4(void *device){
+    return cvra_dc_get_index(device, 4);
+}
+
+int32_t cvra_dc_get_index5(void *device){
+    return cvra_dc_get_index(device, 5);
+}

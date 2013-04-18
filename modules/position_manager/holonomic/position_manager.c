@@ -72,11 +72,15 @@ void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int
  *  - number of impulsions for 1 mm (distance)
  *  - number of impulsions for 1 degree (angle)
  */
-void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, double beta[static 3],
-                  double wheel_radius[static 3], double wheel_distance[static 3],
-                  int32_t encoder_resolution){
-
-    pos->geometry.wheel_sum_distance = 0.0;
+void holonomic_position_set_physical_params(
+                  struct holonomic_robot_position *pos,
+                  double beta[static 3],
+                  double wheel_radius[static 3],
+                  double wheel_distance[static 3],
+                  double wheel_inner_distance[static 3],
+                  double wheel_outer_distance[static 3],
+                  int32_t encoder_resolution,
+                  int32_t index_offset[static 3]){
 
     int i;
     for(i = 0; i < 3; i++){
@@ -87,20 +91,28 @@ void holonomic_position_set_physical_params(struct holonomic_robot_position *pos
 
         pos->geometry.wheel_radius[i] = wheel_radius[i];
         pos->geometry.wheel_distance[i] = wheel_distance[i];
-        pos->geometry.wheel_sum_distance += wheel_distance[i];
+        pos->geometry.wheel_inner_distance[i] = wheel_inner_distance[i];
+        pos->geometry.wheel_outer_distance[i] = wheel_outer_distance[i];
+
+        pos->geometry.index_offset[i] = index_offset[i];
     }
 
     pos->geometry.encoder_resolution = encoder_resolution;
     pos->geometry.inv_encoder_resolution = 2.0 * M_PI / (double)encoder_resolution;
+
 }
 
 void holonomic_position_set_mot_encoder(struct holonomic_robot_position *pos,
                                         int32_t (*motor_encoder[static 3])(void *),
-                                        void *motor_encoder_param[static 3]){
+                                        void *motor_encoder_param[static 3],
+                                        int32_t (*encoder_index[static 3])(void *),
+                                        void *encoder_index_param[static 3]){
     int i;
     for(i = 0; i < 3; i++){
         pos->motor_encoder[i] = motor_encoder[i];
         pos->motor_encoder_param[i] = motor_encoder_param[i];
+        pos->encoder_index[i] = encoder_index[i];
+        pos->encoder_index_param[i] = encoder_index_param[i];
     }
 }
 
@@ -145,6 +157,7 @@ int32_t holonomic_position_get_theta_v_int(void *data){
  */
 void holonomic_position_manage(struct holonomic_robot_position *pos)
 {
+    double sum_wheel_distance = 0.0;
     double sum_wheel_steps_dist = 0.0;
     double sum_cos_steps_dist = 0.0;
     double sum_sin_steps_dist = 0.0;
@@ -154,10 +167,20 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
         const int32_t new_enc_val = - safe_getencoder(pos->motor_encoder[i], pos->motor_encoder_param[i]);
         const int32_t enc_steps = new_enc_val - pos->encoder_val[i];
 
+        const int32_t index = safe_getencoder(pos->encoder_index[i], pos->encoder_index_param[i]);
+        int32_t wheel_state = new_enc_val - index - pos->geometry.index_offset[i];
+
+
         pos->delta_enc[i] = enc_steps;
         pos->encoder_val[i] = new_enc_val;
 
         const double dist_steps = enc_steps * pos->geometry.wheel_radius[i];
+
+        if((int32_t)(wheel_state / (pos->geometry.encoder_resolution / 6.0)) % 2){
+            sum_wheel_distance += pos->geometry.wheel_outer_distance[i];
+        }else{
+            sum_wheel_distance += pos->geometry.wheel_inner_distance[i];
+        }
 
         sum_wheel_steps_dist += dist_steps;
         sum_cos_steps_dist += pos->geometry.cos_beta[i] * dist_steps;
@@ -165,7 +188,7 @@ void holonomic_position_manage(struct holonomic_robot_position *pos)
     }
 
     const double new_a = pos->pos_d.a - sum_wheel_steps_dist * pos->geometry.inv_encoder_resolution /
-                                         pos->geometry.wheel_sum_distance;
+                                         sum_wheel_distance;
 
     const double delta_x = 2./3. * sum_cos_steps_dist * pos->geometry.inv_encoder_resolution;
     const double delta_y = 2./3. * sum_sin_steps_dist * pos->geometry.inv_encoder_resolution;

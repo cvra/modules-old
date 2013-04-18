@@ -132,4 +132,11 @@ int32_t cvra_dc_get_encoder4(void *device);
  */
 int32_t cvra_dc_get_encoder5(void *device);
 
+int32_t cvra_dc_get_index0(void *device);
+int32_t cvra_dc_get_index1(void *device);
+int32_t cvra_dc_get_index2(void *device);
+int32_t cvra_dc_get_index3(void *device);
+int32_t cvra_dc_get_index4(void *device);
+int32_t cvra_dc_get_index5(void *device);
+
 #endif

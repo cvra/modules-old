@@ -18,17 +18,22 @@ struct holonomic_base_geometry {
 
     /** Distance of the wheel to the center of the robot (\f$D_i\f$). */
     double wheel_distance[3];
-
-    /** Sum of above mentionned distances */
-    double wheel_sum_distance;
+    double wheel_inner_distance[3];
+    double wheel_outer_distance[3];
 
     /** Steps per full rotation */
     int32_t encoder_resolution;
     double inv_encoder_resolution;
+
+    /** Encoder steps from index to first change from wheel_inner_distance
+     * to wheel_outer_distance. (When turning the wheel in the positive
+     * direction.) 
+     */
+    int32_t index_offset[3];
 };
 
 
-/** @brief Stores a cartesian position in double.
+/** @brief Stores a Cartesian position in double.
  *
  * This structure holds a position of the robot in the double precision format.
  * @sa xya_position_s16
@@ -66,6 +71,9 @@ struct holonomic_robot_position {
     int32_t (*motor_encoder[3])(void *);        /**< Callback functions for motor encoders */
     void* motor_encoder_param[3];               /**< Callback function parameters */
 
+    int32_t (*encoder_index[3])(void *);        /**< Callback functions for motor encoders */
+    void* encoder_index_param[3];               /**< Callback function parameters */
+
     int32_t encoder_val[3];                     /**< Array of the values from the encoders */
     float update_frequency;                     /**< Frequency at which position_manage is called */
     float speed;
@@ -97,8 +105,15 @@ void holonomic_position_set(struct holonomic_robot_position *pos, int16_t x, int
  * @param [in] wheel_distance Array[3] of the wheels' distances to the robot's center.
  * @param [in] encoder_resolution Encoder step per revolution of a wheel.
  */
-void holonomic_position_set_physical_params(struct holonomic_robot_position *pos, double beta[static 3],
-                  double wheel_radius[static 3], double wheel_distance[static 3], int32_t encoder_resolution);
+void holonomic_position_set_physical_params(
+                  struct holonomic_robot_position *pos,
+                  double beta[static 3],
+                  double wheel_radius[static 3],
+                  double wheel_distance[static 3],
+                  double wheel_inner_distance[static 3],
+                  double wheel_outer_distance[static 3],
+                  int32_t encoder_resolution,
+                  int32_t index_offset[static 3]);
 
 /** @brief Sets the frequency at which the function position_manage is called
  * @param [in] pos The robot_position instance to configure.
@@ -149,7 +164,9 @@ int32_t holonomic_position_get_theta_v_int(void *data);
  */
 void holonomic_position_set_mot_encoder(struct holonomic_robot_position *pos,
                                         int32_t (*motor_encoder[static 3])(void *),
-                                        void *motor_encoder_param[static 3]);
+                                        void *motor_encoder_param[static 3],
+                                        int32_t (*encoder_index[static 3])(void *),
+                                        void *encoder_index_param[static 3]);
 
 /** @brief Updates the position.
  *
