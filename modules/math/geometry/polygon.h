@@ -23,6 +23,7 @@
 #define _POLYGON_H_
 
 #include <vect_base.h>
+
 /** \addtogroup Geometrie
  * @{ */
 
@@ -30,8 +31,8 @@
  * An array of points, defining the corners of a geometric figure.
  */
 typedef struct _poly {
-    point_t * pts;  /**< Array of corner-points */
-    uint8_t l;      /**< Length of the array of points */
+	point_t * pts;  /**< Array of corner-points */
+	uint8_t l;      /**< Length of the array of points */
 } poly_t;
 
 /** Checks if a point belongs to a polygon
@@ -60,7 +61,7 @@ uint8_t is_point_in_poly(poly_t *pol, int16_t x, int16_t y);
   *  and the second segment boundary is out of the polygon) */
 uint8_t 
 is_crossing_poly(point_t p1, point_t p2, point_t *intersect_pt,
-         poly_t *pol);
+		 poly_t *pol);
 
 /** Set coordinates of bounding box.
  * @param [in] x1 x-coordinate bottom-left corner
@@ -115,7 +116,7 @@ calc_rays(poly_t *polys, uint8_t npolys, uint8_t *rays);
  * */
 void 
 calc_rays_weight(poly_t *polys, uint8_t npolys, uint8_t *rays, 
-         uint8_t ray_n, uint16_t *weight);
+		 uint8_t ray_n, uint16_t *weight);
  
 /** @} */
 #endif

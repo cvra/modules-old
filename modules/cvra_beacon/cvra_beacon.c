@@ -19,10 +19,8 @@
 
 #include "cvra_beacon.h"
 #include <stdlib.h>
-#ifdef COMPILE_ON_ROBOT
 #include <io.h>
 #include <sys/alt_irq.h>
-
 //#include <aversive.h>
 //#include <aversive/error.h>
 
@@ -57,7 +55,7 @@ void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number)
     }
     
     /* Start motor with 50% PWM */
-    IOWR(beacon->beacon_adress, PWM_REGISTER, 100);
+    IOWR(beacon->beacon_adress, PWM_REGISTER, 0xff);
     
     /* Store actuel index */
     beacon->lastindex = IORD(beacon->beacon_adress, INDEX_REGISTER);
@@ -100,9 +98,8 @@ void  cvra_beacon_manage(void *a) {
 #endif
         i++;
     }
-    printf("%d", i);
+//    printf("%d", i);
     beacon->nb_edges = i;
     /*Clear IRQ flag*/
     IOWR(beacon->beacon_adress, STATUS_REGISTER, 0);
 }
-#endif

@@ -68,8 +68,9 @@ void bd_manage(struct blocking_detection * bd)
 	if(err > bd->err_thres) {
 		bd->cpt++;
 	}
-	else
+	else {
 		bd->cpt=0;
+    }
 }
 
 /** get value of blocking detection */

@@ -35,8 +35,10 @@
 #include <system.h>
 #include <io.h>
 #include <sys/alt_irq.h>
+#include <aversive/error.h>
 
 #else /* Workaround to compile on X86. */
+
 /** Reimplementation de IORD du NIOS2 pour compiler sur le PC */
 #define IORD(adress, offset) (*((int32_t *)adress+offset))
 /** Reimplementation de IOWR du NIOS2 pour compiler sur le PC */
@@ -121,11 +123,12 @@ do {                                     \
 #define reset() do {                         \
     NIOS2_WRITE_STATUS(0);                   \
     NIOS2_WRITE_IENABLE(0);                  \
-    ((void (*) (void)) 0x04000000) (); 		 \
+    ((void (*) (void)) 0x00000000) (); 		 \
     } while(0)
 
 /** This define is called whenever the code hits a fatal crash. */
-#define panic() do {\
+#define panic() do { \
+    EMERG(0, "kernel panic"); \
 } while(1)
    
 #endif
