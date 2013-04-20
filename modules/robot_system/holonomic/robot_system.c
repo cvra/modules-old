@@ -48,15 +48,16 @@ void rsh_update(struct robot_system_holonomic *rs) {
 
     /** @todo add real physical parameters. */
     double theta_r = holonomic_position_get_a_rad_double(rs->pos);
-    /** omega = omega_r + omega_t = speed of the wheel i */
-    double omega_r; /** < the part for rotation */
-    double omega_t; /** < the part for translation */
     int i;
 
     for(i = 0; i < 3; i++) {
-        omega_t = - rs->speed / rs->pos->geometry.wheel_radius[i] * 
+        /** omega = omega_r + omega_t = speed of the wheel i */
+        
+        /** < the part for translation */
+        const double omega_t = - rs->speed / rs->pos->geometry.wheel_radius[i] * 
                      cos(theta_r - rs->direction + rs->pos->geometry.beta[i] - M_PI_2);
-        omega_r = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
+        /** < the part for rotation */
+        const double omega_r = - rs->rotation_speed * rs->pos->geometry.wheel_distance[i] / rs->pos->geometry.wheel_radius[i];
         
         /** @bug @todo le facteur 10 : on ne le met pas et on a des vitesse 10 x trop haute */
         cs_set_consign(rs->motors[i],((omega_t + omega_r) / M_2_PI * (double)rs->pos->geometry.encoder_resolution / (double)rs->pos->update_frequency)/10);

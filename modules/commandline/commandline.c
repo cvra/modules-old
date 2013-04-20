@@ -37,7 +37,10 @@ static void validate_buffer(const char *buf, int size) {
     /* Counts all the tokens. */
     argc = 1;
     if(strtok(buffer, DELIMITER) == NULL)  /* empty line. */
+    {
+        free(buffer);
         return;
+    }
 
     while(strtok(NULL, DELIMITER) != NULL)
         argc++;

@@ -509,7 +509,7 @@ float _fast_acosf(float v)  // TODO : characterize max rel. err.
     }
     else
     {
-        return (0*av)/(0*av);   // -1.#IND00
+        return NAN;
     }
 }
 
@@ -597,7 +597,7 @@ float _fast_asinf_LUT(float v)      // rel. err. on [-1,1] < 0.004%
         return is_neg ? (r) : (-r);
     }
     
-    return (0*v)/(0*v);     // -1.#IND00 if fabsf(v)>1.0f
+    return NAN;
 }
 
 
@@ -668,7 +668,7 @@ float _fast_acosf_LUT(float v)      // rel. err. on [-1,1] < 0.1%
         return is_neg ? (F_PI_2-r) : (F_PI_2+r);
     }
     
-    return (0*v)/(0*v);     // -1.#IND00 if fabsf(v)>1.0f
+    return NAN;
 }
 
 

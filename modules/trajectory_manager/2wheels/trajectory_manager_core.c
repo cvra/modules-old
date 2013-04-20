@@ -538,7 +538,6 @@ void trajectory_manager_circle_event(struct trajectory *traj)
 	if (angle_to_center_rad < -0.5)
 		angle_to_center_rad = -0.5;
 	coef_d = exp(5*angle_to_center_rad);
-	coef_d = coef_d;
 
 	circle_get_da_speed_from_radius(traj, radius / (coef_p * coef_d),
 					&d_speed, &a_speed);

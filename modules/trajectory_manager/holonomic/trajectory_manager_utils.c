@@ -29,8 +29,8 @@ void holonomic_trajectory_manager_event(void * param)
     int32_t a_consign = 0;  /**< The angle consign */
     int32_t o_consign = 0;  /**< The angular speed (omega) consign */
     
-    float target_norm =  sqrtf(pow(traj->xy_target.x, 2) + pow(traj->xy_target.y, 2));
-    float position_norm = sqrtf(pow(x, 2) + pow(y, 2));
+    float target_norm =  sqrtf(pow(traj->xy_target.x, 2) + pow(traj->xy_target.y, 2));      // TODO : variable never used
+    float position_norm = sqrtf(pow(x, 2) + pow(y, 2));                                     // TODO : variable never used
     int32_t distance2target = sqrtf(pow(x - traj->xy_target.x, 2) + pow(y - traj->xy_target.y, 2));
     
     vector_pos.x = x;
@@ -40,8 +40,8 @@ void holonomic_trajectory_manager_event(void * param)
     vect2_cart vec_target = {.x = traj->xy_target.x - x,
                              .y = traj->xy_target.y - y};
                              
-     vect2_cart vec_to_center = {.x = traj->circle_center.x - x,
-                                 .y = traj->circle_center.y - y};
+    vect2_cart vec_to_center = {.x = traj->circle_center.x - x,     // TODO : variable never used
+                                .y = traj->circle_center.y - y};
     
     static vect2_cart keyframe = {.x = -1,
                                    .y = -1};

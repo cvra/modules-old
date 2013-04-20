@@ -65,10 +65,10 @@ void vt100_init(struct vt100 * vt) {
 
 
 static int match_command(char * buf, unsigned int size) {
-	const char * cmd;
 	int i = 0;
 	
 	for (i=0 ; (unsigned int)i<sizeof(vt100_commands)/sizeof(const char *) ; i++) {
+		const char * cmd;
 		cmd = *(vt100_commands + i);
 		if (size == strlen(cmd) &&
 		    !strncmp(buf, cmd, strlen(cmd))) {
