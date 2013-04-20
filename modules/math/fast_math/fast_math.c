@@ -97,8 +97,8 @@ void fast_math_init()
 }
 
 inline float fast_fabsf    (float v)          { return _fast_fabsf         (v);   }
-inline float fast_sinf     (float v)          { return _fast_sinf_pmPI_o11 (v);   }
-inline float fast_cosf     (float v)          { return _fast_cosf_pmPI_o10 (v);   }
+inline float fast_sinf     (float v)          { return _fast_sinf          (v);   }
+inline float fast_cosf     (float v)          { return _fast_cosf          (v);   }
 inline float fast_tanf     (float v)          { return _fast_tanf_alt      (v);   }
 inline float fast_asinf    (float v)          { return _fast_asinf_LUT     (v);   }
 inline float fast_acosf    (float v)          { return _fast_acosf_LUT     (v);   }

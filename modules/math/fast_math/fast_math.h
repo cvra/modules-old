@@ -19,16 +19,16 @@ float fast_fabsf(float v);
 /** Computes the sine of a float.
  *
  * This function computes the sine by using a Taylor series expansion.
- * Validity range: [-pi,pi]
- * Relative error < 0.0178 % on [-3.141592;3.141592] 
+ * //Validity range: [-pi,pi]
+ * //Relative error < 0.0178 % on [-3.141592;3.141592] 
  */
 float fast_sinf(float v);
 
 /** Computes the cosine of a float.
  *
  * This function computes the cosine by using a Taylor series expansion.
- * Validity range: [-pi,pi]
- * Relative error < 0.0042 % on [-3.141592;3.141592]
+ * //Validity range: [-pi,pi]
+ * //Relative error < 0.0042 % on [-3.141592;3.141592]
  */
 float fast_cosf(float v);
 
