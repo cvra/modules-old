@@ -5,7 +5,7 @@
 
 /** Returns uptime of the robot
  * 
- * Returns time passed since booting the system with a resolution of 1us. This time is counted
+ * Returns time passed since booting the system with a resolution of 1 us. This time is counted
  * by a hardware-timer, so there is no precision drop when the CPU is heavily loaded.
  *
  * @note: the value is stored on 32 bit so the counter overflows after ~1h 11min
