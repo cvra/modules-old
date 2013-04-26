@@ -400,7 +400,8 @@ void trajectory_manager_xy_event(struct trajectory *traj)
 		else {
 			coef = (traj->a_start_rad - ABS(v2pol_target.theta)) / traj->a_start_rad;
 			set_quadramp_speed(traj, traj->d_speed * coef, traj->a_speed);
-		}
+        }
+		
 
 		d_consign = (int32_t)(v2pol_target.r * (traj->position->phys.distance_imp_per_mm));
 		d_consign += rs_get_distance(traj->robot);
@@ -541,15 +542,23 @@ void trajectory_manager_circle_event(struct trajectory *traj)
 
 	circle_get_da_speed_from_radius(traj, radius / (coef_p * coef_d),
 					&d_speed, &a_speed);
-	set_quadramp_speed(traj, d_speed, a_speed);
+
+    set_quadramp_speed(traj, d_speed, a_speed);
 
 	EVT_DEBUG(E_TRAJECTORY, "angle=%2.2f radius=%2.2f r=%2.2f coef_p=%2.2f coef_d=%2.2f "
 	      "d_speed=%2.2f a_speed=%2.2f",
 		  angle_to_center_rad, radius, v2pol_target.r,
 	      coef_p, coef_d, d_speed, a_speed);
 
-	d_consign = 400000 + rs_get_distance(traj->robot);
-	a_consign = 400000 + rs_get_angle(traj->robot);
+    if(traj->target.circle.flags & FORWARD)
+        d_consign = 400000 + rs_get_distance(traj->robot);
+    else
+        d_consign = -400000 + rs_get_distance(traj->robot);
+
+    if(traj->target.circle.flags & TRIGO)
+        a_consign = 400000 + rs_get_angle(traj->robot);
+    else
+        a_consign = -400000 + rs_get_angle(traj->robot);
 
 	cs_set_consign(traj->csm_angle, a_consign);
 	cs_set_consign(traj->csm_distance, d_consign);
