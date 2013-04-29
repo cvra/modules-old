@@ -132,22 +132,17 @@ void position_manage(struct robot_position *pos)
 	delta.distance = encoders.distance - pos->prev_encoders.distance;
 	delta.angle = encoders.angle - pos->prev_encoders.angle;
 
-    if(abs(delta.distance) < 50 && abs(delta.angle) < 50)
-        return;
-
-
 	/* update double position */
 	a = pos->pos_d.a;
 	x = pos->pos_d.x;
 	y = pos->pos_d.y;
 
-	if (abs(delta.angle) < 50) {
+	if (delta.angle==0) {
 		/* we go straight */
 		dx = cos(a) * ((double) delta.distance / (pos->phys.distance_imp_per_mm)) ;
 		dy = sin(a) * ((double) delta.distance / (pos->phys.distance_imp_per_mm)) ;
 		x += dx;
 		y += dy;
-        encoders.angle = pos->prev_encoders.angle; // XXX Quick, ugly hack for Romain
 	}
 	else {
 		/* r the radius of the circle arc */
