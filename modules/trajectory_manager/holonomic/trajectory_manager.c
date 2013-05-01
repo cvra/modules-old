@@ -8,10 +8,11 @@
 void holonomic_trajectory_moving_straight_goto_xy_abs(struct h_trajectory *traj, double x_abs_mm, double y_abs_mm) {
     DEBUG(E_TRAJECTORY, "Go straight to XY");
     traj->moving_state = MOVING_STRAIGHT;
-    traj->turning_state = TURNING_IDLE;
+    traj->turning_state = TURNING_CAP;
 
     traj->xy_target.x = x_abs_mm;
     traj->xy_target.y = y_abs_mm;
+    traj->a_target = holonomic_position_get_a_rad_double(traj->position);
 
     traj->end_of_traj = 0;
     
