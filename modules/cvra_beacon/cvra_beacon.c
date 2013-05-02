@@ -133,6 +133,13 @@ void cvra_beacon_manage(void *a) {
           distance = actual_edge - start_edge;
           beacon->beacon[beacon->nb_beacon].direction = (direction*360.0)/beacon->period;
           beacon->beacon[beacon->nb_beacon].distance = ((distance*360.0)/beacon->period) * beacon->gain + beacon->offset;
+
+          // XXX Debra-specific calibration
+          beacon->beacon[beacon->nb_beacon].direction -= 60; 
+
+          // Keeps the angle between +180 and -180
+          if(beacon->beacon[beacon->nb_beacon].direction > 180)
+            beacon->beacon[beacon->nb_beacon].direction -= 360; 
           beacon->nb_beacon++;
           state = start_beacon;
           break;
