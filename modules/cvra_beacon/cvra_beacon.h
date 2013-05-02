@@ -24,21 +24,28 @@
 //#include <aversive.h>
 #include <alt_types.h>
 
+#define NB_BEACON_MAX 8
+
 /** @struct cvra_adc_t
- * @note: instance of the Analog In driver
- *
- * the driver reads values from an ADC108S102 which is a 8 channel ADC 
- * connected in SPI */
+ * @note: instance of the beacon
+ */
 typedef struct {
- volatile    alt_u32 *beacon_adress;	///< adress of the beacon module
-   volatile alt_u32 period;	        ///< periode time in
-    volatile alt_u32 lastindex;      ///< index of last scan
-  volatile   alt_u32 firstedge;
- volatile    alt_u8  nb_beacon;
-volatile     alt_u8  nb_edges;
+  float direction;
+  float distance;
+} beacon_pos_t;
+
+typedef struct {
+    alt_u32 *beacon_adress;	///< adress of the beacon module
+    alt_u32 period;	        ///< periode time in
+    alt_u32 lastindex;      ///< index of last scan
+    alt_u32 firstedge;
+    float   gain;
+    float   offset;
+    alt_u8  nb_beacon;
+    beacon_pos_t beacon[NB_BEACON_MAX];
 } cvra_beacon_t;
 
 /** Inits the CVRA beacon module. */
-void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number);
+void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number, int pwm, float gain, float offset);
 
 #endif
