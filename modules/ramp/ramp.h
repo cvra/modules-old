@@ -63,13 +63,14 @@ void ramp_init(struct ramp_filter * r );
 void ramp_set_vars(struct ramp_filter * r, uint32_t neg, uint32_t pos);
 
 
-/** @brief Do filter.
+/** @brief Applies a filter that limits the acceleration.
  *
- * This function computes the new speed while respecting maximal acceleration,
- * and outputs the new position consign.
+ * This function limits the acceleration by comparing the variatinon between the
+ * last velocity and the consigned velocity. If the acceleration is to high the 
+ * consigned velocity is set to the highest velocity.
  * @param [in] r The ramp instance, cast to void * to be compatible with CSM.
- * @param [in] in The speed consign.
- * @returns The computed position consign.
+ * @param [in] in A velocity consign.
+ * @returns A the filtered velocity consign.
  */
 int32_t ramp_do_filter(void * r, int32_t in);
 

@@ -40,25 +40,34 @@ int32_t ramp_do_filter(void *data, int32_t in) {
     uint32_t variation;
     struct ramp_filter *r = (struct ramp_filter *) data;
 
-    /* test if the variation is positive or negative */
+    /** This limits the acceleration and if it is to high returns a velocity that is in the bounds. */
     if(in > r->prev_speed) {
         variation = in - r->prev_speed;
-        /* test if the variation is too high */
-        if(variation < r->var_pos)
+        if(variation < r->var_pos) {
             r->prev_speed = in; 
-        else
+        } else {
+            /** Adds the maximal allowed speed change. */
             r->prev_speed = r->prev_speed + r->var_pos; 
-    }
-    else {
+        }
+    } else {
         variation = r->prev_speed - in;
-        if(variation < r->var_neg)
+        if(variation < r->var_neg) {
             r->prev_speed = in; 
+<<<<<<< local
+        } else {
+=======
                     else
+>>>>>>> other
             r->prev_speed = r->prev_speed - r->var_neg;
+        }
     }
 
-    r->prev_out += r->prev_speed;
-    /** We need a speed */
+    /* If we want to return a position we can do an integral over all the velocities.
+     * r->prev_out += r->prev_speed;
+     */
+     
+    /** This returns a speed. */
+    r->prev_out = r->prev_speed;
     return r->prev_out;
 }
 
