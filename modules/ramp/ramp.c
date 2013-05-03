@@ -53,11 +53,7 @@ int32_t ramp_do_filter(void *data, int32_t in) {
         variation = r->prev_speed - in;
         if(variation < r->var_neg) {
             r->prev_speed = in; 
-<<<<<<< local
         } else {
-=======
-                    else
->>>>>>> other
             r->prev_speed = r->prev_speed - r->var_neg;
         }
     }
