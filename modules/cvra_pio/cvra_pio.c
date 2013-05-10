@@ -22,7 +22,7 @@ void cvra_pio_set(int channel, int value) {
     else
         output_value &= ~(1<<channel); 
 
-    IOWR(PIO_BASE, 0, channel);
+    IOWR(PIO_BASE, 0, output_value);
 }
 
 int cvra_pio_get(int channel) {
