@@ -18,11 +18,12 @@ void cvra_pio_set(int channel, int value) {
         return;
 
     if(value) 
-        output_value |= (1<<channel);
+        output_value |= (int32_t)(1<<channel);
     else
-        output_value &= ~(1<<channel); 
+        output_value &= (int32_t)~(1<<channel); 
 
     IOWR(PIO_BASE, 0, output_value);
+    printf("%d\n", output_value);
 }
 
 int cvra_pio_get(int channel) {
