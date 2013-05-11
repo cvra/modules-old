@@ -123,16 +123,18 @@ void holonomic_trajectory_manager_event(void * param)
             return;
         }
          
-        if (prev_speed < 20)
+        if (prev_speed < 30)
         {
            traj->moving_state = MOVING_IDLE;
            holonomic_delete_event(traj);
            return;
        }
-        else
+        else{
             s_consign = 0;
+        }
         
     }
+    
     if (traj->moving_state == MOVING_IDLE && holonomic_robot_in_angle_window(traj, traj->a_win))
     {
 
