@@ -1007,6 +1007,39 @@ float _fast_invf_LUT(float x)    // rel. err. < 0.1% for 8-bit LUT
     return v.f;
 }
 
+
+float fast_pow(float base, int exp){
+    // for negative powers invert base and raise to positive power
+    float b;
+    unsigned int e;
+    if(exp < 0){
+        e = -exp;
+        b = 1/base;
+    }
+    else{
+        e = exp;
+        b = base;
+    }
+
+    // initialize result
+    float acc = 1;
+
+    while(e != 0){
+        // square accumulator
+        acc *= acc;
+        // if least significant bit of exponent set multiply by base
+        if(e%2){
+            acc *= b;
+        }
+        // shift out least significant bit of exponent
+        e >>= 1;
+    }
+
+    // return accumulated result
+    return acc;
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -1024,6 +1057,7 @@ int _is_big_endian()
 }
 
 
+// TODO: add fast_pow to benchmark
 void fast_benchmark(void)
 {
     #ifdef COMPILE_ON_ROBOT
