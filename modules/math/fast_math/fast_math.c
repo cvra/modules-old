@@ -84,6 +84,8 @@ inline float _fast_invsqrtf       (float v);
 inline float _fast_invf           (float v);
        void  _fast_invf_LUT_init  ();
 inline float _fast_invf_LUT       (float v);
+       float _fast_powf_fs        (float b, int e);
+       float _fast_powf_fu        (float b, int e);
 
 
 // DEFINITIONS OF PUBLIC WRAPPERS
@@ -107,6 +109,7 @@ inline float fast_atan2f   (float y, float x) { return _fast_atan2f        (y,x)
 inline float fast_sqrtf    (float v)          { return _fast_sqrtf_LUT     (v);   }
 inline float fast_invsqrtf (float v)          { return _fast_invsqrtf      (v);   }
 inline float fast_invf     (float v)          { return _fast_invf_LUT      (v);   }
+inline float fast_powf     (float b, int e)   { return _fast_powf_fu       (b,e); }
 
 
 // DEFINITION OF INTERNAL FUNCTIONS
@@ -1008,34 +1011,35 @@ float _fast_invf_LUT(float x)    // rel. err. < 0.1% for 8-bit LUT
 }
 
 
-float fast_pow(float base, int exp){
-    // for negative powers invert base and raise to positive power
-    float b;
-    unsigned int e;
-    if(exp < 0){
-        e = -exp;
-        b = 1/base;
-    }
-    else{
-        e = exp;
-        b = base;
-    }
+float _fast_powf_fs(float b, int e)      // POWER(float,signed)
+{
+    if (e < 0) b = 1.0f/b;      // for negative powers, invert base
+    e = abs(e);                 // and raise to positive power
 
-    // initialize result
-    float acc = 1;
-
-    while(e != 0){
-        // square accumulator
-        acc *= acc;
-        // if least significant bit of exponent set multiply by base
-        if(e%2){
-            acc *= b;
-        }
-        // shift out least significant bit of exponent
-        e >>= 1;
+    float acc = 1.0f;           // init accumulator
+    
+    while (e)
+    {
+        if (e&1) acc *= b;      // if LSB of exponent set, mult. by base
+        e >>= 1;                // shift out LSB of exponent
+        b *= b;                 // square base
     }
 
-    // return accumulated result
+    return acc;
+}
+
+
+float _fast_powf_fu(float b, int e)      // POWER(float,unsigned)
+{
+    float acc = 1.0f;           // init accumulator
+    
+    while (e)
+    {
+        if (e&1) acc *= b;      // if LSB of exponent set, mult. by base
+        e >>= 1;                // shift out LSB of exponent
+        b *= b;                 // square base
+    }
+
     return acc;
 }
 
@@ -1146,6 +1150,8 @@ void fast_benchmark(void)
     double mre_invsqrtff = 0.0;
     double mre_invf      = 0.0;
     double mre_invff     = 0.0;
+    double mre_powf      = 0.0;
+    double mre_powff     = 0.0;
     
     double tol = 1e-8;          // tolerance
     
@@ -1319,6 +1325,23 @@ void fast_benchmark(void)
         if (re_f  > mre_invf ) mre_invf  = re_f;
         if (re_ff > mre_invff) mre_invff = re_ff;
     }
+    printf("Checking pow..."NL);
+    for(i=0; i<CNT; i++)
+    {
+        double d = pow(png_d[i], png_i[i+1]%70);
+        float f = powf(png_f[i], png_i[i+1]%70);
+        float ff = fast_powf(png_f[i], png_i[i+1]%70);
+
+        if (fabs(f -d) < tol) continue;    // too small difference, skip
+        if (fabs(ff-d) < tol) continue;    // too small difference, skip
+        if (fabs(   d) < tol) continue;    // too small divider, skip
+
+        double re_f  = fabs(1.0 - (double)f /(double)d);
+        double re_ff = fabs(1.0 - (double)ff/(double)d);
+
+        if (re_f  > mre_invf ) mre_invf  = re_f;
+        if (re_ff > mre_invff) mre_invff = re_ff;
+    }
     
     printf(NL);
     printf("Each function is called %d times"NL, i);
@@ -1426,6 +1449,14 @@ void fast_benchmark(void)
     printf("1.0f/(float)          : %7lu "UT", %f (%lf %%)"NL, (long unsigned int)(UPTIME_GET-t), r_f, 100.0*mre_invf);
     for(t=UPTIME_GET, i=0; i<CNT; i++) r_f = fast_invf(png_f[i]);
     printf("fast_invf (float)     : %7lu "UT", %f (%lf %%)"NL, (long unsigned int)(UPTIME_GET-t), r_f, 100.0*mre_invff);
+    printf(NL);
+
+    for(t=UPTIME_GET, i=0; i<CNT; i++) r_d = pow(png_d[i], png_i[i+1]%70);
+    printf("     pow (double)   : %7lu "UT", %f"NL, (long unsigned int)(UPTIME_GET-t), r_d);
+    for(t=UPTIME_GET, i=0; i<CNT; i++) r_f = powf(png_f[i], png_i[i+1]%70);
+    printf("     powf (float)   : %7lu "UT", %f (%lf %%)"NL, (long unsigned int)(UPTIME_GET-t), r_f, 100.0*mre_powf);
+    for(t=UPTIME_GET, i=0; i<CNT; i++) r_f = fast_powf(png_f[i], png_i[i+1]%70);
+    printf("fast_powf (float)   : %7lu "UT", %f (%lf %%)"NL, (long unsigned int)(UPTIME_GET-t), r_f, 100.0*mre_powff);
     printf(NL);
 
     printf("*** End Benchmark ***"NL);

@@ -87,12 +87,13 @@ float fast_invsqrtf(float v);
  * Relative error < 0.1%
  */
 float fast_invf(float v);
-/** Raises a float to some integer power
+
+/** Raises a float to some (unsigned) integer power
  *  
  *  uses the "exponentiation by squaring"-algorithm 
  *  to raise a float to some integer power
  */  
-float fast_pow(float v,int exp);
+float fast_powf(float b, int e);
 
 /** Benchmarks the library. */
 void  fast_benchmark(void);
