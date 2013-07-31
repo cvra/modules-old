@@ -132,14 +132,12 @@ void position_manage(struct robot_position *pos)
 	delta.distance = encoders.distance - pos->prev_encoders.distance;
 	delta.angle = encoders.angle - pos->prev_encoders.angle;
 
-	pos->prev_encoders = encoders;
-
 	/* update double position */
 	a = pos->pos_d.a;
 	x = pos->pos_d.x;
 	y = pos->pos_d.y;
 
-	if (delta.angle == 0) {
+	if (delta.angle==0) {
 		/* we go straight */
 		dx = cos(a) * ((double) delta.distance / (pos->phys.distance_imp_per_mm)) ;
 		dy = sin(a) * ((double) delta.distance / (pos->phys.distance_imp_per_mm)) ;
@@ -188,6 +186,8 @@ void position_manage(struct robot_position *pos)
 		}
 #endif
 	}
+
+	pos->prev_encoders = encoders;
 
 	/* update int position */
 	x_s16 = (int16_t)x;

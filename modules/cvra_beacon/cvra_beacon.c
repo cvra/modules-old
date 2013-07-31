@@ -41,28 +41,36 @@
 
 void cvra_beacon_manage(void *a);
 
-void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number)
+void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number, int pwm, float gain, float offset)
 {
     int ret;
+    alt_u8 i;
+    
     
     beacon->beacon_adress = adress;
     beacon->nb_beacon = 0;
     beacon->period = 0;
+    beacon->gain = gain;
+    beacon->offset = offset;
+    
+    for (i=0;i<NB_BEACON_MAX;i++) {
+      beacon->beacon[i].direction = 0;
+      beacon->beacon[i].distance = 0;
+    }
     
     // Empty the data fifo
     while (IORD(beacon->beacon_adress, STATUS_REGISTER) ^ FIFO_EMPTY) {
       IORD(beacon->beacon_adress, DATA_REGISTER);
     }
     
-    /* Start motor with 50% PWM */
-    IOWR(beacon->beacon_adress, PWM_REGISTER, 0xff);
+    /* Start motor with 50% PWM = 127*/
+    IOWR(beacon->beacon_adress, PWM_REGISTER, pwm);
     
     /* Store actuel index */
     beacon->lastindex = IORD(beacon->beacon_adress, INDEX_REGISTER);
     
     /*Clear IRQ flag*/
     IOWR(beacon->beacon_adress, STATUS_REGISTER, 0);
-    
 
 //#ifdef COMPILE_ON_ROBOT
     ret=alt_ic_isr_register(0, irq_number, cvra_beacon_manage, (void *)beacon, 0);
@@ -73,33 +81,73 @@ void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number)
 
 }
 
-/* Devrait etre appellee depuis un contexte d'interrupt sur TXRDY. */
-void  cvra_beacon_manage(void *a) {
+/* Interrupt function called one per rotation*/
+void cvra_beacon_manage(void *a) {
     alt_u32 actual_index;
-    static alt_u32 last_call = 0;
+    alt_u32 actual_edge;
+    alt_u32 start_edge;
+    alt_u32 direction;
+    alt_u32 distance;
+    alt_u32 end_edge;
     alt_u8 i = 0;
 
-//    printf("%d\n", (int)(uptime_get() - last_call));
-    last_call = uptime_get();
-    cvra_beacon_t *beacon = (cvra_beacon_t *)a;
-    actual_index = IORD(beacon->beacon_adress, INDEX_REGISTER);
-    beacon->period = actual_index - beacon->lastindex;
-/*    if(beacon->period != 0)
-        printf("period: %d\n", (int)beacon->period);  */
+    typedef enum {
+      first_beacon,
+      start_beacon,
+      end_beacon
+    }search_state;
 
-    beacon->lastindex = actual_index;
-    beacon->firstedge = IORD(beacon->beacon_adress, FIRST_EDGE_REGISTER);
-//    printf("fe : \t%ud\n", (unsigned int)beacon->firstedge);
-    while (IORD(beacon->beacon_adress, STATUS_REGISTER) ^ FIFO_EMPTY){
-#if 1
-        IORD(beacon->beacon_adress, DATA_REGISTER);
-#else
-        printf("%d : \t%ud\n", i, (unsigned int)IORD(beacon->beacon_adress, DATA_REGISTER));
-#endif
-        i++;
-    }
-//    printf("%d", i);
-    beacon->nb_edges = i;
+    search_state state = first_beacon;
+    cvra_beacon_t *beacon = (cvra_beacon_t *)a;
+    
     /*Clear IRQ flag*/
     IOWR(beacon->beacon_adress, STATUS_REGISTER, 0);
+
+    //Clear old beacon informations
+    beacon->nb_beacon = 0;
+    for (i=0;i<NB_BEACON_MAX;i++) {
+      beacon->beacon[i].direction = 0;
+      beacon->beacon[i].distance = 0;
+    }
+
+    actual_index = IORD(beacon->beacon_adress, INDEX_REGISTER);
+    beacon->period = actual_index - beacon->lastindex;
+    beacon->firstedge = IORD(beacon->beacon_adress, FIRST_EDGE_REGISTER);
+    while (~IORD(beacon->beacon_adress, STATUS_REGISTER) & FIFO_EMPTY){
+      actual_edge = IORD(beacon->beacon_adress, DATA_REGISTER);
+      switch (state){
+        case first_beacon:
+          if (actual_edge == beacon->firstedge){
+            start_edge = actual_edge;
+            state = end_beacon;
+          }
+          break;
+          
+        case start_beacon:
+          start_edge = actual_edge;
+          state = end_beacon;
+          break;
+          
+        case end_beacon:
+          direction = (((alt_u64)actual_edge + (alt_u64)start_edge)>>1)-beacon->lastindex;
+          distance = actual_edge - start_edge;
+          beacon->beacon[beacon->nb_beacon].direction = (direction*360.0)/beacon->period;
+          beacon->beacon[beacon->nb_beacon].distance = ((distance*360.0)/beacon->period) * beacon->gain + beacon->offset;
+
+          // XXX Debra-specific calibration
+          beacon->beacon[beacon->nb_beacon].direction -= 60; 
+
+          // Keeps the angle between +180 and -180
+          if(beacon->beacon[beacon->nb_beacon].direction > 180)
+            beacon->beacon[beacon->nb_beacon].direction -= 360; 
+          beacon->nb_beacon++;
+          state = start_beacon;
+          break;
+          
+        default:
+          break;
+      }
+    }
+
+    beacon->lastindex = actual_index;
 }
