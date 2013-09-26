@@ -29,8 +29,6 @@ def main():
     for directory in os.listdir(modules_dir):
         dir_list.append(os.path.join(modules_dir, directory))
 
-    print(dir_list)
-
     with open(args.makefile) as makefile:
         for line in makefile:
             print(line, end="")
