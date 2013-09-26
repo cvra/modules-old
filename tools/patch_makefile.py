@@ -12,9 +12,10 @@ def main():
     """
     parser = argparse.ArgumentParser(
             description="""Patch an Altera-generated Makefile to
-            setup the CVRA dev environment.""")
+            setup the CVRA dev environment. It will output the patched
+            Makefile to stdout.""")
     parser.add_argument("makefile", action="store",
-            help="Path to the Makefile to be patched.")
+            help="Path to the original Makefile.")
     parser.add_argument("source_dir", action="store",
             help="Path to the modules checkout directory.")
     args = parser.parse_args()
