@@ -117,4 +117,52 @@ get a stable frequency.
         cs_manage(&mycs);
         wait_ms(10);
     }
+
+### Changing consign
+Now we got a control system that can prevent the system from moving around the
+zero position. What if we want to use our control system to move the system to a
+new state ? For this example, we will move the system to a new position after a
+second (1000 ms). Replace the while loop above with the following code.
+
+    int time=0;
+    int new_consign_value = 300;
+    while(1) {
+        if(time == 1000)
+            cs_set_consign(&mycs, new_consign_value);
+        cs_manage(&mycs);
+        wait_ms(10);
+        time += 10;
+    }
+
+### Limiting rate of consign change
+So now our controller is able to move the system to a new state, but it will do
+it immediately. What if we want to limit the rate of change of the system, for
+example to limit maximum speed and acceleration in a robot ? This requires a
+*consign filter* to be added to the system. In this example, we will use the
+`modules/quadramp` filter, which limits the first and second derivative of the
+consign. In our example robot position control, this would limit the speed and
+the acceleration of the robot.
+
+First of all let's create the filter. Put the following code after the
+`cs_set_correct_filter` call.
+
+    struct quadramp_filter myqr;
+    quadramp_init(&myqr);
+
+We will now configure the quadramp with a maximum acceleration of 1 and a
+maximum speed of 10. See the quadramp documentation for details.
+
+    quadramp_set_2nd_order_vars(&myqr, 1, 1);
+    quadramp_set_1st_order_vars(&myqr, 10, 10);
+
+The last step is to tell the control system manager to use the quadramp as a
+consign filter.
+
+    cs_set_consign_filter(&mycs, quadramp_do_filter, &myqr);
+
+Now the system would accelerate slowly, reach a maximum speed, and then brake
+slowly to reach the target.
+
+As you can see, the architecture with 3 separate filters (consign, correct and
+feeback) allows for a very flexible architecture and good code reuse.
     
