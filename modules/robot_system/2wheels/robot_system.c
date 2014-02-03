@@ -256,6 +256,7 @@ void rs_update(void * data)
 	struct rs_polar pmot;
 #endif
 	int32_t delta_angle, delta_distance;
+    OS_CPU_SR cpu_sr;
 
 	/* read encoders */
 	wext.left = safe_getencoder(rs->left_ext_encoder, rs->left_ext_encoder_param);
@@ -315,11 +316,9 @@ void rs_update(void * data)
 	delta_distance = pext.distance - rs->pext_prev.distance;
 #endif
 
+    OS_ENTER_CRITICAL();
 	rs->virtual_encoders.angle += delta_angle;
 	rs->virtual_encoders.distance += delta_distance;
-
-	/* don't lock too much time */
-
 	rs->pext_prev = pext;
 	rs->wext_prev = wext;
 
@@ -327,4 +326,5 @@ void rs_update(void * data)
 	rs->pmot_prev = pmot;
 	rs->wmot_prev = wmot;
 #endif
+    OS_EXIT_CRITICAL();
 }
