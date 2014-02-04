@@ -32,6 +32,9 @@
 
 #ifdef COMPILE_ON_ROBOT
 
+#include "os_cpu.h"
+#include "os_cfg.h"
+#include "ucos_ii.h"
 #include <system.h>
 #include <io.h>
 #include <sys/alt_irq.h>
