@@ -1,0 +1,138 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Aa	trajectory_manager.h	/^	double Aa;  \/**< The angular acceleration. *\/$/;"	m	struct:line_target
+DEG	trajectory_manager_utils.h	32;"	d
+EVT_DEBUG	trajectory_manager_core.c	54;"	d	file:
+FORWARD	trajectory_manager.h	80;"	d
+M_2PI	trajectory_manager_utils.h	30;"	d
+R	trajectory_manager.h	/^	double R; \/**< The radius of the circular part. *\/$/;"	m	struct:line_target
+RAD	trajectory_manager_utils.h	33;"	d
+READY	trajectory_manager.h	/^	READY, \/**< Ready, waiting for a trajectory. *\/$/;"	e	enum:trajectory_state
+RESET_A	trajectory_manager_core.c	50;"	d	file:
+RESET_D	trajectory_manager_core.c	49;"	d	file:
+RUNNING_A	trajectory_manager.h	/^	RUNNING_A, \/**< Turning without moving. *\/$/;"	e	enum:trajectory_state
+RUNNING_AD	trajectory_manager.h	/^	RUNNING_AD, \/**< Going forward and turning at the same time. *\/$/;"	e	enum:trajectory_state
+RUNNING_CIRCLE	trajectory_manager.h	/^	RUNNING_CIRCLE,          \/**< Running a circle trajectory. *\/$/;"	e	enum:trajectory_state
+RUNNING_CLITOID_CURVE	trajectory_manager.h	/^	RUNNING_CLITOID_CURVE,   \/**< Running a clitoid in the curve part. *\/$/;"	e	enum:trajectory_state
+RUNNING_CLITOID_LINE	trajectory_manager.h	/^	RUNNING_CLITOID_LINE,    \/**< Running a clitoid (line->circle->line) in the line part. *\/$/;"	e	enum:trajectory_state
+RUNNING_D	trajectory_manager.h	/^	RUNNING_D, \/**< Going straight. *\/$/;"	e	enum:trajectory_state
+RUNNING_LINE	trajectory_manager.h	/^	RUNNING_LINE,            \/**< Following a line. *\/$/;"	e	enum:trajectory_state
+RUNNING_XY_ANGLE	trajectory_manager.h	/^	RUNNING_XY_ANGLE,        \/**< Doing a preliminary turn before starting to move. *\/$/;"	e	enum:trajectory_state
+RUNNING_XY_ANGLE_OK	trajectory_manager.h	/^	RUNNING_XY_ANGLE_OK,     \/**< Angle is now ok, move forward. *\/ $/;"	e	enum:trajectory_state
+RUNNING_XY_B_ANGLE	trajectory_manager.h	/^	RUNNING_XY_B_ANGLE,      \/**< Same as RUNNING_XY_ANGLE but backward only. *\/$/;"	e	enum:trajectory_state
+RUNNING_XY_B_ANGLE_OK	trajectory_manager.h	/^	RUNNING_XY_B_ANGLE_OK,   \/**< Same as RUNNING_XY_B_ANGLE_OK but backward only. *\/$/;"	e	enum:trajectory_state
+RUNNING_XY_B_START	trajectory_manager.h	/^	RUNNING_XY_B_START,      \/**< Same as RUNNING_XY_START but backward only. *\/$/;"	e	enum:trajectory_state
+RUNNING_XY_F_ANGLE	trajectory_manager.h	/^	RUNNING_XY_F_ANGLE,      \/**< Same as RUNNING_XY_ANGLE but forward only. *\/$/;"	e	enum:trajectory_state
+RUNNING_XY_F_ANGLE_OK	trajectory_manager.h	/^	RUNNING_XY_F_ANGLE_OK,   \/**< Same as RUNNING_XY_ANGLE_OK but forward only. *\/$/;"	e	enum:trajectory_state
+RUNNING_XY_F_START	trajectory_manager.h	/^	RUNNING_XY_F_START,      \/**< Same as RUNNING_XY_START but forward only. *\/ $/;"	e	enum:trajectory_state
+RUNNING_XY_START	trajectory_manager.h	/^	RUNNING_XY_START,        \/**< A trajectory order was given, preparing to go. *\/$/;"	e	enum:trajectory_state
+TRAJECTORY_MANAGER	trajectory_manager.h	34;"	d
+TRAJ_EVT_PERIOD	trajectory_manager_utils.h	36;"	d
+TRIGO	trajectory_manager.h	79;"	d
+UPDATE_A	trajectory_manager_core.c	48;"	d	file:
+UPDATE_D	trajectory_manager_core.c	47;"	d	file:
+Va	trajectory_manager.h	/^	double Va; \/**< The angular speed. *\/$/;"	m	struct:line_target
+_TRAJECTORY_MANAGER_H_	trajectory_manager_utils.h	25;"	d
+__trajectory_goto_d_a_rel	trajectory_manager_core.c	/^void __trajectory_goto_d_a_rel(struct trajectory *traj, double d_mm,$/;"	f
+__trajectory_line_abs	trajectory_manager_core.c	/^static void __trajectory_line_abs(struct trajectory *traj,$/;"	f	file:
+a_acc	trajectory_manager.h	/^	double a_acc;    \/**<< angle acceleration consign *\/$/;"	m	struct:trajectory
+a_speed	trajectory_manager.h	/^	double a_speed;  \/**<< angle speed consign *\/$/;"	m	struct:trajectory
+a_start_rad	trajectory_manager.h	/^	double a_start_rad;\/**<< in xy consigns, start to move in distance$/;"	m	struct:trajectory
+a_win_rad	trajectory_manager.h	/^	double a_win_rad;  \/**<< angle window (for END_NEAR) *\/$/;"	m	struct:trajectory
+acc_imp2mm	trajectory_manager_utils.c	/^double acc_imp2mm(struct trajectory *traj, double acc)$/;"	f
+acc_imp2rd	trajectory_manager_utils.c	/^double acc_imp2rd(struct trajectory *traj, double acc)$/;"	f
+acc_mm2imp	trajectory_manager_utils.c	/^double acc_mm2imp(struct trajectory *traj, double acc)$/;"	f
+acc_rd2imp	trajectory_manager_utils.c	/^double acc_rd2imp(struct trajectory *traj, double acc)$/;"	f
+advance	trajectory_manager.h	/^	double advance; \/**< The sampling factor. *\/$/;"	m	struct:line_target
+alpha	trajectory_manager.h	/^	double alpha; \/**< The angle to turn. *\/$/;"	m	struct:line_target
+angle	trajectory_manager.h	/^	double angle; \/**< The angle of line. *\/$/;"	m	struct:line_target
+calc_clitoid	trajectory_manager_core.c	/^static int8_t calc_clitoid(struct trajectory *traj,$/;"	f	file:
+cart	trajectory_manager.h	/^		vect2_cart cart;             \/**< target, if it is a x,y vector *\/$/;"	m	union:trajectory::__anon1
+center	trajectory_manager.h	/^	vect2_cart center;   \/**< center of the circle *\/$/;"	m	struct:circle_target
+circle	trajectory_manager.h	/^		struct circle_target circle; \/**< target, if it is a circle *\/$/;"	m	union:trajectory::__anon1	typeref:struct:trajectory::__anon1::circle_target
+circle_get_da_speed_from_radius	trajectory_manager_core.c	/^void circle_get_da_speed_from_radius(struct trajectory *traj,$/;"	f
+circle_get_dist_from_degrees	trajectory_manager_core.c	/^\/* static  *\/double circle_get_dist_from_degrees(double radius_mm, double a_deg)$/;"	f
+circle_target	trajectory_manager.h	/^struct circle_target {$/;"	s
+cs_hz	trajectory_manager.h	/^	double cs_hz;   \/**< The frequency of the control system associated with this manager. *\/$/;"	m	struct:trajectory
+csm_angle	trajectory_manager.h	/^	struct cs *csm_angle;     \/**<< associated control system (angle) *\/$/;"	m	struct:trajectory	typeref:struct:trajectory::cs
+csm_distance	trajectory_manager.h	/^	struct cs *csm_distance;  \/**<< associated control system (distance) *\/$/;"	m	struct:trajectory	typeref:struct:trajectory::cs
+d_acc	trajectory_manager.h	/^	double d_acc;    \/**<< distance acceleration consign *\/$/;"	m	struct:trajectory
+d_speed	trajectory_manager.h	/^	double d_speed;  \/**<< distance speed consign *\/$/;"	m	struct:trajectory
+d_win	trajectory_manager.h	/^	double d_win; 	   \/**<< distance window (for END_NEAR) *\/$/;"	m	struct:trajectory
+delete_event	trajectory_manager_utils.c	/^void delete_event(struct trajectory *traj)$/;"	f
+dest_angle	trajectory_manager.h	/^	int32_t dest_angle;  \/**< dst angle in inc *\/$/;"	m	struct:circle_target
+evt_debug_cpt	trajectory_manager_core.c	/^static uint8_t evt_debug_cpt = 0;$/;"	v	file:
+flags	trajectory_manager.h	/^	uint8_t flags;   \/**< flags for this trajectory *\/$/;"	m	struct:circle_target
+get_quadramp_angle_speed	trajectory_manager_utils.c	/^double get_quadramp_angle_speed(struct trajectory *traj)$/;"	f
+get_quadramp_distance_speed	trajectory_manager_utils.c	/^double get_quadramp_distance_speed(struct trajectory *traj)$/;"	f
+is_robot_in_angle_window	trajectory_manager_utils.c	/^uint8_t is_robot_in_angle_window(struct trajectory *traj, double a_win_rad)$/;"	f
+is_robot_in_dist_window	trajectory_manager_utils.c	/^uint8_t is_robot_in_dist_window(struct trajectory *traj, double d_win)$/;"	f
+is_robot_in_xy_window	trajectory_manager_utils.c	/^uint8_t is_robot_in_xy_window(struct trajectory *traj, double d_win)$/;"	f
+line	trajectory_manager.h	/^		struct line_target line;     \/**< target, if it is a line *\/$/;"	m	union:trajectory::__anon1	typeref:struct:trajectory::__anon1::line_target
+line	trajectory_manager.h	/^	line_t line;  \/**< The line to follow. *\/$/;"	m	struct:line_target
+line_target	trajectory_manager.h	/^struct line_target {$/;"	s
+modulo_2pi	trajectory_manager_utils.c	/^double modulo_2pi(double a)$/;"	f
+pol	trajectory_manager.h	/^		struct rs_polar pol;         \/**< target, if it is a d,a vector *\/$/;"	m	union:trajectory::__anon1	typeref:struct:trajectory::__anon1::rs_polar
+pos_imp2mm	trajectory_manager_utils.c	/^double pos_imp2mm(struct trajectory *traj, double pos)$/;"	f
+pos_imp2rd	trajectory_manager_utils.c	/^double pos_imp2rd(struct trajectory *traj, double pos)$/;"	f
+pos_mm2imp	trajectory_manager_utils.c	/^double pos_mm2imp(struct trajectory *traj, double pos)$/;"	f
+pos_rd2imp	trajectory_manager_utils.c	/^double pos_rd2imp(struct trajectory *traj, double pos)$/;"	f
+position	trajectory_manager.h	/^	struct robot_position *position; \/**<< associated robot_position *\/$/;"	m	struct:trajectory	typeref:struct:trajectory::robot_position
+radius	trajectory_manager.h	/^	double radius;       \/**< radius of the circle *\/$/;"	m	struct:circle_target
+robot	trajectory_manager.h	/^	struct robot_system *robot;      \/**<< associated robot_system *\/$/;"	m	struct:trajectory	typeref:struct:trajectory::robot_system
+schedule_event	trajectory_manager_utils.c	/^void schedule_event(struct trajectory *traj)$/;"	f
+scheduler_task	trajectory_manager.h	/^	int8_t scheduler_task;    \/**<< id of current task (-1 if no running task) *\/$/;"	m	struct:trajectory
+set_quadramp_acc	trajectory_manager_utils.c	/^void set_quadramp_acc(struct trajectory *traj, double d_acc, double a_acc)$/;"	f
+set_quadramp_speed	trajectory_manager_utils.c	/^void set_quadramp_speed(struct trajectory *traj, double d_speed, double a_speed)$/;"	f
+simple_modulo_2pi	trajectory_manager_utils.c	/^double simple_modulo_2pi(double a)$/;"	f
+speed_imp2mm	trajectory_manager_utils.c	/^double speed_imp2mm(struct trajectory *traj, double speed)$/;"	f
+speed_imp2rd	trajectory_manager_utils.c	/^double speed_imp2rd(struct trajectory *traj, double speed)$/;"	f
+speed_mm2imp	trajectory_manager_utils.c	/^double speed_mm2imp(struct trajectory *traj, double speed)$/;"	f
+speed_rd2imp	trajectory_manager_utils.c	/^double speed_rd2imp(struct trajectory *traj, double speed)$/;"	f
+start_clitoid	trajectory_manager_core.c	/^static void start_clitoid(struct trajectory *traj)$/;"	f	file:
+state	trajectory_manager.h	/^	enum trajectory_state state; \/**< describe the type of target, and if we reached the target *\/$/;"	m	struct:trajectory	typeref:enum:trajectory::trajectory_state
+target	trajectory_manager.h	/^	} target;                        \/**< Target of the movement. *\/$/;"	m	struct:trajectory	typeref:union:trajectory::__anon1
+trajectory	trajectory_manager.h	/^struct trajectory {$/;"	s
+trajectory_a_abs	trajectory_manager_core.c	/^void trajectory_a_abs(struct trajectory *traj, double a_deg_abs)$/;"	f
+trajectory_a_rel	trajectory_manager_core.c	/^void trajectory_a_rel(struct trajectory *traj, double a_deg_rel)$/;"	f
+trajectory_angle_finished	trajectory_manager_core.c	/^uint8_t trajectory_angle_finished(struct trajectory *traj)$/;"	f
+trajectory_circle_rel	trajectory_manager_core.c	/^void trajectory_circle_rel(struct trajectory *traj,$/;"	f
+trajectory_clitoid	trajectory_manager_core.c	/^int8_t trajectory_clitoid(struct trajectory *traj,$/;"	f
+trajectory_d_a_rel	trajectory_manager_core.c	/^void trajectory_d_a_rel(struct trajectory *traj, double d_mm, double a_deg)$/;"	f
+trajectory_d_rel	trajectory_manager_core.c	/^void trajectory_d_rel(struct trajectory *traj, double d_mm)$/;"	f
+trajectory_distance_finished	trajectory_manager_core.c	/^uint8_t trajectory_distance_finished(struct trajectory *traj)$/;"	f
+trajectory_finished	trajectory_manager_core.c	/^uint8_t trajectory_finished(struct trajectory *traj)$/;"	f
+trajectory_get_state	trajectory_manager_utils.c	/^enum trajectory_state trajectory_get_state(struct trajectory *traj)$/;"	f
+trajectory_goto_backward_xy_abs	trajectory_manager_core.c	/^void trajectory_goto_backward_xy_abs(struct trajectory *traj, double x, double y)$/;"	f
+trajectory_goto_d_a_rel	trajectory_manager_core.c	/^void trajectory_goto_d_a_rel(struct trajectory *traj, double d, double a)$/;"	f
+trajectory_goto_forward_xy_abs	trajectory_manager_core.c	/^void trajectory_goto_forward_xy_abs(struct trajectory *traj, double x, double y)$/;"	f
+trajectory_goto_xy_abs	trajectory_manager_core.c	/^void trajectory_goto_xy_abs(struct trajectory *traj, double x, double y)$/;"	f
+trajectory_goto_xy_rel	trajectory_manager_core.c	/^void trajectory_goto_xy_rel(struct trajectory *traj, double x_rel_mm, double y_rel_mm)$/;"	f
+trajectory_hardstop	trajectory_manager_core.c	/^void trajectory_hardstop(struct trajectory *traj)$/;"	f
+trajectory_in_window	trajectory_manager_core.c	/^uint8_t trajectory_in_window(struct trajectory *traj, double d_win, double a_win_rad)$/;"	f
+trajectory_init	trajectory_manager.c	/^void trajectory_init(struct trajectory *traj, double cs_hz)$/;"	f
+trajectory_line_abs	trajectory_manager_core.c	/^void trajectory_line_abs(struct trajectory *traj,$/;"	f
+trajectory_manager_circle_event	trajectory_manager_core.c	/^void trajectory_manager_circle_event(struct trajectory *traj)$/;"	f
+trajectory_manager_event	trajectory_manager_core.c	/^void trajectory_manager_event(void * param)$/;"	f
+trajectory_manager_line_event	trajectory_manager_core.c	/^static void trajectory_manager_line_event(struct trajectory *traj)$/;"	f	file:
+trajectory_manager_xy_event	trajectory_manager_core.c	/^void trajectory_manager_xy_event(struct trajectory *traj)$/;"	f
+trajectory_moving_backward	trajectory_manager_utils.c	/^int trajectory_moving_backward(struct trajectory *traj) {$/;"	f
+trajectory_moving_forward	trajectory_manager_utils.c	/^int trajectory_moving_forward(struct trajectory *traj) {$/;"	f
+trajectory_only_a_abs	trajectory_manager_core.c	/^void trajectory_only_a_abs(struct trajectory *traj, double a_deg_abs)$/;"	f
+trajectory_only_a_rel	trajectory_manager_core.c	/^void trajectory_only_a_rel(struct trajectory *traj, double a_deg)$/;"	f
+trajectory_only_d_rel	trajectory_manager_core.c	/^void trajectory_only_d_rel(struct trajectory *traj, double d_mm)$/;"	f
+trajectory_set_acc	trajectory_manager.c	/^void trajectory_set_acc(struct trajectory *traj, double d_acc, double a_acc)$/;"	f
+trajectory_set_cs	trajectory_manager.c	/^void trajectory_set_cs(struct trajectory *traj, struct cs *cs_d,$/;"	f
+trajectory_set_robot_params	trajectory_manager.c	/^void trajectory_set_robot_params(struct trajectory *traj,$/;"	f
+trajectory_set_speed	trajectory_manager.c	/^void trajectory_set_speed(struct trajectory *traj, double d_speed, double a_speed)$/;"	f
+trajectory_set_windows	trajectory_manager.c	/^void trajectory_set_windows(struct trajectory *traj, double d_win,$/;"	f
+trajectory_state	trajectory_manager.h	/^enum trajectory_state {$/;"	g
+trajectory_stop	trajectory_manager_core.c	/^void trajectory_stop(struct trajectory *traj)$/;"	f
+trajectory_turning	trajectory_manager_utils.c	/^int trajectory_turning(struct trajectory *traj) {$/;"	f
+trajectory_turnto_xy	trajectory_manager_core.c	/^void trajectory_turnto_xy(struct trajectory *traj, double x_abs_mm, double y_abs_mm)$/;"	f
+trajectory_turnto_xy_behind	trajectory_manager_core.c	/^void trajectory_turnto_xy_behind(struct trajectory *traj, double x_abs_mm, double y_abs_mm)$/;"	f
+turn_pt	trajectory_manager.h	/^	point_t turn_pt; \/**< The starting point of the clitoid. *\/$/;"	m	struct:line_target

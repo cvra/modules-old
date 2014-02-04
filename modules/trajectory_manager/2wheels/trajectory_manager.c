@@ -27,7 +27,6 @@
 
 #include <aversive.h>
 #include <aversive/error.h>
-#include <scheduler.h>
 #include <vect2.h>
 
 #include <2wheels/position_manager.h>
@@ -43,15 +42,14 @@
 /** structure initialization */
 void trajectory_init(struct trajectory *traj, double cs_hz)
 {
-	memset(traj, 0, sizeof(struct trajectory));
-	traj->cs_hz = cs_hz;
-	traj->state = READY;
-	traj->scheduler_task = -1;
+    memset(traj, 0, sizeof(struct trajectory));
+    traj->cs_hz = cs_hz;
+    traj->state = READY;
 }
 
 /** structure initialization */
 void trajectory_set_cs(struct trajectory *traj, struct cs *cs_d,
-		       struct cs *cs_a)
+               struct cs *cs_a)
 {
     traj->csm_distance = cs_d;
     traj->csm_angle = cs_a;
@@ -59,33 +57,33 @@ void trajectory_set_cs(struct trajectory *traj, struct cs *cs_d,
 
 /** structure initialization */
 void trajectory_set_robot_params(struct trajectory *traj,
-				 struct robot_system *rs,
-				 struct robot_position *pos)
+                 struct robot_system *rs,
+                 struct robot_position *pos)
 {
-	traj->robot = rs;
-	traj->position = pos;
+    traj->robot = rs;
+    traj->position = pos;
 }
 
 /** set speed consign */
 void trajectory_set_speed(struct trajectory *traj, double d_speed, double a_speed)
 {
-	traj->d_speed = d_speed;
-	traj->a_speed = a_speed;
+    traj->d_speed = d_speed;
+    traj->a_speed = a_speed;
 }
 
 /** set acc consign */
 void trajectory_set_acc(struct trajectory *traj, double d_acc, double a_acc)
 {
-	traj->d_acc = d_acc;
-	traj->a_acc = a_acc;
+    traj->d_acc = d_acc;
+    traj->a_acc = a_acc;
 }
 
 /** set windows for trajectory */
 void trajectory_set_windows(struct trajectory *traj, double d_win,
-			    double a_win_deg, double a_start_deg)
+                double a_win_deg, double a_start_deg)
 {
     traj->d_win = d_win ;
     traj->a_win_rad = RAD(a_win_deg);
-	traj->a_start_rad = RAD(a_start_deg);
+    traj->a_start_rad = RAD(a_start_deg);
 }
 

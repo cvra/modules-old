@@ -33,7 +33,8 @@
 #define RAD(x) ((x) * (M_PI / 180.0))
 
 /* 25 ms */
-#define TRAJ_EVT_PERIOD (25000UL/SCHEDULER_UNIT)
+#define TRAJ_EVT_PERIOD 25
+#define TRAJ_EVT_PRIO 23
 
 /** set speed consign in quadramp filter */
 void set_quadramp_speed(struct trajectory *traj, double d_speed, double a_speed);
