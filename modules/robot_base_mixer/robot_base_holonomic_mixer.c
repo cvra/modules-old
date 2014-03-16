@@ -5,18 +5,22 @@
 #include "robot_base_mixer.h"
 
 // TODO wrong constants, replace by dimensions from CAD/calibration
+
+// wheel angle (from robot x axis to wheel rotation axis)
 static const float beta[3] = {
     0,
     120,
     240
 };
 
+// wheel radius
 static const float r[3] = {
     0.010,
     0.010,
     0.010
 };
 
+// wheel distance from center
 static const float D[3] = {
     0.020,
     0.020,
