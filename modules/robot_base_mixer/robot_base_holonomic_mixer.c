@@ -8,9 +8,9 @@
 
 // wheel angle (from robot x axis to wheel rotation axis)
 static const float beta[3] = {
-    0,
-    120,
-    240
+    0,                        //   0 deg
+    2.0943951023931954923084, // 120 deg
+    4.1887902047863909846168  // 240 deg
 };
 
 // wheel radius
@@ -44,9 +44,9 @@ static void compute_matrix(void)
     rtw[0][1] = sin(beta[0]);
     rtw[1][1] = sin(beta[1]);
     rtw[2][1] = sin(beta[2]);
-    rtw[0][2] = -cos(D[0]);
-    rtw[1][2] = -cos(D[1]);
-    rtw[2][2] = -cos(D[2]);
+    rtw[0][2] = -cos(beta[0]);
+    rtw[1][2] = -cos(beta[1]);
+    rtw[2][2] = -cos(beta[2]);
     // wheel to robot matrix
     float c = 1 / (  D[0] * sin(beta[1] - beta[2])
                    - D[1] * sin(beta[0] - beta[2])
