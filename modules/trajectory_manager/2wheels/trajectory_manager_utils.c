@@ -79,29 +79,27 @@ void set_quadramp_acc(struct trajectory *traj, double d_acc, double a_acc)
 /** remove event if any */
 void delete_event(struct trajectory *traj)
 {
+
     set_quadramp_speed(traj, traj->d_speed, traj->a_speed);
     set_quadramp_acc(traj, traj->d_acc, traj->a_acc);
     if (traj->scheduler_task) {
-        OSTaskSuspend(traj->scheduler_task);
+        OSTaskDel(TRAJ_EVT_PRIO);
+        traj->scheduler_task = 0;
     }
 }
 
 /** schedule the trajectory event */
 void schedule_event(struct trajectory *traj)
 {
-    if(traj->scheduler_task) {
-        OSTaskResume(traj->scheduler_task);
-    } else {
-        traj->scheduler_task = TRAJ_EVT_PRIO;
-        OSTaskCreateExt(trajectory_manager_event,
-                        (void*)traj,
-                        &traj->task_stk[2047],
-                        TRAJ_EVT_PRIO,
-                        TRAJ_EVT_PRIO,
-                        &traj->task_stk[0],
-                        2048,
-                        NULL, NULL);
-    }
+    traj->scheduler_task = TRAJ_EVT_PRIO;
+    OSTaskCreateExt(trajectory_manager_event,
+                    (void*)traj,
+                    &traj->task_stk[2047],
+                    TRAJ_EVT_PRIO,
+                    TRAJ_EVT_PRIO,
+                    &traj->task_stk[0],
+                    2048,
+                    NULL, NULL);
 }
 
 /** do a modulo 2.pi -> [-Pi,+Pi], knowing that 'a' is in [-3Pi,+3Pi] */
