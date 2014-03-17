@@ -75,6 +75,7 @@ struct circle_target {
     vect2_cart center;   /**< center of the circle */
     double radius;       /**< radius of the circle */
     int32_t dest_angle;  /**< dst angle in inc */
+    int32_t dest_distance;  /**< dst angle in inc */
 
 #define TRIGO   1 /**< Rotation is counterclockwise */
 #define FORWARD 2 /**< go forward or backward */

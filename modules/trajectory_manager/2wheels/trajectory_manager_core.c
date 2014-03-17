@@ -549,15 +549,17 @@ void trajectory_manager_circle_event(struct trajectory *traj)
           angle_to_center_rad, radius, v2pol_target.r,
           coef_p, coef_d, d_speed, a_speed);
 
-    if(traj->target.circle.flags & FORWARD)
-        d_consign = 400000 + rs_get_distance(traj->robot);
-    else
-        d_consign = -400000 + rs_get_distance(traj->robot);
+    a_consign = traj->target.circle.dest_angle;
+    d_consign = traj->target.circle.dest_distance;
 
-    if(traj->target.circle.flags & TRIGO)
-        a_consign = 400000 + rs_get_angle(traj->robot);
-    else
-        a_consign = -400000 + rs_get_angle(traj->robot);
+
+    /* convert relative angle from imp to rad */
+    a = traj->target.circle.dest_angle - rs_get_angle(traj->robot);
+    a /= traj->position->phys.distance_imp_per_mm;
+    a /= traj->position->phys.track_mm;
+    a *= 2.;
+    if (ABS(a) < RAD(2))
+        delete_event(traj);
 
     cs_set_consign(traj->csm_angle, a_consign);
     cs_set_consign(traj->csm_distance, d_consign);
@@ -681,7 +683,7 @@ void trajectory_circle_rel(struct trajectory *traj,
                double rel_a_deg,
                uint8_t flags)
 {
-    double dst_angle;
+    double dst_angle, dst_distance;
 
     delete_event(traj);
 
@@ -695,8 +697,13 @@ void trajectory_circle_rel(struct trajectory *traj,
         (traj->position->phys.distance_imp_per_mm) *
         (traj->position->phys.track_mm) / 2.0;
 
+    dst_distance = RAD(rel_a_deg) * (traj->position->phys.distance_imp_per_mm) * radius_mm;
+
     traj->target.circle.dest_angle = rs_get_angle(traj->robot);
     traj->target.circle.dest_angle += dst_angle;
+
+    traj->target.circle.dest_distance = rs_get_distance(traj->robot);
+    traj->target.circle.dest_distance += dst_distance;
 
     DEBUG(E_TRAJECTORY, "Circle rel (x,y)=%2.2f,%2.2f r=%2.2f flags=%x dst_angle=%"PRIi32"",
           x, y, radius_mm, flags, traj->target.circle.dest_angle);
