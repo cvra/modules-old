@@ -9,25 +9,6 @@
 
 #include <inttypes.h>
 
-#ifdef COMPILE_ON_ROBOT
-
-#include "os_cpu.h"
-#include "os_cfg.h"
-#include "ucos_ii.h"
-#include <system.h>
-#include <io.h>
-#include <sys/alt_irq.h>
-#include <aversive/error.h>
-
-#else /* Workaround to compile on X86. */
-
-/** Reimplementation de IORD du NIOS2 pour compiler sur le PC */
-#define IORD(adress, offset) (*((int32_t *)adress+offset))
-/** Reimplementation de IOWR du NIOS2 pour compiler sur le PC */
-#define IOWR(adress, offset, data) (*((int32_t *)adress+offset) = data)
-#endif
-
-
  /** @brief Computes the absolute value of a number 
  *
  *  While the abs() function in the libc works only with int type
