@@ -24,7 +24,7 @@ void cvra_dc_set_pwm(void *device, int channel, int32_t value);
  *
  * This functions reads the position register of the board and returns its content.
  * @param [in] device A pointer to the base adress of the device.
- * @param [in] channel The encoder channel to read. 
+ * @param [in] channel The encoder channel to read.
  * @return The position of the asked encoder.
  */
 int32_t cvra_dc_get_encoder(void *device, int channel);
@@ -34,7 +34,7 @@ int32_t cvra_dc_get_encoder(void *device, int channel);
  * This function writes the given value to the count register of the given
  * channel.
  * @param [in] device A pointer to the base adress of the device.
- * @param [in] channel The encoder channel to read. 
+ * @param [in] channel The encoder channel to read.
  * @param [in] value The value to write to the register.
  */
 void cvra_dc_set_encoder(void *device, int channel, int32_t value);
