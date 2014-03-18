@@ -7,7 +7,7 @@
 #ifndef _AVERSIVE_H_
 #define _AVERSIVE_H_
 
-#include <aversive/types.h>
+#include <inttypes.h>
 
 #ifdef COMPILE_ON_ROBOT
 
