@@ -2,9 +2,9 @@
 #define _PLATFORM_H_
 
 #ifdef COMPILE_ON_ROBOT
-#include <platform/platform_nios2.h>
+#include <platform_nios2.h>
 #else
-#include <platform/platform_host.h>
+#include <platform_host.h>
 #endif
 
 /** @brief Resets the boards. */

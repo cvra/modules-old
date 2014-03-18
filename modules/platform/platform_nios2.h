@@ -1,6 +1,7 @@
 #ifndef _PLATFORM_NIOS2_H_
 #define _PLATFORM_NIOS2_H_
 
+#include <stdint.h>
 #include "os_cpu.h"
 #include "os_cfg.h"
 #include "ucos_ii.h"
