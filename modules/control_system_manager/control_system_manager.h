@@ -1,48 +1,23 @@
-/*  
- *  Copyright Droids Corporation, Microb Technology, Eirbot (2005)
- * 
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *
- *  Revision : $Id: control_system_manager.h,v 1.7.4.5 2008-03-02 17:18:34 zer0 Exp $
- *
- */
-
-/* Droids-corp, Eirbot, Microb Techology 2005
- * Implementation for the control_system manager
- */
-
 /** \file control_system_manager.h
  * \brief Interface for the control_system manager module.
  *
  * This module provide functions to control and regulate a system.
  */
-    
+
 #ifndef _CONTROL_SYSTEM_MANAGER_
 #define _CONTROL_SYSTEM_MANAGER_
 
-#include <aversive.h>
+#include <platform.h>
 
 /** \addtogroup Regulation
  * Ce module s'occupe de fournir un wrapper aux filtres (PID et trapeze).
- * Il s'occupe aussi de lire les entrees des capteurs et de balancer la 
+ * Il s'occupe aussi de lire les entrees des capteurs et de balancer la
  * puissance sur la sortie du regulateur.
  * @{
  */
 
 /** The data structure used by the control_system_manager module */
-struct cs {  
+struct cs {
     int32_t (*consign_filter)(void *, int32_t); /**< Callback function for the consign filter, eg: ramp. */
     void* consign_filter_params; /**< Parameter for consign_filter, will be passed as 1st param. */
 
@@ -50,26 +25,26 @@ struct cs {
     void* correct_filter_params; /**< Parameter for correct_filter, will be passed as 1st param. */
 
     int32_t (*feedback_filter)(void*, int32_t); /**< Callback function for the feedback filter, eg: low pass. */
-    void* feedback_filter_params; /**< Parameter for feedback_filter, will be passed as 1st param. */  
+    void* feedback_filter_params; /**< Parameter for feedback_filter, will be passed as 1st param. */
 
     /** Callback function for the output filter, eg: torque limiter or inertia adapter.
      * @note This may not be the best way to do it. */
-    int32_t (*output_filter)(void*, int32_t); 
-    void* output_filter_params; /**< Parameter for output_filter, will be passed as 1st param. */  
+    int32_t (*output_filter)(void*, int32_t);
+    void* output_filter_params; /**< Parameter for output_filter, will be passed as 1st param. */
 
     int32_t (*process_out)(void*); /**< Callback function to get process out, eg : encoder value. */
-    void* process_out_params; /**< Parameter for process_out, will be passed as 1st param. */  
+    void* process_out_params; /**< Parameter for process_out, will be passed as 1st param. */
 
     void (*process_in)(void*, int32_t); /**< Callback function to set process in, eg: PWM. */
-    void* process_in_params; /**< Parameter for process_out, will be passed as 1st param. */  
+    void* process_in_params; /**< Parameter for process_out, will be passed as 1st param. */
 
 
     int32_t consign_value; /**< Consign value for the control system. */
     /** Feedback from the process after going through feedback_filter() */
-    int32_t filtered_feedback_value; 
+    int32_t filtered_feedback_value;
 
     /** Consign for the system after going through consign_filter. This will be feeded to correct_filter. */
-    int32_t filtered_consign_value; 
+    int32_t filtered_consign_value;
     int32_t error_value; /**< Error value. This is filtered_consign_value - filtered_feedback_value. */
     int32_t out_value; /**< Output of correct_filter, as sent to process_in. */
     int enabled; /**< =1 if the control system is enabled, 0 otherwise. */
@@ -152,11 +127,11 @@ void cs_set_process_out(struct cs* cs,
  *   @param [in] cs A cs structure instance.
  *   @param [in] consign The consign of the control system.
  *
- *   @returns The value that was put at the process input. 
+ *   @returns The value that was put at the process input.
  */
 int32_t cs_do_process(struct cs* cs, int32_t consign);
 
-/** Apply cs_do_process() to the structure cs 
+/** Apply cs_do_process() to the structure cs
  *  @param [in] cs A cs structure instance, cast to void *.
  *  @note This is the same as cs_do_process except it takes the consign from
  *  the structure field.
@@ -183,7 +158,7 @@ int32_t cs_get_consign(struct cs* cs);
 /** Return the current consign, after filter.
  * @param [in] cs A control system instance.
  * @returns The last consign after the filter (eg: once processed by the ramp.)
- */ 
+ */
 int32_t cs_get_filtered_consign(struct cs* cs);
 
 /** Return the last feedback value, after filter.
@@ -191,7 +166,7 @@ int32_t cs_get_filtered_consign(struct cs* cs);
  * @returns The last feedback of the filter after the feedback filter.
  */
 int32_t cs_get_filtered_feedback(struct cs* cs);
- 
+
 
 /** Gets the feedback value, with no filter
  *
@@ -219,7 +194,7 @@ void cs_set_consign(struct cs* cs, int32_t v);
  */
 void cs_disable(struct cs *cs);
 
-/** Enables the control system (return to normal operation). 
+/** Enables the control system (return to normal operation).
  * @param [in] cs A control system instance.
  * @sa cs_disable().
  */
