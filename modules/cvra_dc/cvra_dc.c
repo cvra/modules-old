@@ -1,4 +1,3 @@
-#include <aversive.h>
 #include <cvra_dc.h>
 
 /** Registers definitions for the PWMs. */

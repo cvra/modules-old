@@ -1,7 +1,7 @@
 #ifndef _CVRA_DC_H_
 #define _CVRA_DC_H_
 
-#include <aversive.h>
+#include <platform.h>
 
 /** Number of motors per board. */
 #define CVRA_DC_MOTOR_COUNT 6
