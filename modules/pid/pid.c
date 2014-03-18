@@ -22,6 +22,16 @@
 #include <string.h>
 #include <pid.h>
 
+/**
+ *  signed maxmimum : both signs are tested
+ */
+#define S_MAX(to_saturate, value_max)    \
+do {                                     \
+   if (to_saturate > value_max)          \
+     to_saturate = value_max;            \
+   else if (to_saturate < -value_max)    \
+     to_saturate = -value_max;           \
+ } while(0)
 
 /** this function will initialize all fieds of pid structure to 0 */
 void pid_init(struct pid_filter *p)
