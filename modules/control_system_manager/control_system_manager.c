@@ -1,4 +1,5 @@
 #include <control_system_manager.h>
+#include <string.h>
 
 /** Call a filter() pointer :
  * - lock the interrupts
@@ -63,28 +64,8 @@ safe_setprocessin(void (*f)(void *, int32_t), void * param, int32_t value)
 
 void cs_init(struct cs* cs)
 {
-    cs->consign_filter = NULL;
-    cs->consign_filter_params = NULL;
-
-    cs->correct_filter = NULL;
-    cs->correct_filter_params = NULL;
-
-    cs->feedback_filter = NULL;
-    cs->feedback_filter_params = NULL;
-
-    cs->process_out = NULL;
-    cs->process_out_params = NULL;
-
-    cs->process_in = NULL;
-    cs->process_in_params = NULL;
-
-    cs->consign_value = 0;
-    cs->error_value = 0;
-    cs->out_value = 0;
-
+    memset(cs, 0, sizeof(struct cs));
     cs->enabled = 1;
-
-    return;
 }
 
 
