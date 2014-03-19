@@ -9,3 +9,10 @@ Usage
 This module only provides a single function, which retrieves the time :
 
     int time_since_reset_us = uptime_get();
+
+Mock usage
+----------
+When compiling for host platform, this module can be configured to return
+any value using the following function :
+
+    void uptime_set(int32_t time);
