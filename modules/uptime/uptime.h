@@ -1,7 +1,7 @@
 #ifndef _UPTIME_H_
 
+#include <platform.h>
 
-#include <aversive.h>
 
 /** Returns uptime of the robot
  *
