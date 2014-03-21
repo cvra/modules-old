@@ -1,3 +1,4 @@
+#include <aversive.h>
 #include <uptime.h>
 
 timestamp_t uptime_get(void) {
