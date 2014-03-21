@@ -1,7 +1,7 @@
 #ifndef _UPTIME_H_
 
 
-#include <aversive.h> 
+#include <stdint.h>
 
 /** Returns uptime of the robot
  * 
@@ -16,6 +16,8 @@
  *@todo: returns zero when run in simulation
  */ 
 
-int32_t uptime_get(void);
+typedef int32_t timestamp_t; // [us]
+
+timestamp_t uptime_get(void);
 
 #endif

@@ -1,6 +1,6 @@
 #include <uptime.h>
 
-int32_t uptime_get(void) {
+timestamp_t uptime_get(void) {
 #ifdef COMPILE_ON_ROBOT
     return (IORD(TIMECOUNTER_BASE, 0));
 #else
