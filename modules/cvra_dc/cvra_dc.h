@@ -3,6 +3,9 @@
 
 #include <aversive.h>
 
+#define DC_PWM_MAX_VALUE 475
+
+
 /** Number of motors per board. */
 #define CVRA_DC_MOTOR_COUNT 6
 
