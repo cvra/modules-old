@@ -1,7 +1,7 @@
-/*  
+/*
  *  Copyright Droids Corporation (2007)
  *  Olivier MATZ <zer0@droids-corp.org>
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -32,6 +32,7 @@
  * implemented on such systems.
  */
 
+#include <platform.h>
 #include <cirbuf.h>
 #include <vt100.h>
 #include <rdline_config.h>
@@ -48,8 +49,8 @@
 
 /** Status of the rdline module. */
 enum rdline_status {
-	RDLINE_INIT,  /**< Module not ready to accept chars. */
-	RDLINE_RUNNING, /** < Module ready to accept chars. */
+    RDLINE_INIT,  /**< Module not ready to accept chars. */
+    RDLINE_RUNNING, /** < Module ready to accept chars. */
 };
 
 
@@ -61,45 +62,45 @@ typedef void (rdline_validate_t)(const char *buf, int size);
 
 /** Prototype of the compatibles complete buffer functions. */
 typedef int (rdline_complete_t)(const char *buf, char *dstbuf,
-				int dstsize, int *state);
+                int dstsize, int *state);
 
 /** @struct rdline
  * @brief An instance of the rdline module.
  *
  * This modules holds everything that a single instance of the rdline module needs
  * such as buffers, history, clipboards, callbacks and so on.
- */ 
+ */
 struct rdline {
-	enum rdline_status status; /**< Flag to tell if the instance is ready to receive chars. */
-	/* rdline bufs */
-	struct cirbuf left; /**< Content of the line to the left of the cursor. */
-	struct cirbuf right; /**< Content of the line to the right of the cursor. */
+    enum rdline_status status; /**< Flag to tell if the instance is ready to receive chars. */
+    /* rdline bufs */
+    struct cirbuf left; /**< Content of the line to the left of the cursor. */
+    struct cirbuf right; /**< Content of the line to the right of the cursor. */
     /** Memory buffer for left cirbuf. reserve 2 chars for the \n\0 */
-	char left_buf[RDLINE_BUF_SIZE+2]; 
-	char right_buf[RDLINE_BUF_SIZE]; /**< Memory buffer for the right cirbuf. */
+    char left_buf[RDLINE_BUF_SIZE+2];
+    char right_buf[RDLINE_BUF_SIZE]; /**< Memory buffer for the right cirbuf. */
 
-	char prompt[RDLINE_PROMPT_SIZE]; /**< Prompt of the command line. */
-	uint8_t prompt_size; /**< Length of prompt. */
+    char prompt[RDLINE_PROMPT_SIZE]; /**< Prompt of the command line. */
+    uint8_t prompt_size; /**< Length of prompt. */
 
 #ifdef CONFIG_MODULE_RDLINE_KILL_BUF
-	char kill_buf[RDLINE_BUF_SIZE]; /**< Kill buffer (clipboard) */
-	uint8_t kill_size; /**< Length of the kill buffer. */
+    char kill_buf[RDLINE_BUF_SIZE]; /**< Kill buffer (clipboard) */
+    uint8_t kill_size; /**< Length of the kill buffer. */
 #endif
 
 #ifdef CONFIG_MODULE_RDLINE_HISTORY
-	/* history */
-	struct cirbuf history; 
-	char history_buf[RDLINE_HISTORY_BUF_SIZE];
-	int8_t history_cur_line;
+    /* history */
+    struct cirbuf history;
+    char history_buf[RDLINE_HISTORY_BUF_SIZE];
+    int8_t history_cur_line;
 #endif
 
-	/* callbacks and func pointers */
-	rdline_write_char_t *write_char; /**< Write char callback. */
-	rdline_validate_t *validate; /**< Validate buffer callback. Called after a press on enter. */
-	rdline_complete_t *complete; /**< Complete buffer callback. Called after a press on tab. */
+    /* callbacks and func pointers */
+    rdline_write_char_t *write_char; /**< Write char callback. */
+    rdline_validate_t *validate; /**< Validate buffer callback. Called after a press on enter. */
+    rdline_complete_t *complete; /**< Complete buffer callback. Called after a press on tab. */
 
-	/* vt100 parser */
-	struct vt100 vt100; /**< VT-100 associated with the buffer, for arrows, <C-A>, etc... */
+    /* vt100 parser */
+    struct vt100 vt100; /**< VT-100 associated with the buffer, for arrows, <C-A>, etc... */
 };
 
 /**
@@ -107,15 +108,15 @@ struct rdline {
  * of your program.
  * \param rdl A pointer to an uninitialized struct rdline
  * \param write_char The function used by the function to write a character
- * \param validate A pointer to the function to execute when the 
+ * \param validate A pointer to the function to execute when the
  *                 user validates the buffer.
- * \param complete A pointer to the function to execute when the 
+ * \param complete A pointer to the function to execute when the
  *                 user completes the buffer.
  */
-void rdline_init(struct rdline *rdl, 
-		 rdline_write_char_t *write_char,
-		 rdline_validate_t *validate,
-		 rdline_complete_t *complete);
+void rdline_init(struct rdline *rdl,
+         rdline_write_char_t *write_char,
+         rdline_validate_t *validate,
+         rdline_complete_t *complete);
 
 
 /**
@@ -145,12 +146,12 @@ void rdline_redisplay(struct rdline *rdl);
 
 
 /**
- * append a char to the readline buffer. 
+ * append a char to the readline buffer.
  * @return 1 when the line has been validated.
  * @return 2 when the user asked to complete the buffer.
  * @return -1 if it is not running.
  * @return -2 if EOF (ctrl-d on an empty line).
- * @return 0 in every other case. 
+ * @return 0 in every other case.
  * @todo error case when the buffer is full ?
  *
  * \param rdl A pointer to a struct rdline

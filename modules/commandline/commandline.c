@@ -1,36 +1,39 @@
+#include <platform.h>
 #include <commandline.h>
-#include <aversive.h>
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <rdline.h>
 #include <string.h>
 
 /** This functions is used to write a char by the module. */
-static void write_char(char c) {
+static void write_char(char c)
+{
     putchar(c);
 }
 
 /** The instance of the readline module used by the shell. */
 static struct rdline rdl;
 
-/** The prompt of the shell. */ 
+/** The prompt of the shell. */
 static char prompt[] = "board>";
 
 /* All the possibles delimiter for a token. */
-#define DELIMITER " \n" 
+#define DELIMITER " \n"
 
 /** List of all registered commands. */
 static command_t *commands;
 
 /** This function is called when user press enter. */
-static void validate_buffer(const char *buf, int size) {
+static void validate_buffer(const char *buf, int size)
+{
     int argc;
     unsigned int i;
     char **argv;
 
-    char *buffer; 
+    char *buffer;
 
-    /* strtok() changes the buffer, so we copy it first. */ 
+    /* strtok() changes the buffer, so we copy it first. */
     buffer = malloc(size);
     strncpy(buffer, buf, size);
 
@@ -78,7 +81,8 @@ static void validate_buffer(const char *buf, int size) {
 }
 
 /** This function is called each time the user press tab. */
-static int complete_buffer(const char *buf, char *dst_buf, int dst_size, int *state) {
+static int complete_buffer(const char *buf, char *dst_buf, int dst_size, int *state)
+{
     if(*state == 0){
         int size = strlen(buf);
 
@@ -101,7 +105,7 @@ static int complete_buffer(const char *buf, char *dst_buf, int dst_size, int *st
             }
 
             if(completed_cmd_name && (int)strlen(completed_cmd_name) - size + i < dst_size){
-                strncpy(dst_buf, completed_cmd_name + (size - i), strlen(completed_cmd_name) - (size - i) + 1);    
+                strncpy(dst_buf, completed_cmd_name + (size - i), strlen(completed_cmd_name) - (size - i) + 1);
                 int dst_string_size = strlen(dst_buf);
                 dst_buf[dst_string_size] = ' ';
                 dst_buf[dst_string_size + 1] = '\0';
@@ -113,7 +117,8 @@ static int complete_buffer(const char *buf, char *dst_buf, int dst_size, int *st
     return 0;
 }
 
-void commandline_input_char(char c) {
+void commandline_input_char(char c)
+{
     int same;
     int ret;
     const char *buffer, *history;
@@ -133,7 +138,8 @@ void commandline_input_char(char c) {
     }
 }
 
-void commandline_init(command_t c[]) {
+void commandline_init(command_t c[])
+{
     commands = c;
     rdline_init(&rdl, write_char, validate_buffer, complete_buffer);
     rdline_newline(&rdl, prompt);
