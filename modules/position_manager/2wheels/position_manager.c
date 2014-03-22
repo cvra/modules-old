@@ -28,24 +28,21 @@
 /** initialization of the robot_position pos, everthing is set to 0 */
 void position_init(struct robot_position *pos)
 {
-    OS_CPU_SR cpu_sr;
-    OS_ENTER_CRITICAL();
     memset(pos, 0, sizeof(struct robot_position));
-    OS_EXIT_CRITICAL();
+    platform_create_semaphore(&pos->lock, 1);
 }
 
 /** Set a new robot position */
 void position_set(struct robot_position *pos, int16_t x, int16_t y, double a_deg)
 {
-    OS_CPU_SR cpu_sr;
-    OS_ENTER_CRITICAL();
+    platform_take_semaphore(&pos->lock);
     pos->pos_d.a = (a_deg * M_PI)/ 180.0;
     pos->pos_d.x = x;
     pos->pos_d.y = y;
     pos->pos_s16.x = x;
     pos->pos_s16.y = y;
     pos->pos_s16.a = a_deg;
-    OS_EXIT_CRITICAL();
+    platform_signal_semaphore(&pos->lock);
 }
 
 #ifdef CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
@@ -112,7 +109,6 @@ void position_manage(struct robot_position *pos)
     struct rs_polar encoders;
     struct rs_polar delta;
     struct robot_system * rs;
-    OS_CPU_SR cpu_sr;
 
     rs = pos->rs;
     /* here we could raise an error */
@@ -140,11 +136,10 @@ void position_manage(struct robot_position *pos)
     delta.angle = encoders.angle - pos->prev_encoders.angle;
 
     /* update double position */
-    OS_ENTER_CRITICAL();
+    platform_take_semaphore(&pos->lock);
     a = pos->pos_d.a;
     x = pos->pos_d.x;
     y = pos->pos_d.y;
-    OS_EXIT_CRITICAL();
 
     if (delta.angle==0) {
         /* we go straight */
@@ -203,14 +198,13 @@ void position_manage(struct robot_position *pos)
     y_s16 = (int16_t)y;
     a_s16 = (int16_t)(a * (360.0/(M_PI*2)));
 
-    OS_ENTER_CRITICAL();
     pos->pos_d.a = a;
     pos->pos_d.x = x;
     pos->pos_d.y = y;
     pos->pos_s16.x = x_s16;
     pos->pos_s16.y = y_s16;
     pos->pos_s16.a = a_s16;
-    OS_EXIT_CRITICAL();
+    platform_signal_semaphore(&pos->lock);
 }
 
 

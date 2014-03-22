@@ -23,6 +23,7 @@
 #ifndef _ROBOT_POSITION_MANAGER_H_
 #define _ROBOT_POSITION_MANAGER_H_
 
+#include <platform.h>
 #include <math.h>
 #include <2wheels/robot_system.h>
 #include <vect2.h>
@@ -95,8 +96,8 @@
  */
 struct robot_physical_params
 {
-	double track_mm;			/**< Track (distance between wheels) in mm */
-	double distance_imp_per_mm;	/**< Impulsions per mm */
+    double track_mm;            /**< Track (distance between wheels) in mm */
+    double distance_imp_per_mm; /**< Impulsions per mm */
 };
 
 
@@ -107,9 +108,9 @@ struct robot_physical_params
  */
 struct xya_position
 {
-	double x; /**< The X coordinate, in mm. */
-	double y; /**< The Y coordinate, in mm. */
-	double a; /**< The angle relative to the X axis, in radians. */
+    double x; /**< The X coordinate, in mm. */
+    double y; /**< The Y coordinate, in mm. */
+    double a; /**< The angle relative to the X axis, in radians. */
 };
 
 /**@brief Stores a cartesian position in int.
@@ -120,9 +121,9 @@ struct xya_position
  */
 struct xya_position_s16
 {
-	int16_t x; /**< The X coordinate, in mm. */
-	int16_t y; /**< The Y coordinate, in mm. */
-	int16_t a; /**< The angle relative to the X axis in degrees. */
+    int16_t x; /**< The X coordinate, in mm. */
+    int16_t y; /**< The Y coordinate, in mm. */
+    int16_t a; /**< The angle relative to the X axis in degrees. */
 };
 
 /** \brief Instance of the odometry subsystem.
@@ -132,16 +133,17 @@ struct xya_position_s16
  */
 struct robot_position
 {
-	uint8_t use_ext;					/**< Only useful when we have 2 sets of encoders. */
-	struct robot_physical_params phys;	/**< The physical parameters of the robot. */
-	struct xya_position pos_d;			/**< Position of the robot in double. */
-	struct xya_position_s16 pos_s16;	/**< Position of the robot in integers. */
-	struct rs_polar prev_encoders;		/**< Previous state of the encoders. */
-	struct robot_system *rs;			/**< Robot system used for the computations. */
+    uint8_t use_ext;                    /**< Only useful when we have 2 sets of encoders. */
+    struct robot_physical_params phys;  /**< The physical parameters of the robot. */
+    struct xya_position pos_d;          /**< Position of the robot in double. */
+    struct xya_position_s16 pos_s16;    /**< Position of the robot in integers. */
+    struct rs_polar prev_encoders;      /**< Previous state of the encoders. */
+    struct robot_system *rs;            /**< Robot system used for the computations. */
 
 #ifdef CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
-	double centrifugal_coef;			/**< Coefficient for the centrifugal computation */
+    double centrifugal_coef;            /**< Coefficient for the centrifugal computation */
 #endif
+    semaphore_t lock;                   /**< Lock to prevent concurrent access. */
 };
 
 
@@ -193,7 +195,7 @@ void position_use_mot(struct robot_position *pos);
  * @param [in] distance_imp_per_mm The number of encoder pulses for one mm.
  */
 void position_set_physical_params(struct robot_position *pos, double track_mm,
-				  double distance_imp_per_mm);
+                  double distance_imp_per_mm);
 
 /** @brief Set related robot_system structure.
  *

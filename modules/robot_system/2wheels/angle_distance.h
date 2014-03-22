@@ -1,6 +1,6 @@
-/*  
+/*
  *  Copyright Droids Corporation, Microb Technology, Eirbot (2005)
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -22,7 +22,7 @@
 #ifndef _ANGLE_DISTANCE_H_
 #define _ANGLE_DISTANCE_H_
 
-#include <aversive.h>
+#include <platform.h>
 
 /** Stores the state of two encoders or pwm in the left / right format. */
 struct rs_wheels {
