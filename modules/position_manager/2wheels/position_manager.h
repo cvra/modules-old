@@ -1,6 +1,6 @@
-/*  
+/*
  *  Copyright Droids Corporation, Microb Technology, Eirbot (2005)
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -33,7 +33,7 @@
  */
 
 
-/** 
+/**
  * @brief Enables centrifugal force compensation.
  *
  * A vehicle moving on a trajectory is subject to the centrifugal force F. This
@@ -43,7 +43,7 @@
  * is that since F is orthogonal to the speed vector, we suppose that the
  * lateral displacement will be pureley proportionnal to this force.
  *
- * The centrifugal force can be written as 
+ * The centrifugal force can be written as
  *
  * \f$\begin{array}{lcl}
  * F &=&\frac{v^2}{R}\cdot m \\
@@ -52,7 +52,7 @@
  *
  * The third form is the most interseting one because it does not require
  * the computation of the radius R. At any given point n of the trajectory
- * we can easily compute 
+ * we can easily compute
  *
  * \f$\begin{array}{ĺcl}
  * V_n &=& D_n - D_{n-1}\\
@@ -67,10 +67,10 @@
  * \end{array} \f$
  *
  * In a classic odometry implementation, the equations of odometry are :
- * 
+ *
  * \f$\begin{array}{lcl}
  * X_{n+1} &=& X_n + \Delta X \\
- * Y_{n+1} &=& Y_n + \Delta Y 
+ * Y_{n+1} &=& Y_n + \Delta Y
  * \end{array} \f$
  *
  * In the modified implementation we have :
@@ -80,12 +80,12 @@
  * Y_{n+1} &=& Y_n &+& \Delta Y  &+& k \omega_n\ \Delta X
  * \end{array} \f$
  *
- * K is found by experience, and given to the system using 
- * position_set_centrifugal_coef(). 
+ * K is found by experience, and given to the system using
+ * position_set_centrifugal_coef().
  *
  * \todo For now the code does not use the algorithm written above but another
  * equivalent, slower implementation.
- * */ 
+ * */
 #define CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
 
 /** @brief Stores the physical dimensions of the robot.
@@ -93,7 +93,7 @@
  * This structure stores the number of encoder impulsion per mm and the
  * distance between the wheels of the robot.
  */
-struct robot_physical_params 
+struct robot_physical_params
 {
 	double track_mm;			/**< Track (distance between wheels) in mm */
 	double distance_imp_per_mm;	/**< Impulsions per mm */
@@ -105,7 +105,7 @@ struct robot_physical_params
  * This structure holds a position of the robot in the double precision format.
  * @sa xya_position_s16
  */
-struct xya_position 
+struct xya_position
 {
 	double x; /**< The X coordinate, in mm. */
 	double y; /**< The Y coordinate, in mm. */
@@ -113,7 +113,7 @@ struct xya_position
 };
 
 /**@brief Stores a cartesian position in int.
- * 
+ *
  * Same as xya_position but in integers.
  * @note The angle is stocked in degrees.
  * @sa xya_position
@@ -138,8 +138,8 @@ struct robot_position
 	struct xya_position_s16 pos_s16;	/**< Position of the robot in integers. */
 	struct rs_polar prev_encoders;		/**< Previous state of the encoders. */
 	struct robot_system *rs;			/**< Robot system used for the computations. */
-	
-#ifdef CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE	
+
+#ifdef CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
 	double centrifugal_coef;			/**< Coefficient for the centrifugal computation */
 #endif
 };
@@ -148,13 +148,13 @@ struct robot_position
 /** @brief Initialization of the odometry subsystem.
  *
  * This function initialize a robot_position structure, setting everything to 0.
- * @param [in] pos The odometry instance to initialize. 
+ * @param [in] pos The odometry instance to initialize.
  */
 void position_init(struct robot_position *pos);
 
-#ifdef CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE	
+#ifdef CONFIG_MODULE_COMPENSATE_CENTRIFUGAL_FORCE
 /** @brief Set centrifugal coef.
- * 
+ *
  * This functions sets the centrifugal coef for the odometry compensation.
  * @param [in] pos The odometry instance.
  * @param [in] coef The centrifugal force coefficient.
@@ -187,7 +187,7 @@ void position_use_ext(struct robot_position *pos);
 void position_use_mot(struct robot_position *pos);
 
 
-/** @brief Sets the physical parameters of the robot. 
+/** @brief Sets the physical parameters of the robot.
  * @param [in] pos The robot_position instance to configure.
  * @param [in] track_mm The distance between the wheels, in mm.
  * @param [in] distance_imp_per_mm The number of encoder pulses for one mm.
@@ -197,7 +197,7 @@ void position_set_physical_params(struct robot_position *pos, double track_mm,
 
 /** @brief Set related robot_system structure.
  *
- * Save in pos structure the pointer to the associated robot_system. 
+ * Save in pos structure the pointer to the associated robot_system.
  * The robot_system structure is used to get values from virtual encoders
  * that return angle and distance.
  *
@@ -220,57 +220,57 @@ void position_set_related_robot_system(struct robot_position *pos, struct robot_
 void position_manage(struct robot_position *pos);
 
 
-/** @brief Get current X. 
+/** @brief Get current X.
  *
  * @param [in] pos The odometry system instance.
  * @return Current x in mm in integer.
- */ 
+ */
 int16_t position_get_x_s16(struct robot_position *pos);
 
-/** @brief Get current Y. 
+/** @brief Get current Y.
  *
  * @param [in] pos The odometry system instance.
  * @return Current Y in mm in integer.
  */
 int16_t position_get_y_s16(struct robot_position *pos);
 
-/** @brief Get current angle. 
+/** @brief Get current angle.
  *
  * @param [in] pos The odometry system instance.
  * @return Current angle in degrees in integer.
  */
 int16_t position_get_a_deg_s16(struct robot_position *pos);
 
-/** @brief Get current X. 
+/** @brief Get current X.
  *
  * @param [in] pos The odometry system instance.
  * @return Current x in mm in double.
- */ 
+ */
 double position_get_x_double(struct robot_position *pos);
 
-/** @brief Get current X. 
+/** @brief Get current X.
  *
  * @param [in] pos The odometry system instance.
  * @return Current x in mm in float.
- */ 
+ */
 float position_get_x_float(struct robot_position *pos);
 
-/** @brief Get current Y. 
+/** @brief Get current Y.
  *
  * @param [in] pos The odometry system instance.
  * @return Current Y in mm in double.
- */ 
+ */
 double position_get_y_double(struct robot_position *pos);
 
-/** @brief Get current Y. 
+/** @brief Get current Y.
  *
  * @param [in] pos The odometry system instance.
  * @return Current Y in mm in float.
- */ 
+ */
 float position_get_y_float(struct robot_position *pos);
 
 /** @brief Get current position
- * 
+ *
  * @param [in] pos The odometry system instance.
  * @returns current position stored in a vect2_cart.
  */
