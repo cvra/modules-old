@@ -22,7 +22,7 @@
 
 #include <string.h>
 
-#include <aversive.h>
+#include <platform.h>
 #include <aversive/error.h>
 
 struct error_fct g_error_fct;

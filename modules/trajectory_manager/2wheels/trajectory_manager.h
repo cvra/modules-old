@@ -33,7 +33,7 @@
 #ifndef TRAJECTORY_MANAGER
 #define TRAJECTORY_MANAGER
 
-#include <aversive.h>
+#include <platform.h>
 #include <vect2.h>
 #include <2wheels/robot_system.h>
 #include <vect_base.h>

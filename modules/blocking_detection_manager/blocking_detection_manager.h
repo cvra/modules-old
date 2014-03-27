@@ -25,7 +25,7 @@
 #ifndef BLOCKING_DETECTION_MANAGER_H_
 #define BLOCKING_DETECTION_MANAGER_H_
 
-#include <aversive.h>
+#include <platform.h>
 #include <control_system_manager.h>
 
 

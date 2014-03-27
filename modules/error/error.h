@@ -22,6 +22,8 @@
 #ifndef _ERROR_H_
 #define _ERROR_H_
 
+#include <platform.h>
+
 #ifndef _AVERSIVE_ERROR_H_
 #error "Don't include <error.h>, include <aversive/error.h> instead"
 #endif

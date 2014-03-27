@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include <aversive.h>
+#include <platform.h>
 #include <aversive/error.h>
 #include <vect2.h>
 

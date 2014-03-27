@@ -21,7 +21,7 @@
 #ifndef _CVRA_ADC_H_
 #define _CVRA_ADC_H_
 
-#include <aversive.h>
+#include <platform.h>
 
 /** Returns the selected ADC channel's value. */
 int32_t cvra_adc_get_value(void *base, int input);

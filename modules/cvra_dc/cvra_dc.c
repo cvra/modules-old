@@ -1,7 +1,7 @@
 #include <cvra_dc.h>
 
 /** Registers definitions for the PWMs. */
-static const int pwm_registers[] = {0x03, 0x07,  0x0B, 0x0E, 0x11, 0x14};
+static const int pwm_registers[] = {0x03, 0x07,  0x0B, 0x0E, 0x11, 0x14, 0x15, 0x16};
 
 /** Registers definitions for the indexes. */
 static const int position_registers[] = {0x00, 0x04, 0x08, 0x0C, 0x0F, 0x12};
@@ -16,7 +16,7 @@ static const int current_registers[] = {0x02, 0x06, 0x0A, 0x0D, 0x10, 0x13};
 
 
 void cvra_dc_set_pwm(void *device, int channel, int32_t value) {
-    if(channel < 0 || channel > 5)
+    if(channel < 0 || channel > 7)
         return;
 
     if(value < -DC_PWM_MAX_VALUE)

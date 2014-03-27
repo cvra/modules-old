@@ -18,7 +18,6 @@
 //      MA 02110-1301, USA.
 
 #include "cvra_adc.h"
-#include <aversive.h>
 
 int32_t cvra_adc_get_value(void *base, int input) {
     if(input >= 8 || input < 0)

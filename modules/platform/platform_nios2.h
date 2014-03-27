@@ -8,6 +8,11 @@
 #include <system.h>
 #include <io.h>
 #include <sys/alt_irq.h>
-#include <aversive/error.h>
+
+
+typedef struct {
+    int count;
+    int acquired_count;
+} semaphore_t;
 
 #endif

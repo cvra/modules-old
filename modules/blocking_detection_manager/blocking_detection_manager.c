@@ -30,6 +30,12 @@
 #include <blocking_detection_manager.h>
 
 
+#define ABS(val) ({					\
+			__typeof(val) __val = (val);	\
+			if (__val < 0)			\
+				__val = - __val;	\
+			__val;				\
+		})
 
 /** init module, give the robot system to use as a parameter */
 void bd_init(struct blocking_detection * bd, struct cs *cs)

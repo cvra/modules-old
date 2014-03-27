@@ -21,7 +21,7 @@
  *  Integration in Aversive: Olivier MATZ <zer0@droids-corp.org>
  */
 
-#include <aversive.h>
+#include <platform.h>
 #include <aversive/error.h>
 
 #include <math.h>

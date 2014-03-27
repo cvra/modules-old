@@ -24,7 +24,6 @@
 #ifndef _TRAJECTORY_MANAGER_H_
 #define _TRAJECTORY_MANAGER_H_
 
-#include <aversive.h>
 #include <2wheels/trajectory_manager.h>
 
 #define M_2PI (2*M_PI)
