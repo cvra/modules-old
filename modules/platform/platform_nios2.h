@@ -9,10 +9,8 @@
 #include <io.h>
 #include <sys/alt_irq.h>
 
-
 typedef struct {
-    int count;
-    int acquired_count;
+    OS_EVENT*   sem;
 } semaphore_t;
 
 #endif

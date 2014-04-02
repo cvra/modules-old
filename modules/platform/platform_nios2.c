@@ -17,22 +17,19 @@ void panic(void)
 
 void platform_create_semaphore(semaphore_t *sem, int count)
 {
-    sem->count = count;
-    sem->acquired_count = 0;
+    sem->sem = OSSemCreate((INT16U)count);
 }
 
 
 void platform_signal_semaphore(semaphore_t *sem)
 {
-    sem->count++;
+    OSSemPost(sem->sem);
 }
 
 void platform_take_semaphore(semaphore_t *sem)
 {
-    if (sem->count > 0) {
-        sem->count--;
-        sem->acquired_count++;
-    }
+    INT8U err;
+    OSSemPend(sem->sem, 0, &err);
 }
 
 
