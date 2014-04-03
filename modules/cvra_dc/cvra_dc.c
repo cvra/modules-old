@@ -69,6 +69,7 @@ void cvra_dc_set_pwm0(void *device, int32_t value) {
     cvra_dc_set_pwm(device, 0, value);
 }
 
+
 void cvra_dc_set_pwm1(void *device, int32_t value) {
     cvra_dc_set_pwm(device, 1, value);
 }
@@ -124,3 +125,34 @@ int32_t cvra_dc_get_index1(void *device){
 int32_t cvra_dc_get_index2(void *device){
     return cvra_dc_get_index(device, 2);
 }
+
+void cvra_dc_set_pwm0_negative(void *device, int32_t value)
+{
+    cvra_dc_set_pwm(device, 0, -value);
+}
+
+void cvra_dc_set_pwm1_negative(void *device, int32_t value)
+{
+    cvra_dc_set_pwm(device, 1, -value);
+}
+
+void cvra_dc_set_pwm2_negative(void *device, int32_t value)
+{
+    cvra_dc_set_pwm(device, 2, -value);
+}
+
+void cvra_dc_set_pwm3_negative(void *device, int32_t value)
+{
+    cvra_dc_set_pwm(device, 3, -value);
+}
+
+void cvra_dc_set_pwm4_negative(void *device, int32_t value)
+{
+    cvra_dc_set_pwm(device, 4, -value);
+}
+
+void cvra_dc_set_pwm5_negative(void *device, int32_t value)
+{
+    cvra_dc_set_pwm(device, 5, -value);
+}
+

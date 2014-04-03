@@ -132,6 +132,14 @@ int32_t cvra_dc_get_encoder4(void *device);
  */
 int32_t cvra_dc_get_encoder5(void *device);
 
+/** Similar to set_pwm but multiplies input by -1. */
+void cvra_dc_set_pwm0_negative(void *device, int32_t value);
+void cvra_dc_set_pwm1_negative(void *device, int32_t value);
+void cvra_dc_set_pwm2_negative(void *device, int32_t value);
+void cvra_dc_set_pwm3_negative(void *device, int32_t value);
+void cvra_dc_set_pwm4_negative(void *device, int32_t value);
+void cvra_dc_set_pwm5_negative(void *device, int32_t value);
+
 int32_t cvra_dc_get_index0(void *device);
 int32_t cvra_dc_get_index1(void *device);
 int32_t cvra_dc_get_index2(void *device);
