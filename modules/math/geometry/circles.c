@@ -59,6 +59,27 @@ int circle_intersect(const circle_t *c1, const circle_t *c2,
 	float a, b, c, d, e;
 	uint8_t ret = 0;
 
+
+    if (fabs(c1->y - c2->y) < 0.0001f) {
+        /* TODO: Dirty fix because we assumed that delta_y != 0. */
+        /* avoids infinite recursion. */
+        if (fabs(c1->x - c2->x) < 0.0001f)
+            return 0;
+        point_t pa, pb;
+        ca.x = c1->y;
+        ca.y = c1->x;
+        ca.r = c1->r;
+        cb.x = c2->y;
+        cb.y = c2->x;
+        cb.r = c2->r;
+        ret = circle_intersect(&ca, &cb, &pa, &pb);
+        p1->x=pa.y;
+        p1->y=pa.x;
+        p2->y=pb.x;
+        p2->x=pb.y;
+        return ret;
+    }
+
 	/* create circles with same radius, but centered on 0,0 : it
 	 * will make process easier */
 	ca.x = 0;
@@ -68,7 +89,7 @@ int circle_intersect(const circle_t *c1, const circle_t *c2,
 	cb.y = c2->y - c1->y;
 	cb.r = c2->r;
 
-	/* inspired from http://www.loria.fr/~roegel/notes/note0001.pdf 
+	/* inspired from http://www.loria.fr/~roegel/notes/note0001.pdf
 	 * which can be found in doc. */
 	a = 2.0f * cb.x;
 	b = 2.0f * cb.y;
@@ -80,7 +101,7 @@ int circle_intersect(const circle_t *c1, const circle_t *c2,
 	if (d < 0.0f)
 		return 0;
 
-	
+
 	if (fabsf(b) <  0.0001f) {
 		/* special case */
 		e = sq(cb.r) - sq((2.0f * c - sq(a)) / (2.0f * a));
