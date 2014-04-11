@@ -15,16 +15,16 @@ static const float beta[3] = {
 
 // wheel radius
 static const float r[3] = {
-    0.0175*1.1,
-    0.0175*1.1,
-    0.0175*1.1
+    0.01855,
+    0.01855,
+    0.01855
 };
 
 // wheel distance from center
 static const float D[3] = {
-    0.09385,  // inner 87.7 mm outer 100 mm
-    0.09385,
-    0.09385
+    0.095,  // inner 87.7 mm outer 100 mm = 0.09385 (0.095 measured!?)
+    0.095,
+    0.095
 };
 
 
