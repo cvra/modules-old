@@ -82,15 +82,13 @@ void delete_event(struct trajectory *traj)
 
     set_quadramp_speed(traj, traj->d_speed, traj->a_speed);
     set_quadramp_acc(traj, traj->d_acc, traj->a_acc);
-    if (traj->scheduler_task) {
-        OSTaskDel(TRAJ_EVT_PRIO);
-        traj->scheduler_task = 0;
-    }
+    OSTaskDel(TRAJ_EVT_PRIO);
 }
 
 /** schedule the trajectory event */
 void schedule_event(struct trajectory *traj)
 {
+
     traj->scheduler_task = TRAJ_EVT_PRIO;
     OSTaskCreateExt(trajectory_manager_event,
                     (void*)traj,

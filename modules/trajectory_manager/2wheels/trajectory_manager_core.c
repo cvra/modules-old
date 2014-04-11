@@ -208,7 +208,6 @@ void trajectory_goto_xy_abs(struct trajectory *traj, double x, double y)
     traj->target.cart.x = x;
     traj->target.cart.y = y;
     traj->state = RUNNING_XY_START;
-    trajectory_manager_event(traj);
     schedule_event(traj);
 }
 
@@ -219,7 +218,6 @@ void trajectory_goto_forward_xy_abs(struct trajectory *traj, double x, double y)
     traj->target.cart.x = x;
     traj->target.cart.y = y;
     traj->state = RUNNING_XY_F_START;
-    trajectory_manager_event(traj);
     schedule_event(traj);
 }
 
@@ -230,7 +228,6 @@ void trajectory_goto_backward_xy_abs(struct trajectory *traj, double x, double y
     traj->target.cart.x = x;
     traj->target.cart.y = y;
     traj->state = RUNNING_XY_B_START;
-    trajectory_manager_event(traj);
     schedule_event(traj);
 }
 
@@ -250,7 +247,6 @@ void trajectory_goto_d_a_rel(struct trajectory *traj, double d, double a)
     traj->target.cart.y += y;
 
     traj->state = RUNNING_XY_START;
-    trajectory_manager_event(traj);
     schedule_event(traj);
 }
 
@@ -275,7 +271,6 @@ void trajectory_goto_xy_rel(struct trajectory *traj, double x_rel_mm, double y_r
     traj->target.cart.y += y;
 
     traj->state = RUNNING_XY_START;
-    trajectory_manager_event(traj);
     schedule_event(traj);
 }
 
@@ -709,7 +704,6 @@ void trajectory_circle_rel(struct trajectory *traj,
           x, y, radius_mm, flags, traj->target.circle.dest_angle);
 
     traj->state = RUNNING_CIRCLE;
-    trajectory_manager_event(traj);
     schedule_event(traj);
 }
 
@@ -761,7 +755,6 @@ void trajectory_line_abs(struct trajectory *traj,
     delete_event(traj);
     __trajectory_line_abs(traj, x1, y1, x2, y2, advance);
     traj->state = RUNNING_LINE;
-    trajectory_manager_event(traj);
     schedule_event(traj);
 }
 
@@ -1008,7 +1001,6 @@ int8_t trajectory_clitoid(struct trajectory *traj,
     __trajectory_line_abs(traj, x, y, turnx, turny,
                   advance);
     traj->state = RUNNING_CLITOID_LINE;
-    trajectory_manager_event(traj);
     schedule_event(traj);
     return 0;
 }
