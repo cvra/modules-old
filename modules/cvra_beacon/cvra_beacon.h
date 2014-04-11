@@ -41,11 +41,14 @@ typedef struct {
     alt_u32 firstedge;
     float   gain;
     float   offset;
+    float direction_offset;
     alt_u8  nb_beacon;
     beacon_pos_t beacon[NB_BEACON_MAX];
 } cvra_beacon_t;
 
 /** Inits the CVRA beacon module. */
 void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number, int pwm, float gain, float offset);
+
+void cvra_beacon_set_direction_offset(cvra_beacon_t *beacon, float value);
 
 #endif

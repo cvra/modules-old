@@ -81,6 +81,11 @@ void cvra_beacon_init(cvra_beacon_t *beacon, void *adress, int irq_number, int p
 
 }
 
+void cvra_beacon_set_direction_offset(cvra_beacon_t *beacon, float value)
+{
+    beacon->direction_offset = value;
+}
+
 /* Interrupt function called one per rotation*/
 void cvra_beacon_manage(void *a) {
     alt_u32 actual_index;
@@ -134,8 +139,7 @@ void cvra_beacon_manage(void *a) {
           beacon->beacon[beacon->nb_beacon].direction = (direction*360.0)/beacon->period;
           beacon->beacon[beacon->nb_beacon].distance = ((distance*360.0)/beacon->period) * beacon->gain + beacon->offset;
 
-          // XXX Debra-specific calibration
-          beacon->beacon[beacon->nb_beacon].direction -= 60; 
+          beacon->beacon[beacon->nb_beacon].direction += beacon->direction_offset; 
 
           // Keeps the angle between +180 and -180
           if(beacon->beacon[beacon->nb_beacon].direction > 180)
