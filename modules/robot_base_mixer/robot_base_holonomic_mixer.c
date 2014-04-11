@@ -15,9 +15,9 @@ static const float beta[3] = {
 
 // wheel radius
 static const float r[3] = {
-    0.0175,
-    0.0175,
-    0.0175
+    0.0175*1.1,
+    0.0175*1.1,
+    0.0175*1.1
 };
 
 // wheel distance from center
