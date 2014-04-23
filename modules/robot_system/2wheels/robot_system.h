@@ -89,6 +89,9 @@
 /** This flags tells the module to ignore the motor coder gain. */
 #define RS_IGNORE_MOT_GAIN 4
 
+
+#define CONFIG_MODULE_ROBOT_SYSTEM_MOT_AND_EXT
+
 /** @brief An instance of the robot_system module
  *
  * This structure holds everything we need in order to perform the left / right
@@ -105,7 +108,7 @@ struct robot_system
     struct rs_polar pmot_prev; /**< Previous position of the virtual motor encoders. */
     struct rs_wheels wmot_prev; /**< Previous position of the real motor encoders. */
 
-    f64 ratio_mot_ext; /**< Ratio between the motor and external encoders track. */
+    float ratio_mot_ext; /**< Ratio between the motor and external encoders track. */
 
     /** Callback to get the value of the left motor encoder.*/
     int32_t (*left_mot_encoder)(void *);
@@ -114,7 +117,7 @@ struct robot_system
     void* left_mot_encoder_param;
 
     /** Gain on the left motor encoder to compensate for wheel difference. */
-    f64 left_mot_gain;
+    float left_mot_gain;
 
     /** Callback to get the value of the left motor encoder.*/
     int32_t (*right_mot_encoder)(void *);
@@ -123,7 +126,7 @@ struct robot_system
     void* right_mot_encoder_param;
 
     /** Gain on the right motor encoder to compensate for wheel difference. */
-    f64 right_mot_gain;
+    float right_mot_gain;
 #endif
 
     /* External encoders */

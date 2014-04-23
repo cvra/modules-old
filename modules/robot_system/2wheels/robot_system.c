@@ -83,7 +83,7 @@ void rs_init( struct robot_system * rs)
 #ifdef CONFIG_MODULE_ROBOT_SYSTEM_MOT_AND_EXT
 void rs_set_ratio(struct robot_system * rs, double ratio)
 {
-    rs->ratio_mot_ext = f64_from_double(ratio);
+    rs->ratio_mot_ext = ratio;
 }
 #endif
 
@@ -105,7 +105,7 @@ void rs_set_left_mot_encoder(struct robot_system * rs, int32_t (*left_mot_encode
 {
     rs->left_mot_encoder = left_mot_encoder;
     rs->left_mot_encoder_param = left_mot_encoder_param;
-    rs->left_mot_gain = f64_from_double(gain);
+    rs->left_mot_gain = gain;
 }
 
 void rs_set_right_mot_encoder(struct robot_system * rs, int32_t (*right_mot_encoder)(void *),
@@ -113,7 +113,7 @@ void rs_set_right_mot_encoder(struct robot_system * rs, int32_t (*right_mot_enco
 {
     rs->right_mot_encoder = right_mot_encoder;
     rs->right_mot_encoder_param = right_mot_encoder_param;
-    rs->right_mot_gain = f64_from_double(gain);
+    rs->right_mot_gain = gain;
 }
 #endif
 
@@ -122,11 +122,7 @@ void rs_set_left_ext_encoder(struct robot_system * rs, int32_t (*left_ext_encode
 {
     rs->left_ext_encoder = left_ext_encoder;
     rs->left_ext_encoder_param = left_ext_encoder_param;
-#ifdef CONFIG_MODULE_ROBOT_SYSTEM_USE_F64
-    rs->left_ext_gain = f64_from_double(gain);
-#else
     rs->left_ext_gain = gain;
-#endif
 }
 
 void rs_set_right_ext_encoder(struct robot_system * rs, int32_t (*right_ext_encoder)(void *),
@@ -134,11 +130,7 @@ void rs_set_right_ext_encoder(struct robot_system * rs, int32_t (*right_ext_enco
 {
     rs->right_ext_encoder = right_ext_encoder;
     rs->right_ext_encoder_param = right_ext_encoder_param;
-#ifdef CONFIG_MODULE_ROBOT_SYSTEM_USE_F64
-    rs->right_ext_gain = f64_from_double(gain);
-#else
     rs->right_ext_gain = gain;
-#endif
 }
 
 void rs_set_angle(void * data, int32_t angle)
@@ -264,10 +256,6 @@ void rs_update(void * data)
 
     /* apply gains to each wheel */
     if (! (rs->flags & RS_IGNORE_EXT_GAIN )) {
-#ifdef CONFIG_MODULE_ROBOT_SYSTEM_USE_F64
-        wext.left = f64_msb_mul(f64_from_lsb(wext.left), rs->left_ext_gain);
-        wext.right = f64_msb_mul(f64_from_lsb(wext.right), rs->right_ext_gain);
-#else
         double tmp;
         tmp = wext.left;
         tmp *= rs->left_ext_gain;
@@ -275,13 +263,12 @@ void rs_update(void * data)
         tmp = wext.right;
         tmp *= rs->right_ext_gain;
         wext.right = tmp;
-#endif
     }
 
 #ifdef CONFIG_MODULE_ROBOT_SYSTEM_MOT_AND_EXT
     if (! (rs->flags & RS_IGNORE_MOT_GAIN )) {
-        wmot.left = f64_msb_mul(f64_from_lsb(wmot.left), rs->left_mot_gain);
-        wmot.right = f64_msb_mul(f64_from_lsb(wmot.right), rs->right_mot_gain);
+        wmot.left = wmot.left * rs->left_mot_gain;
+        wmot.right =wmot.right * rs->right_mot_gain;
     }
 #endif
 
@@ -290,7 +277,7 @@ void rs_update(void * data)
     rs_get_polar_from_wheels(&pmot, &wmot);
 
     /* apply ratio to polar and reupdate wheels for ext coders */
-    pext.angle = f64_msb_mul(f64_from_lsb(pext.angle), rs->ratio_mot_ext);
+    pext.angle =  pext.angle * rs->ratio_mot_ext;
     rs_get_wheels_from_polar(&wext, &pext);
 #endif
 
