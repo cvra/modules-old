@@ -1,40 +1,62 @@
 
 #include <stdbool.h>
 #include <math.h>
+#include "../param/param.h"
 
 #include "robot_base_mixer.h"
 
 // wheel angle (from robot x axis to wheel rotation axis)
-static const float beta[3] = {
+static float beta[3] = {
     0.5235987756 + 0,                        //   0 deg
     0.5235987756 + 2.0943951023931954923084, // 120 deg
     0.5235987756 + 4.1887902047863909846168  // 240 deg
 };
 
+
+#define WHEEL_RADIUS 0.01817305846
 // wheel radius
-static const float r[3] = {
-    0.01817305846,
-    0.01817305846,
-    0.01817305846
+static float r[3] = {
+    WHEEL_RADIUS,
+    WHEEL_RADIUS,
+    WHEEL_RADIUS
 };
 
+#define WHEEL_DISTANCE 0.09252132883 // inner 87.7 mm outer 100 mm = 0.09385
 // wheel distance from center
-static const float D[3] = {
-    0.09233404958,  // inner 87.7 mm outer 100 mm = 0.09385 (0.095 measured!?)
-    0.09233404958,
-    0.09233404958
+static float D[3] = {
+    WHEEL_DISTANCE,
+    WHEEL_DISTANCE,
+    WHEEL_DISTANCE
 };
 
 
 // conversion matrices
 static float rtw[3][3];
 static float wtr[3][3];
+static param_t D_param;
+static param_t r_param;
+
 
 static void compute_matrix(void)
 {
-    static bool done = false;
-    if (done)
+    static bool first_call = true;
+    if (first_call) {
+        param_add(&D_param, "D", "wheel dist from center");
+        param_add(&r_param, "r", "wheel radius");
+        param_set(&D_param, WHEEL_DISTANCE);
+        param_set(&r_param, WHEEL_RADIUS);
+    }
+    first_call = false;
+    if (param_has_changed(&D_param) || param_has_changed(&r_param)) {
+        D[0] = param_get(&D_param);
+        D[1] = param_get(&D_param);
+        D[2] = param_get(&D_param);
+        r[0] = param_get(&r_param);
+        r[1] = param_get(&r_param);
+        r[2] = param_get(&r_param);
+    } else {
         return;
+    }
     // robot to wheel matrix
     rtw[0][0] = -D[0];
     rtw[1][0] = -D[1];
@@ -58,7 +80,6 @@ static void compute_matrix(void)
     wtr[2][0] = c * (D[2]*sin(beta[1]) - D[1]*sin(beta[2]));
     wtr[2][1] = c * (D[0]*sin(beta[2]) - D[2]*sin(beta[0]));
     wtr[2][2] = c * (D[1]*sin(beta[0]) - D[0]*sin(beta[1]));
-    done = true;
 }
 
 void holonomic_base_mixer_robot_to_wheels(float dx, float dy, float dtheta,
