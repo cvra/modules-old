@@ -60,11 +60,13 @@ int circle_intersect(const circle_t *c1, const circle_t *c2,
 	uint8_t ret = 0;
 
 
-    if (fabs(c1->y - c2->y) < 0.0001f) {
-        /* TODO: Dirty fix because we assumed that delta_y != 0. */
-        /* avoids infinite recursion. */
-        if (fabs(c1->x - c2->x) < 0.0001f)
-            return 0;
+    /* We have to assume that either delta_x or delta_y is not zero to avoid
+     * the corner case of the two coincident circles. If we assume that, for
+     * example, delta_y is never zero, but in reality gets really close to zero,
+     * it creates numerical stability problems. To avoid it, we check which of
+     * delta_x or delta_y is smaller and assume the other cannot be zero.
+     */
+    if (fabs(c1->y - c2->y) < fabs(c1->x - c2->x)) {
         point_t pa, pb;
         ca.x = c1->y;
         ca.y = c1->x;
