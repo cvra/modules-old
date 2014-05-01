@@ -27,7 +27,7 @@
 #include <circles.h>
 //#include "../fast_math/fast_math.h"
 
-static inline float sq(float x)
+static inline double sq(double x)
 {
 	return x*x;
 }
@@ -56,7 +56,7 @@ int circle_intersect(const circle_t *c1, const circle_t *c2,
 			 point_t *p1, point_t *p2)
 {
 	circle_t ca, cb;
-	float a, b, c, d, e;
+	double a, b, c, d, e;
 	uint8_t ret = 0;
 
 
