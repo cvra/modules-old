@@ -1,19 +1,15 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <sys/types.h>
-
 #include <fcntl.h>
 #include <sys/socket.h>
-
 #ifdef COMPILE_ON_ROBOT
 #include <ucos_ii.h>
 #include <tasks.h>
 #else
 #include <unistd.h>
 #include <pthread.h>
+#include <arpa/inet.h>
 #endif
 
 #include "trace.h"
@@ -149,6 +145,7 @@ void trace_task(void *arg)
 void trace_over_ip_init(int port)
 {
     tcp_listen_port = port;
+    
 #ifdef COMPILE_ON_ROBOT
     OSTaskCreateExt(trace_task,
                     NULL,
