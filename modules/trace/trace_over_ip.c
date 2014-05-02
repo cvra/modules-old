@@ -1,16 +1,32 @@
-#include <lwip/udp.h>
-#include <ucos_ii.h>
+#include <stdio.h>
+#include <string.h>
 
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/types.h>
+
+#include <fcntl.h>
+#include <sys/socket.h>
+
+#ifdef COMPILE_ON_ROBOT
+#include <ucos_ii.h>
 #include <tasks.h>
+#else
+#include <unistd.h>
+#include <pthread.h>
+#endif
 
 #include "trace.h"
 #include "trace_over_ip.h"
 
+
+#ifdef COMPILE_ON_ROBOT
 OS_STK trace_stk[TRACE_TASK_STACKSIZE];
+#endif
 
 static int tcp_listen_port;
-static struct udp_pcb *udp_conn;
-static int trace_freq;
+static int trace_freq = 1;
+static int udp_send_socket = -1;
 
 static bool is_number(char c)
 {
@@ -20,14 +36,15 @@ static bool is_number(char c)
 static void setup_trace_variables(char *buf)
 {
     trace_var_disable_all();
+    trace_freq = 1;
     // for each line
     char *lstart = buf;
     while (lstart != NULL) {
         char *line = lstart;
         char *lend = lstart;
-        while (*lend != '\n' && *lend != '\0')
+        while (*lend != '\n' && *lend != '\r' && *lend != '\0')
             lend++;
-        if (lend != '\0')
+        if (*lend != '\0')
             lstart = lend + 1;
         else
             lstart = NULL;
@@ -35,56 +52,96 @@ static void setup_trace_variables(char *buf)
         if (is_number(*line)) {
             sscanf(line, "%d", &trace_freq);
         } else {
-            trace_var_enable(trace_var_lookup(line));
+            trace_var_enable_by_name(line);
+        }
+    }
+    if (trace_freq <= 0)
+        trace_freq = 1;
+}
+
+static void accept_new_connection(int conn)
+{
+    static char setup_buf[300];
+    int new_conn;
+    struct sockaddr_in addr;
+    socklen_t addr_len = sizeof(addr);
+    if ((new_conn = accept(conn, (struct sockaddr *)&addr, &addr_len)) < 0) {
+        return;
+    }
+    // close current udp socket
+    if (udp_send_socket != -1)
+        close(udp_send_socket);
+    udp_send_socket = -1;
+
+    int flags = fcntl(new_conn,F_GETFL,0);
+    fcntl(new_conn, F_SETFL, flags & ~O_NONBLOCK);
+
+    // fill setup_buf
+    int remaining_sz = sizeof(setup_buf) - 1; // -1 for 0-terminator
+    char *bufp = setup_buf;
+    while (remaining_sz > 0) {
+        int sz = read(new_conn, bufp, remaining_sz);
+        if (sz <= 0) {
+            break;
+        }
+        remaining_sz -= sz;
+        bufp += sz;
+    }
+    *bufp = '\0';
+    if (bufp == setup_buf)
+        return;
+
+    setup_trace_variables(setup_buf);
+
+    int s;
+    if ((s = socket(AF_INET, SOCK_DGRAM, 0)) >= 0) {
+        addr.sin_port = htons(tcp_listen_port);
+        if (connect(s, (struct sockaddr *)&addr, sizeof(addr)) != -1) {
+            udp_send_socket = s;
         }
     }
 }
 
-static void accept_new_connection(struct netconn *conn)
-{
-    static char setup_buf[300];
-
-    err_t err;
-    struct netconn *newconn;
-    err = netconn_accept(conn, &newconn);
-
-    ip_addr_t ipaddr;
-
-
-    // fill setup_buf
-
-    setup_trace_variables(setup_buf);
-
-    udp_conn = udp_new();
-    int src_port = tcp_listen_port;
-    int dest_port = tcp_listen_port;
-    udp_bind(udp_conn, IP_ADDR_ANY, src_port);
-    udp_connect(udp_conn, &ipaddr, dest_port);
-}
-
 void trace_task(void *arg)
 {
+    printf("thread task started\n");
     // setup tcp listen
-
-    // int listenfd = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
-
-    struct netconn *listen_conn;
-    listen_conn = netconn_new(NETCONN_TCP);
-    netconn_bind(listen_conn, NULL, 23);
-    netconn_listen(listen_conn);
-    netconn_set_nonblocking(listen_conn, 1);
+    int listenfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (listenfd < 0) {
+        printf("trace task: socket error\n");
+        return;
+    }
+    int flags = fcntl(listenfd,F_GETFL,0);
+    fcntl(listenfd, F_SETFL, flags | O_NONBLOCK);
+    struct sockaddr_in serv_addr;
+    bzero((char *) &serv_addr, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_port = htons(tcp_listen_port);
+    int yes = 1;
+    setsockopt(listenfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int));
+    if (bind(listenfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+        printf("trace task: socket bind error\n");
+        return;
+    }
+    listen(listenfd,1);
     while (1) {
         // check tcp for new connection
-        accept_new_connection(listen_conn);
+        accept_new_connection(listenfd);
         // write variables to buffer
-        char *send_str = trace_var_output();
+        static char send_str[300];
+        trace_var_output(send_str, sizeof(send_str));
         // send udp
-        struct pbuf *p;
-        p = pbuf_alloc(PBUF_TRANSPORT, strlen(send_str), PBUF_REF);
-        p->payload = send_str;
-        udp_send(udp_conn, p); // TODO use netconn api!!!
-
+        if (udp_send_socket != -1) {
+            printf(".");
+            fflush(stdout);
+            write(udp_send_socket, send_str, strlen(send_str));
+        }
+#ifdef COMPILE_ON_ROBOT
         OSTimeDly(OS_TICKS_PER_SEC / trace_freq);
+#else // COMPILE_ON_ROBOT
+        usleep(1000000/trace_freq);
+#endif // COMPILE_ON_ROBOT
     }
 }
 
@@ -92,6 +149,7 @@ void trace_task(void *arg)
 void trace_over_ip_init(int port)
 {
     tcp_listen_port = port;
+#ifdef COMPILE_ON_ROBOT
     OSTaskCreateExt(trace_task,
                     NULL,
                     &trace_stk[TRACE_TASK_STACKSIZE-1],
@@ -100,4 +158,8 @@ void trace_over_ip_init(int port)
                     &trace_stk[0],
                     TRACE_TASK_STACKSIZE,
                     NULL, 0);
+#else // COMPILE_ON_ROBOT
+    static pthread_t thread;
+    pthread_create(&thread, NULL, (void *(*)(void *))trace_task, NULL);
+#endif // COMPILE_ON_ROBOT
 }
