@@ -129,8 +129,6 @@ void trace_task(void *arg)
         trace_var_output(send_str, sizeof(send_str));
         // send udp
         if (udp_send_socket != -1) {
-            printf(".");
-            fflush(stdout);
             write(udp_send_socket, send_str, strlen(send_str));
         }
 #ifdef COMPILE_ON_ROBOT
@@ -145,7 +143,7 @@ void trace_task(void *arg)
 void trace_over_ip_init(int port)
 {
     tcp_listen_port = port;
-    
+
 #ifdef COMPILE_ON_ROBOT
     OSTaskCreateExt(trace_task,
                     NULL,
