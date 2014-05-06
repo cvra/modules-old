@@ -145,11 +145,9 @@ void trace_var_disable_all(void)
 {
     LOCK();
     trace_var_t *v = enabled_list_head;
-    if (v != NULL) {
-        while (v->next != NULL)
-            v = v->next;
-        v->next = disabled_list_head;
-        disabled_list_head = v;
+    while (v != NULL) {
+        _trace_var_disable(v);
+        v = v->next;
     }
     UNLOCK();
 }

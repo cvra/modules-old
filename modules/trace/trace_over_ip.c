@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <fcntl.h>
 #include <sys/socket.h>
 #ifdef COMPILE_ON_ROBOT
 #include <ucos_ii.h>
@@ -10,6 +9,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <arpa/inet.h>
+#include <fcntl.h>
 #endif
 
 #include "trace.h"
@@ -84,9 +84,10 @@ static void accept_new_connection(int conn)
         bufp += sz;
     }
     *bufp = '\0';
+    close(new_conn);
+
     if (bufp == setup_buf)
         return;
-
     setup_trace_variables(setup_buf);
 
     int s;
@@ -107,7 +108,7 @@ void trace_task(void *arg)
         printf("trace task: socket error\n");
         return;
     }
-    int flags = fcntl(listenfd,F_GETFL,0);
+    int flags = fcntl(listenfd, F_GETFL, 0);
     fcntl(listenfd, F_SETFL, flags | O_NONBLOCK);
     struct sockaddr_in serv_addr;
     bzero((char *) &serv_addr, sizeof(serv_addr));
