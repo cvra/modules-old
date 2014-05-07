@@ -1,6 +1,5 @@
 #ifndef _UPTIME_H_
 
-#include <platform.h>
 #include <stdint.h>
 
 typedef int32_t timestamp_t; // [us]
