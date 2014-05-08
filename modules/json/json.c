@@ -1310,6 +1310,20 @@ static int write_hex16(char *out, uint16_t val)
 	return 4;
 }
 
+int json_get_length(JsonNode *object)
+{
+    int len = 0;
+    JsonNode *n;
+
+    if (object->tag != JSON_ARRAY)
+        return -1;
+
+    json_foreach(n, object)
+        len++;
+
+    return len;
+}
+
 bool json_check(const JsonNode *node, char errmsg[256])
 {
 	#define problem(...) do { \

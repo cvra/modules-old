@@ -104,6 +104,12 @@ void json_prepend_member(JsonNode *object, const char *key, JsonNode *value);
 
 void json_remove_from_parent(JsonNode *node);
 
+/** Returns the length of a JSON array.
+ *
+ * @returns The length of object if it is an array, -1 otherwise.
+ */
+int json_get_length(JsonNode *object);
+
 /*** Debugging ***/
 
 /*
